@@ -12,9 +12,9 @@ WORKDIR /usr/src/app
 
 # Copiar los archivos necesarios al contenedor
 COPY . /usr/src/app
-
 # Instalar las dependencias de Python
-RUN pip3 install -r requirements.txt
+RUN pip freeze > requirements.txt
+#RUN pip3 install -r requirements.txt
 
 # Definir las variables de entorno
 ENV O_HOST="192.168.21.165"
@@ -23,7 +23,6 @@ ENV O_SERVICE_NAME="SQL"
 ENV O_USERNAME="consulta"
 ENV O_PASSWORD="consulta"
 
+EXPOSE 5011
 
-EXPOSE 5010
-
-CMD ["python3", "main.py"]
+CMD ["python3", "0.0.0.0:5011", "main.py"]

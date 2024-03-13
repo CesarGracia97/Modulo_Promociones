@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  modulo_promociones_ms1:
+    image: ${DOCKER_REGISTRY-}modulo_promociones_ms1
+    container_name: modulo_promociones_ms1
+    build: 
+      context: .
+      dockerfile: Modulo-Promociones-backend/modulo_promociones_ms1/Dockerfile
+    ports:
+      - "5011:5011"
+    environment:
+      - O_HOST=192.168.21.165
+      - O_PORT=1521
+      - O_SERVICE_NAME=SQL
+      - O_USERNAME=consulta
+      - O_PASSWORD=consulta
+
+  modulo_promociones_rapi1:
+    image: ${DOCKER_REGISTRY-}modulo_promociones_rapi1
+    container_name: modulo_promociones_rapi1
+    build:
+      context: .
+      dockerfile: Modulo-Promociones-backend/modulo_promociones_rapi1/Dockerfile
+    ports:
+      - "5012:5012"
+
+  modulo_promociones_rapi2:
+    image: ${DOCKER_REGISTRY-}modulo_promociones_rapi2
+    container_name: modulo_promociones_rapi2
+    build:
+      context: .
+      dockerfile: Modulo-Promociones-backend/modulo_promociones_rapi2/Dockerfile
+    ports:
+      - "5013:5013"
