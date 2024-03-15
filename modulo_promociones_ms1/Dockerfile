@@ -1,5 +1,5 @@
 # Definir la imagen base
-FROM python:3.8.10
+FROM python:3.10-slim-buster
 
 #Actualizacion de SO e instalacion de herramientas base
 RUN apt-get update && apt-get install -y libaio1 unzip 
@@ -10,12 +10,14 @@ WORKDIR /usr/src/app
 # Copiar los archivos necesarios al contenedor
 COPY . /usr/src/app
 
+
+
 #Descomprimir la biblioteca de docker e Instalar
 RUN unzip /usr/src/app/modulo_promociones_ms1/Config/oracle_client/instantclient-basic-linux.x64-21.8.0.0.0dbru.zip -d /usr/src/app/modulo_promociones_ms1/Config/oracle_client
 RUN sh -c "echo /usr/src/app/modulo_promociones_ms1/Config/oracle_client/instantclient_21_8 > \
       /etc/ld.so.conf.d/oracle-instantclient.conf"
 RUN ldconfig
-ENV LD_LIBRARY_PATH=/usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/Config/oracle_client/nstantclient_21_8
+ENV LD_LIBRARY_PATH=/usr/src/app/modulo_promociones_ms1/Config/oracle_client/nistantclient_21_8
 
 # Actualizar pip
 RUN pip install --upgrade pip
@@ -31,7 +33,7 @@ ENV O_USERNAME="consulta"
 ENV O_PASSWORD="consulta"
 
 # Exponer el puerto en el que se ejecutará la aplicación
-EXPOSE 5011
+EXPOSE 5000
 
 # Comando para ejecutar la aplicación
 CMD ["python", "/usr/src/app/modulo_promociones_ms1/__main__.py"]

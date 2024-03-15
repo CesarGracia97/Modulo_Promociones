@@ -1,5 +1,5 @@
 # Usar la imagen base de Ubuntu
-FROM python:3.8.10
+FROM python:3.10-slim-buster
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app

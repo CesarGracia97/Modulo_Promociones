@@ -1,5 +1,5 @@
 # Usar la imagen base de Ubuntu
-FROM python:3.8.10
+FROM python:3.10-slim-buster
 
 # Actualizar los repositorios e instalar Python 3.12
 RUN apt-get update 

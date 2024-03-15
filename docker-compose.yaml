@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: modulo_promociones_ms1/Dockerfile
     ports:
-      - "5011:5011"
+      - 5000:5000
     environment:
       - O_HOST=192.168.21.165
       - O_PORT=1521
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: modulo_promociones_rapi1/Dockerfile
     ports:
-      - "5012:5012"
+      - 5012:5012
 
   modulo_promociones_rapi2:
     image: ${DOCKER_REGISTRY-}modulo_promociones_rapi2
@@ -32,4 +32,4 @@ services:
       context: .
       dockerfile: modulo_promociones_rapi2/Dockerfile
     ports:
-      - "5013:5013"
+      - 5013:5013
