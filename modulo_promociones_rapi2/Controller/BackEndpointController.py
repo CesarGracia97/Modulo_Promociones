@@ -31,11 +31,11 @@ class BackEndpointController:
                     _ttype = _ttype.upper()
                     if _stype in ['OFER', 'SERV', 'TECN', 'TISE', 'PLAN']:
                         params = {'type': _type, 'stype': _stype, 'ttype': _ttype}
-                        return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlanes', params)
+                        return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes', params)
                     else:
                         return jsonify({'error': ' BACK ENDPOINT - Tipo de petición no válido'}), 400
                 elif _type == 'COMBO':
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlanes', request.args)
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes', request.args)
                 else:
                     return jsonify({'error': ' BACK ENDPOINT - Tipo de petición no válido'}), 400
         except Exception as e:

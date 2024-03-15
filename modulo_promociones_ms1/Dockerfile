@@ -11,8 +11,8 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 #Descomprimir la biblioteca de docker e Instalar
-RUN unzip /usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/Config/oracle_client/instantclient-basic-linux.x64-21.8.0.0.0dbru.zip -d /usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/Config/oracle_client
-RUN sh -c "echo /usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/Config/oracle_client/instantclient_21_8 > \
+RUN unzip /usr/src/app/modulo_promociones_ms1/Config/oracle_client/instantclient-basic-linux.x64-21.8.0.0.0dbru.zip -d /usr/src/app/modulo_promociones_ms1/Config/oracle_client
+RUN sh -c "echo /usr/src/app/modulo_promociones_ms1/Config/oracle_client/instantclient_21_8 > \
       /etc/ld.so.conf.d/oracle-instantclient.conf"
 RUN ldconfig
 ENV LD_LIBRARY_PATH=/usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/Config/oracle_client/nstantclient_21_8
@@ -21,7 +21,7 @@ ENV LD_LIBRARY_PATH=/usr/src/app/Modulo-Promociones-backend/modulo_promociones_m
 RUN pip install --upgrade pip
 
 # Instalar las dependencias de Python desde requirements.txt
-RUN pip install -r /usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/requirements.txt
+RUN pip install -r /usr/src/app/modulo_promociones_ms1/requirements.txt
 
 # Definir las variables de entorno
 ENV O_HOST="192.168.21.165"
@@ -34,4 +34,4 @@ ENV O_PASSWORD="consulta"
 EXPOSE 5011
 
 # Comando para ejecutar la aplicación
-CMD ["python", "/usr/src/app/Modulo-Promociones-backend/modulo_promociones_ms1/__main__.py"]
+CMD ["python", "/usr/src/app/modulo_promociones_ms1/__main__.py"]

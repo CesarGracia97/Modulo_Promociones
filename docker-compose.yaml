@@ -6,7 +6,7 @@ services:
     container_name: modulo_promociones_ms1
     build: 
       context: .
-      dockerfile: Modulo-Promociones-backend/modulo_promociones_ms1/Dockerfile
+      dockerfile: modulo_promociones_ms1/Dockerfile
     ports:
       - "5011:5011"
     environment:
@@ -21,7 +21,7 @@ services:
     container_name: modulo_promociones_rapi1
     build:
       context: .
-      dockerfile: Modulo-Promociones-backend/modulo_promociones_rapi1/Dockerfile
+      dockerfile: modulo_promociones_rapi1/Dockerfile
     ports:
       - "5012:5012"
 
@@ -30,6 +30,6 @@ services:
     container_name: modulo_promociones_rapi2
     build:
       context: .
-      dockerfile: Modulo-Promociones-backend/modulo_promociones_rapi2/Dockerfile
+      dockerfile: modulo_promociones_rapi2/Dockerfile
     ports:
       - "5013:5013"

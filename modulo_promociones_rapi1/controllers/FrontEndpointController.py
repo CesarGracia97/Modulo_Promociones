@@ -19,7 +19,7 @@ class FrontEndpointController:
             _type = data.get('type')
             if _type.upper() == 'ALL_PROVS':
                 params = {'type': 'ALL_PROVS'}
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("prov_endpoint - FrontEndpointController | Tipo de Peticion no valido")
@@ -39,14 +39,14 @@ class FrontEndpointController:
             _type = data.get('type')
             if _type.upper() == 'ALL_CITIES':
                 params = {'type': 'ALL_CITIES'}
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             if _type.upper() == 'CITY_SPECIFIC':
                 print("CIUDAD ESPECIFICA POR PROVINCIA ENDPOINT ACTIVO\n")
                 _idProv = data.get('id_Prov')
                 params = {'type': 'CITY_SPECIFIC',
                           'id_Prov': _idProv}
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("city_endpoint - FrontEndpointController | Tipo de Peticion no valido")
@@ -66,14 +66,14 @@ class FrontEndpointController:
             _type = data.get('type')
             if _type.upper() == 'ALL_SECTORS':
                 params = {'type': 'ALL_SECTORS'}
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             elif _type.upper() == 'SECTOR_SPECIFIC':
                 print("SECTOR ESPECIFICO POR CIUDAD ENDPOINT ACTIVO\n")
                 _idCity = data.get('id_City')
                 params = {'type': 'SECTOR_SPECIFIC',
                           'id_City': _idCity }
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("sectors_endpoint - FrontEndpointController | Tipo de Peticion no valido")
@@ -93,14 +93,14 @@ class FrontEndpointController:
             _type = data.get('type')
             if _type.upper() == 'ALL_SUB_SECTORS':
                 params = {'type': 'ALL_SUB_SECTORS'}
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             elif _type.upper() == 'SUB_SECTOR_SPECIFIC':
                 print("SUB SECTOR ESPECIFICO POR SECTOR ENDPOINT ACTIVO\n")
                 _idSector = data.get('id_Sector')
                 params = {'type': 'SUB_SECTOR_SPECIFIC',
                           'id_Sector': _idSector}
-                response = requests.get('http://127.0.0.1:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("sub_sectors_endpoint - FrontEndpointController | Tipo de Peticion no valido")

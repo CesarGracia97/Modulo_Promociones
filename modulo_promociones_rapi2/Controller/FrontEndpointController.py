@@ -26,7 +26,7 @@ class FrontEndpointController:
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1}
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'RED_TECNOLOGIA':
@@ -36,7 +36,7 @@ class FrontEndpointController:
                               'stype': _stype,
                               '_V1': _V1,
                               '_V2': _V2}
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'PLANES':
@@ -48,7 +48,7 @@ class FrontEndpointController:
                               '_V1': _V1,
                               '_V2': _V2,
                               '_V3': _V3}
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'PROVINCIA':
@@ -62,7 +62,7 @@ class FrontEndpointController:
                               '_V2': _V2,
                               '_V3': _V3,
                               '_V4': _V4}
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'CIUDAD':
@@ -78,7 +78,7 @@ class FrontEndpointController:
                               '_V3': _V3,
                               '_V4': _V4,
                               '_V5': _V5}
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'SECTOR':
@@ -96,7 +96,7 @@ class FrontEndpointController:
                               '_V4': _V4,
                               '_V5': _V5,
                               '_V6': _V6}
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 else:
@@ -133,7 +133,7 @@ class FrontEndpointController:
                         'stype': _stype,
                         'ttype': 1
                     }
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() != 'OFER' and (
@@ -171,7 +171,7 @@ class FrontEndpointController:
                         'stype': _stype,
                         'ttype': 1
                     }
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() != 'SERV' and (
@@ -209,7 +209,7 @@ class FrontEndpointController:
                         'stype': _stype,
                         'ttype': 1
                     }
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() != 'TECN' and (
@@ -247,7 +247,7 @@ class FrontEndpointController:
                         'stype': _stype,
                         'ttype': 1
                     }
-                    response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
                 elif _stype.upper() != 'TISE' and (
@@ -287,7 +287,7 @@ class FrontEndpointController:
                             'stype': _stype,
                             'ttype': _ttype
                         }
-                        response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                        response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                         return response.text, response.status_code
 
                     if _ttype == 2:
@@ -296,7 +296,7 @@ class FrontEndpointController:
                             'stype': _stype,
                             'ttype': _ttype
                         }
-                        response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                        response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                         return response.text, response.status_code
 
                     if _ttype == 3:
@@ -305,7 +305,7 @@ class FrontEndpointController:
                             'stype': _stype,
                             'ttype': _ttype
                         }
-                        response = requests.get('http://127.0.0.1:5013/api/ra/plnback_endpoint', params=params)
+                        response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                         return response.text, response.status_code
                 elif _stype.upper() != 'PLAN' and (
                         _stype.upper() == 'OFER' or _stype.upper() == 'TECN' or _stype.upper() == 'SERV' or _stype.upper() == 'TISE'):

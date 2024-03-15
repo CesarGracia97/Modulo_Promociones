@@ -25,28 +25,28 @@ class BackEndpointController:
             if _type:
                 _type = _type.upper()
                 if _type == 'ALL_PROVS':
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "ALL_PROVS"})
                 elif _type == 'ALL_CITIES':
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "ALL_CITIES"})
                 elif _type == 'CITY_SPECIFIC':
                     _idProv = request.args.get('id_Prov')
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "CITY_SPECIFIC", "id_Prov": _idProv})
                 elif _type == 'ALL_SECTORS':
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "ALL_SECTORS"})
                 elif _type == 'SECTOR_SPECIFIC':
                     _idCity = request.args.get('id_City')
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "SECTOR_SPECIFIC", "id_City": _idCity})
                 elif _type == 'ALL_SUB_SECTORS':
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "ALL_SUB_SECTORS"})
                 elif _type == 'SUB_SECTOR_SPECIFIC':
                     _idSector = request.args.get('id_Sector')
-                    return BackEndpointController.make_request('http://127.0.0.1:5011/api/ms/peticionPlaces',
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "SUB_SECTOR_SPECIFIC", "id_Sector": _idSector})
                 else:
                     return jsonify({'error': ' BACK ENDPOINT - Tipo de petición no válido'}), 400

@@ -1,9 +1,8 @@
 # Usar la imagen base de Ubuntu
-FROM ubuntu:latest
+FROM python:3.8.10
 
 # Actualizar los repositorios e instalar Python 3.12
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip
+RUN apt-get update 
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app
@@ -12,11 +11,11 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 # Instalar las dependencias del proyecto
-#RUN pip3 install -r requirements.txt
-RUN pip freeze > requirements.txt
+RUN pip install -r /usr/src/app/modulo_promociones_rapi2/requirements.txt
+
 
 # Exponer el puerto en el que tu API REST estará escuchando
 EXPOSE 5013
 
 # Comando para ejecutar tu aplicación
-CMD ["python3",  "0.0.0.0:5013", "main.py"]
+CMD ["python", "/usr/src/app/modulo_promociones_rapi2/__main__.py"]
