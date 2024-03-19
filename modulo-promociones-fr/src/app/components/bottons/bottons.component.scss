@@ -1,0 +1,45 @@
+#menu{
+    display: flex;
+    flex-direction: column;
+    padding-top: 100px;
+
+    a{
+        text-decoration: none;
+        color: #333;
+        border-top: 1px solid #CCC;
+        padding: 15px 20px;
+
+        &:hover{
+            background-color: #eee;
+        }
+    }
+    .btn_Combo{
+        background: none;
+        border: none;
+        text-decoration: none;
+        color: #333;
+        padding: 15px 20px;
+
+        &:hover{
+            background-color: #eee;
+        }
+        li{
+            border-bottom: none;
+        }
+        
+    }
+    .btn_Consulta{
+        background: none;
+        border: none;
+        text-decoration: none;
+        color: #333;
+        padding: 15px 20px;
+
+        &:hover{
+            background-color: #eee;
+        }
+        li{
+            border-top: none;
+        }
+    }
+}
