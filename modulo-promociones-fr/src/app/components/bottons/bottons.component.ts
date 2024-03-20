@@ -10,15 +10,20 @@ import { CommonModule } from '@angular/common';
 })
 export class BottonsComponent implements OnInit {
   options = [
-    {name: 'Tipo de Servicio', value:'opcion-1'},
-    {name: 'Red', value:'opcion-2'},
-    {name: 'Plan', value:'opcion-3'},
-    {name: 'Provincial', value:'opcion-4'},
-    {name: 'Ciudad', value:'opcion-5'},
-    {name: 'Sector', value:'opcion-6'}
+    {name: 'Tipo de Servicio', value:'ptc-TIE'},
+    {name: 'Red', value:'ptc-RED'},
+    {name: 'Plan', value:'ptc-PLAN'},
+    {name: 'Provincial', value:'ptc-PROV'},
+    {name: 'Ciudad', value:'ptc-CITY'},
+    {name: 'Sector', value:'ptc-SECT'}
   ]
 
   constructor(){ }
 
   ngOnInit(): void {}
+
+  handleButtonClick(value: string): void {
+    console.log('Peticion de Consulta:', value);
+    // Aquí puedes agregar cualquier otra lógica que quieras realizar al hacer clic en un botón
+  }
 }

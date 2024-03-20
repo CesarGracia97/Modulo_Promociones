@@ -21,11 +21,11 @@
             display: none;
             position: absolute;
             width: 175px;
-            min-height: 325px;
+            min-height: 315px;
             overflow: auto;
             background-color: #f9f9f9f9;
             border-radius: 10px;
-            top: 100%;
+            top: 105%;
             left: 0;
 
             ul{
@@ -46,6 +46,7 @@
                     color:#000000;
                     padding: 15px 30px;
                     display: block;
+                    border-radius: 10px;
 
                     &:hover{
                         background-color: #eee;
@@ -56,6 +57,7 @@
 
         &:hover{
             background-color: #eee;
+            border: 1px solid #000000;
             #dropDown{
                 display: block;
             }

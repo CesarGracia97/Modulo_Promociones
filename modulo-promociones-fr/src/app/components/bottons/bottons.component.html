@@ -3,7 +3,7 @@
     <div id="button_CD">Combos Predefinidos
         <div id="dropDown">
             <ul>
-                <li *ngFor="let option of options"><button class="btns">{{option.name}}</button></li>
+                <li *ngFor="let option of options"><button class="btns" (click)="handleButtonClick(option.value)">{{option.name}}</button></li>
             </ul>
         </div>
     </div>
