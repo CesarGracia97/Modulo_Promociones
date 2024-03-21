@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProvinciasService } from '../../places/services/provincias.service';
-import { Provincias } from '../../places/interfaces/provincias.interface';
 
 @Component({
   selector: 'app-bottons',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './bottons.component.html',
-  styleUrl: './bottons.component.scss'
+  styleUrls: ['./bottons.component.scss']
 })
 export class BottonsComponent implements OnInit {
-  provincias: Provincias[] = [];
-  
   options = [
     {name: 'Tipo de Servicio', value:'ptc-TIE'},
     {name: 'Red', value:'ptc-RED'},
@@ -24,33 +21,15 @@ export class BottonsComponent implements OnInit {
 
   constructor(private provinciasService: ProvinciasService){ }
 
-  ngOnInit(): void {this.mostrardatos()}
+  ngOnInit(): void {}
 
   handleButtonClick(value: string): void {
-    try
+    console.log('Peticion de Consulta:', value);
+    if (value =='ptc-TIE')
     {
-      if (value =='ptc-TIE')
-      {
-        this.provinciasService.getProvincias();
-      }
-      console.log('Peticion de Consulta:', value);
-      this.mostrardatos();
+      this.provinciasService.getProvincias();
     }
-    catch (error){
-      console.log('Algo Ocurrio: ', error);
-    }
-
-  }
-  mostrardatos(){
-    this.provinciasService.getProvincias().subscribe(
-      (data: Provincias[]) => {
-        this.provincias = data;
-        console.log('Datos recibidos:', this.provincias);
-      },
-      (error) => {
-        console.error('Error al obtener las provincias:', error);
-      }
-    );
-
+    // Aquí puedes agregar cualquier otra lógica que quieras realizar al hacer clic en un botón
   }
 }
+

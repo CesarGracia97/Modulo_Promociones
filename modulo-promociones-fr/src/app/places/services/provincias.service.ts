@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Provincias } from '../interfaces/provincias.interface';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Provincias } from '../interfaces/provincias.interface';
 
 export class ProvinciasService {
 
-  private baseUrl ='https://localhost:5001/api/ms/peticionPlaces';
+  private baseUrl ='http://127.0.0.1:5012/api/ra/plcprov_endpoint';
   private _infoProvincias:string[]=[];
 
   get infoProvincias():string[]{
@@ -19,21 +19,10 @@ export class ProvinciasService {
   constructor(private http:HttpClient) { }
   
   getProvincias(): Observable<Provincias[]> {
-    const url = `${this.baseUrl}?type=ALL_PROVS`;
-
-    return this.http.get<Provincias[]>(url)
-      .pipe(
-        tap((response: any) => {
-          if (response && response.status === 200 && response.data && response.data.length > 0) {
-            console.log('La solicitud se ejecutó exitosamente.');
-          }
-        }),
-        catchError(this.handleError)
-      );
-  }
-
-  private handleError(error: any): Observable<never> {
-    console.error('Hubo un error al obtener las provincias:', error);
-    throw error;
+    // Construir los parámetros de consulta
+    let params = new HttpParams().set('type', 'ALL_PROVS');
+    
+    // Realizar la solicitud GET con los parámetros de consulta
+    return this.http.get<Provincias[]>(this.baseUrl, { params: params });
   }
 }

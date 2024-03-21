@@ -15,14 +15,15 @@ class FrontEndpointController:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
             print("PROVS ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
-            if _type.upper() == 'ALL_PROVS':
+            # Obtener parámetros de consulta de la URL
+            _type = request.args.get('type')
+
+            if _type and _type.upper() == 'ALL_PROVS':
                 params = {'type': 'ALL_PROVS'}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
-                print("prov_endpoint - FrontEndpointController | Tipo de Peticion no valido")
+                print("prov_endpoint - FrontEndpointController | Tipo de Petición no válido")
                 return jsonify({'error': 'Tipo de petición no válido'}), 400
         except Exception as e:
             print("--------------------------------------------------------------------")
