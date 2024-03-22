@@ -17,12 +17,11 @@ class FrontEndpointController:
             print("\nPLANS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("COMBO ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             if _type.upper() == 'COMBO':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'TIPO_SERVICIOS':
-                    _V1 = data.get('_V1')
+                    _V1 = request.args.get('_V1')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1}
@@ -30,8 +29,8 @@ class FrontEndpointController:
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'RED_TECNOLOGIA':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1,
@@ -40,9 +39,9 @@ class FrontEndpointController:
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'PLANES':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1,
@@ -52,10 +51,10 @@ class FrontEndpointController:
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'PROVINCIA':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
-                    _V4 = data.get('_V4')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
+                    _V4 = request.args.get('_V4')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1,
@@ -66,11 +65,11 @@ class FrontEndpointController:
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'CIUDAD':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
-                    _V4 = data.get('_V4')
-                    _V5 = data.get('_V5')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
+                    _V4 = request.args.get('_V4')
+                    _V5 = request.args.get('_V5')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1,
@@ -82,12 +81,12 @@ class FrontEndpointController:
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'SECTOR':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
-                    _V4 = data.get('_V4')
-                    _V5 = data.get('_V5')
-                    _V6 = data.get('_V6')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
+                    _V4 = request.args.get('_V4')
+                    _V5 = request.args.get('_V5')
+                    _V6 = request.args.get('_V6')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1,
@@ -123,10 +122,9 @@ class FrontEndpointController:
             print("\nPLANS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("OFERTAS ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'OFER':
                     params = {
                         'type': _type,
@@ -161,10 +159,9 @@ class FrontEndpointController:
             print("\nPLANS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("SERVICIOS ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'SERV':
                     params = {
                         'type': _type,
@@ -199,10 +196,9 @@ class FrontEndpointController:
             print("\nPLANS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("TECNOLOGIAS ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'TECN':
                     params = {
                         'type': _type,
@@ -237,10 +233,9 @@ class FrontEndpointController:
             print("\nPLANS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("TIPO DE SERVICIOS ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'TISE':
                     params = {
                         'type': _type,
@@ -275,12 +270,11 @@ class FrontEndpointController:
             print("\nPLANS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("PLANES ENDPOINT ACTIVO\n")
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'PLAN':
-                    _ttype = data.get('ttype')
+                    _ttype = request.args.get('ttype')
                     if _ttype == 1:
                         params = {
                             'type': _type,
