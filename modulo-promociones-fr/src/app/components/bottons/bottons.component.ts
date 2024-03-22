@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProvinciasService } from '../../places/services/provincias.service';
+//import { ProvinciasService } from '../../places/services/provincias.service';
 import { Provincias } from '../../places/interfaces/provincias.interface';
 
 @Component({
@@ -22,10 +22,12 @@ export class BottonsComponent implements OnInit {
     {name: 'Sector', value:'ptc-SECT'}
   ]
 
-  constructor(private provinciasService: ProvinciasService){ }
+  //constructor(private provinciasService: ProvinciasService){ }
 
-  ngOnInit(): void {this.mostrardatos()}
+  constructor(){}
 
+  ngOnInit(): void {}
+  /*
   handleButtonClick(value: string): void {
     try
     {
@@ -39,8 +41,9 @@ export class BottonsComponent implements OnInit {
     catch (error){
       console.log('Algo Ocurrio: ', error);
     }
-
   }
+  */
+  /*
   mostrardatos(){
     this.provinciasService.getProvincias().subscribe(
       (data: Provincias[]) => {
@@ -53,4 +56,5 @@ export class BottonsComponent implements OnInit {
     );
 
   }
+  */
 }
