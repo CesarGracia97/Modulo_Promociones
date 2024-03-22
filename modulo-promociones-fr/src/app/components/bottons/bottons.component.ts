@@ -27,22 +27,25 @@ export class BottonsComponent implements OnInit {
   constructor(){}
 
   ngOnInit(): void {}
-  /*
+
   handleButtonClick(value: string): void {
-    try
+    /*try
     {
       if (value =='ptc-TIE')
       {
         this.provinciasService.getProvincias();
       }
       console.log('Peticion de Consulta:', value);
-      this.mostrardatos();
+      /this.mostrardatos();
     }
     catch (error){
       console.log('Algo Ocurrio: ', error);
+    }*/
+    if (value =='ptc-TIE'){
+      console.log('Peticion de Consulta:', value);
     }
+    
   }
-  */
   /*
   mostrardatos(){
     this.provinciasService.getProvincias().subscribe(
