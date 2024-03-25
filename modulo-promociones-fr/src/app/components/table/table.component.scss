@@ -1,0 +1,16 @@
+#content{
+    display: flex;
+    flex-direction: column;
+    height: 91%;
+
+    app-header-table{
+        width: 100%;
+        background-color: blue;
+        height: 10%;
+    }
+    app-body-table{
+        width: 100%;
+        height: 90%;
+        background-color: chocolate;
+    }
+}

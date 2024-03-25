@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { ProvinciasService } from '../../places/services/provincias.service';
-import { Provincias } from '../../places/interfaces/provincias.interface';
+//import { ProvinciasService } from '../../../places/services/provincias.service';
+import { Provincias } from '../../../places/interfaces/provincias.interface';
 
 @Component({
   selector: 'app-bottons',
@@ -14,12 +14,12 @@ export class BottonsComponent implements OnInit {
   provincias: Provincias[] = [];
   
   options = [
-    {name: 'Tipo de Servicio', value:'ptc-TIE'},
-    {name: 'Red', value:'ptc-RED'},
-    {name: 'Plan', value:'ptc-PLAN'},
-    {name: 'Provincial', value:'ptc-PROV'},
-    {name: 'Ciudad', value:'ptc-CITY'},
-    {name: 'Sector', value:'ptc-SECT'}
+    {name: 'Tipo de Servicio', value:'TISE'},
+    {name: 'Red', value:'RED'},
+    {name: 'Plan', value:'PLAN'},
+    {name: 'Provincial', value:'PROV'},
+    {name: 'Ciudad', value:'CITY'},
+    {name: 'Sector', value:'SECT'}
   ]
 
   //constructor(private provinciasService: ProvinciasService){ }

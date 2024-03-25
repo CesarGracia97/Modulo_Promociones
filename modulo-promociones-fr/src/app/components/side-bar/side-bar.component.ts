@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BottonsComponent } from '../bottons/bottons.component';
+import { BottonsComponent } from './bottons/bottons.component';
 
 @Component({
   selector: 'app-side-bar',

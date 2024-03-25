@@ -1,9 +1,9 @@
-#menu{
+#men{
     display: flex;
     flex-direction: column;
-    padding-top: 100px;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 
     #button_CD{
         background: none;
@@ -16,6 +16,8 @@
         position: relative;
         border-radius: 10px;
         border: 1px solid #ccc;
+        z-index: 1;
+        position: relative;
 
         #dropDown{
             display: none;
@@ -47,6 +49,8 @@
                     padding: 15px 30px;
                     display: block;
                     border-radius: 10px;
+                    z-index: 2;
+                    position: relative;
 
                     &:hover{
                         background-color: #eee;
@@ -79,6 +83,7 @@
         border-radius: 10px;
         border: 1px solid #ccc;
         margin-bottom: 20px;
+        z-index: 1;
 
         &:hover{
             background-color: #eee;
