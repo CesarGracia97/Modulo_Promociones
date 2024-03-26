@@ -2,83 +2,90 @@
     <div id="TISE">
         <label>Combo#1 - Tipo de Servicio</label>
         <select name="_V1">
-            <option value="A">Elija el Servicio</option>
+            <option value="">Elija el Servicio</option>
+            <option *ngFor="let item of _servicio" [value]="item.SERVICIO">{{ item.SERVICIO }}</option>
         </select>
     </div>
+    <!-- <div id="TISE">
+        <label>Combo#1 - Tipo de Servicio</label>
+        <select name="_V1">
+            <option value="">Elija el Servicio</option>
+            <option *ngFor="let opcion of _servicio" [value]="opcion.SERVICIO">{{ opcion.SERVICIO }}</option>
+        </select>
+    </div> -->
     <!-- <div id="RED">
         <label>Combo#2 - Red</label>
         <select name="_V1">
-            <option value="A">Elija el Servicio</option>
+            <option value="">Elija el Servicio</option>
         </select>
         <select name="_V2">
-            <option value="A">Elija el Tipo de Servicio</option>
+            <option value="">Elija el Tipo de Servicio</option>
         </select>
     </div>
     <div id="PLAN">
         <label>Combo#3 - Combo Planes</label>
         <select name="_V1">
-            <option value="A">Elija el Servicio</option>
+            <option value="">Elija el Servicio</option>
         </select>
         <select name="_V2">
-            <option value="A">Elija el Tipo de Servicio</option>
+            <option value="">Elija el Tipo de Servicio</option>
         </select>
         <select name="_V3">
-            <option value="A">Elija la Tecnologia</option>
+            <option value="">Elija la Tecnologia</option>
         </select>
     </div>
-    <div id="CPRO">
+    <div id="PROV">
         <label>Combo#4 - Combo Provincias</label>
         <select name="_V1">
-            <option value="A">Elija el Servicio</option>
+            <option value="">Elija el Servicio</option>
         </select>
         <select name="_V2">
-            <option value="A">Elija el Tipo de Servicio</option>
+            <option value="">Elija el Tipo de Servicio</option>
         </select>
         <select name="_V3">
-            <option value="A">Elija la Tecnologia</option>
+            <option value="">Elija la Tecnologia</option>
         </select>
         <select name="_V4">
-            <option value="A">Elija el TARIFFPLANIDVARIANT</option>
+            <option value="">Elija el TARIFFPLANIDVARIANT</option>
         </select>
     </div>
-    <div id="CCiu">
+    <div id="CITY">
         <label>Combo#5 - Combo Ciudades</label>
         <select name="_V1">
-            <option value="A">Elija el Servicio</option>
+            <option value="">Elija el Servicio</option>
         </select>
         <select name="_V2">
-            <option value="A">Elija el Tipo de Servicio</option>
+            <option value="">Elija el Tipo de Servicio</option>
         </select>
         <select name="_V3">
-            <option value="A">Elija la Tecnologia</option>
+            <option value="">Elija la Tecnologia</option>
         </select>
         <select name="_V4">
-            <option value="A">Elija el TARIFFPLANIDVARIANT</option>
+            <option value="">Elija el TARIFFPLANIDVARIANT</option>
         </select>
         <select name="_V5">
-            <option value="A">Elija una Provincia</option>
+            <option value="">Elija una Provincia</option>
         </select>
     </div>
-    <div id="CSec">
+    <div id="SECT">
         <label>Combo#6 - Combo Sector</label>
         <select name="_V1">
-            <option value="A">Elija el Servicio</option>
+            <option value="">Elija el Servicio</option>
         </select>
         <select name="_V2">
-            <option value="A">Elija el Tipo de Servicio</option>
+            <option value="">Elija el Tipo de Servicio</option>
         </select>
         <select name="_V3">
-            <option value="A">Elija la Tecnologia</option>
+            <option value="">Elija la Tecnologia</option>
         </select>
         <select name="_V4">
-            <option value="A">Elija el TARIFFPLANIDVARIANT</option>
+            <option value="">Elija el TARIFFPLANIDVARIANT</option>
         </select>
         <select name="_V5">
-            <option value="A">Elija una Provincia</option>
+            <option value="">Elija una Provincia</option>
         </select>
         <select name="_V6">
-            <option value="A">Elija una Ciudad</option>
+            <option value="">Elija una Ciudad</option>
         </select>
     </div> -->
-    
 </div>

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tecnologias } from '../interfaces/tecnologias.interface';
+import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class TecnologiasService {
 
-  private baseUrl ='http://127.0.0.1:5012/api/ra/plntecn_endpoint';
+  private baseUrl ='http://127.0.0.1:5013/api/ra/plntecn_endpoint';
 
   constructor(private http:HttpClient) { }
 

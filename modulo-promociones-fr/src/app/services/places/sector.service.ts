@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Sectores } from '../interfaces/sector.interface';
+import { Sectores } from '../../interfaces/places/sector.interface';
 
 @Injectable({
   providedIn: 'root'

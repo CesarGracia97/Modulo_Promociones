@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Servicios } from '../interfaces/servicios.interface';
+import { Servicios } from '../../interfaces/planes/servicios.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiciosService {
 
-  private baseUrl ='http://127.0.0.1:5012/api/ra/plnserv_endpoint';
+  private baseUrl ='http://127.0.0.1:5013/api/ra/plnserv_endpoint';
 
   constructor(private http:HttpClient) { }
 

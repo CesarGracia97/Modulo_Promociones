@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-//import { ProvinciasService } from '../../../places/services/provincias.service';
-import { Provincias } from '../../../places/interfaces/provincias.interface';
+import { Provincias } from '../../../interfaces/places/provincias.interface';
 
 @Component({
   selector: 'app-bottons',
@@ -22,42 +21,23 @@ export class BottonsComponent implements OnInit {
     {name: 'Sector', value:'SECT'}
   ]
 
-  //constructor(private provinciasService: ProvinciasService){ }
-
   constructor(){}
 
   ngOnInit(): void {}
 
-  handleButtonClick(value: string): void {
-    /*try
-    {
-      if (value =='ptc-TIE')
-      {
-        this.provinciasService.getProvincias();
-      }
-      console.log('Peticion de Consulta:', value);
-      /this.mostrardatos();
-    }
-    catch (error){
-      console.log('Algo Ocurrio: ', error);
-    }*/
-    if (value =='ptc-TIE'){
-      console.log('Peticion de Consulta:', value);
-    }
-    
-  }
-  /*
-  mostrardatos(){
-    this.provinciasService.getProvincias().subscribe(
-      (data: Provincias[]) => {
-        this.provincias = data;
-        console.log('Datos recibidos:', this.provincias);
-      },
-      (error) => {
-        console.error('Error al obtener las provincias:', error);
-      }
-    );
+  @Output() buttonClick = new EventEmitter<string>();
 
+  handleButtonClick(value: string): void {
+    try
+    {
+      this.buttonClick.emit(value);
+    }
+    catch (error)
+    {
+      console.log("---------------------------------------------------------------")
+      console.log("botton.componets - handleButtonClick | Error detectado: ")
+      console.log(error)
+      console.log("---------------------------------------------------------------")
+    }
   }
-  */
 }

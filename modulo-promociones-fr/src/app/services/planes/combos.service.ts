@@ -1,18 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TipoServicios } from '../interfaces/tiposervicios.interface';
-import { Tecnologias } from '../interfaces/tecnologias.interface';
-import { TariffPlanesVariant } from '../interfaces/tariffplanes.interface';
-import { Provincias } from '../../places/interfaces/provincias.interface';
-import { C_Ciudades, C_Sectores } from '../interfaces/combos.interface';
+import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
+import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
+import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
+import { Provincias } from '../../interfaces/places/provincias.interface';
+import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CombosService {
 
-  private baseUrl ='http://127.0.0.1:5012/api/ra/plncomb_endpoint';
+  private baseUrl ='http://127.0.0.1:5013/api/ra/plncomb_endpoint';
 
   constructor(private http:HttpClient) { }
 

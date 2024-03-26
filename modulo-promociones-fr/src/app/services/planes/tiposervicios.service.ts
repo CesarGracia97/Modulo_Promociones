@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TipoServicios } from '../interfaces/tiposervicios.interface';
+import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TiposerviciosService {
 
-  private baseUrl ='http://127.0.0.1:5012/api/ra/plntise_endpoint';
+  private baseUrl ='http://127.0.0.1:5013/api/ra/plntise_endpoint';
 
   constructor(private http:HttpClient) { }
 

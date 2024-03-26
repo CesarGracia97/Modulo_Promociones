@@ -15,7 +15,7 @@ class FrontEndpointController:
     def combp_endpoint():
         try:
             print("\nPLANS - PLANES")
-            print("Fase de Escucha | ENDPOINT - F ACTIVADO")
+            print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("COMBO ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'COMBO':
@@ -119,7 +119,7 @@ class FrontEndpointController:
     def oferp_enpoint():
         try:
 
-            print("\nPLANS - PLANES")
+            print("\nOFERTAS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("OFERTAS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
@@ -156,8 +156,8 @@ class FrontEndpointController:
     @servp_bp.route('/api/ra/plnserv_endpoint', methods=['GET'])
     def servp_enpoint():
         try:
-            print("\nPLANS - PLANES")
-            print("Fase de Escucha | ENDPOINT - F ACTIVADO")
+            print("\nSERVICIOS - PLANES")
+            print("Fase de Escucha | FRONT-ENDPOINT - F ACTIVADO")
             print("SERVICIOS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
@@ -193,7 +193,7 @@ class FrontEndpointController:
     @tecnp_bp.route('/api/ra/plntecn_endpoint', methods=['GET'])
     def tecnp_enpoint():
         try:
-            print("\nPLANS - PLANES")
+            print("\nTECNOLOGIAS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("TECNOLOGIAS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
@@ -230,7 +230,7 @@ class FrontEndpointController:
     @tisep_bp.route('/api/ra/plntise_endpoint', methods=['GET'])
     def tisep_enpoint():
         try:
-            print("\nPLANS - PLANES")
+            print("\nTIPO DE SERVICIOS - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("TIPO DE SERVICIOS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
@@ -267,7 +267,7 @@ class FrontEndpointController:
     @planp_bp.route('/api/ra/plnplan_endpoint', methods=['GET'])
     def planp_enpoint():
         try:
-            print("\nPLANS - PLANES")
+            print("\nPLANES - PLANES")
             print("Fase de Escucha | ENDPOINT - F ACTIVADO")
             print("PLANES ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
@@ -275,7 +275,7 @@ class FrontEndpointController:
                 _stype = request.args.get('stype')
                 if _stype.upper() == 'PLAN':
                     _ttype = request.args.get('ttype')
-                    if _ttype == 1:
+                    if _ttype == 1 or _ttype == '1':
                         params = {
                             'type': _type,
                             'stype': _stype,
@@ -284,7 +284,7 @@ class FrontEndpointController:
                         response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                         return response.text, response.status_code
 
-                    if _ttype == 2:
+                    if _ttype == 2 or _ttype == '2':
                         params = {
                             'type': _type,
                             'stype': _stype,
@@ -293,7 +293,7 @@ class FrontEndpointController:
                         response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                         return response.text, response.status_code
 
-                    if _ttype == 3:
+                    if _ttype == 3 or _ttype == '1':
                         params = {
                             'type': _type,
                             'stype': _stype,

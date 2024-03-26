@@ -18,8 +18,7 @@ class BackEndpointController:
     @backp_bp.route('/api/ra/plnback_endpoint', methods=['GET'])
     def back_endpoint():
         try:
-            print("\nFase de Escucha | ENDPOINT ACTIVADO")
-            print("PLACE - Lugares")
+            print("\nFase de Escucha | BACK-ENDPOINT ACTIVADO")
             print("BACK ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type:
