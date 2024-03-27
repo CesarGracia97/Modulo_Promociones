@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from Controller.BackEndpointController import backp_bp
 from Controller.FrontEndpointController import combp_bp, oferp_bp, servp_bp, tecnp_bp, tisep_bp, planp_bp
 
@@ -12,6 +13,8 @@ def create_app():
     _app.register_blueprint(tisep_bp)
     _app.register_blueprint(planp_bp)
     _app.register_blueprint(backp_bp)
+
+    CORS(_app)
 
     return _app
 

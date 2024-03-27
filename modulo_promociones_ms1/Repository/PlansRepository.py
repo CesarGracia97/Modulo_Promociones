@@ -115,10 +115,16 @@ class PlansRepository:
                                 return data
 
                             if _topcion == 2:
+                                _V1 = _diccionario["_V1"]
+                                _V2 = _diccionario["_V2"]
+                                _V3 = _diccionario["_V3"]
                                 _Qdiccionario = {"popcion": "Planes",
                                                  "sopcion": "ALL_DATA",
                                                  "topcion": "PLAN",
-                                                 "name_Query": "AD_TARIFFPLANVARIANT"}
+                                                 "name_Query": "AD_TARIFFPLANVARIANT",
+                                                 "_V1": _V1,
+                                                 "_V2": _V2,
+                                                 "_V3": _V3}
                                 query = self.reader_json.getQuery(_Qdiccionario)
                                 results = self.db.execute_query(query)
                                 if results is None:
@@ -134,6 +140,7 @@ class PlansRepository:
                                 return data
 
                             if _topcion == 3:
+
                                 _Qdiccionario = {"popcion": "Planes",
                                                  "sopcion": "ALL_DATA",
                                                  "topcion": "PLAN",

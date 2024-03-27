@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from controllers.BackEndpointController import backp_bp
 from controllers.FrontEndpointController import provp_bp, cityp_bp, sectp_bp, ssecp_bp
@@ -11,6 +12,8 @@ def create_app():
     app.register_blueprint(cityp_bp)
     app.register_blueprint(sectp_bp)
     app.register_blueprint(ssecp_bp)
+    CORS(app)
+
     return app
 
 

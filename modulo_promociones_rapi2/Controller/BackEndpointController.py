@@ -28,13 +28,23 @@ class BackEndpointController:
                     _stype = _stype.upper()
                     _ttype = request.args.get('ttype')
                     _ttype = _ttype.upper()
-                    if _stype in ['OFER', 'SERV', 'TECN', 'TISE', 'PLAN']:
+                    if (_stype in ['OFER', 'SERV', 'TECN', 'TISE'] or
+                            (_stype == 'PLAN' and (_ttype == '1' or _ttype == '3'))):
                         params = {'type': _type, 'stype': _stype, 'ttype': _ttype}
-                        return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes', params)
+                        return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes',
+                                                                   params)
+                    elif _stype == 'PLAN' and _ttype == '2':
+                        _V1 = request.args.get('_V1')
+                        _V2 = request.args.get('_V2')
+                        _V3 = request.args.get('_V3')
+                        params = {'type': _type, 'stype': _stype, 'ttype': _ttype, '_V1': _V1, '_V2': _V2, '_V3': _V3}
+                        return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes',
+                                                                   params)
                     else:
                         return jsonify({'error': ' BACK ENDPOINT - Tipo de petición no válido'}), 400
                 elif _type == 'COMBO':
-                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes', request.args)
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes',
+                                                               request.args)
                 else:
                     return jsonify({'error': ' BACK ENDPOINT - Tipo de petición no válido'}), 400
         except Exception as e:

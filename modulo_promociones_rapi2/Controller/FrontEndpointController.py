@@ -120,7 +120,7 @@ class FrontEndpointController:
         try:
 
             print("\nOFERTAS - PLANES")
-            print("Fase de Escucha | ENDPOINT - F ACTIVADO")
+            print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("OFERTAS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
@@ -157,7 +157,7 @@ class FrontEndpointController:
     def servp_enpoint():
         try:
             print("\nSERVICIOS - PLANES")
-            print("Fase de Escucha | FRONT-ENDPOINT - F ACTIVADO")
+            print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("SERVICIOS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
@@ -194,7 +194,7 @@ class FrontEndpointController:
     def tecnp_enpoint():
         try:
             print("\nTECNOLOGIAS - PLANES")
-            print("Fase de Escucha | ENDPOINT - F ACTIVADO")
+            print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("TECNOLOGIAS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
@@ -231,7 +231,7 @@ class FrontEndpointController:
     def tisep_enpoint():
         try:
             print("\nTIPO DE SERVICIOS - PLANES")
-            print("Fase de Escucha | ENDPOINT - F ACTIVADO")
+            print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("TIPO DE SERVICIOS ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
@@ -268,7 +268,7 @@ class FrontEndpointController:
     def planp_enpoint():
         try:
             print("\nPLANES - PLANES")
-            print("Fase de Escucha | ENDPOINT - F ACTIVADO")
+            print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("PLANES ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
@@ -285,10 +285,16 @@ class FrontEndpointController:
                         return response.text, response.status_code
 
                     if _ttype == 2 or _ttype == '2':
+                        _V1 = request.args.get('_V1')
+                        _V2 = request.args.get('_V2')
+                        _V3 = request.args.get('_V3')
                         params = {
                             'type': _type,
                             'stype': _stype,
-                            'ttype': _ttype
+                            'ttype': _ttype,
+                            '_V1': _V1,
+                            '_V2': _V2,
+                            '_V3': _V3
                         }
                         response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                         return response.text, response.status_code

@@ -3,50 +3,52 @@
         <label>Combo#1 - Tipo de Servicio</label>
         <select name="_V1">
             <option value="">Elija el Servicio</option>
-            <option *ngFor="let item of _servicio" [value]="item.SERVICIO">{{ item.SERVICIO }}</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
     </div>
-    <!-- <div id="TISE">
-        <label>Combo#1 - Tipo de Servicio</label>
-        <select name="_V1">
-            <option value="">Elija el Servicio</option>
-            <option *ngFor="let opcion of _servicio" [value]="opcion.SERVICIO">{{ opcion.SERVICIO }}</option>
-        </select>
-    </div> -->
-    <!-- <div id="RED">
+    <div id="RED">
         <label>Combo#2 - Red</label>
         <select name="_V1">
             <option value="">Elija el Servicio</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
         <select name="_V2">
             <option value="">Elija el Tipo de Servicio</option>
+            <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
     </div>
     <div id="PLAN">
         <label>Combo#3 - Combo Planes</label>
         <select name="_V1">
             <option value="">Elija el Servicio</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
         <select name="_V2">
             <option value="">Elija el Tipo de Servicio</option>
+            <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
         <select name="_V3">
             <option value="">Elija la Tecnologia</option>
+            <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
     </div>
-    <div id="PROV">
+    <!-- <div id="PROV">
         <label>Combo#4 - Combo Provincias</label>
         <select name="_V1">
             <option value="">Elija el Servicio</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
         <select name="_V2">
             <option value="">Elija el Tipo de Servicio</option>
+            <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
         <select name="_V3">
             <option value="">Elija la Tecnologia</option>
+            <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
         <select name="_V4">
             <option value="">Elija el TARIFFPLANIDVARIANT</option>
+            <option *ngFor=" let tecnologia of planData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
     </div>
     <div id="CITY">

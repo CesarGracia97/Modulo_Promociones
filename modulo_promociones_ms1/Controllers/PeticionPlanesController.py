@@ -72,10 +72,16 @@ class PeticionPlanesController:
                         dt_dtpl1 = frt.formated_ADPlan(data_dtpl1, 1)
                         return jsonify(dt_dtpl1), 200
                     if _ttype == '2':
+                        _V1 = data.get('_V1')
+                        _V2 = data.get('_V2')
+                        _V3 = data.get('_V3')
                         _diccionario = {
                             "popcion": "ALL_DATA",
                             "sopcion": "PLAN",
-                            "topcion": 2
+                            "topcion": 2,
+                            "_V1": _V1,
+                            "_V2": _V2,
+                            "_V3": _V3
                         }
                         data_dtpl2 = repository.getData_Planes(_diccionario)
                         dt_dtpl2 = frt.formated_ADPlan(data_dtpl2, 2)
