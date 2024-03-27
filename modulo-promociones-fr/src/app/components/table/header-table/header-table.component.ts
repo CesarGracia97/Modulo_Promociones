@@ -6,6 +6,7 @@ import { TecnologiasService } from '../../../services/planes/tecnologias.service
 import { TariffplanesService } from '../../../services/planes/tariffplanes.service';
 import { CiudadService } from '../../../services/places/ciudad.service';
 import { ProvinciasService } from '../../../services/places/provincias.service';
+import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
 
 @Component({
   selector: 'app-header-table',
@@ -18,7 +19,7 @@ export class HeaderTableComponent implements OnInit{
   serviciosData: string[] = [];
   tiposervicioData: string[] = [];
   tecnologiaData: string[] = [];
-  planData: string[] = [];
+  planData: TariffPlanesVariant[] = [];
   provinciaData: string[] = [];
   ciudadData: string[] = [];
 
@@ -33,14 +34,15 @@ export class HeaderTableComponent implements OnInit{
   ){}
 
   ngOnInit():void{
-    this.Darth_Nihilus_function();
+    this.Darth_Nihilus_funcion();
+    this.updateTariffPlanesVariant();
   }
 
-  Darth_Nihilus_function(){
+  Darth_Nihilus_funcion(){
     try{
-      this.fetchServiciosData(); this.fecthTipoServiciosData(); 
+      this.fetchServiciosData(); 
+      this.fecthTipoServiciosData(); 
       this.fecthTecnologiasData(); 
-      this.fecthTariffPlanesVariantData(); 
       //this.fecthProvinciaData();
     } catch (error){
       console.log("---------------------------------------------------------------")
@@ -49,6 +51,17 @@ export class HeaderTableComponent implements OnInit{
       console.log("---------------------------------------------------------------")
     }
   }
+
+  updateTariffPlanesVariant(): void {
+    const servicio = (document.querySelector('select[name="_V1"]') as HTMLSelectElement)?.value;
+    const tipoServicio = (document.querySelector('select[name="_V2"]') as HTMLSelectElement)?.value;
+    const tecnologia = (document.querySelector('select[name="_V3"]') as HTMLSelectElement)?.value;
+  
+    if (servicio && tipoServicio && tecnologia) {
+      this.fecthTariffPlanesVariantData(servicio, tipoServicio, tecnologia);
+    }
+  }
+
   private fecthProvinciaData(): void {
     console.log("ProvinciaData");
     this.prov.getProvincias().subscribe((response: any) =>{
@@ -60,12 +73,17 @@ export class HeaderTableComponent implements OnInit{
     });
   }
 
-  private fecthTariffPlanesVariantData(): void {
+  private fecthTariffPlanesVariantData(servicio: string, tipoServicio: string, tecnologia: string): void {
     console.log("TariffPlanesVariantData");
-    this.plan.getTariffPlanesVariantALL().subscribe((response: any) =>{
+    this.plan.getTariffPlanesVariantALL(servicio, tipoServicio, tecnologia).subscribe((response: any) =>{
       console.log(response); 
       if (response && response.PLANES){
-        this.planData = response.PLANES.map((plan: any) => plan.PLANES);
+        this.planData = response.PLANES.map((plan: any) =>{
+          return {
+            TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
+            TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
+          };
+        });
         console.log(this.planData); 
       }
     });

@@ -18,9 +18,9 @@ export class TariffplanesService {
     return this.http.get<TariffPlanes[]>(this.baseUrl, { params: params });
   }
 
-  getTariffPlanesVariantALL():Observable<TariffPlanesVariant[]>{
+  getTariffPlanesVariantALL(servicio: string, tipo_servicio: string, tecnologia: string):Observable<TariffPlanesVariant[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'PLAN').set('ttype', 2);
+    .set('stype', 'PLAN').set('ttype', 2).set('_V1', servicio).set('_V2', tipo_servicio).set('_V3', tecnologia);
     return this.http.get<TariffPlanesVariant[]>(this.baseUrl, { params: params });
   }
 
