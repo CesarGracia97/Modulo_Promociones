@@ -7,6 +7,7 @@ import { TariffplanesService } from '../../../services/planes/tariffplanes.servi
 import { CiudadService } from '../../../services/places/ciudad.service';
 import { ProvinciasService } from '../../../services/places/provincias.service';
 import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
+import { TimeService } from '../../../services/complements/time.service';
 
 @Component({
   selector: 'app-header-table',
@@ -22,7 +23,17 @@ export class HeaderTableComponent implements OnInit{
   planData: TariffPlanesVariant[] = [];
   provinciaData: string[] = [];
   ciudadData: string[] = [];
-
+  selectoresSeleccionados: {
+    servicio: string,
+    tipoServicio: string,
+    tecnologia: string
+  } = {
+    servicio: '',
+    tipoServicio: '',
+    tecnologia: ''
+  
+  };
+  horaActual: string;
 
   constructor(
     private serv: ServiciosService,
@@ -30,12 +41,14 @@ export class HeaderTableComponent implements OnInit{
     private tecn: TecnologiasService,
     private plan: TariffplanesService,
     private prov: ProvinciasService,
-    private city: CiudadService
-  ){}
+    private city: CiudadService,
+    private cs_time: TimeService
+  ){
+    this.horaActual = this.cs_time.obtenerHoraActual();
+  }
 
   ngOnInit():void{
     this.Darth_Nihilus_funcion();
-    this.updateTariffPlanesVariant();
   }
 
   Darth_Nihilus_funcion(){
@@ -43,7 +56,6 @@ export class HeaderTableComponent implements OnInit{
       this.fetchServiciosData(); 
       this.fecthTipoServiciosData(); 
       this.fecthTecnologiasData(); 
-      //this.fecthProvinciaData();
     } catch (error){
       console.log("---------------------------------------------------------------")
       console.log("header-table.compo - Darth_Nihilus_function | Error detectado: ")
@@ -52,14 +64,35 @@ export class HeaderTableComponent implements OnInit{
     }
   }
 
-  updateTariffPlanesVariant(): void {
-    const servicio = (document.querySelector('select[name="_V1"]') as HTMLSelectElement)?.value;
-    const tipoServicio = (document.querySelector('select[name="_V2"]') as HTMLSelectElement)?.value;
-    const tecnologia = (document.querySelector('select[name="_V3"]') as HTMLSelectElement)?.value;
+  seleccionadoChange(): void {
+    // Verificar si se han seleccionado opciones en todos los selectores
+    const servicio = (document.querySelector('select[name="PROV_V1"]') as HTMLSelectElement)?.value;
+    const tipoServicio = (document.querySelector('select[name="PROV_V2"]') as HTMLSelectElement)?.value;
+    const tecnologia = (document.querySelector('select[name="PROV_V3"]') as HTMLSelectElement)?.value;
+
+    console.log(this.horaActual+"----------------")
+    console.log("Servicio seleccionado:", servicio);
+    console.log("Tipo de Servicio seleccionado:", tipoServicio);
+    console.log("Tecnología seleccionada:", tecnologia);
   
-    if (servicio && tipoServicio && tecnologia) {
-      this.fecthTariffPlanesVariantData(servicio, tipoServicio, tecnologia);
+    this.selectoresSeleccionados = { servicio, tipoServicio, tecnologia };
+  
+    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
+    if (this.selectoresSeleccionados.servicio && this.selectoresSeleccionados.tipoServicio && this.selectoresSeleccionados.tecnologia) {
+      console.log(this.horaActual+"----------------")
+      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
+      this.updateTariffPlanesVariant();
     }
+  }
+  
+  updateTariffPlanesVariant(): void {
+    console.log(this.horaActual+"----------------")
+    console.log("Actualizando los planes tarifarios...");
+    const { servicio, tipoServicio, tecnologia } = this.selectoresSeleccionados;
+    console.log("Servicio:", servicio);
+    console.log("Tipo de Servicio:", tipoServicio);
+    console.log("Tecnología:", tecnologia);
+    this.fecthTariffPlanesVariantData(servicio, tipoServicio, tecnologia);
   }
 
   private fecthProvinciaData(): void {
