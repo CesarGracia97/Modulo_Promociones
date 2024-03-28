@@ -34,15 +34,15 @@
     </div>
     <div id="PROV">
         <label>Combo#4 - Combo Provincias</label>
-        <select name="PROV_V1" (change)="seleccionadoChange()">
+        <select name="PROV_V1" (change)="selectItemsPlansChange()">
             <option value="">Elija el Servicio</option>
             <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
-        <select name="PROV_V2" (change)="seleccionadoChange()">
+        <select name="PROV_V2" (change)="selectItemsPlansChange()">
             <option value="">Elija el Tipo de Servicio</option>
             <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
-        <select name="PROV_V3" (change)="seleccionadoChange()">
+        <select name="PROV_V3" (change)="selectItemsPlansChange()">
             <option value="">Elija la Tecnologia</option>
             <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
@@ -65,7 +65,7 @@
         <select name="CITY_V4">
             <option value="">Elija el TARIFFPLANIDVARIANT</option>
         </select>
-        <select name="CITY_V5">
+        <select name="CITY_V5" >
             <option value="">Elija una Provincia</option>
         </select>
     </div>
@@ -83,7 +83,7 @@
         <select name="SECT_V4">
             <option value="">Elija el TARIFFPLANIDVARIANT</option>
         </select>
-        <select name="SECT_V5">
+        <select name="SECT_V5" (change)="selectItemsProvChange()">
             <option value="">Elija una Provincia</option>
         </select>
         <select name="SECT_V6">
