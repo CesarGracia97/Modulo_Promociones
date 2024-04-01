@@ -12,6 +12,7 @@ export class CommunicationService {
   constructor() {}
 
   sendSelectedButton(buttonId: string) {
+    console.log("CommunicationService - Activo | Valor:", buttonId)
     this.selectedButtonSubject.next(buttonId);
   }
 }

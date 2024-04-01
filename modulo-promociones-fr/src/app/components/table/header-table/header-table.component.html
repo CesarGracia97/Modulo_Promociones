@@ -1,5 +1,5 @@
 <div id="content_header">
-    <div id="TISE" [hidden]="visibleDivId !== 'TISE'">
+    <div id="TISE" *ngIf="visibleDivId === 'TISE'">
         <label>Combo#1 - Tipo de Servicio</label>
         <select name="TISE_V1">
             <option value="">Elija el Servicio</option>
