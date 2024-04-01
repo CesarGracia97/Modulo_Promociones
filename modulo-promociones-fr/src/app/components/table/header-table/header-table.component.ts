@@ -10,6 +10,7 @@ import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.int
 import { TimeService } from '../../../services/complements/time.service';
 import { Provincias } from '../../../interfaces/places/provincias.interface';
 import { Ciudades } from '../../../interfaces/places/ciudad.interface';
+import { CommunicationService } from '../../../services/complements/communication.service';
 
 @Component({
   selector: 'app-header-table',
@@ -29,6 +30,8 @@ export class HeaderTableComponent implements OnInit{
   horaActual: string;
   ssCity: { id_Prov: number } = { id_Prov: 0 } 
 
+  visibleDivId: string | null = null;
+
   constructor(
     private serv: ServiciosService,
     private tise: TiposerviciosService,
@@ -36,11 +39,15 @@ export class HeaderTableComponent implements OnInit{
     private plan: TariffplanesService,
     private prov: ProvinciasService,
     private city: CiudadService,
-    private cs_time: TimeService
+    private cs_time: TimeService,
+    private communicationService: CommunicationService
   ){ this.horaActual = this.cs_time.obtenerHoraActual(); }
 
   ngOnInit():void{
     this.Darth_Nihilus_funcion();
+    this.communicationService.selectedButton$.subscribe(buttonId => {
+      this.visibleDivId = buttonId;
+    });
   }
 
   Darth_Nihilus_funcion(){

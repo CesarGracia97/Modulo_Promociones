@@ -1,12 +1,12 @@
 <div id="content_header">
-    <div id="TISE">
+    <div id="TISE" [hidden]="visibleDivId !== 'TISE'">
         <label>Combo#1 - Tipo de Servicio</label>
         <select name="TISE_V1">
             <option value="">Elija el Servicio</option>
             <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
     </div>
-    <div id="RED">
+    <div id="RED" [hidden]="visibleDivId !== 'RED'">
         <label>Combo#2 - Red</label>
         <select name="RED_V1">
             <option value="">Elija el Servicio</option>
@@ -17,7 +17,7 @@
             <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
     </div>
-    <div id="PLAN">
+    <div id="PLAN" [hidden]="visibleDivId !== 'PLAN'">
         <label>Combo#3 - Combo Planes</label>
         <select name="PLAN_V1">
             <option value="">Elija el Servicio</option>
@@ -32,7 +32,7 @@
             <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
     </div>
-    <div id="PROV">
+    <div id="PROV" [hidden]="visibleDivId !== 'PROV'">
         <label>Combo#4 - Combo Provincias</label>
         <select name="PROV_V1" (change)="SIZProv()">
             <option value="">Elija el Servicio</option>
@@ -51,7 +51,7 @@
             <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
         </select>
     </div>
-    <div id="CITY">
+    <div id="CITY" [hidden]="visibleDivId !== 'CITY'">
         <label>Combo#5 - Combo Ciudades</label>
         <select name="CITY_V1" (change)="SIZCity()">
             <option value="">Elija el Servicio</option>
@@ -74,7 +74,7 @@
             <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
         </select>
     </div>
-    <div id="SECT">
+    <div id="SECT"  [hidden]="visibleDivId !== 'SECT'">
         <label>Combo#6 - Combo Sector</label>
         <select name="SECT_V1" (change)="SIZSect()">
             <option value="">Elija el Servicio</option>

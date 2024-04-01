@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Provincias } from '../../../interfaces/places/provincias.interface';
+import { CommunicationService } from '../../../services/complements/communication.service';
 
 @Component({
   selector: 'app-bottons',
@@ -10,8 +10,7 @@ import { Provincias } from '../../../interfaces/places/provincias.interface';
   styleUrl: './bottons.component.scss'
 })
 export class BottonsComponent implements OnInit {
-  provincias: Provincias[] = [];
-  
+
   options = [
     {name: 'Tipo de Servicio', value:'TISE'},
     {name: 'Red', value:'RED'},
@@ -21,21 +20,21 @@ export class BottonsComponent implements OnInit {
     {name: 'Sector', value:'SECT'}
   ]
 
-  constructor(){}
+  constructor(private communicationService: CommunicationService){}
 
   ngOnInit(): void {}
 
-  @Output() buttonClick = new EventEmitter<string>();
+  @Output() subButtonClick = new EventEmitter<string>();
 
-  handleButtonClick(value: string): void {
+  handleSubButtonClick(value: string): void {
     try
     {
-      this.buttonClick.emit(value);
+      this.communicationService.sendSelectedButton(value);
     }
     catch (error)
     {
       console.log("---------------------------------------------------------------")
-      console.log("botton.componets - handleButtonClick | Error detectado: ")
+      console.log("botton.componets - handleSubButtonClick | Error detectado: ")
       console.log(error)
       console.log("---------------------------------------------------------------")
     }

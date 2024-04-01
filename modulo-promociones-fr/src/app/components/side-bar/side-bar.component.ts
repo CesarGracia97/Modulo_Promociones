@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BottonsComponent } from './bottons/bottons.component';
 
 @Component({
@@ -9,10 +9,11 @@ import { BottonsComponent } from './bottons/bottons.component';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SideBarComponent implements OnInit{
-  constructor(){
 
-  }
-  ngOnInit(): void {
-      
-  }
+  @Output() sidebarButtonClick = new EventEmitter<string>();
+
+  constructor(){}
+
+  ngOnInit(): void {}
+  
 }
