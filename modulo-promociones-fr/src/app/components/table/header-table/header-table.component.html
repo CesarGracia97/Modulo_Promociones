@@ -34,15 +34,15 @@
     </div>
     <div id="PROV">
         <label>Combo#4 - Combo Provincias</label>
-        <select name="PROV_V1" (change)="selectItemsPlansChange()">
+        <select name="PROV_V1" (change)="SIZProv()">
             <option value="">Elija el Servicio</option>
             <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
-        <select name="PROV_V2" (change)="selectItemsPlansChange()">
+        <select name="PROV_V2" (change)="SIZProv()">
             <option value="">Elija el Tipo de Servicio</option>
             <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
-        <select name="PROV_V3" (change)="selectItemsPlansChange()">
+        <select name="PROV_V3" (change)="SIZProv()">
             <option value="">Elija la Tecnologia</option>
             <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
@@ -51,43 +51,54 @@
             <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
         </select>
     </div>
-    <!-- <div id="CITY">
+    <div id="CITY">
         <label>Combo#5 - Combo Ciudades</label>
-        <select name="CITY_V1">
+        <select name="CITY_V1" (change)="SIZCity()">
             <option value="">Elija el Servicio</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
-        <select name="CITY_V2">
+        <select name="CITY_V2" (change)="SIZCity()">
             <option value="">Elija el Tipo de Servicio</option>
+            <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
-        <select name="CITY_V3">
+        <select name="CITY_V3" (change)="SIZCity()">
             <option value="">Elija la Tecnologia</option>
+            <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
         <select name="CITY_V4">
             <option value="">Elija el TARIFFPLANIDVARIANT</option>
+            <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
         </select>
         <select name="CITY_V5" >
             <option value="">Elija una Provincia</option>
+            <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
         </select>
     </div>
     <div id="SECT">
         <label>Combo#6 - Combo Sector</label>
-        <select name="SECT_V1">
+        <select name="SECT_V1" (change)="SIZSect()">
             <option value="">Elija el Servicio</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
         </select>
-        <select name=SECT"_V2">
+        <select name="SECT_V2" (change)="SIZSect()">
             <option value="">Elija el Tipo de Servicio</option>
+            <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>
         </select>
-        <select name="SECT_V3">
+        <select name="SECT_V3" (change)="SIZSect()">
             <option value="">Elija la Tecnologia</option>
+            <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
         </select>
         <select name="SECT_V4">
             <option value="">Elija el TARIFFPLANIDVARIANT</option>
+            <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
         </select>
-        <select name="SECT_V5" (change)="selectItemsProvChange()">
+        <select name="SECT_V5" (change)="SIZSectProv()">
             <option value="">Elija una Provincia</option>
+            <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
         </select>
         <select name="SECT_V6">
             <option value="">Elija una Ciudad</option>
+            <option *ngFor=" let ciudad of ciudadData" [value]="ciudad.CIUDAD_ID">{{ciudad.CIUDAD}}</option>
         </select>
-    </div> -->
+    </div>
 </div>

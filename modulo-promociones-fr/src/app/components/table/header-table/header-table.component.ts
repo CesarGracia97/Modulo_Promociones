@@ -8,7 +8,8 @@ import { CiudadService } from '../../../services/places/ciudad.service';
 import { ProvinciasService } from '../../../services/places/provincias.service';
 import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
 import { TimeService } from '../../../services/complements/time.service';
-import { response } from 'express';
+import { Provincias } from '../../../interfaces/places/provincias.interface';
+import { Ciudades } from '../../../interfaces/places/ciudad.interface';
 
 @Component({
   selector: 'app-header-table',
@@ -22,8 +23,8 @@ export class HeaderTableComponent implements OnInit{
   tiposervicioData: string[] = [];
   tecnologiaData: string[] = [];
   planData: TariffPlanesVariant[] = [];
-  provinciaData: string[] = [];
-  ciudadData: string[] = [];
+  provinciaData: Provincias[] = [];
+  ciudadData: Ciudades[] = [];
   ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
   horaActual: string;
   ssCity: { id_Prov: number } = { id_Prov: 0 } 
@@ -44,7 +45,7 @@ export class HeaderTableComponent implements OnInit{
 
   Darth_Nihilus_funcion(){
     try{
-      this.fetchServiciosData(); 
+      this.fecthServiciosData(); 
       this.fecthTipoServiciosData(); 
       this.fecthTecnologiasData(); 
       this.fecthProvinciaData();
@@ -55,33 +56,14 @@ export class HeaderTableComponent implements OnInit{
       console.log("---------------------------------------------------------------")
     }
   }
-
-  selectItemsProvChange(): void {
-    const id_Prov = (document.querySelector('select[name="SECT_V5"]') as HTMLSelectElement)?.value;
-    // Verificar si id_Prov tiene un valor válido
-    if (id_Prov !== null && id_Prov !== undefined) {
-      const id_ProvNumber = parseInt(id_Prov, 10);
-      // Verificar si id_ProvNumber es un número válido
-      if (!isNaN(id_ProvNumber)) {
-        console.log(this.horaActual + "----------------");
-        console.log("Provincia seleccionada:", id_ProvNumber);
-        this.ssCity = { id_Prov: id_ProvNumber };
-        this.updateCiudad()
-      } else {
-        console.error("El valor de id_Prov no es un número válido.");
-      }
-    } else {
-      console.error("El valor de id_Prov es nulo o indefinido.");
-    }
-  }
-
-  selectItemsPlansChange(): void {
+  
+  SIZProv(): void {
     // Verificar si se han seleccionado opciones en todos los selectores
     const servicio = (document.querySelector('select[name="PROV_V1"]') as HTMLSelectElement)?.value;
     const tipoServicio = (document.querySelector('select[name="PROV_V2"]') as HTMLSelectElement)?.value;
     const tecnologia = (document.querySelector('select[name="PROV_V3"]') as HTMLSelectElement)?.value;
 
-    console.log(this.horaActual+"----------------");
+    console.log(this.horaActual+" - Z Prov");
     console.log("Servicio seleccionado:", servicio);
     console.log("Tipo de Servicio seleccionado:", tipoServicio);
     console.log("Tecnología seleccionada:", tecnologia);
@@ -92,11 +74,71 @@ export class HeaderTableComponent implements OnInit{
     if (this.ssPlan .servicio && this.ssPlan .tipoServicio && this.ssPlan .tecnologia) {
       console.log(this.horaActual+"----------------")
       console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
-      this.updateTPlanesVariant();
+      this.UpTPVariant();
+    }
+  }
+
+  SIZCity(): void {
+    // Verificar si se han seleccionado opciones en todos los selectores
+    const servicio = (document.querySelector('select[name="CITY_V1"]') as HTMLSelectElement)?.value;
+    const tipoServicio = (document.querySelector('select[name="CITY_V2"]') as HTMLSelectElement)?.value;
+    const tecnologia = (document.querySelector('select[name="CITY_V3"]') as HTMLSelectElement)?.value;
+
+    console.log(this.horaActual+" - Z City");
+    console.log("Servicio seleccionado:", servicio);
+    console.log("Tipo de Servicio seleccionado:", tipoServicio);
+    console.log("Tecnología seleccionada:", tecnologia);
+    
+    this.ssPlan = { servicio, tipoServicio, tecnologia };
+    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
+    if (this.ssPlan .servicio && this.ssPlan .tipoServicio && this.ssPlan .tecnologia) {
+      console.log(this.horaActual+"----------------")
+      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
+      this.UpTPVariant();
+    }
+  }
+
+  SIZSect(): void {
+    // Verificar si se han seleccionado opciones en todos los selectores
+    const servicio = (document.querySelector('select[name="SECT_V1"]') as HTMLSelectElement)?.value;
+    const tipoServicio = (document.querySelector('select[name="SECT_V2"]') as HTMLSelectElement)?.value;
+    const tecnologia = (document.querySelector('select[name="SECT_V3"]') as HTMLSelectElement)?.value;
+
+    console.log(this.horaActual+" - Z Sect");
+    console.log("Servicio seleccionado:", servicio);
+    console.log("Tipo de Servicio seleccionado:", tipoServicio);
+    console.log("Tecnología seleccionada:", tecnologia);
+    
+    this.ssPlan = { servicio, tipoServicio, tecnologia };
+  
+    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
+    if (this.ssPlan .servicio && this.ssPlan .tipoServicio && this.ssPlan .tecnologia) {
+      console.log(this.horaActual+"----------------")
+      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
+      this.UpTPVariant();
     }
   }
   
-  updateTPlanesVariant(): void {
+  SIZSectProv(): void {
+    const id_Prov = (document.querySelector('select[name="SECT_V5"]') as HTMLSelectElement)?.value;
+    // Verificar si id_Prov tiene un valor válido
+    if (id_Prov !== null && id_Prov !== undefined) {
+      const id_ProvNumber = parseInt(id_Prov, 10);
+      // Verificar si id_ProvNumber es un número válido
+      if (!isNaN(id_ProvNumber)) {
+        console.log(this.horaActual + "----------------");
+        console.log("Provincia seleccionada:", id_ProvNumber);
+        this.ssCity = { id_Prov: id_ProvNumber };
+        this.UpCiudad()
+      } else {
+        console.error("El valor de id_Prov no es un número válido.");
+      }
+    } else {
+      console.error("El valor de id_Prov es nulo o indefinido.");
+    }
+  }
+  
+  UpTPVariant(): void {
     console.log(this.horaActual+"----------------")
     console.log("Actualizando los planes tarifarios...");
     const { servicio, tipoServicio, tecnologia } = this.ssPlan ;
@@ -106,7 +148,7 @@ export class HeaderTableComponent implements OnInit{
     this.fecthTariffPlanesVariantData(servicio, tipoServicio, tecnologia);
   }
 
-  updateCiudad(): void {
+  UpCiudad(): void {
     console.log(this.horaActual+"----------------")
     console.log("Actualizando las Ciudades...");
     const { id_Prov } = this.ssCity;
@@ -135,7 +177,13 @@ export class HeaderTableComponent implements OnInit{
     this.prov.getProvincias().subscribe((response: any) =>{
       console.log(response); 
       if (response && response.PROVINCIES){
-        this.provinciaData = response.PROVINCIES.map((provincia: any) => provincia.PROVINCIES);
+        this.provinciaData = response.PROVINCIES.map((provincia: any) => {
+          
+          return {
+            PROVINCIA_ID: provincia.PROVINCIA_ID,
+            PROVINCIA: provincia.PROVINCIA
+          };
+        });
         console.log(this.provinciaData); 
       }
     });
@@ -183,7 +231,7 @@ export class HeaderTableComponent implements OnInit{
     });
   }
 
-  private fetchServiciosData(): void {
+  private fecthServiciosData(): void {
     console.log("ServiciosData");
     this.serv.getServiciosALL().subscribe((response: any) => {
       console.log(response);
