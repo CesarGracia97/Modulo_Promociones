@@ -1,1 +1,22 @@
 <p>Cuerpo de la Tabla</p>
+<div id="TISE">
+    <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tipo de Servicio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let city of cities">
+            <td>{{ city.name }}</td>
+            <td>{{ city.temperature }}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+<div id="RED"></div>
+<div id="PLAN"></div>
+<div id="PROV"></div>
+<div id="CITY"></div>
+<div id="SECT"></div>

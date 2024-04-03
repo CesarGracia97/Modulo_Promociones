@@ -11,26 +11,45 @@ import { TimeService } from '../../../services/complements/time.service';
 import { Provincias } from '../../../interfaces/places/provincias.interface';
 import { Ciudades } from '../../../interfaces/places/ciudad.interface';
 import { CommunicationService } from '../../../services/complements/communication.service';
+import { Servicios } from '../../../interfaces/planes/servicios.interface';
+import { Tecnologias } from '../../../interfaces/planes/tecnologias.interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './header-table.component.html',
   styleUrl: './header-table.component.scss'
 })
 export class HeaderTableComponent implements OnInit{
-  serviciosData: string[] = [];
-  tiposervicioData: string[] = [];
-  tecnologiaData: string[] = [];
+  sTISE: string = '';
+  sRED_V1: string = ''; sRED_V2: string = '';
+  sPLAN_V1: string = ''; sPLAN_V2: string = ''; sPLAN_V3: string = '';
+  sPROV_V1: string = ''; sPROV_V2: string = ''; sPROV_V3: string = ''; sPROV_V4: number = 0;
+  sCITY_V1: string = ''; sCITY_V2: string = ''; sCITY_V3: string = ''; sCITY_V4: number = 0; sCITY_V5: number = 0;
+  sSECT_V1: string = ''; sSECT_V2: string = ''; sSECT_V3: string = ''; sSECT_V4: number = 0; sSECT_V5: number = 0; sSECT_V6: number = 0;
+  //v. Estructura de datos
+  serviciosData: Servicios[] = [];
+  tiposervicioData: TiposerviciosService[] = [];
+  tecnologiaData: Tecnologias[] = [];
   planData: TariffPlanesVariant[] = [];
   provinciaData: Provincias[] = [];
   ciudadData: Ciudades[] = [];
-  ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
+  //v. inicializadores de elementos HTML
+  dataTISE: {id: string, _V1: string} = {id: '', _V1: ''}
+  dataREDT: {id: string, _V1: string, _V2: string} = {id: '', _V1: '',  _V2: ''}
+  dataPLAN: {id: string, _V1: string, _V2: string, _V3: string} = {id: '', _V1: '',  _V2: '',  _V3: ''}
+  dataPROV: {id: string, _V1: string, _V2: string, _V3: string, _V4: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: ''}
+  dataCITY: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: ''}
+  dataSECT: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string, _V6: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: '',  _V6: ''}
+    //sub-variables inicializadores de elementos HTML
+    ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
+    ssCity: { id_Prov: number } = { id_Prov: 0 } 
+  //v. complemento y soporte
   horaActual: string;
-  ssCity: { id_Prov: number } = { id_Prov: 0 } 
-
   visibleDivId: string | null = null;
+  diccionario: any = {};
 
   constructor(
     private serv: ServiciosService,
@@ -63,8 +82,92 @@ export class HeaderTableComponent implements OnInit{
       console.log("---------------------------------------------------------------")
     }
   }
+
+  getDataTISE(selectedValue: string): void {
+    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
+    this.dataTISE= {id: 'TISE', _V1: selectedValue }
+    this.communicationService.sendDataHeaderTable(this.dataTISE);
+    if(selectedValue){
+        console.log(this.horaActual+"----------------")
+        console.log("Todos los selectores TISE han sido seleccionados. Enviando los datos...");
+        this.communicationService.sendDataHeaderTable(this.dataTISE);
+    }
+  }
+
+  getDataREDT(value1: string, value2: string): void {
+    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
+    this.dataREDT= {id: 'RED', _V1: value1, _V2: value2 }
+    if(value1 && value2){
+        console.log(this.horaActual+"----------------");
+        console.log("Todos los selectores RED han sido seleccionados. Enviando los datos...");
+        console.log(this.dataREDT)
+        this.communicationService.sendDataHeaderTable(this.dataREDT);
+    }
+}
+
+  getDataPLAN(){
+    const id = "PLAN";
+    const _V1 = (document.querySelector('select[name="PLAN_V1"]') as HTMLSelectElement)?.value;
+    const _V2 = (document.querySelector('select[name="PLAN_V2"]') as HTMLSelectElement)?.value;
+    const _V3 = (document.querySelector('select[name="PLAN_V3"]') as HTMLSelectElement)?.value;
+    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
+    this.dataPLAN= {id ,_V1, _V2, _V3 }
+    if(this.dataPLAN ._V1 && this.dataPLAN ._V2 && this.dataPLAN ._V3){
+      console.log(this.horaActual+"----------------");
+      console.log("Todos los selectores PLAN han sido seleccionados. Enviando los datos...");
+      this.communicationService.sendDataHeaderTable(this.dataPLAN);
+    }
+  }
+
+  getDataPROV(){
+    const id = "PROV";
+    const _V1 = (document.querySelector('select[name="PROV_V1"]') as HTMLSelectElement)?.value;
+    const _V2 = (document.querySelector('select[name="PROV_V2"]') as HTMLSelectElement)?.value;
+    const _V3 = (document.querySelector('select[name="PROV_V3"]') as HTMLSelectElement)?.value;
+    const _V4 = (document.querySelector('select[name="PROV_V4"]') as HTMLSelectElement)?.value;
+    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
+    this.dataPROV= {id ,_V1, _V2, _V3, _V4}
+    if(this.dataPROV._V1 && this.dataPROV ._V2 && this.dataPROV ._V3 && this.dataPROV ._V4){
+      console.log(this.horaActual+"----------------");
+      console.log("Todos los selectores PROV han sido seleccionados. Enviando los datos...");
+      this.communicationService.sendDataHeaderTable(this.dataPROV);
+    }
+  }
+
+  getDataCITY(){
+    const id = "CITY";
+    const _V1 = (document.querySelector('select[name="CITY_V1"]') as HTMLSelectElement)?.value;
+    const _V2 = (document.querySelector('select[name="CITY_V2"]') as HTMLSelectElement)?.value;
+    const _V3 = (document.querySelector('select[name="CITY_V3"]') as HTMLSelectElement)?.value;
+    const _V4 = (document.querySelector('select[name="CITY_V4"]') as HTMLSelectElement)?.value;
+    const _V5 = (document.querySelector('select[name="CITY_V5"]') as HTMLSelectElement)?.value;
+    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
+    this.dataCITY= {id ,_V1, _V2, _V3, _V4, _V5}
+    if(this.dataCITY._V1 && this.dataCITY ._V2 && this.dataCITY ._V3 && this.dataCITY ._V4 && this.dataCITY ._V5){
+      console.log(this.horaActual+"----------------");
+      console.log("Todos los selectores CITY han sido seleccionados. Enviando los datos...");
+      this.communicationService.sendDataHeaderTable(this.dataCITY);
+    }
+  }
+
+  getDataSECT(){
+    const id = "SECT";
+    const _V1 = (document.querySelector('select[name="SECT_V1"]') as HTMLSelectElement)?.value;
+    const _V2 = (document.querySelector('select[name="SECT_V2"]') as HTMLSelectElement)?.value;
+    const _V3 = (document.querySelector('select[name="SECT_V3"]') as HTMLSelectElement)?.value;
+    const _V4 = (document.querySelector('select[name="SECT_V4"]') as HTMLSelectElement)?.value;
+    const _V5 = (document.querySelector('select[name="SECT_V5"]') as HTMLSelectElement)?.value;
+    const _V6 = (document.querySelector('select[name="SECT_V6"]') as HTMLSelectElement)?.value;
+    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
+    this.dataSECT= {id ,_V1, _V2, _V3, _V4, _V5, _V6}
+    if(this.dataSECT._V1 && this.dataSECT ._V2 && this.dataSECT ._V3 && this.dataSECT ._V4 && this.dataSECT ._V5 && this.dataSECT ._V6){
+      console.log(this.horaActual+"----------------");
+      console.log("Todos los selectores SECT han sido seleccionados. Enviando los datos...");
+      this.communicationService.sendDataHeaderTable(this.dataSECT);
+    }
+  }
   
-  SIZProv(): void {
+  SIZProv(){
     // Verificar si se han seleccionado opciones en todos los selectores
     const servicio = (document.querySelector('select[name="PROV_V1"]') as HTMLSelectElement)?.value;
     const tipoServicio = (document.querySelector('select[name="PROV_V2"]') as HTMLSelectElement)?.value;
