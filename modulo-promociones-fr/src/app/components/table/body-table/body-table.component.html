@@ -1,5 +1,5 @@
 <p>Cuerpo de la Tabla</p>
-<div id="TISE">
+<div id="TISE" [hidden]="visibleDivId !== 'TISE'">
     <table>
         <thead>
           <tr>
@@ -8,15 +8,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let city of cities">
-            <td>{{ city.name }}</td>
-            <td>{{ city.temperature }}</td>
+          <tr *ngFor="let servicio of tiseData; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ servicio.TIPO_SERVICIO }}</td>
           </tr>
         </tbody>
     </table>
 </div>
-<div id="RED"></div>
-<div id="PLAN"></div>
-<div id="PROV"></div>
-<div id="CITY"></div>
-<div id="SECT"></div>
+<div id="RED" [hidden]="visibleDivId !== 'RED'"></div>
+<div id="PLAN" [hidden]="visibleDivId !== 'PLAN'"></div>
+<div id="PROV" [hidden]="visibleDivId !== 'PROV'"></div>
+<div id="CITY" [hidden]="visibleDivId !== 'CITY'"></div>
+<div id="SECT" [hidden]="visibleDivId !== 'SECT'"></div>

@@ -18,7 +18,7 @@ export class CombosService {
 
   getCombosTipoServicios(SERVICIO: string):Observable<TipoServicios[]>{
     let params = new HttpParams()
-    .set('type', 'ALL_COMBO')
+    .set('type', 'COMBO')
     .set('stype', 'TIPO_SERVICIOS')
     .set('_V1', SERVICIO.toString());
     return this.http.get<TipoServicios[]>(this.baseUrl, { params: params });
@@ -26,7 +26,7 @@ export class CombosService {
 
   getCombosRedTecnologia(SERVICIO: string, TIPO_SERVICIOS:string):Observable<Tecnologias[]>{
     let params = new HttpParams()
-    .set('type', 'ALL_COMBO')
+    .set('type', 'COMBO')
     .set('stype', 'RED_TECNOLOGIA')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString());
@@ -35,7 +35,7 @@ export class CombosService {
 
   getCombosPlanes(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string):Observable<TariffPlanesVariant[]>{
     let params = new HttpParams()
-    .set('type', 'ALL_COMBO')
+    .set('type', 'COMBO')
     .set('stype', 'PLANES')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString())
@@ -45,7 +45,7 @@ export class CombosService {
 
   getCombosProvincia(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string, TARIFFPLANIDVARIANTID: number):Observable<Provincias[]>{
     let params = new HttpParams()
-    .set('type', 'ALL_COMBO')
+    .set('type', 'COMBO')
     .set('stype', 'PROVINCIA')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString())
@@ -56,7 +56,7 @@ export class CombosService {
 
   getCombosCiudad(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string, TARIFFPLANIDVARIANTID: number, PROVINCIAID:number):Observable<C_Ciudades[]>{
     let params = new HttpParams()
-    .set('type', 'ALL_COMBO')
+    .set('type', 'COMBO')
     .set('stype', 'CIUDAD')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString())
@@ -68,7 +68,7 @@ export class CombosService {
 
   getCombosSectores(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string, TARIFFPLANIDVARIANTID: number, PROVINCIAID:number, CIUDADID:number):Observable<C_Sectores[]>{
     let params = new HttpParams()
-    .set('type', 'ALL_COMBO')
+    .set('type', 'COMBO')
     .set('stype', 'SECTOR')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString())

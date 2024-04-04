@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommunicationService } from '../../../services/complements/communication.service';
+import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
 
 
 @Component({
@@ -10,10 +12,19 @@ import { Component } from '@angular/core';
   styleUrl: './body-table.component.scss'
 })
 export class BodyTableComponent {
-  cities = [
-    { name: 'Quito', temperature: 18, description: 'Mayormente soleado' },
-    { name: 'Guayaquil', temperature: 28, description: 'Parcialmente nublado' },
-    { name: 'Cuenca', temperature: 15, description: 'Lluvias dispersas' },
-    { name: 'Manta', temperature: 25, description: 'Nublado con posibilidad de lluvias' }
-  ];
+  visibleDivId: string | null = null;
+  tiseData: TipoServicios[] = [];
+  constructor(
+    private communicationService: CommunicationService
+  ){}
+  ngOnInit():void{
+    this.communicationService.visbleItemT$.subscribe(operationId =>{
+      this.visibleDivId = operationId
+    });
+    this.communicationService.dTISE$.subscribe(data => {
+      this.tiseData = data;
+      console.log("info de TiseData: ",this.tiseData)
+    })
+  }
+
 }

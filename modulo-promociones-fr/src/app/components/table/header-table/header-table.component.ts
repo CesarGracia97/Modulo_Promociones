@@ -23,12 +23,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './header-table.component.scss'
 })
 export class HeaderTableComponent implements OnInit{
-  sTISE: string = '';
-  sRED_V1: string = ''; sRED_V2: string = '';
-  sPLAN_V1: string = ''; sPLAN_V2: string = ''; sPLAN_V3: string = '';
-  sPROV_V1: string = ''; sPROV_V2: string = ''; sPROV_V3: string = ''; sPROV_V4: number = 0;
-  sCITY_V1: string = ''; sCITY_V2: string = ''; sCITY_V3: string = ''; sCITY_V4: number = 0; sCITY_V5: number = 0;
-  sSECT_V1: string = ''; sSECT_V2: string = ''; sSECT_V3: string = ''; sSECT_V4: number = 0; sSECT_V5: number = 0; sSECT_V6: number = 0;
+  _V1: string = ''; _V2: string = ''; _V3: string = ''; _V4: string = ''; _V5: string = ''; _V6: string = '';
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   tiposervicioData: TiposerviciosService[] = [];
@@ -45,7 +40,7 @@ export class HeaderTableComponent implements OnInit{
   dataSECT: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string, _V6: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: '',  _V6: ''}
     //sub-variables inicializadores de elementos HTML
     ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
-    ssCity: { id_Prov: number } = { id_Prov: 0 } 
+    ssCity: { id_Prov: string } = { id_Prov: '' } 
   //v. complemento y soporte
   horaActual: string;
   visibleDivId: string | null = null;
@@ -64,7 +59,7 @@ export class HeaderTableComponent implements OnInit{
 
   ngOnInit():void{
     this.Darth_Nihilus_funcion();
-    this.communicationService.selectedButton$.subscribe(buttonId => {
+    this.communicationService.visbleItemS$.subscribe(buttonId => {
       this.visibleDivId = buttonId;
     });
   }
@@ -84,171 +79,123 @@ export class HeaderTableComponent implements OnInit{
   }
 
   getDataTISE(selectedValue: string): void {
-    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
-    this.dataTISE= {id: 'TISE', _V1: selectedValue }
-    this.communicationService.sendDataHeaderTable(this.dataTISE);
-    if(selectedValue){
+    try{
+      this.dataTISE= {id: 'TISE', _V1: selectedValue }
+      this.communicationService.sendDataHeaderTable(this.dataTISE);
+      if(selectedValue){
         console.log(this.horaActual+"----------------")
         console.log("Todos los selectores TISE han sido seleccionados. Enviando los datos...");
         this.communicationService.sendDataHeaderTable(this.dataTISE);
+      }
     }
-  }
+    catch(error){
+      console.log("Error detectado: ",error)
+    }
+  } 
 
   getDataREDT(value1: string, value2: string): void {
-    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
-    this.dataREDT= {id: 'RED', _V1: value1, _V2: value2 }
-    if(value1 && value2){
+    try{
+      this.dataREDT= {id: 'RED', _V1: value1, _V2: value2 }
+      if(value1 && value2){
         console.log(this.horaActual+"----------------");
         console.log("Todos los selectores RED han sido seleccionados. Enviando los datos...");
         console.log(this.dataREDT)
         this.communicationService.sendDataHeaderTable(this.dataREDT);
-    }
-}
-
-  getDataPLAN(){
-    const id = "PLAN";
-    const _V1 = (document.querySelector('select[name="PLAN_V1"]') as HTMLSelectElement)?.value;
-    const _V2 = (document.querySelector('select[name="PLAN_V2"]') as HTMLSelectElement)?.value;
-    const _V3 = (document.querySelector('select[name="PLAN_V3"]') as HTMLSelectElement)?.value;
-    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
-    this.dataPLAN= {id ,_V1, _V2, _V3 }
-    if(this.dataPLAN ._V1 && this.dataPLAN ._V2 && this.dataPLAN ._V3){
-      console.log(this.horaActual+"----------------");
-      console.log("Todos los selectores PLAN han sido seleccionados. Enviando los datos...");
-      this.communicationService.sendDataHeaderTable(this.dataPLAN);
-    }
-  }
-
-  getDataPROV(){
-    const id = "PROV";
-    const _V1 = (document.querySelector('select[name="PROV_V1"]') as HTMLSelectElement)?.value;
-    const _V2 = (document.querySelector('select[name="PROV_V2"]') as HTMLSelectElement)?.value;
-    const _V3 = (document.querySelector('select[name="PROV_V3"]') as HTMLSelectElement)?.value;
-    const _V4 = (document.querySelector('select[name="PROV_V4"]') as HTMLSelectElement)?.value;
-    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
-    this.dataPROV= {id ,_V1, _V2, _V3, _V4}
-    if(this.dataPROV._V1 && this.dataPROV ._V2 && this.dataPROV ._V3 && this.dataPROV ._V4){
-      console.log(this.horaActual+"----------------");
-      console.log("Todos los selectores PROV han sido seleccionados. Enviando los datos...");
-      this.communicationService.sendDataHeaderTable(this.dataPROV);
-    }
-  }
-
-  getDataCITY(){
-    const id = "CITY";
-    const _V1 = (document.querySelector('select[name="CITY_V1"]') as HTMLSelectElement)?.value;
-    const _V2 = (document.querySelector('select[name="CITY_V2"]') as HTMLSelectElement)?.value;
-    const _V3 = (document.querySelector('select[name="CITY_V3"]') as HTMLSelectElement)?.value;
-    const _V4 = (document.querySelector('select[name="CITY_V4"]') as HTMLSelectElement)?.value;
-    const _V5 = (document.querySelector('select[name="CITY_V5"]') as HTMLSelectElement)?.value;
-    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
-    this.dataCITY= {id ,_V1, _V2, _V3, _V4, _V5}
-    if(this.dataCITY._V1 && this.dataCITY ._V2 && this.dataCITY ._V3 && this.dataCITY ._V4 && this.dataCITY ._V5){
-      console.log(this.horaActual+"----------------");
-      console.log("Todos los selectores CITY han sido seleccionados. Enviando los datos...");
-      this.communicationService.sendDataHeaderTable(this.dataCITY);
-    }
-  }
-
-  getDataSECT(){
-    const id = "SECT";
-    const _V1 = (document.querySelector('select[name="SECT_V1"]') as HTMLSelectElement)?.value;
-    const _V2 = (document.querySelector('select[name="SECT_V2"]') as HTMLSelectElement)?.value;
-    const _V3 = (document.querySelector('select[name="SECT_V3"]') as HTMLSelectElement)?.value;
-    const _V4 = (document.querySelector('select[name="SECT_V4"]') as HTMLSelectElement)?.value;
-    const _V5 = (document.querySelector('select[name="SECT_V5"]') as HTMLSelectElement)?.value;
-    const _V6 = (document.querySelector('select[name="SECT_V6"]') as HTMLSelectElement)?.value;
-    console.log(this.horaActual+"\n Datos seleccionados - Enviar");
-    this.dataSECT= {id ,_V1, _V2, _V3, _V4, _V5, _V6}
-    if(this.dataSECT._V1 && this.dataSECT ._V2 && this.dataSECT ._V3 && this.dataSECT ._V4 && this.dataSECT ._V5 && this.dataSECT ._V6){
-      console.log(this.horaActual+"----------------");
-      console.log("Todos los selectores SECT han sido seleccionados. Enviando los datos...");
-      this.communicationService.sendDataHeaderTable(this.dataSECT);
-    }
-  }
-  
-  SIZProv(){
-    // Verificar si se han seleccionado opciones en todos los selectores
-    const servicio = (document.querySelector('select[name="PROV_V1"]') as HTMLSelectElement)?.value;
-    const tipoServicio = (document.querySelector('select[name="PROV_V2"]') as HTMLSelectElement)?.value;
-    const tecnologia = (document.querySelector('select[name="PROV_V3"]') as HTMLSelectElement)?.value;
-
-    console.log(this.horaActual+" - Z Prov");
-    console.log("Servicio seleccionado:", servicio);
-    console.log("Tipo de Servicio seleccionado:", tipoServicio);
-    console.log("Tecnología seleccionada:", tecnologia);
-  
-    this.ssPlan = { servicio, tipoServicio, tecnologia };
-  
-    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
-    if (this.ssPlan .servicio && this.ssPlan .tipoServicio && this.ssPlan .tecnologia) {
-      console.log(this.horaActual+"----------------")
-      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
-      this.UpTPVariant();
-    }
-  }
-
-  SIZCity(): void {
-    // Verificar si se han seleccionado opciones en todos los selectores
-    const servicio = (document.querySelector('select[name="CITY_V1"]') as HTMLSelectElement)?.value;
-    const tipoServicio = (document.querySelector('select[name="CITY_V2"]') as HTMLSelectElement)?.value;
-    const tecnologia = (document.querySelector('select[name="CITY_V3"]') as HTMLSelectElement)?.value;
-
-    console.log(this.horaActual+" - Z City");
-    console.log("Servicio seleccionado:", servicio);
-    console.log("Tipo de Servicio seleccionado:", tipoServicio);
-    console.log("Tecnología seleccionada:", tecnologia);
-    
-    this.ssPlan = { servicio, tipoServicio, tecnologia };
-    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
-    if (this.ssPlan .servicio && this.ssPlan .tipoServicio && this.ssPlan .tecnologia) {
-      console.log(this.horaActual+"----------------")
-      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
-      this.UpTPVariant();
-    }
-  }
-
-  SIZSect(): void {
-    // Verificar si se han seleccionado opciones en todos los selectores
-    const servicio = (document.querySelector('select[name="SECT_V1"]') as HTMLSelectElement)?.value;
-    const tipoServicio = (document.querySelector('select[name="SECT_V2"]') as HTMLSelectElement)?.value;
-    const tecnologia = (document.querySelector('select[name="SECT_V3"]') as HTMLSelectElement)?.value;
-
-    console.log(this.horaActual+" - Z Sect");
-    console.log("Servicio seleccionado:", servicio);
-    console.log("Tipo de Servicio seleccionado:", tipoServicio);
-    console.log("Tecnología seleccionada:", tecnologia);
-    
-    this.ssPlan = { servicio, tipoServicio, tecnologia };
-  
-    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
-    if (this.ssPlan .servicio && this.ssPlan .tipoServicio && this.ssPlan .tecnologia) {
-      console.log(this.horaActual+"----------------")
-      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
-      this.UpTPVariant();
-    }
-  }
-  
-  SIZSectProv(): void {
-    const id_Prov = (document.querySelector('select[name="SECT_V5"]') as HTMLSelectElement)?.value;
-    // Verificar si id_Prov tiene un valor válido
-    if (id_Prov !== null && id_Prov !== undefined) {
-      const id_ProvNumber = parseInt(id_Prov, 10);
-      // Verificar si id_ProvNumber es un número válido
-      if (!isNaN(id_ProvNumber)) {
-        console.log(this.horaActual + "----------------");
-        console.log("Provincia seleccionada:", id_ProvNumber);
-        this.ssCity = { id_Prov: id_ProvNumber };
-        this.UpCiudad()
-      } else {
-        console.error("El valor de id_Prov no es un número válido.");
       }
-    } else {
-      console.error("El valor de id_Prov es nulo o indefinido.");
+    } catch(error){
+      console.log("Error Detectado: ",error)
+    }
+  }
+
+  getDataPLAN(value1: string, value2:string, value3: string): void {
+    try{
+      this.dataPLAN = {id:'PLAN', _V1: value1, _V2: value2, _V3: value3}
+      if(value1 && value2 && value3){
+        console.log(this.horaActual+"----------------");
+        console.log("Todos los selectores PLAN han sido seleccionados. Enviando los datos...");
+        console.log(this.dataPLAN);
+        this.communicationService.sendDataHeaderTable(this.dataPLAN);
+      }
+    } catch (error){
+      console.log("Error detectado: ",error)
+    }
+  }
+
+  getDataPROV(value1: string, value2:string, value3: string, value4: string): void {
+    try{
+      this.dataPROV = {id: 'PROV', _V1: value1, _V2: value2, _V3: value3, _V4: value4}
+      if(value1 && value2 && value3 && value4){
+        console.log(this.horaActual+"----------------");
+        console.log("Todos los selectores PROV han sido seleccionados. Enviando los datos...");
+        console.log(this.dataPROV);
+        this.communicationService.sendDataHeaderTable(this.dataPROV);
+      }
+    } catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
+
+  getDataCITY(value1: string, value2:string, value3: string, value4: string, value5: string): void{
+    try{
+      this.dataCITY = {id: 'CITY', _V1: value1, _V2: value2, _V3: value3, _V4: value4, _V5: value5}
+      if(value1 && value2 && value3 && value4 && value5){
+        console.log(this.horaActual+"----------------");
+        console.log("Todos los selectores CITY han sido seleccionados. Enviando los datos...");
+        console.log(this.dataCITY);
+        this.communicationService.sendDataHeaderTable(this.dataCITY);
+      }
+    } catch (error) {
+      console.log("Error Detectado: ", error)
+    }
+  }
+
+  getDataSECT(value1: string, value2:string, value3: string, value4: string, value5: string, value6: string): void{
+    try{
+      this.dataSECT = {id: 'SECT', _V1: value1, _V2: value2, _V3: value3, _V4: value4, _V5: value5, _V6: value6}
+      if(value1 && value2 && value3 && value4 && value5 && value6){
+        console.log(this.horaActual+"----------------");
+        console.log("Todos los selectores SECT han sido seleccionados. Enviando los datos...");
+        console.log(this.dataSECT);
+        this.communicationService.sendDataHeaderTable(this.dataSECT);
+      }
+    } catch (error) {
+      console.log("Error Detectado: ", error)
     }
   }
   
-  UpTPVariant(): void {
+  SITPVariant(value1: string, value2: string, value3: string): void {
+    try{
+    // Verificar si se han seleccionado opciones en todos los selectores
+    console.log(this.horaActual+" - SITPVariant");
+    console.log("Servicio seleccionado:", value1);
+    console.log("Tipo de Servicio seleccionado:", value2);
+    console.log("Tecnología seleccionada:", value3);
+    this.ssPlan = { servicio: value1, tipoServicio: value2, tecnologia: value3 };
+    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
+    if (value1 && value2 && value3) {
+      console.log(this.horaActual+"----------------")
+      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
+      this.UpTPVariant();
+    }
+    } catch (error) {
+      console.log("Error Detectado: ", error)
+    }
+  }
+  
+  SIProv(value: string): void {
+    try{
+      console.log(this.horaActual+" - SIProv");
+      console.log("Id Provincia Seleccionado:",value)
+      this.ssCity = {id_Prov: value}
+      if (value) {
+        this.UpCiudad();
+      }
+    } catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
+  
+  UpTPVariant(){
     console.log(this.horaActual+"----------------")
     console.log("Actualizando los planes tarifarios...");
     const { servicio, tipoServicio, tecnologia } = this.ssPlan ;
@@ -258,12 +205,12 @@ export class HeaderTableComponent implements OnInit{
     this.fecthTariffPlanesVariantData(servicio, tipoServicio, tecnologia);
   }
 
-  UpCiudad(): void {
+  UpCiudad(){
     console.log(this.horaActual+"----------------")
     console.log("Actualizando las Ciudades...");
     const { id_Prov } = this.ssCity;
     console.log("Id Provincia:", id_Prov)
-    this.fecthCiudadData(id_Prov);
+    this.fecthCiudadData(parseInt(id_Prov));
   }
 
   private fecthCiudadData(id_Prov: number): void {

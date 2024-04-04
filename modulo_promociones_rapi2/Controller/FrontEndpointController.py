@@ -107,7 +107,7 @@ class FrontEndpointController:
                 return jsonify({'error': mensaje}), 400
 
             else:
-                print("prov_endpoint - FrontEndpointController | Tipo de Peticion no valido")
+                print("plncomb_endpoint - FrontEndpointController | Tipo de Peticion no valido")
                 return jsonify({'error': 'Tipo de petición no válido'}), 400
         except Exception as e:
             print("--------------------------------------------------------------------")

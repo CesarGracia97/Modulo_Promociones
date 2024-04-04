@@ -114,7 +114,7 @@ class FormattedPlans:
             }
             for tiposervicio in data['C_TIPO_SERVICIOS']:
                 json_data['C_TIPO_SERVICIOS'].append({
-                    'C_TIPO_SERVICIOS': tiposervicio.TIPO_SERVICIO
+                    'TIPO_SERVICIO': tiposervicio.TIPO_SERVICIO
                 })
             return json_data
         except Exception as e:
@@ -131,7 +131,7 @@ class FormattedPlans:
             }
             for tecnologia in data['C_TECNOLOGIA']:
                 json_data['C_TECNOLOGIA'].append({
-                    'C_TECNOLOGIA': tecnologia.TECNOLOGIA
+                    'TECNOLOGIA': tecnologia.TECNOLOGIA
                 })
             return json_data
         except Exception as e:
