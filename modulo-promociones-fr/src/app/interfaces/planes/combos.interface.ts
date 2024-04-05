@@ -1,11 +1,11 @@
 export interface C_Sectores {
-    SECTORID: number;
+    SECTOR_ID: number;
     SECTOR: string;
     CIUDAD: string;
 }
 
 export interface C_Ciudades {
-    CIUDADID: number;
+    CIUDAD_ID: number;
     CIUDAD: string;
     PROVINCIA: string;
 }

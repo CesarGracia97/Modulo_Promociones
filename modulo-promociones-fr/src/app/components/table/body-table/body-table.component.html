@@ -1,22 +1,103 @@
 <p>Cuerpo de la Tabla</p>
 <div id="TISE" [hidden]="visibleDivId !== 'TISE'">
-    <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Tipo de Servicio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let servicio of tiseData; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ servicio.TIPO_SERVICIO }}</td>
-          </tr>
-        </tbody>
-    </table>
+  <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tipo de Servicio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tise of tiseData; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{tise}}</td>
+        </tr>
+      </tbody>
+  </table>
 </div>
-<div id="RED" [hidden]="visibleDivId !== 'RED'"></div>
-<div id="PLAN" [hidden]="visibleDivId !== 'PLAN'"></div>
-<div id="PROV" [hidden]="visibleDivId !== 'PROV'"></div>
-<div id="CITY" [hidden]="visibleDivId !== 'CITY'"></div>
-<div id="SECT" [hidden]="visibleDivId !== 'SECT'"></div>
+<div id="RED" [hidden]="visibleDivId !== 'RED'">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tecnologias</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let redt of redtData; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{redt}}</td>
+      </tr>
+    </tbody>
+</table>
+</div>
+<div id="PLAN" [hidden]="visibleDivId !== 'PLAN'">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Planes Tarifarios - VariantID</th>
+        <th>Planes Tarifarios - Variant</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let plan of planData; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{plan.TARIFFPLANVARIANTID}}</td>
+        <td>{{plan.TARIFFPLANVARIANT}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div id="PROV" [hidden]="visibleDivId !== 'PROV'">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Provincia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prov of provData; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{prov.PROVINCIA}}</td>
+      </tr>
+    </tbody>
+</table>
+</div>
+<div id="CITY" [hidden]="visibleDivId !== 'CITY'">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Provincia</th>
+        <th>Ciudad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of cityData; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{city.PROVINCIA}}</td>
+        <td>{{city.CIUDAD}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div id="SECT" [hidden]="visibleDivId !== 'SECT'">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Ciudad</th>
+        <th>Sector</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sect of sectData; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{sect.CIUDAD}}</td>
+        <td>{{sect.SECTOR}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

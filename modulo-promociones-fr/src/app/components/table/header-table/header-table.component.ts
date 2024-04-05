@@ -14,6 +14,7 @@ import { CommunicationService } from '../../../services/complements/communicatio
 import { Servicios } from '../../../interfaces/planes/servicios.interface';
 import { Tecnologias } from '../../../interfaces/planes/tecnologias.interface';
 import { FormsModule } from '@angular/forms';
+import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
 
 @Component({
   selector: 'app-header-table',
@@ -26,7 +27,7 @@ export class HeaderTableComponent implements OnInit{
   _V1: string = ''; _V2: string = ''; _V3: string = ''; _V4: string = ''; _V5: string = ''; _V6: string = '';
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
-  tiposervicioData: TiposerviciosService[] = [];
+  tiposervicioData: TipoServicios[] = [];
   tecnologiaData: Tecnologias[] = [];
   planData: TariffPlanesVariant[] = [];
   provinciaData: Provincias[] = [];

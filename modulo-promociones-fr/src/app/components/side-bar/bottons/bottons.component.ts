@@ -29,7 +29,7 @@ export class BottonsComponent implements OnInit {
   handleSubButtonClick(value: string): void {
     try
     {
-      this.communicationService.sendSelectedButton(value);
+      this.communicationService.visibleHeaderTable(value);
     }
     catch (error)
     {

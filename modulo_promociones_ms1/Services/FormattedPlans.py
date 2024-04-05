@@ -185,7 +185,7 @@ class FormattedPlans:
             for ciudad in data['C_CIUDAD']:
                 json_data['C_CIUDAD'].append({
                     'CIUDAD_ID': ciudad.CIUDAD_ID,
-                    'PROVINCIA_ID': ciudad.PROVINCIA_ID,
+                    'PROVINCIA': ciudad.PROVINCIA,
                     'CIUDAD': ciudad.CIUDAD
                 })
             return json_data
@@ -204,7 +204,7 @@ class FormattedPlans:
             for sector in data['C_SECTOR']:
                 json_data['C_SECTOR'].append({
                     'SECTOR_ID': sector.SECTOR_ID,
-                    'CIUDAD_ID': sector.CIUDAD_ID,
+                    'CIUDAD': sector.CIUDAD,
                     'SECTOR': sector.SECTOR
                 })
             return json_data
