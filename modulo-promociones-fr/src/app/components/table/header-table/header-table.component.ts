@@ -10,11 +10,12 @@ import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.int
 import { TimeService } from '../../../services/complements/time.service';
 import { Provincias } from '../../../interfaces/places/provincias.interface';
 import { Ciudades } from '../../../interfaces/places/ciudad.interface';
-import { CommunicationService } from '../../../services/complements/communication.service';
+import { CommunicationService } from '../../../services/communication/communication.service';
 import { Servicios } from '../../../interfaces/planes/servicios.interface';
 import { Tecnologias } from '../../../interfaces/planes/tecnologias.interface';
 import { FormsModule } from '@angular/forms';
 import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
+import { FetchDataService } from '../../../services/fetchData/fetch-data.service';
 
 @Component({
   selector: 'app-header-table',
@@ -55,13 +56,15 @@ export class HeaderTableComponent implements OnInit{
     private prov: ProvinciasService,
     private city: CiudadService,
     private cs_time: TimeService,
-    private communicationService: CommunicationService
+    private communicationService: CommunicationService,
+    private fetchData: FetchDataService
   ){ this.horaActual = this.cs_time.obtenerHoraActual(); }
 
   ngOnInit():void{
     this.Darth_Nihilus_funcion();
     this.communicationService.visbleItemS$.subscribe(buttonId => {
       this.visibleDivId = buttonId;
+      this.showfetchData(this.visibleDivId)
     });
   }
 
@@ -76,6 +79,25 @@ export class HeaderTableComponent implements OnInit{
       console.log("header-table.compo - Darth_Nihilus_function | Error detectado: ")
       console.log(error)
       console.log("---------------------------------------------------------------")
+    }
+  }
+
+  showfetchData(id: string){
+    switch(id){
+      case 'TISE':
+        this.fetchData.fetchDataServicio();
+        
+        break;
+      case 'RED':
+        break;
+      case 'PLAN':
+        break;
+      case 'PROV':
+        break;
+      case 'CITY':
+        break;
+      case 'SECT':
+        break;
     }
   }
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CommunicationService } from '../../../services/complements/communication.service';
+import { CommunicationService } from '../../../services/communication/communication.service';
 
 @Component({
   selector: 'app-bottons',

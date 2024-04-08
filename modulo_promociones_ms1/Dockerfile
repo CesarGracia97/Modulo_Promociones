@@ -33,7 +33,7 @@ ENV O_USERNAME="consulta"
 ENV O_PASSWORD="consulta"
 
 # Exponer el puerto en el que se ejecutará la aplicación
-EXPOSE 5000
+EXPOSE 5011
 
 # Comando para ejecutar la aplicación
 CMD ["python", "/usr/src/app/modulo_promociones_ms1/__main__.py"]

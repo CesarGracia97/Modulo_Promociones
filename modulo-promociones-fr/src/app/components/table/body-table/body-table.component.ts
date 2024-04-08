@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CommunicationService } from '../../../services/complements/communication.service';
+import { CommunicationService } from '../../../services/communication/communication.service';
 import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
 import { Tecnologias } from '../../../interfaces/planes/tecnologias.interface';
 import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
