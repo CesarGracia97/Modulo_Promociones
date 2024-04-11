@@ -48,11 +48,12 @@ export class CommunicationService {
   visibleHeaderTable(buttonId: string) {
     this.visibleItemSSubject.next(buttonId);
   }
-  visibleBodyTable(id:string){
+
+  visibleBodyTable(id:string) {
     this.visibleItemTSubject.next(id);
   }
 
-  sendDataHeaderTable(diccionario:{[key: string]: any}){
+  sendDataHeaderTable(diccionario:{[key: string]: any}) {
     const id = diccionario['id'];
     let _V1, _V2, _V3, _V4, _V5, _V6;
     switch (id){

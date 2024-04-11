@@ -3,12 +3,12 @@ import { HeaderTableComponent } from "./header-table/header-table.component";
 import { BodyTableComponent } from "./body-table/body-table.component";
 
 @Component({
-    selector: 'app-table',
+    selector: 'app-table-query',
     standalone: true,
-    templateUrl: './table.component.html',
-    styleUrls: ['./table.component.scss'],
+    templateUrl: './table-query.component.html',
+    styleUrls: ['./table-query.component.scss'],
     imports: [HeaderTableComponent, BodyTableComponent]
 })
-export class TableComponent {
+export class TableQueryComponent {
 
 }
