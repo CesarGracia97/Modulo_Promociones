@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div id="container" [ngClass]="{sidebarActive: sidebarActive}">
+	<app-side-bar></app-side-bar>
+	<div id="contentContainer">
+		<app-header (toggleSidebar)="sidebarActive = !sidebarActive" [sidebarActive]="sidebarActive"
+		></app-header>
+		<div id="content">
+			<app-table-query></app-table-query>
+      <app-table-insert></app-table-insert>
+		</div>
+  </div>
+</div>
