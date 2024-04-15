@@ -1,92 +1,85 @@
-#men{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Alinea todos los elementos internos al centro */
+}
 
-    #button_CD{
-        background: none;
-        border: none;
-        text-decoration: none;
-        color: #333;
-        padding: 15px 20px;
-        display: inline-block;
-        font-family: Arial, Helvetica, sans-serif;
-        position: relative;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        z-index: 1;
-        position: relative;
-
-        #dropDown{
-            display: none;
-            position: absolute;
-            width: 175px;
-            min-height: 315px;
-            overflow: auto;
-            background-color: #f9f9f9f9;
-            border-radius: 10px;
-            top: 105%;
-            left: 0;
-
-            ul{
-                list-style: none;
-                padding: 0px;
-                margin: 0px;
-                display: flex;
-                gap:10px;
-                flex-direction: column;
-
-                .btns{
-                    width: 175px;
-                    background: none;
-                    border: none;
-                    text-decoration: none;
-                    cursor: pointer;
-                    //
-                    color:#000000;
-                    padding: 15px 30px;
-                    display: block;
-                    border-radius: 10px;
-                    z-index: 2;
-                    position: relative;
-
-                    &:hover{
-                        background-color: #eee;
-                    }
-                }
-            }
-        }
-
-        &:hover{
-            background-color: #eee;
-            border: 1px solid #000000;
-            #dropDown{
-                display: block;
-            }
-        }
-        #dropDown:hover{
-            display: block;
-        }
+.main-button {
+    margin-bottom: 10px;
+    width: 80%; /* Ajuste de ancho inicial más flexible */
+    max-width: 250px; /* Ancho máximo para grandes pantallas */
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: #333;
+    padding: 15px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    &:hover{
+        background-color: #eee;
     }
+}
 
-    #button_CP{
-        background: none;
-        border: none;
-        text-decoration: none;
-        color: #333;
-        padding: 15px 20px;
-        display: inline-block;
-        font-family: Arial, Helvetica, sans-serif;
-        position: relative;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        margin-bottom: 20px;
-        z-index: 1;
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
+  width: 80%; /* Asegura que el contenedor del dropdown toma el ancho completo */
+  align-items: center; /* Alinea los botones del dropdown al centro */
 
-        &:hover{
-            background-color: #eee;
-        }
+  background-color: #f9f9f9f9;
+  border-radius: 10px;
+  &.closing {
+    transition: max-height 0.3s ease-out; // Transición más rápida para cerrar
+  }
+}
+
+.dropdown.show {
+  max-height: 1000px; /* Un valor suficientemente alto para mostrar todo el contenido */
+  margin-bottom: 15px;
+}
+
+.dropdown-button {
+  margin-bottom: 5px;
+  width: 250px; 
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  //
+  color:#000000;
+  padding: 15px 30px;
+  display: block;
+  border-radius: 10px;
+    &:hover{
+        background-color: #eee;
     }
+}
+
+/* Estilos para eliminar el padding y los marcadores de lista */
+.dropdown ul {
+    list-style: none;  /* Elimina los puntos de los items de lista */
+    padding: 0;        /* Elimina el padding predeterminado */
+    margin: 0;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
+    width: 100%; /* Ocupa el ancho completo para centrar los botones internamente */
+    display: flex; /* Utiliza flex para facilitar la alineación */
+    flex-direction: column; /* Alinea los elementos verticalmente */
+    align-items: center; /* Alinea los botones al centro */
+}
+  
+.dropdown li {
+    list-style: none;  /* Asegura que no hay marcadores de lista */
+    width: 100%; /* Ocupa el ancho completo para mejor alineación */
+    display: flex; /* Utiliza flexbox para facilitar la alineación */
+    justify-content: center; /* Asegura que los botones se centren horizontalmente dentro de cada <li> */
+}
+
+@media (max-width: 768px) {
+  .main-button, .dropdown-button {
+    padding: 12px 15px; /* Reducción del padding para espacios más pequeños */
+    width: 95%; /* Mayor porcentaje de ancho para uso eficiente del espacio disponible */
+  }
 }

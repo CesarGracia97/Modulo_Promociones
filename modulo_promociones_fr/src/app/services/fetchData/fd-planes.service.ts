@@ -7,6 +7,7 @@ import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
 import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
+import { CommunicationDataService } from '../communication/communicationData.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class FdPlanesService {
     private tise: TiposerviciosService,
     private tecn: TecnologiasService,
     private plan: TariffplanesService,
+    private comData: CommunicationDataService
   ) { }
 
   switchFD(id: string){
@@ -52,6 +54,7 @@ export class FdPlanesService {
       if (response && response.SERVICIOS) {
         this.serviciosData = response.SERVICIOS.map((servicio: any) => servicio.SERVICIO);
         console.log(this.serviciosData); 
+        this.comData.sendDataServicio(this.serviciosData);
       } else {
         console.error("La respuesta no contiene la propiedad 'SERVICIOS'.");
       }
@@ -65,6 +68,7 @@ export class FdPlanesService {
       if (response && response.TIPO_SERVICIO){
         this.tiposervicioData = response.TIPO_SERVICIO.map((tipo_servicio: any) => tipo_servicio.TIPO_SERVICIO);
         console.log(this.tiposervicioData); 
+        this.comData.sendDataTipoServicios(this.tiposervicioData);
       } else {
         console.error("La respuesta no contiene la propiedad 'TIPO_SERVICIO'.");
       }
@@ -78,6 +82,7 @@ export class FdPlanesService {
       if (response && response.TECNOLOGIAS){
         this.tecnologiaData = response.TECNOLOGIAS.map((tecnologia: any) => tecnologia.TECNOLOGIA);
         console.log(this.tecnologiaData); 
+        this.comData.sendDataTecnologias(this.tecnologiaData);
       } else {
         console.error("La respuesta no contiene la propiedad 'TECNOLOGIAS'.");
       }
@@ -96,6 +101,7 @@ export class FdPlanesService {
           };
         });
         console.log(this.planData); 
+        this.comData.sendDataPlanes(this.planData);
       }
     });
   }

@@ -5,6 +5,9 @@ from Controller.FrontEndpointController import combp_bp, oferp_bp, servp_bp, tec
 
 
 def create_app():
+    print("---------------------------------")
+    print("Rest Api2 - PLANES")
+    print("---------------------------------")
     _app = Flask(__name__)
     _app.register_blueprint(combp_bp)
     _app.register_blueprint(oferp_bp)

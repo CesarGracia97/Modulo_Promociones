@@ -3,6 +3,7 @@ import { ProvinciasService } from '../places/provincias.service';
 import { CiudadService } from '../places/ciudad.service';
 import { Provincias } from '../../interfaces/places/provincias.interface';
 import { Ciudades } from '../../interfaces/places/ciudad.interface';
+import { CommunicationDataService } from '../communication/communicationData.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class FdPlacesService {
   constructor(
     private prov: ProvinciasService,
     private city: CiudadService,
+    private comData: CommunicationDataService
   ) { }
 
   fetchDataCiudad(id_Prov: number){
@@ -30,6 +32,7 @@ export class FdPlacesService {
           };
         });
         console.log(this.ciudadData);
+        this.comData.sendDataCiudades(this.ciudadData);
       }
     });
   }
@@ -46,6 +49,7 @@ export class FdPlacesService {
           };
         });
         console.log(this.provinciaData); 
+        this.comData.sendDataProvincias(this.provinciaData);
       }
     });
   }

@@ -2,11 +2,10 @@
 <div id="container" [ngClass]="{sidebarActive: sidebarActive}">
 	<app-side-bar></app-side-bar>
 	<div id="contentContainer">
-		<app-header (toggleSidebar)="sidebarActive = !sidebarActive" [sidebarActive]="sidebarActive"
-		></app-header>
+		<app-header (toggleSidebar)="sidebarActive = !sidebarActive" [sidebarActive]="sidebarActive"></app-header>
 		<div id="content">
-			<app-table-query></app-table-query>
-      <app-table-insert></app-table-insert>
+			<!-- <app-table-query></app-table-query> -->
+			<app-table-insert [hidden]="visibleDivId !== 'TI'"></app-table-insert>
 		</div>
-  </div>
+	</div>
 </div>

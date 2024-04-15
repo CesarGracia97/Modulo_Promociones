@@ -20,6 +20,8 @@ export class ButtonsComponent implements OnInit {
     {name: 'Ciudad', value:'CITY'},
     {name: 'Sector', value:'SECT'}
   ];
+  showDropDown: boolean = false;
+  closing: boolean = false; // Controla si el dropdown está en proceso de cierre
 
   constructor(
     private comVisual: CommunicationVisibleService,
@@ -29,8 +31,22 @@ export class ButtonsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  @Output() subButtonClick = new EventEmitter<string>();
+  toggleDropDown() {
+    if (this.showDropDown) {
+      // Si está abierto y se va a cerrar, activa la transición rápida
+      this.closing = true;
+      setTimeout(() => {
+        this.showDropDown = false;
+        this.closing = false; // Restablece el estado después de cerrar
+      }, 30); // Espera el tiempo de la transición de cierre
+    } else {
+      // Si está cerrado y se va a abrir
+      this.showDropDown = true;
+    }
+  }
 
+  @Output() subButtonClick = new EventEmitter<string>();
+  
   handleSubButtonClick(value: string): void {
     try
     {

@@ -1,12 +1,12 @@
-<div id="men">
-    <button id="button_CP" (click)="handleSubButtonClick('TI')">Agregar Datos</button>
-    <div id="button_CD">Combos Predefinidos
-        <div id="dropDown">
-            <ul>
-                <li *ngFor="let option of options">
-                    <button class="btns" (click)="handleSubButtonClick(option.value)">{{option.name}}</button>
-                </li>
-            </ul>
-        </div>
-    </div>
+<div class="button-container">
+  <button class="main-button">Agregar Datos</button>
+  <button button (click)="toggleDropDown()" class="main-button">Combos Predefinidos</button>
+  <div [ngClass]="{'show': showDropDown, 'closing': closing}" class="dropdown">
+    <ul>
+        <li *ngFor="let option of options">
+          <button class="dropdown-button" (click)="handleSubButtonClick(option.value)">{{option.name}}</button>
+        </li>
+    </ul>
+  </div>
+  <button class="main-button">Diseño de Combos</button>
 </div>

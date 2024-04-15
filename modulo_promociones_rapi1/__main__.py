@@ -7,6 +7,9 @@ from controllers.FrontEndpointController import provp_bp, cityp_bp, sectp_bp, ss
 
 def create_app():
     app = Flask(__name__)
+    print("---------------------------------")
+    print("Rest Api1 - PLACE")
+    print("---------------------------------")
     app.register_blueprint(backp_bp)
     app.register_blueprint(provp_bp)
     app.register_blueprint(cityp_bp)
