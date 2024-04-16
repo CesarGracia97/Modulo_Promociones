@@ -2,13 +2,34 @@
     visibility: hidden; // Oculta todos los elementos por defecto
 }
 
+.table-wrapper {
+    max-height: 590px; /* Ajusta la altura máxima según sea necesario */
+    overflow-y: auto; /* Agrega desplazamiento vertical cuando sea necesario */
+  }
+
 #TISE, #RED, #PLAN, #PROV, #CITY, #SECT {
-    margin: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    border: 1px solid #ccc;
 }
   
 table {
     width: 100%;
     border-collapse: collapse;
+    text-decoration: none;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 2px solid #ccc;
+    text-indent: initial;
+    unicode-bidi: isolate;
+    border-spacing: 2px;
+    border-color: gray;
 }
   
 th, td {
@@ -23,4 +44,11 @@ th {
   
 tr:hover {
     background-color: #f5f5f5;
+}
+
+#contentTable{
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
