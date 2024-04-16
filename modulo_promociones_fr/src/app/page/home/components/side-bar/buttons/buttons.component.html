@@ -4,7 +4,7 @@
   <div [ngClass]="{'show': showDropDown, 'closing': closing}" class="dropdown">
     <ul>
         <li *ngFor="let option of options">
-          <button class="dropdown-button" (click)="handleSubButtonClick(option.value)">{{option.name}}</button>
+          <button class="dropdown-button" (click)="handleSubButtonClick(option.value);; changeValueVisible()">{{option.name}}</button>
         </li>
     </ul>
   </div>

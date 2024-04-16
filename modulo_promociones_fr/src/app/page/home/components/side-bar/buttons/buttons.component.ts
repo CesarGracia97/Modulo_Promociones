@@ -22,14 +22,17 @@ export class ButtonsComponent implements OnInit {
   ];
   showDropDown: boolean = false;
   closing: boolean = false; // Controla si el dropdown está en proceso de cierre
+  visibleValueDiv: string | null = null;
 
   constructor(
     private comVisual: CommunicationVisibleService,
     private fdplan: FdPlanesService,
-    private fdplace: FdPlacesService
+    private fdplace: FdPlacesService,
   ){}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.comVisual.visibleItemT$.subscribe( value => {this.visibleValueDiv = value});
+  }
 
   toggleDropDown() {
     if (this.showDropDown) {
@@ -67,6 +70,12 @@ export class ButtonsComponent implements OnInit {
       console.log("botton.componets - handleSubButtonClick | Error detectado: ")
       console.log(error)
       console.log("---------------------------------------------------------------")
+    }
+  }
+
+  changeValueVisible(){
+    if(this.visibleValueDiv !== ''){
+      this.comVisual.visibleTerceriaComponent('');
     }
   }
 }

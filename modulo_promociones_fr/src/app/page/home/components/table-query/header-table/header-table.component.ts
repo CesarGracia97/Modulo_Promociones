@@ -44,6 +44,7 @@ export class HeaderTableComponent implements OnInit{
   horaActual: string;
   visibleDivId: string | null = null;
   diccionario: any = {};
+  isLoading = true;
 
   constructor(    
     private cs_time: TimeService,
@@ -56,12 +57,12 @@ export class HeaderTableComponent implements OnInit{
 
   ngOnInit():void{
     this.visible.visbleItemS$.subscribe( id => {this.visibleDivId = id});
-    this.comData.dServicios$.subscribe(data => {this.serviciosData = data});
-    this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data});
-    this.comData.dTecnologias$.subscribe(data => {this.tecnologiaData = data});
-    this.comData.dPlanes$.subscribe(data => {this.planData = data});
-    this.comData.dProvincia$.subscribe(data => {this.provinciaData = data});
-    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data});
+    this.comData.dServicios$.subscribe(data => {this.serviciosData = data; this.checkLoading();});
+    this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data; this.checkLoading();});
+    this.comData.dTecnologias$.subscribe(data => {this.tecnologiaData = data; this.checkLoading();});
+    this.comData.dPlanes$.subscribe(data => {this.planData = data; this.checkLoading();});
+    this.comData.dProvincia$.subscribe(data => {this.provinciaData = data; this.checkLoading();});
+    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data; this.checkLoading();});
   }
 
   getDataTISE(selectedValue: string): void {
@@ -196,5 +197,9 @@ export class HeaderTableComponent implements OnInit{
     const { id_Prov } = this.ssCity;
     console.log("Id Provincia:", id_Prov)
     this.fdPlcRequeriments.fetchDataCiudad(parseInt(id_Prov));
+  }
+
+  checkLoading() {
+    this.isLoading = this.serviciosData.length === 0 || this.tiposervicioData.length === 0 || this.tecnologiaData.length === 0 || this.planData.length === 0; // Puedes añadir más comprobaciones dependiendo de tus datos
   }
 }
