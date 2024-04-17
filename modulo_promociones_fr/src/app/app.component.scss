@@ -18,13 +18,7 @@
         flex-grow: 1;
         margin-left: -200px;
         transition: margin-left 0.3s ease-in-out;
-
-        #content{
-            height: 85%;
-            .hidden{
-                visibility: hidden;
-            }
-        }
+        height: 100%;
     }
     &.sidebarActive{
         app-side-bar{
@@ -34,4 +28,10 @@
             margin-left: 0;
         }
     }
+}
+.hidden{
+    visibility: hidden;
+}
+#content{
+    height: 10%;
 }

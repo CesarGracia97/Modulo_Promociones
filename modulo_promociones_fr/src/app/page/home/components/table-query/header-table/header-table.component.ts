@@ -57,12 +57,12 @@ export class HeaderTableComponent implements OnInit{
 
   ngOnInit():void{
     this.visible.visbleItemS$.subscribe( id => {this.visibleDivId = id});
-    this.comData.dServicios$.subscribe(data => {this.serviciosData = data; this.checkLoading();});
-    this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data; this.checkLoading();});
-    this.comData.dTecnologias$.subscribe(data => {this.tecnologiaData = data; this.checkLoading();});
-    this.comData.dPlanes$.subscribe(data => {this.planData = data; this.checkLoading();});
-    this.comData.dProvincia$.subscribe(data => {this.provinciaData = data; this.checkLoading();});
-    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data; this.checkLoading();});
+    this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
+    this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data;});
+    this.comData.dTecnologias$.subscribe(data => {this.tecnologiaData = data;});
+    this.comData.dPlanes$.subscribe(data => {this.planData = data;});
+    this.comData.dProvincia$.subscribe(data => {this.provinciaData = data;});
+    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
   }
 
   getDataTISE(selectedValue: string): void {
@@ -199,7 +199,19 @@ export class HeaderTableComponent implements OnInit{
     this.fdPlcRequeriments.fetchDataCiudad(parseInt(id_Prov));
   }
 
-  checkLoading() {
-    this.isLoading = this.serviciosData.length === 0 || this.tiposervicioData.length === 0 || this.tecnologiaData.length === 0 || this.planData.length === 0; // Puedes añadir más comprobaciones dependiendo de tus datos
+  checkSDLoading() {
+    return this.serviciosData.length === 0;
+  }
+  
+  checkTSDLoading() {
+    return this.tiposervicioData.length === 0;
+  }
+
+  checkTDLoading() {
+    return this.tecnologiaData.length === 0;
+  }
+
+  checkPDLoading() {
+    return this.provinciaData.length === 0;
   }
 }

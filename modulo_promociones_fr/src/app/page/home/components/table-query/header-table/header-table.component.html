@@ -1,9 +1,9 @@
 <div id="content_header">
-    <div *ngIf="isLoading">
-        Cargando datos, por favor espera...
-    </div>
-    <div *ngIf="!isLoading">
-        <div id="TISE" [hidden]="visibleDivId !== 'TISE'">
+    <div id="TISE" [hidden]="visibleDivId !== 'TISE'">
+        <div  id="CHARGE"*ngIf="checkSDLoading()">
+            Cargando datos, por favor espera...
+        </div>
+        <div *ngIf="!checkSDLoading()">
             <label>Combo#1 - Tipo de Servicio</label>
             <div id="contentSelect">
                 <select name="TISE_V1" [(ngModel)]="_V1" (ngModelChange)="getDataTISE(_V1)">
@@ -13,8 +13,11 @@
             </div>
         </div> 
     </div> 
-    <div *ngIf="!isLoading">
-        <div id="RED" [hidden]="visibleDivId !== 'RED'">
+    <div id="RED" [hidden]="visibleDivId !== 'RED'">
+        <div  id="CHARGE"*ngIf="checkSDLoading() || checkTSDLoading()">
+            Cargando datos, por favor espera...
+        </div>
+        <div *ngIf="!checkSDLoading() && !checkTSDLoading()">
             <label>Combo#2 - Red</label>
             <div id="contentSelect">
                 <select name="RED_V1" [(ngModel)]="_V1" (ngModelChange)="getDataREDT(_V1, _V2)">
@@ -28,8 +31,11 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!isLoading">
-        <div id="PLAN" [hidden]="visibleDivId !== 'PLAN'">
+    <div id="PLAN" [hidden]="visibleDivId !== 'PLAN'">
+        <div  id="CHARGE"*ngIf="checkSDLoading() || checkTSDLoading() || checkTDLoading()">
+            Cargando datos, por favor espera...
+        </div>
+        <div *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkTDLoading()">
             <label>Combo#3 - Combo Planes</label>
             <div id="contentSelect">
                 <select name="PLAN_V1" [(ngModel)]="_V1" (change)="getDataPLAN(_V1, _V2, _V3)">
@@ -47,13 +53,16 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!isLoading">
-        <div id="PROV" [hidden]="visibleDivId !== 'PROV'">
+    <div id="PROV" [hidden]="visibleDivId !== 'PROV'">
+        <div  id="CHARGE"*ngIf="checkSDLoading() || checkTSDLoading() || checkTDLoading()">
+            Cargando datos, por favor espera...
+        </div>
+        <div *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkTDLoading()">
             <label>Combo#4 - Combo Provincias</label>
             <div id="contentSelect">
                 <select name="PROV_V1" [(ngModel)]="_V1" (change)="SITPVariant(_V1, _V2, _V3); getDataPROV(_V1, _V2, _V3, _V4)">
                     <option value="">Elija el Servicio</option>
-                    <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
+                    <option *ngFor=" let servicio of serviciosData" [value]="servicio">{{servicio}}</option>
                 </select>
                 <select name="PROV_V2" [(ngModel)]="_V2" (change)="SITPVariant(_V1, _V2, _V3); getDataPROV(_V1, _V2, _V3, _V4)">
                     <option value="">Elija el Tipo de Servicio</option>
@@ -64,14 +73,19 @@
                     <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
                 </select>
                 <select name="PROV_V4" [(ngModel)]="_V4" (change)=" getDataPROV(_V1, _V2, _V3, _V4)">
-                    <option value="">Elija el TARIFFPLANIDVARIANT</option>
+                    <option value="">Elija el TARIFFPLANVARIANT</option>
+                    <option value="" *ngIf="planData.length === 0 && !_V1 || !_V2 || !_V3">Selecc. antes los otros elementos</option>
+                    <option value="" *ngIf="planData.length === 0 && _V1 && _V2 && _V3">Cargando datos...</option>
                     <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
                 </select>
             </div>
         </div>
     </div>
-    <div *ngIf="!isLoading">
-        <div id="CITY" [hidden]="visibleDivId !== 'CITY'">
+    <div id="CITY" [hidden]="visibleDivId !== 'CITY'">
+        <div  id="CHARGE"*ngIf="checkSDLoading() || checkTSDLoading() || checkTDLoading() || checkPDLoading()">
+            Cargando datos, por favor espera...
+        </div>
+        <div *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkTDLoading() && !checkPDLoading()">
             <label>Combo#5 - Combo Ciudades</label>
             <div id="contentSelect">
                 <select name="CITY_V1" [(ngModel)]="_V1" (change)="SITPVariant(_V1, _V2, _V3); getDataCITY(_V1, _V2, _V3, _V4, _V5)">
@@ -87,7 +101,9 @@
                     <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
                 </select>
                 <select name="CITY_V4" [(ngModel)]="_V4" (change)="getDataCITY(_V1, _V2, _V3, _V4, _V5)">
-                    <option value="">Elija el TARIFFPLANIDVARIANT</option>
+                    <option value="">Elija el TARIFFPLANVARIANT</option>
+                    <option value="" *ngIf="planData.length === 0 && !_V1 || !_V2 || !_V3">Selecc. antes los otros elementos</option>
+                    <option value="" *ngIf="planData.length === 0 && _V1 && _V2 && _V3">Cargando datos...</option>
                     <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
                 </select>
                 <select name="CITY_V5" [(ngModel)]="_V5" (change)="getDataCITY(_V1, _V2, _V3, _V4, _V5)">
@@ -97,8 +113,11 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!isLoading">
-        <div id="SECT" [hidden]="visibleDivId !== 'SECT'">
+    <div id="SECT" [hidden]="visibleDivId !== 'SECT'">
+        <div  id="CHARGE"*ngIf="checkSDLoading() || checkTSDLoading() || checkTDLoading() || checkPDLoading()">
+            Cargando datos, por favor espera...
+        </div>
+        <div *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkTDLoading() && !checkPDLoading()">
             <label>Combo#6 - Combo Sector</label>
             <div id="contentSelect">
                 <select name="SECT_V1" [(ngModel)]="_V1" (change)="SITPVariant(_V1, _V2, _V3); getDataSECT(_V1, _V2, _V3, _V4, _V5, _V6)">
@@ -114,7 +133,9 @@
                     <option *ngFor=" let tecnologia of tecnologiaData" [value]="tecnologia" >{{tecnologia}}</option>
                 </select>
                 <select name="SECT_V4" [(ngModel)]="_V4" (change)="getDataSECT(_V1, _V2, _V3, _V4, _V5, _V6)">
-                    <option value="">Elija el TARIFFPLANIDVARIANT</option>
+                    <option value="">Elija el TARIFFPLANVARIANT</option>
+                    <option value="" *ngIf="planData.length === 0 && !_V1 || !_V2 || !_V3">Selecc. antes los otros elementos</option>
+                    <option value="" *ngIf="planData.length === 0 && _V1 && _V2 && _V3">Cargando datos...</option>
                     <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
                 </select>
                 <select name="SECT_V5" [(ngModel)]="_V5" (change)="SIProv(_V5); getDataSECT(_V1, _V2, _V3, _V4, _V5, _V6)">
@@ -123,6 +144,8 @@
                 </select>
                 <select name="SECT_V6" [(ngModel)]="_V6" (change)="getDataSECT(_V1, _V2, _V3, _V4, _V5, _V6)">
                     <option value="">Elija una Ciudad</option>
+                    <option value ="" *ngIf="ciudadData.length === 0 && !_V5">Seleccion. una Provincia</option>
+                    <option value ="" *ngIf="ciudadData.length === 0 && _V5">Cargando Datos...</option>
                     <option *ngFor=" let ciudad of ciudadData" [value]="ciudad.CIUDAD_ID">{{ciudad.CIUDAD}}</option>
                 </select>
             </div>
