@@ -1,1 +1,72 @@
-Hola esta es Tabla Insert
+<div id="content">
+    <table id="principalTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Servicio</th>
+                <th>Tipo de Servicio</th>
+                <th>Red</th>
+                <th>Plan</th>
+                <th>Forma de Pago</th>
+                <th>Buro</th>
+                <th>Provincia</th>
+                <th>Ciudad</th>
+                <th>Sector</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="getData" *ngFor="let row of rows">
+                <td>{{ row.id }}</td>
+                <td>
+                    <select>
+                        <option value="">Elije un Servicio</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Elije un Tipo de Servicio</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Elije una Red</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Elije un Plan</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Elije Forma Pago</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Buro</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Provincia</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Ciudad</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">Sector</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="mas" (click)="addRow()">
+                <td>+</td>
+                <td colspan="9"></td> <!-- Extiende la celda sobre las siguientes 9 columnas -->
+            </tr>
+        </tbody>
+    </table>
+</div>

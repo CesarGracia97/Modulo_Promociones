@@ -1,0 +1,66 @@
+#content {
+    padding: 10px 10px;
+    height: 100%;
+    overflow: auto; /* Añadimos scroll si se excede el contenido */
+    // padding: 20px;
+    // height: auto; /* Cambiado para un manejo automático */
+    // overflow: auto; /* Solo scroll vertical */
+    // max-height: 540px;
+    // background: #f9f9f9; /* Color de fondo más claro */
+    // border-radius: 8px; /* Bordes redondeados para el contenedor */
+    // box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+}
+
+#principalTable {
+    width: 100%; /* Aseguramos que ocupe todo el contenedor */
+    border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px; /* Un tamaño de fuente más grande y legible */
+    color: #333; /* Color de texto oscuro para mejor contraste */
+}
+
+#principalTable thead {
+    background-color: #7e08df62; /* Color de fondo para la cabecera */
+    color: #ffffff; /* Texto blanco para la cabecera */
+}
+
+#principalTable th, #principalTable td {
+    padding: 12px 15px; /* Espaciado adecuado en las celdas */
+    border-bottom: 1px solid #dddddd; /* Línea divisoria sutil */
+    text-align: left; /* Alineación de texto a la izquierda */
+}
+
+#principalTable th {
+    position: sticky; /* Hace que la cabecera sea fija */
+    top: 0; /* Fija la cabecera en la parte superior */
+    z-index: 10; /* Asegura que la cabecera se muestre sobre el contenido */
+    text-align: center;
+}
+
+#principalTable tr:last-child td {
+    border-bottom: none; /* Elimina el borde del último elemento */
+}
+
+select {
+    padding: 8px; /* Más espacio dentro del select */
+    border: 1px solid #ccc; /* Borde sutil */
+    border-radius: 4px; /* Bordes ligeramente redondeados para el select */
+    font-size: 7pt; /* Tamaño de fuente más grande para select */
+    width: 100%; /* Hace que el select ocupe todo el espacio de la celda */
+    box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+}
+
+tr.mas td {
+    cursor: pointer; /* Indica que es un elemento interactivo */
+    text-align: center; /* Centra el contenido de '+', en caso de agregar funcionalidad */
+    background-color: #f0f0f0; /* Fondo distinto para resaltar la acción */
+}
+
+/* Efectos de hover para mejorar la interacción */
+#principalTable tr:hover {
+    background-color: #f4f4f4;
+}
+
+#principalTable thead tr:hover {
+    background-color: #dd3fc862; /* Un azul ligeramente más oscuro al pasar el mouse */
+}
