@@ -61,6 +61,9 @@ export class ButtonsComponent implements OnInit {
         if(value == 'CITY' || value == 'SECT')
           this.fdplace.fetchDataProvincias();
       } else if(value = 'TI'){
+        this.fdplan.fetchDataServicio();
+        this.fdplan.fetchDataTipoServicio();
+        this.fdplace.fetchDataProvincias();
         this.comVisual.visiblePrincipalComponent(value);
       }
     }

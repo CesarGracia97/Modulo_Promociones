@@ -37,9 +37,9 @@ export class HeaderTableComponent implements OnInit{
   dataPROV: {id: string, _V1: string, _V2: string, _V3: string, _V4: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: ''}
   dataCITY: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: ''}
   dataSECT: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string, _V6: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: '',  _V6: ''}
-    //sub-variables inicializadores de elementos HTML
-    ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
-    ssCity: { id_Prov: string } = { id_Prov: '' } 
+  //sub-variables inicializadores de elementos HTML
+  ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
+  ssCity: { id_Prov: string } = { id_Prov: '' } 
   //v. complemento y soporte
   horaActual: string;
   visibleDivId: string | null = null;
@@ -151,18 +151,18 @@ export class HeaderTableComponent implements OnInit{
   
   SITPVariant(value1: string, value2: string, value3: string): void {
     try{
-    // Verificar si se han seleccionado opciones en todos los selectores
-    console.log(this.horaActual+" - SITPVariant");
-    console.log("Servicio seleccionado:", value1);
-    console.log("Tipo de Servicio seleccionado:", value2);
-    console.log("Tecnología seleccionada:", value3);
-    this.ssPlan = { servicio: value1, tipoServicio: value2, tecnologia: value3 };
-    // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
-    if (value1 && value2 && value3) {
-      console.log(this.horaActual+"----------------")
-      console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
-      this.UpTPVariant();
-    }
+      // Verificar si se han seleccionado opciones en todos los selectores
+      console.log(this.horaActual+" - SITPVariant");
+      console.log("Servicio seleccionado:", value1);
+      console.log("Tipo de Servicio seleccionado:", value2);
+      console.log("Tecnología seleccionada:", value3);
+      this.ssPlan = { servicio: value1, tipoServicio: value2, tecnologia: value3 };
+      // Actualizar los planes tarifarios si todos los selectores han sido seleccionados
+      if (value1 && value2 && value3) {
+        console.log(this.horaActual+"----------------")
+        console.log("Todos los selectores han sido seleccionados. Actualizando los planes tarifarios...");
+        this.UpTPVariant();
+      }
     } catch (error) {
       console.log("Error Detectado: ", error)
     }

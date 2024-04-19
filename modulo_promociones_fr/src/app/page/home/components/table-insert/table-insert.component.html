@@ -1,5 +1,8 @@
 <div id="content">
-    <table id="principalTable">
+    <div id="waitCharge" *ngIf="checkSDLoading() || checkTSDLoading() || checkPDLoading()">
+        Por favor espera, Los datos se estan Cargando. Si notas latencia Informa a Cesar Gracia de TI
+    </div> 
+    <table id="principalTable" *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkPDLoading()">
         <thead>
             <tr>
                 <th>#</th>
@@ -10,56 +13,49 @@
                 <th>Forma de Pago</th>
                 <th>Buro</th>
                 <th>Provincia</th>
-                <th>Ciudad</th>
-                <th>Sector</th>
             </tr>
         </thead>
         <tbody>
             <tr id="getData" *ngFor="let row of rows">
                 <td>{{ row.id }}</td>
                 <td>
-                    <select>
-                        <option value="">Elije un Servicio</option>
+                    <select name="_V1" [(ngModel)]="_V1" (ngModelChange)="getDataREDT(_V1, _V2)">
+                        <option value="">Elija el Servicio</option>
+                        <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
                 </td>
                 <td>
-                    <select>
-                        <option value="">Elije un Tipo de Servicio</option>
+                    <select name="_V2" [(ngModel)]="_V2" (ngModelChange)="getDataREDT(_V1, _V2)">
+                        <option value="">Elija el T. Servicio</option>
+                        <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>    
                     </select>
                 </td>
                 <td>
-                    <select>
+                    <select name="_V3" [(ngModel)]="_V3">
                         <option value="">Elije una Red</option>
+                        <option value="" *ngIf="redData.length === 0 && !_V1 || !_V2">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="redData.length === 0 && _V1 && _V2">Cargando Datos..</option>
+                        <option *ngFor="let red of redData" [value]="red">{{red}}</option>
                     </select>
                 </td>
                 <td>
-                    <select>
+                    <select name="_V4" [(ngModel)]="_V4">
                         <option value="">Elije un Plan</option>
                     </select>
                 </td>
                 <td>
-                    <select>
+                    <select name="_V5" [(ngModel)]="_V5">
                         <option value="">Elije Forma Pago</option>
                     </select>
                 </td>
                 <td>
-                    <select>
+                    <select name="_V6" [(ngModel)]="_V6">
                         <option value="">Buro</option>
                     </select>
                 </td>
                 <td>
-                    <select>
+                    <select name="_V7" [(ngModel)]="_V7">
                         <option value="">Provincia</option>
-                    </select>
-                </td>
-                <td>
-                    <select>
-                        <option value="">Ciudad</option>
-                    </select>
-                </td>
-                <td>
-                    <select>
-                        <option value="">Sector</option>
                     </select>
                 </td>
             </tr>
