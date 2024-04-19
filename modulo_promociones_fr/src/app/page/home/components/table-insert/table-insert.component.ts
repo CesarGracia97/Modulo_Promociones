@@ -41,10 +41,17 @@ export class TableInsertComponent implements OnInit  {
   ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
   ssCity: { id_Prov: string } = { id_Prov: '' } 
 
+  options = [
+    {name: 'Debito Ahorro', value:'TISE'},
+    {name: 'Debito Corriente', value:'RED'},
+    {name: 'Tarjeta de Credito', value:'PLAN'},
+    {name: 'Rol de Pago', value:'PROV'},
+    {name: 'Efectivo', value:'CITY'}
+  ];
+
   constructor(
     private comData: CommunicationDataService,
     private fdCRequeriments: FdCombosService,
-    private fdPlnRequeriments: FdPlanesService,
     private fdPlcRequeriments: FdPlacesService
   ){}
 
@@ -53,7 +60,7 @@ export class TableInsertComponent implements OnInit  {
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data;});
     this.comData.dRed$.subscribe(data => {this.redData = data;});
-    this.comData.dPlanes$.subscribe(data => {this.planData = data;});
+    this.comData.dPlan$.subscribe(data => {this.planData = data;});
     this.comData.dProvincia$.subscribe(data => {this.provinciaData = data;});
     this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
   }
@@ -75,6 +82,19 @@ export class TableInsertComponent implements OnInit  {
       }
     } catch(error){
       console.log("Error Detectado: ",error)
+    }
+  }
+
+  getDataPLAN(value1: string, value2:string, value3: string): void {
+    try{
+      this.dataPLAN = {id:'PLAN', _V1: value1, _V2: value2, _V3: value3}
+      if(value1 && value2 && value3){
+        console.log("Todos los selectores PLAN han sido seleccionados. Enviando los datos...");
+        console.log(this.dataPLAN);
+        this.fdCRequeriments.getComboPLAN(this.dataPLAN);
+      }
+    } catch (error){
+      console.log("Error detectado: ",error)
     }
   }
 

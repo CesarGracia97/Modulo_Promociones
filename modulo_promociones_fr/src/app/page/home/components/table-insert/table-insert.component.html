@@ -19,19 +19,19 @@
             <tr id="getData" *ngFor="let row of rows">
                 <td>{{ row.id }}</td>
                 <td>
-                    <select name="_V1" [(ngModel)]="_V1" (ngModelChange)="getDataREDT(_V1, _V2)">
+                    <select name="_V1" [(ngModel)]="_V1" (ngModelChange)="getDataREDT(_V1, _V2); getDataPLAN(_V1, _V2,_V3)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
                 </td>
                 <td>
-                    <select name="_V2" [(ngModel)]="_V2" (ngModelChange)="getDataREDT(_V1, _V2)">
+                    <select name="_V2" [(ngModel)]="_V2" (ngModelChange)="getDataREDT(_V1, _V2); getDataPLAN(_V1, _V2,_V3)">
                         <option value="">Elija el T. Servicio</option>
                         <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>    
                     </select>
                 </td>
                 <td>
-                    <select name="_V3" [(ngModel)]="_V3">
+                    <select name="_V3" [(ngModel)]="_V3" (ngModelChange)="getDataPLAN(_V1, _V2,_V3)">
                         <option value="">Elije una Red</option>
                         <option value="" *ngIf="redData.length === 0 && !_V1 || !_V2">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="redData.length === 0 && _V1 && _V2">Cargando Datos..</option>
@@ -41,6 +41,9 @@
                 <td>
                     <select name="_V4" [(ngModel)]="_V4">
                         <option value="">Elije un Plan</option>
+                        <option value="" *ngIf="planData.length === 0 && !_V1 || !_V2 || !_V3">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="planData.length === 0 && _V1 && _V2 && _V3">Cargando datos...</option>
+                        <option *ngFor=" let plan of planData" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
                     </select>
                 </td>
                 <td>
@@ -56,6 +59,7 @@
                 <td>
                     <select name="_V7" [(ngModel)]="_V7">
                         <option value="">Provincia</option>
+                        <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
                     </select>
                 </td>
             </tr>
