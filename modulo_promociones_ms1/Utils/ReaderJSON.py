@@ -167,6 +167,14 @@ class ReaderJSON:
                                     else:
                                         raise ValueError(
                                             "Se requieren todos los parametros para esta consulta específica.")
+                if _popcion == "Finance":
+                    if "sopcion" in _diccionario:
+                        _sopcion = _diccionario["sopcion"]
+                        if _sopcion == "ALL_DATA":
+                            _nameQuery = _diccionario["name_Query"]
+                            return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                                                                                f"Consulta no encontrada en "
+                                                                                f"{_popcion}, {_sopcion}")
         except Exception as e:
             print("----------------------------------------------")
             print("getQuery - ReaderJSON | Error Detectado:", e)
