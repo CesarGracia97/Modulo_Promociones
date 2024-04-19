@@ -170,7 +170,12 @@ class ReaderJSON:
                 if _popcion == "Finance":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]
-                        if _sopcion == "ALL_DATA":
+                        if _sopcion == "ALL_MPAGOS":
+                            _nameQuery = _diccionario["name_Query"]
+                            return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                                                                                f"Consulta no encontrada en "
+                                                                                f"{_popcion}, {_sopcion}")
+                        if _sopcion == "ALL_BURO":
                             _nameQuery = _diccionario["name_Query"]
                             return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
                                                                                 f"Consulta no encontrada en "
