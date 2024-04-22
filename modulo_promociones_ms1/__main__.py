@@ -2,6 +2,7 @@ from flask import Flask
 from Resources.database.connection import connection
 from Controllers.PeticionPlacesController import receptor_bplc
 from Controllers.PeticionPlanesController import receptor_bpln
+from Controllers.PeticionFinanController import receptor_bfinan
 
 
 def create_app():
@@ -17,6 +18,7 @@ def create_app():
         # Registro de blueprints
         app.register_blueprint(receptor_bplc)
         app.register_blueprint(receptor_bpln)
+        app.register_blueprint(receptor_bfinan)
 
     return app
 

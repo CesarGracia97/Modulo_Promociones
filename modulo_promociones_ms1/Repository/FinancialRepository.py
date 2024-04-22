@@ -35,7 +35,14 @@ class FinancialRepository:
                             print("\n**** Modo de Pago - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
-                        if _sopcion == 2:
+                if _popcion == "ALL_BURO":
+                    if "sopcion" in _diccionario:
+                        _sopcion = _diccionario["sopcion"]
+                        _Qdiccionario = {
+                            "popcion": "Finance",
+                            "sopcion": "ALL_BURO"
+                        }
+                        if _sopcion == 1:
                             _Qdiccionario["name_Query"] = "ALL_BURO"
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
@@ -47,7 +54,7 @@ class FinancialRepository:
                             for result in results:
                                 buro = Buro(result[0], result[1])
                                 data['BURO'].append(buro)
-                            print("\n**** Modo de Pago - DATOS OBTENIDOS ****\n")
+                            print("\n**** BURO - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
         except Exception as e:

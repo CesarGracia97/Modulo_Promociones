@@ -33,9 +33,9 @@ class FrontEndpointController:
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("COMBO ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
-            if _type and _type.upper() == 'ALL_BURO':
+            if _type and _type.upper() == 'ALL_MPAGOS':
                 params = {'type': 'ALL_MPAGOS'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5013/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("mpagp_endpoint - FrontEndpointController | Tipo de Petición no válido")

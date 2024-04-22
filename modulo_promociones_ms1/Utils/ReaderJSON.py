@@ -170,16 +170,14 @@ class ReaderJSON:
                 if _popcion == "Finance":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]
-                        if _sopcion == "ALL_MPAGOS":
+                        if _sopcion in data["Type_Queries"][_popcion]:  # Verificar si _sopcion es una clave válida
                             _nameQuery = _diccionario["name_Query"]
-                            return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                            return data["Type_Queries"][_popcion].get(_nameQuery,
                                                                                 f"Consulta no encontrada en "
                                                                                 f"{_popcion}, {_sopcion}")
-                        if _sopcion == "ALL_BURO":
-                            _nameQuery = _diccionario["name_Query"]
-                            return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
-                                                                                f"Consulta no encontrada en "
-                                                                                f"{_popcion}, {_sopcion}")
+                        else:
+                            return f"{_sopcion} no es una opción válida en {data['Type_Queries'][_popcion]}"
+
         except Exception as e:
             print("----------------------------------------------")
             print("getQuery - ReaderJSON | Error Detectado:", e)

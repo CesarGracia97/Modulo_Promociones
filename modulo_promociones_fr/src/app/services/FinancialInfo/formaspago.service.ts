@@ -1,19 +1,19 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ModosPago } from '../../interfaces/modos-pago.interface';
+import { ModosPago } from '../../interfaces/financial/modos-pago.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormaspagoService {
 
-  private baseUrl ='http://127.0.0.1:5014/api/ra/fina_endpoint';
+  private baseUrl ='http://127.0.0.1:5013/api/ra/fncmpag_endpoint';
 
   constructor(private http:HttpClient) { }
 
   getModosPago():Observable<ModosPago[]> {
-    let params = new HttpParams().set('type', 'ALL_MPAGO');
+    let params = new HttpParams().set('type', 'ALL_MPAGOS');
     return this.http.get<ModosPago[]>(this.baseUrl, { params: params });
   }
 }
