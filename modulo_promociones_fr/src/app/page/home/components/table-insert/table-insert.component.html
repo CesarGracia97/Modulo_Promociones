@@ -1,8 +1,8 @@
 <div id="content">
-    <div id="waitCharge" *ngIf="checkSDLoading() || checkTSDLoading() || checkPDLoading()">
+    <div id="waitCharge" *ngIf="checkSDLoading() || checkTSDLoading() || checkPDLoading() || checkBDLoading() || checkMPDLoading()">
         Por favor espera, Los datos se estan Cargando. Si notas latencia Informa a Cesar Gracia de TI
     </div> 
-    <table id="principalTable" *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkPDLoading()">
+    <table id="principalTable" *ngIf="!checkSDLoading() && !checkTSDLoading() && !checkPDLoading() && !checkBDLoading() && !checkMPDLoading()">
         <thead>
             <tr>
                 <th>#</th>
@@ -49,11 +49,13 @@
                 <td>
                     <select name="_V5" [(ngModel)]="_V5">
                         <option value="">Elije Forma Pago</option>
+                        <option *ngFor=" let mdpg of modoPagosData" [value]="mdpg.ID">{{mdpg.NAME}}</option>
                     </select>
                 </td>
                 <td>
                     <select name="_V6" [(ngModel)]="_V6">
                         <option value="">Buro</option>
+                        <option *ngFor=" let buro of buroData" [value]="buro.ID">{{buro.NAME}}</option>
                     </select>
                 </td>
                 <td>

@@ -8,6 +8,8 @@ import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface
 import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { Ciudades } from '../../interfaces/places/ciudad.interface';
 import { Sectores } from '../../interfaces/places/sector.interface';
+import { Buro } from '../../interfaces/financial/buro.interface';
+import { ModosPago } from '../../interfaces/financial/modos-pago.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +46,12 @@ export class CommunicationDataService {
   dCiudades$ = this.dCiudades_Subject.asObservable();
   private dSectores_Subject = new Subject<Sectores[]>();
   dSectores$ = this.dSectores_Subject.asObservable();
+
+  //Variables de Comunicacion de datos Tipo Complemento
+  private dBuro_Subject = new Subject<Buro[]>();
+  dBuro$ = this.dBuro_Subject.asObservable();
+  private dModoPago_Subject = new Subject<ModosPago[]>();
+  dModoPago$ = this.dModoPago_Subject.asObservable();
   
   constructor() { }
   
@@ -97,5 +105,13 @@ export class CommunicationDataService {
   
   sendDataSectores(data: Sectores[]){
     this.dSectores_Subject.next(data);
+  }
+
+  sendDataBuro(data: Buro[]){
+    this.dBuro_Subject.next(data);
+  }
+
+  sendDataModosPago(data: ModosPago[]){
+    this.dModoPago_Subject.next(data);
   }
 }

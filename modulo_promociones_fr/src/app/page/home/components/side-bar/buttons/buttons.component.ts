@@ -3,6 +3,8 @@ import { CommunicationVisibleService } from '../../../../../services/communicati
 import { CommonModule } from '@angular/common';
 import { FdPlanesService } from '../../../../../services/fetchData/fd-planes.service';
 import { FdPlacesService } from '../../../../../services/fetchData/fd-places.service';
+import { FdBuroService } from '../../../../../services/fetchData/fd-buro.service';
+import { FdModospagosService } from '../../../../../services/fetchData/fd-modospagos.service';
 
 @Component({
   selector: 'app-buttons',
@@ -28,6 +30,8 @@ export class ButtonsComponent implements OnInit {
     private comVisual: CommunicationVisibleService,
     private fdplan: FdPlanesService,
     private fdplace: FdPlacesService,
+    private fdburo: FdBuroService,
+    private fdmopg: FdModospagosService
   ){}
 
   ngOnInit(): void {
@@ -64,6 +68,8 @@ export class ButtonsComponent implements OnInit {
         this.fdplan.fetchDataServicio();
         this.fdplan.fetchDataTipoServicio();
         this.fdplace.fetchDataProvincias();
+        this.fdburo.fetchDataBuro();
+        this.fdmopg.fetchDataModosPago();
         this.comVisual.visiblePrincipalComponent(value);
       }
     }

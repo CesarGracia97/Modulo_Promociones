@@ -8,7 +8,7 @@ import { ModosPago } from '../../interfaces/financial/modos-pago.interface';
 })
 export class FormaspagoService {
 
-  private baseUrl ='http://127.0.0.1:5013/api/ra/fncmpag_endpoint';
+  private baseUrl ='http://127.0.0.1:5014/api/ra/fncmpag_endpoint';
 
   constructor(private http:HttpClient) { }
 

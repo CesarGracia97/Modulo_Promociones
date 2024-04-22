@@ -11,6 +11,8 @@ import { CommunicationDataService } from '../../../../services/communication/com
 import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
 import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
+import { Buro } from '../../../../interfaces/financial/buro.interface';
+import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
 
 @Component({
   selector: 'app-table-insert',
@@ -31,6 +33,8 @@ export class TableInsertComponent implements OnInit  {
   planData: TariffPlanesVariant[] = [];
   provinciaData: Provincias[] = [];
   ciudadData: Ciudades[] = [];
+  buroData: Buro[] = [];
+  modoPagosData: ModosPago[] = [];
 
   dataREDT: {id: string, _V1: string, _V2: string} = {id: '', _V1: '',  _V2: ''}
   dataPLAN: {id: string, _V1: string, _V2: string, _V3: string} = {id: '', _V1: '',  _V2: '',  _V3: ''}
@@ -40,14 +44,6 @@ export class TableInsertComponent implements OnInit  {
   //sub-variables inicializadores de elementos HTML
   ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
   ssCity: { id_Prov: string } = { id_Prov: '' } 
-
-  options = [
-    {name: 'Debito Ahorro', value:'TISE'},
-    {name: 'Debito Corriente', value:'RED'},
-    {name: 'Tarjeta de Credito', value:'PLAN'},
-    {name: 'Rol de Pago', value:'PROV'},
-    {name: 'Efectivo', value:'CITY'}
-  ];
 
   constructor(
     private comData: CommunicationDataService,
@@ -63,6 +59,8 @@ export class TableInsertComponent implements OnInit  {
     this.comData.dPlan$.subscribe(data => {this.planData = data;});
     this.comData.dProvincia$.subscribe(data => {this.provinciaData = data;});
     this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
+    this.comData.dBuro$.subscribe(data => {this.buroData = data});
+    this.comData.dModoPago$.subscribe(data => { this.modoPagosData = data});
   }
 
   addRow(): void {
@@ -108,5 +106,13 @@ export class TableInsertComponent implements OnInit  {
 
   checkPDLoading() {
     return this.provinciaData.length === 0;
+  }
+
+  checkBDLoading(){
+    return this.buroData.length === 0;
+  }
+
+  checkMPDLoading(){
+    return this.modoPagosData.length === 0;
   }
 }

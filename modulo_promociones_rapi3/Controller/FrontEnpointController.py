@@ -15,7 +15,7 @@ class FrontEndpointController:
             _type = request.args.get('type')
             if _type and _type.upper() == 'ALL_BURO':
                 params = {'type': 'ALL_BURO'}
-                response = requests.get('http://localhost:5013/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5014/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("burop_endpoint - FrontEndpointController | Tipo de Petición no válido")
@@ -35,7 +35,7 @@ class FrontEndpointController:
             _type = request.args.get('type')
             if _type and _type.upper() == 'ALL_MPAGOS':
                 params = {'type': 'ALL_MPAGOS'}
-                response = requests.get('http://localhost:5013/api/ra/plcback_endpoint', params=params)
+                response = requests.get('http://localhost:5014/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
                 print("mpagp_endpoint - FrontEndpointController | Tipo de Petición no válido")
