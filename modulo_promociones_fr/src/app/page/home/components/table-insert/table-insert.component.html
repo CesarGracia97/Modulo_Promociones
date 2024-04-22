@@ -13,6 +13,8 @@
                 <th>Forma de Pago</th>
                 <th>Buro</th>
                 <th>Provincia</th>
+                <th>Ciudad y Sectores</th>
+                <th>Enviar</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +66,8 @@
                         <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
                     </select>
                 </td>
+                <td></td>
+                <td></td>
             </tr>
             <tr class="mas" (click)="addRow()">
                 <td>+</td>

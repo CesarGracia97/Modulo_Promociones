@@ -17,4 +17,10 @@ export class ProvinciasService {
     let params = new HttpParams().set('type', 'ALL_PROVS');
     return this.http.get<Provincias[]>(this.baseUrl, { params: params });
   }
+
+  getProvinciasXTecnologias(tecnologia: string):Observable<Provincias[]>{
+    let params = new HttpParams().set('type', 'ALL_PROVS')
+    .set('TECNOLOGIA', tecnologia);
+    return this.http.get<Provincias[]>(this.baseUrl, { params: params });
+  }
 }
