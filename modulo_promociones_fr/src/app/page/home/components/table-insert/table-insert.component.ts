@@ -10,9 +10,9 @@ import { TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.
 import { CommunicationDataService } from '../../../../services/communication/communicationData.service';
 import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
-import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
 import { Buro } from '../../../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
+import { Sectores } from '../../../../interfaces/places/sector.interface';
 
 @Component({
   selector: 'app-table-insert',
@@ -33,17 +33,14 @@ export class TableInsertComponent implements OnInit  {
   planData: TariffPlanesVariant[] = [];
   provinciaData: Provincias[] = [];
   ciudadData: Ciudades[] = [];
+  sectoresData: Sectores[] = [];
   buroData: Buro[] = [];
   modoPagosData: ModosPago[] = [];
 
   dataREDT: {id: string, _V1: string, _V2: string} = {id: '', _V1: '',  _V2: ''}
   dataPLAN: {id: string, _V1: string, _V2: string, _V3: string} = {id: '', _V1: '',  _V2: '',  _V3: ''}
-  dataPROV: {id: string, _V1: string, _V2: string, _V3: string, _V4: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: ''}
-  dataCITY: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: ''}
-  dataSECT: {id: string, _V1: string, _V2: string, _V3: string, _V4: string, _V5: string, _V6: string} = {id: '', _V1: '',  _V2: '',  _V3: '',  _V4: '',  _V5: '',  _V6: ''}
+  
   //sub-variables inicializadores de elementos HTML
-  ssPlan: { servicio: string, tipoServicio: string, tecnologia: string } = { servicio: '', tipoServicio: '', tecnologia: ''  };
-  ssCity: { id_Prov: string } = { id_Prov: '' } 
 
   constructor(
     private comData: CommunicationDataService,
@@ -59,6 +56,7 @@ export class TableInsertComponent implements OnInit  {
     this.comData.dPlan$.subscribe(data => {this.planData = data;});
     this.comData.dProvincia$.subscribe(data => {this.provinciaData = data;});
     this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
+    this.comData.dSectores$.subscribe(data => {this.sectoresData = data;})
     this.comData.dBuro$.subscribe(data => {this.buroData = data});
     this.comData.dModoPago$.subscribe(data => { this.modoPagosData = data});
   }
@@ -87,11 +85,19 @@ export class TableInsertComponent implements OnInit  {
     try{
       this.dataPLAN = {id:'PLAN', _V1: value1, _V2: value2, _V3: value3}
       if(value1 && value2 && value3){
-        console.log("Todos los selectores PLAN han sido seleccionados. Enviando los datos...");
-        console.log(this.dataPLAN);
         this.fdCRequeriments.getComboPLAN(this.dataPLAN);
       }
-    } catch (error){
+    } catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
+
+  getDataProvincias(tecnologias: string, tariffPlanesVariantID: string): void {
+    try{
+      if(tecnologias && tariffPlanesVariantID){
+        this.fdPlcRequeriments.fetchDataProvinciasXTecnologiaXTariffplanVariant(tecnologias, parseInt(tariffPlanesVariantID))
+      }
+    }  catch (error) {
       console.log("Error detectado: ",error)
     }
   }

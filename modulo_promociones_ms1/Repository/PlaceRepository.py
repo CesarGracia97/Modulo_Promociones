@@ -137,6 +137,59 @@ class PlaceRepository:
                             print("\n**** SUB SECTORES ESPECIFICOS POR SECTOR - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
+                        elif _sopcion == 4:
+                            _Qdiccionario["name_Query"] = "SPECIFIC_PROVXTT"
+                            _Qdiccionario["_V1"] = _diccionario["_V1"]
+                            _Qdiccionario["_V2"] = _diccionario["_V2"]
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'PROVINCIES': []
+                            }
+                            for result in results:
+                                provincia = Provincia(result[0], result[1])
+                                data['PROVINCIES'].append(provincia)
+                            print("\n**** PROVINCIA ESPECIFICAS TT - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
+                        elif _sopcion == 5:
+                            _Qdiccionario["name_Query"] = "SPECIFIC_CITYXTT"
+                            _Qdiccionario["_V1"] = _diccionario["id_Prov"]
+                            _Qdiccionario["_V2"] = _diccionario["_V1"]
+                            _Qdiccionario["_V3"] = _diccionario["_V2"]
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'CITIESxPROV': []
+                            }
+                            for result in results:
+                                ciudad = CiudadxProvincia(result[0], result[1])
+                                data['CITIESxPROV'].append(ciudad)
+                            print("\n**** CIUDADES ESPECIFICAS TT - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
+                        elif _sopcion == 6:
+                            _Qdiccionario["name_Query"] = "SPECIFIC_SECTXTT"
+                            _Qdiccionario["_V1"] = _diccionario["id_City"]
+                            _Qdiccionario["_V2"] = _diccionario["_V1"]
+                            _Qdiccionario["_V3"] = _diccionario["_V2"]
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'SECTORSxCITY': []
+                            }
+                            for result in results:
+                                sector = SectorxCiudad(result[0], result[1])
+                                data['SECTORSxCITY'].append(sector)
+                            print("\n**** SECTORES ESPECIFICOS TT - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
                         else:
                             self.db.close()
                             print("Segunda Opción no válida: ", _sopcion)

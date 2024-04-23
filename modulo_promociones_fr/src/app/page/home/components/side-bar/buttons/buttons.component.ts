@@ -67,7 +67,6 @@ export class ButtonsComponent implements OnInit {
       } else if(value = 'TI'){
         this.fdplan.fetchDataServicio();
         this.fdplan.fetchDataTipoServicio();
-        this.fdplace.fetchDataProvincias();
         this.fdburo.fetchDataBuro();
         this.fdmopg.fetchDataModosPago();
         this.comVisual.visiblePrincipalComponent(value);

@@ -86,6 +86,49 @@ class PeticionPlacesController:
                 data_ssst = repository.getData_Places(_diccionario)
                 dt_ssst = frt.formated_specific_sub_sector(data_ssst)
                 return jsonify(dt_ssst), 200
+
+            elif _type.upper() == "SPECIFIC_PROVXTT":
+                _V1 = data.get('_V1')
+                _V2 = data.get('_V2')
+                _diccionario = {
+                    "popcion": "PARAMETRE_DATA",
+                    "sopcion": 4,
+                    "_V1": _V1,
+                    "_V2": _V2
+                }
+                data_prv = repository.getData_Places(_diccionario)
+                dt_prv = frt.formated_provinces(data_prv)
+                return jsonify(dt_prv), 200
+
+            elif _type.upper() == "SPECIFIC_CITYXTT":
+                _idProv = data.get('id_Prov')
+                _V1 = data.get('_V1')
+                _V2 = data.get('_V2')
+                _diccionario = {
+                    "popcion": "PARAMETRE_DATA",
+                    "sopcion": 5,
+                    "id_Prov": _idProv,
+                    "_V1": _V1,
+                    "_V2": _V2
+                }
+                data_scts = repository.getData_Places(_diccionario)
+                dt_scts = frt.formated_specific_city(data_scts)
+                return jsonify(dt_scts), 200
+
+            elif _type.upper() == "SPECIFIC_SECTXTT":
+                _idCity = data.get('id_City')
+                _V1 = data.get('_V1')
+                _V2 = data.get('_V2')
+                _diccionario = {
+                    "popcion": "PARAMETRE_DATA",
+                    "sopcion": 6,
+                    "id_City": _idCity,
+                    "_V1": _V1,
+                    "_V2": _V2
+                }
+                data_ssct = repository.getData_Places(_diccionario)
+                dt_ssct = frt.formated_specific_sector(data_ssct)
+                return jsonify(dt_ssct), 200
             else:
                 return jsonify({'error': 'El valor del campo "tipo" no es válido'}), 400
 

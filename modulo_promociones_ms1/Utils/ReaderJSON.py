@@ -23,14 +23,27 @@ class ReaderJSON:
                                                                                 f"{_popcion}, {_sopcion}")
                         if _sopcion == "PARAMETRE_DATA":
                             _nameQuery = _diccionario["name_Query"]
-                            _parametro = _diccionario["id"]
-                            if _nameQuery.startswith("SPECIFIC_") and _parametro is None:
+                            if _nameQuery == "SPECIFIC_PROVXTT":
+                                _V1 = _diccionario["_V1"]
+                                _V2 = _diccionario["_V2"]
+                                return (data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                                            f"Consulta no encontrada en "f"{_popcion}, {_sopcion}")
+                                            .replace("_V1", str(_V1)).replace("_V2", str(_V2)))
+                            if _nameQuery == "SPECIFIC_CITYXTT" or _nameQuery == "SPECIFIC_SECTXTT":
+                                _V1 = _diccionario["_V1"]
+                                _V2 = _diccionario["_V2"]
+                                _V3 = _diccionario["_V3"]
+                                return (data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                                        f"Consulta no encontrada en "f"{_popcion}, {_sopcion}")
+                                        .replace("_V1", str(_V1)).replace("_V2", str(_V2)).replace("_V3", str(_V3)))
+                            if _nameQuery.startswith("SPECIFIC_"):
                                 raise ValueError("Se requiere un parámetro para esta consulta específica.")
                             if _nameQuery.startswith("SPECIFIC_"):
-                                return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
-                                                                                    f"Consulta no encontrada en "
-                                                                                    f"{_popcion}, {_sopcion}").replace(
-                                    "?", str(_parametro))
+                                _parametro = _diccionario["id"]
+                                return (data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                                            f"Consulta no encontrada en "f"{_popcion}, {_sopcion}")
+                                .replace("?", str(_parametro)))
+
                 if _popcion == "Planes":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]

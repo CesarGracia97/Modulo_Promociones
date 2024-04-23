@@ -24,7 +24,7 @@ export class CiudadService {
   }
 
   getCiudadesXTecnologiaXTariffplanVariant(id_Prov:number, tecnologia: string, tariffplanvariant: number):Observable<Ciudades[]>{
-    let params = new HttpParams().set('type', 'CITY_SPECIFIC')
+    let params = new HttpParams().set('type', 'SPECIFIC_CITYXTT')
     .set('id_Prov', id_Prov.toString())
     .set('TECNOLOGIA', tecnologia)
     .set('TARIFFPLANVARIANT', tariffplanvariant);

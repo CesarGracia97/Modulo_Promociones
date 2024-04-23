@@ -24,7 +24,7 @@ export class SectorService {
   }
 
   getSectoresXTecnologiaXTariffplanVariant(id_City: number, tecnologia: string, tariffplanvariant: number):Observable<Sectores[]>{
-    let params = new HttpParams().set('type', 'SECTOR_SPECIFIC')
+    let params = new HttpParams().set('type', 'SPECIFIC_SECTXTT')
     .set('id_City', id_City.toString())
     .set('TECNOLOGIA', tecnologia)
     .set('TARIFFPLANVARIANT', tariffplanvariant);
