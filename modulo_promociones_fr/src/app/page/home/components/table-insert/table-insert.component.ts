@@ -63,7 +63,14 @@ export class TableInsertComponent implements OnInit  {
 
   addRow(): void {
     const newRow = {
-      id: this.rows.length + 1
+      id: this.rows.length + 1,
+      _V1: '',
+      _V2: '',
+      _V3: '',
+      _V4: '',
+      _V5: '',
+      _V6: '',
+      _V7: ''
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
   }
