@@ -23,10 +23,11 @@ export class SectorService {
     return this.http.get<Sectores[]>(this.baseUrl, { params: params });
   }
 
-  getSectoresXTecnologia(id_City: number, tecnologia: string):Observable<Sectores[]>{
+  getSectoresXTecnologiaXTariffplanVariant(id_City: number, tecnologia: string, tariffplanvariant: number):Observable<Sectores[]>{
     let params = new HttpParams().set('type', 'SECTOR_SPECIFIC')
     .set('id_City', id_City.toString())
-    .set('TECNOLOGIA', tecnologia);
+    .set('TECNOLOGIA', tecnologia)
+    .set('TARIFFPLANVARIANT', tariffplanvariant);
     return this.http.get<Sectores[]>(this.baseUrl, { params: params });
   }
 }

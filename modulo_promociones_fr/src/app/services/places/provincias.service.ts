@@ -18,9 +18,10 @@ export class ProvinciasService {
     return this.http.get<Provincias[]>(this.baseUrl, { params: params });
   }
 
-  getProvinciasXTecnologias(tecnologia: string):Observable<Provincias[]>{
+  getProvinciasXTecnologiasXTariffplanVariant(tecnologia: string, tariffplanvariant: number):Observable<Provincias[]>{
     let params = new HttpParams().set('type', 'ALL_PROVS')
-    .set('TECNOLOGIA', tecnologia);
+    .set('TECNOLOGIA', tecnologia)
+    .set('TARIFFPLANVARIANT', tariffplanvariant);
     return this.http.get<Provincias[]>(this.baseUrl, { params: params });
   }
 }
