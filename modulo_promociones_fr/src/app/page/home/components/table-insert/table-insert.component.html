@@ -21,19 +21,19 @@
             <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
                 <td>{{ row.id }}</td>
                 <td>
-                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataREDT(row._V1, row._V2); getDataPLAN(row._V1, row._V2, row._V3)">
+                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
                 </td>
                 <td>
-                    <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataREDT(row._V1, row._V2); getDataPLAN(row._V1, row._V2, row._V3)">
+                    <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el T. Servicio</option>
                         <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>    
                     </select>
                 </td>
                 <td>
-                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPLAN(row._V1, row._V2, row._V3); getDataProvincias(row._V3, row._V4)">
+                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPLAN(row._V1, row._V2, row._V3, i); getDataProvincias(row._V3, row._V4, i)">
                         <option value="">Elije una Red</option>
                         <option value="" *ngIf="redData.length === 0 && !row._V1 || !row._V2">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="redData.length === 0 && row._V1 && row._V2">Cargando Datos..</option>
@@ -41,7 +41,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="_V4" [(ngModel)]="row._V4" (ngModelChange)="getDataProvincias(row._V3, row._V4)">
+                    <select name="_V4" [(ngModel)]="row._V4" (ngModelChange)="getDataProvincias(row._V3, row._V4, i)">
                         <option value="">Elije un Plan</option>
                         <option value="" *ngIf="planData.length === 0 && !row._V1 || !row._V2 || !row._V3">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="planData.length === 0 && row._V1 && row._V2 && row._V3">Cargando datos...</option>
@@ -56,7 +56,7 @@
                 </td>
                 <td>
                     <select name="_V6" [(ngModel)]="row._V6">
-                        <option value="">Buro</option>
+                        <option value="">Elije Categoria del Buro</option>
                         <option *ngFor=" let buro of buroData" [value]="buro.ID">{{buro.NAME}}</option>
                     </select>
                 </td>
@@ -68,8 +68,8 @@
                         <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
                     </select>
                 </td>
-                <td><button>Seleccionar</button></td>
-                <td><button>Enviar Carga</button></td>
+                <td><button id="button" [disabled]="!areAllValuesSelected(row)">Seleccionar</button></td>
+                <td><button id="button">Enviar Carga</button></td>
             </tr>
             <tr class="mas" (click)="addRow()">
                 <td>+</td>

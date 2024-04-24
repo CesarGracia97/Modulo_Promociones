@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Servicios } from '../../../../interfaces/planes/servicios.interface';
 import { TipoServicios } from '../../../../interfaces/planes/tiposervicios.interface';
@@ -11,8 +11,6 @@ import { CommunicationDataService } from '../../../../services/communication/com
 import { Buro } from '../../../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
 import { Sectores } from '../../../../interfaces/places/sector.interface';
-import { CombosService } from '../../../../services/planes/combos.service';
-import { ProvinciasService } from '../../../../services/places/provincias.service';
 import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
 
@@ -27,7 +25,7 @@ export class TableInsertComponent implements OnInit  {
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; _V4: string = ''; _V5: string = ''; _V6: string = '';
   _V7: string = ''; _V8: string = ''; _V9: string = '';
-  rows: any[] = []; // Arreglo para almacenar las filas y sus datos
+  @Input() rows: any[] = []; // Arreglo para almacenar las filas y sus datos
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   tiposervicioData: TipoServicios[] = [];
@@ -72,17 +70,12 @@ export class TableInsertComponent implements OnInit  {
       _V4: '',
       _V5: '',
       _V6: '',
-      _V7: '',
-      rowData: {
-        redData: [] as Tecnologias[],
-        planData: [] as TariffPlanesVariant[],
-        provinciaData: [] as Provincias[]
-      }
+      _V7: ''
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
   }
 
-  getDataREDT(value1: string, value2: string): void {
+  getDataREDT(value1: string, value2: string, index: number): void {
     try{
       this.dataREDT= {id: 'RED', _V1: value1, _V2: value2 }
       if(value1 && value2){
@@ -95,7 +88,7 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  getDataPLAN(value1: string, value2:string, value3: string): void {
+  getDataPLAN(value1: string, value2:string, value3: string, index: number): void {
     try{
       this.dataPLAN = {id:'PLAN', _V1: value1, _V2: value2, _V3: value3}
       if(value1 && value2 && value3){
@@ -106,7 +99,7 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  getDataProvincias(tecnologias: string, tariffPlanesVariantID: string): void {
+  getDataProvincias(tecnologias: string, tariffPlanesVariantID: string, index: number): void {
     try{
       if(tecnologias && tariffPlanesVariantID){
         this.fdPlcRequeriments.fetchDataProvinciasXTecnologiaXTariffplanVariant(tecnologias, parseInt(tariffPlanesVariantID))
@@ -116,7 +109,10 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-
+  areAllValuesSelected(row: any): boolean {
+    return row._V1 && row._V2 && row._V3 && row._V4 && row._V5 && row._V6 && row._V7;
+  }
+  
   checkSDLoading() {
     return this.serviciosData.length === 0;
   }

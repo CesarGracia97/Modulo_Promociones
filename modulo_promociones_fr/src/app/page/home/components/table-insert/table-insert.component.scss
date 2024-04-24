@@ -64,3 +64,9 @@ tr.mas td {
 #principalTable thead tr:hover {
     background-color: #dd3fc862; /* Un azul ligeramente más oscuro al pasar el mouse */
 }
+
+#button {
+    display: block; /* Hace que los botones se comporten como bloques */
+    margin: 0 auto; /* Centra los botones horizontalmente */
+    text-align: center; /* Alinea el texto dentro del botón al centro */
+}
