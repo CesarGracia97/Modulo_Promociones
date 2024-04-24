@@ -109,7 +109,11 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  areAllValuesSelected(row: any): boolean {
+  buttton_V1_V7(row: any): boolean {
+    return row._V1 && row._V2 && row._V3 && row._V4 && row._V5 && row._V6 && row._V7;
+  }
+
+  buttton_V1_V8(row: any): boolean {
     return row._V1 && row._V2 && row._V3 && row._V4 && row._V5 && row._V6 && row._V7;
   }
   

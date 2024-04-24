@@ -68,7 +68,7 @@
                         <option *ngFor=" let provincia of provinciaData" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
                     </select>
                 </td>
-                <td><button id="button" [disabled]="!areAllValuesSelected(row)">Seleccionar</button></td>
+                <td><button id="button" [disabled]="!buttton_V1_V7(row)">Seleccionar</button></td>
                 <td><button id="button">Enviar Carga</button></td>
             </tr>
             <tr class="mas" (click)="addRow()">
