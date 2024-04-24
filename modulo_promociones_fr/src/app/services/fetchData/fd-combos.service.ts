@@ -161,4 +161,43 @@ export class FdCombosService {
       }
     });
   }
+
+  // Retornar informacion Directamente
+
+  getComboRED_RETURN(diccionario:{[key: string]: any}){
+    const id = diccionario['id'];
+    let _V1, _V2;
+    _V1 = diccionario['_V1'];
+    _V2 = diccionario['_V2'];
+    this.combo.getCombosRedTecnologia(_V1,_V2).subscribe((response: any) => {
+      if(response && response.C_TECNOLOGIA){
+        this.c_redt = response.C_TECNOLOGIA.map((red: any) => red.TECNOLOGIA);
+      } else {
+        console.error("La respuesta no presenta la propiedad 'TECNOLOGIA'.")
+      }
+    });
+    return this.c_redt;
+  }
+
+  getComboPLAN_RETURN(diccionario:{[key: string]: any}){
+    const id = diccionario['id'];
+    let _V1, _V2, _V3;
+    _V1 = diccionario['_V1'];
+    _V2 = diccionario['_V2'];
+    _V3 = diccionario['_V3'];
+    this.combo.getCombosPlanes(_V1, _V2, _V3).subscribe((response: any) => {
+      console.log(response);
+      if (response && response.C_PLANES){
+        this.c_plan = response.C_PLANES.map((plan: any) => {
+          return {
+            TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
+            TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
+          };
+        });
+      } else {
+        console.error("La respuesta no presenta la propiedad 'TECNOLOGIA'.")
+      } 
+    });
+    return this.c_plan
+  }
 }

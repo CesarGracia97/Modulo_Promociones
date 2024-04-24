@@ -8,11 +8,13 @@ import { Ciudades } from '../../../../interfaces/places/ciudad.interface';
 import { Provincias } from '../../../../interfaces/places/provincias.interface';
 import { TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../../../../services/communication/communicationData.service';
-import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
-import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
 import { Buro } from '../../../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
 import { Sectores } from '../../../../interfaces/places/sector.interface';
+import { CombosService } from '../../../../services/planes/combos.service';
+import { ProvinciasService } from '../../../../services/places/provincias.service';
+import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
+import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
 
 @Component({
   selector: 'app-table-insert',
@@ -25,7 +27,7 @@ export class TableInsertComponent implements OnInit  {
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; _V4: string = ''; _V5: string = ''; _V6: string = '';
   _V7: string = ''; _V8: string = ''; _V9: string = '';
-  rows: any[] = []; //filas
+  rows: any[] = []; // Arreglo para almacenar las filas y sus datos
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   tiposervicioData: TipoServicios[] = [];
@@ -39,7 +41,7 @@ export class TableInsertComponent implements OnInit  {
 
   dataREDT: {id: string, _V1: string, _V2: string} = {id: '', _V1: '',  _V2: ''}
   dataPLAN: {id: string, _V1: string, _V2: string, _V3: string} = {id: '', _V1: '',  _V2: '',  _V3: ''}
-  
+ 
   //sub-variables inicializadores de elementos HTML
 
   constructor(
@@ -70,7 +72,12 @@ export class TableInsertComponent implements OnInit  {
       _V4: '',
       _V5: '',
       _V6: '',
-      _V7: ''
+      _V7: '',
+      rowData: {
+        redData: [] as Tecnologias[],
+        planData: [] as TariffPlanesVariant[],
+        provinciaData: [] as Provincias[]
+      }
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
   }
@@ -108,6 +115,7 @@ export class TableInsertComponent implements OnInit  {
       console.log("Error detectado: ",error)
     }
   }
+
 
   checkSDLoading() {
     return this.serviciosData.length === 0;

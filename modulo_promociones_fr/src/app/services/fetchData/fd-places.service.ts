@@ -108,4 +108,21 @@ export class FdPlacesService {
       }
     });
   }
+
+  //Retornar directamente
+
+  fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologia: string, tariffplanvariant: number){
+    console.log("ProvinciaTTData");
+    this.prov.getProvinciasXTecnologiasXTariffplanVariant(tecnologia, tariffplanvariant).subscribe((response: any) =>{
+      console.log(response); 
+      if (response && response.PROVINCIES){
+        return this.provinciaData = response.PROVINCIES.map((provincia: any) => {
+          return {
+            PROVINCIA_ID: provincia.PROVINCIA_ID,
+            PROVINCIA: provincia.PROVINCIA
+          };
+        });
+      }
+    });
+  }
 }
