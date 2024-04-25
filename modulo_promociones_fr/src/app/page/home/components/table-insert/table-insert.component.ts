@@ -13,6 +13,7 @@ import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface
 import { Sectores } from '../../../../interfaces/places/sector.interface';
 import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
+import { CombosService } from '../../../../services/planes/combos.service';
 
 @Component({
   selector: 'app-table-insert',
@@ -29,32 +30,25 @@ export class TableInsertComponent implements OnInit  {
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   tiposervicioData: TipoServicios[] = [];
-  redData: Tecnologias[] = [];
-  planData: TariffPlanesVariant[] = [];
-  provinciaData: Provincias[] = [];
+  redData: Tecnologias[][] = [];
+  planData: TariffPlanesVariant[][] = [];
+  provinciaData: Provincias[][] = [];
   ciudadData: Ciudades[] = [];
   sectoresData: Sectores[] = [];
   buroData: Buro[] = [];
   modoPagosData: ModosPago[] = [];
-
-  dataREDT: {id: string, _V1: string, _V2: string} = {id: '', _V1: '',  _V2: ''}
-  dataPLAN: {id: string, _V1: string, _V2: string, _V3: string} = {id: '', _V1: '',  _V2: '',  _V3: ''}
  
-  //sub-variables inicializadores de elementos HTML
-
   constructor(
     private comData: CommunicationDataService,
-    private fdCRequeriments: FdCombosService,
-    private fdPlcRequeriments: FdPlacesService
+    private combo: CombosService,
+    private fdpl: FdPlacesService,
+    private fdcb: FdCombosService
   ){}
 
   ngOnInit(): void {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data;});
-    this.comData.dRed$.subscribe(data => {this.redData = data;});
-    this.comData.dPlan$.subscribe(data => {this.planData = data;});
-    this.comData.dProvincia$.subscribe(data => {this.provinciaData = data;});
     this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
     this.comData.dSectores$.subscribe(data => {this.sectoresData = data;})
     this.comData.dBuro$.subscribe(data => {this.buroData = data});
@@ -70,18 +64,25 @@ export class TableInsertComponent implements OnInit  {
       _V4: '',
       _V5: '',
       _V6: '',
-      _V7: ''
+      _V7: '',
+      redData: [],
+      planData: [],
+      provinciaData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
+    this.redData.push([]); // Inicializar redData específico para la nueva fila
+    this.planData.push([]);
+    this.provinciaData.push([]);
+
   }
 
   getDataREDT(value1: string, value2: string, index: number): void {
     try{
-      this.dataREDT= {id: 'RED', _V1: value1, _V2: value2 }
       if(value1 && value2){
         console.log("Todos los selectores RED han sido seleccionados. Enviando los datos...");
-        console.log(this.dataREDT)
-        this.fdCRequeriments.getComboRED(this.dataREDT);
+        this.fdcb.getComboRED_RETURN(value1, value2).subscribe((red: Tecnologias[]) => {
+          this.redData[index] = red;
+        });
       }
     } catch(error){
       console.log("Error Detectado: ",error)
@@ -90,9 +91,10 @@ export class TableInsertComponent implements OnInit  {
 
   getDataPLAN(value1: string, value2:string, value3: string, index: number): void {
     try{
-      this.dataPLAN = {id:'PLAN', _V1: value1, _V2: value2, _V3: value3}
       if(value1 && value2 && value3){
-        this.fdCRequeriments.getComboPLAN(this.dataPLAN);
+        this.fdcb.getComboPLAN_RETURN(value1, value2, value3).subscribe((plan: TariffPlanesVariant[]) =>{
+          this.planData[index] = plan;
+        })
       }
     } catch (error) {
       console.log("Error detectado: ",error)
@@ -102,7 +104,10 @@ export class TableInsertComponent implements OnInit  {
   getDataProvincias(tecnologias: string, tariffPlanesVariantID: string, index: number): void {
     try{
       if(tecnologias && tariffPlanesVariantID){
-        this.fdPlcRequeriments.fetchDataProvinciasXTecnologiaXTariffplanVariant(tecnologias, parseInt(tariffPlanesVariantID))
+        this.fdpl.fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologias, parseInt(tariffPlanesVariantID))
+        .subscribe((prv: Provincias[]) => {
+          this.provinciaData[index] = prv;
+        });
       }
     }  catch (error) {
       console.log("Error detectado: ",error)

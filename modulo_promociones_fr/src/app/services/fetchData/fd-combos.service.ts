@@ -7,6 +7,7 @@ import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface
 import { CombosService } from '../planes/combos.service';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { CommunicationVisibleService } from '../communication/communicationVisible.service';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -164,40 +165,33 @@ export class FdCombosService {
 
   // Retornar informacion Directamente
 
-  getComboRED_RETURN(diccionario:{[key: string]: any}){
-    const id = diccionario['id'];
-    let _V1, _V2;
-    _V1 = diccionario['_V1'];
-    _V2 = diccionario['_V2'];
-    this.combo.getCombosRedTecnologia(_V1,_V2).subscribe((response: any) => {
-      if(response && response.C_TECNOLOGIA){
-        this.c_redt = response.C_TECNOLOGIA.map((red: any) => red.TECNOLOGIA);
-      } else {
-        console.error("La respuesta no presenta la propiedad 'TECNOLOGIA'.")
-      }
-    });
-    return this.c_redt;
+  getComboRED_RETURN(SERVICIO: string, TIPO_SERVICIOS:string): Observable<Tecnologias []>{
+    
+    return this.combo.getCombosRedTecnologia(SERVICIO, TIPO_SERVICIOS).pipe(
+      map((response: any) => {
+        console.log(response);
+        if(response && response.C_TECNOLOGIA){
+          return response.C_TECNOLOGIA.map((red: any) => red.TECNOLOGIA); 
+        } else {
+          return [];
+        }
+      })
+    );
   }
 
-  getComboPLAN_RETURN(diccionario:{[key: string]: any}){
-    const id = diccionario['id'];
-    let _V1, _V2, _V3;
-    _V1 = diccionario['_V1'];
-    _V2 = diccionario['_V2'];
-    _V3 = diccionario['_V3'];
-    this.combo.getCombosPlanes(_V1, _V2, _V3).subscribe((response: any) => {
-      console.log(response);
-      if (response && response.C_PLANES){
-        this.c_plan = response.C_PLANES.map((plan: any) => {
-          return {
-            TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
-            TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
-          };
-        });
-      } else {
-        console.error("La respuesta no presenta la propiedad 'TECNOLOGIA'.")
-      } 
-    });
-    return this.c_plan
+  getComboPLAN_RETURN(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string): Observable<TariffPlanesVariant []>{
+     return this.combo.getCombosPlanes(SERVICIO, TIPO_SERVICIOS, TECNOLOGIA).pipe(
+      map((response: any) => {
+        console.log(response);
+        if (response && response.C_PLANES){
+          return response.C_PLANES.map((plan: any) => {
+            return {
+              TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
+              TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
+            };
+          });
+        }
+      })
+     );
   }
 }

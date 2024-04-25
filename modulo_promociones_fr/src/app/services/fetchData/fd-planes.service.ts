@@ -8,6 +8,7 @@ import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
 import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../communication/communicationData.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -106,7 +107,4 @@ export class FdPlanesService {
     });
   }
 
-  //Retorno de Informacion Directa
-
-  
 }

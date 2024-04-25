@@ -6,6 +6,7 @@ import { Ciudades } from '../../interfaces/places/ciudad.interface';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { SectorService } from '../places/sector.service';
 import { Sectores } from '../../interfaces/places/sector.interface';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -111,18 +112,23 @@ export class FdPlacesService {
 
   //Retornar directamente
 
-  fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologia: string, tariffplanvariant: number){
+  fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologia: string, tariffplanvariant: number): Observable<Provincias[]> {
     console.log("ProvinciaTTData");
-    this.prov.getProvinciasXTecnologiasXTariffplanVariant(tecnologia, tariffplanvariant).subscribe((response: any) =>{
-      console.log(response); 
-      if (response && response.PROVINCIES){
-        return this.provinciaData = response.PROVINCIES.map((provincia: any) => {
-          return {
-            PROVINCIA_ID: provincia.PROVINCIA_ID,
-            PROVINCIA: provincia.PROVINCIA
-          };
-        });
-      }
-    });
+    return this.prov.getProvinciasXTecnologiasXTariffplanVariant(tecnologia, tariffplanvariant).pipe(
+      map((response: any) => {
+        console.log(response); 
+        if (response && response.PROVINCIES){
+          return response.PROVINCIES.map((provincia: any) => {
+            return {
+              PROVINCIA_ID: provincia.PROVINCIA_ID,
+              PROVINCIA: provincia.PROVINCIA
+            };
+          });
+        } else {
+          return [];
+        }
+      })
+    );
   }
+  
 }
