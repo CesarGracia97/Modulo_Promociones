@@ -83,3 +83,42 @@ tr.mas td {
     box-sizing: border-box; /* Incluye el padding y border en el ancho total */
     background-color: #ffffff;;
 }
+
+// --
+
+.dropdown {
+    font-size: 9pt;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+    width: 100%; /* Asegura que el contenedor del dropdown toma el ancho completo */
+
+    background-color: #f9f9f9f9;
+    border-radius: 10px;
+    &.closing {
+    transition: max-height 0.3s ease-out; // Transición más rápida para cerrar
+    }
+}
+
+.dropdown.show {
+    max-height: 1000px; /* Un valor suficientemente alto para mostrar todo el contenido */
+}
+
+/* Estilos para eliminar el padding y los marcadores de lista */
+.dropdown ul {
+    list-style: none;  /* Elimina los puntos de los items de lista */
+    padding: 0;        /* Elimina el padding predeterminado */
+    margin: 0;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
+    width: 100%; /* Ocupa el ancho completo para centrar los botones internamente */
+    display: flex; /* Utiliza flex para facilitar la alineación */
+    flex-direction: column; /* Alinea los elementos verticalmente */
+}
+  
+.dropdown li {
+    list-style: none;  /* Asegura que no hay marcadores de lista */
+    width: 100%; /* Ocupa el ancho completo para mejor alineación */
+    display: flex; /* Utiliza flexbox para facilitar la alineación */
+
+}

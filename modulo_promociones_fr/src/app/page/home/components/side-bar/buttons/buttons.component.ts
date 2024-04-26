@@ -68,7 +68,6 @@ export class ButtonsComponent implements OnInit {
         this.fdplan.fetchDataServicio();
         this.fdplan.fetchDataTipoServicio();
         this.fdburo.fetchDataBuro();
-        this.fdmopg.fetchDataModosPago();
         this.comVisual.visiblePrincipalComponent(value);
       }
     }

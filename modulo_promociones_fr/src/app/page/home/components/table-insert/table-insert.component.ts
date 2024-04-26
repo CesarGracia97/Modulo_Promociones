@@ -13,7 +13,7 @@ import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface
 import { Sectores } from '../../../../interfaces/places/sector.interface';
 import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
-import { CombosService } from '../../../../services/planes/combos.service';
+import { FdModospagosService } from '../../../../services/fetchData/fd-modospagos.service';
 
 @Component({
   selector: 'app-table-insert',
@@ -36,13 +36,16 @@ export class TableInsertComponent implements OnInit  {
   ciudadData: Ciudades[] = [];
   sectoresData: Sectores[] = [];
   buroData: Buro[] = [];
-  modoPagosData: ModosPago[] = [];
+  modoPagosData: ModosPago[][] = [];
+
+  showDropDown: boolean[] = []; 
+  closing: boolean = false; // Controla si el dropdown está en proceso de cierre
  
   constructor(
     private comData: CommunicationDataService,
-    private combo: CombosService,
     private fdpl: FdPlacesService,
-    private fdcb: FdCombosService
+    private fdcb: FdCombosService,
+    private fdmp: FdModospagosService
   ){}
 
   ngOnInit(): void {
@@ -50,9 +53,9 @@ export class TableInsertComponent implements OnInit  {
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data;});
     this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
-    this.comData.dSectores$.subscribe(data => {this.sectoresData = data;})
-    this.comData.dBuro$.subscribe(data => {this.buroData = data});
-    this.comData.dModoPago$.subscribe(data => { this.modoPagosData = data});
+    this.comData.dSectores$.subscribe(data => {this.sectoresData = data;});
+    this.comData.dBuro$.subscribe(data => {this.buroData = data;});
+    //this.comData.dModoPago$.subscribe(data => { this.modoPagosData = [data]; });
   }
 
   addRow(): void {
@@ -73,7 +76,8 @@ export class TableInsertComponent implements OnInit  {
     this.redData.push([]); // Inicializar redData específico para la nueva fila
     this.planData.push([]);
     this.provinciaData.push([]);
-
+    this.showDropDown.push(false); // Agrega un estado inicial para el nuevo dropdown
+    this.getModoPagosData(this.rows.length - 1);
   }
 
   getDataREDT(value1: string, value2: string, index: number): void {
@@ -92,7 +96,7 @@ export class TableInsertComponent implements OnInit  {
   getDataPLAN(value1: string, value2:string, value3: string, index: number): void {
     try{
       if(value1 && value2 && value3){
-        this.fdcb.getComboPLAN_RETURN(value1, value2, value3).subscribe((plan: TariffPlanesVariant[]) =>{
+        this.fdcb.getComboPLAN_RETURN(value1, value2, value3).subscribe((plan: TariffPlanesVariant[]) => {
           this.planData[index] = plan;
         })
       }
@@ -114,12 +118,32 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  buttton_V1_V7(row: any): boolean {
-    return row._V1 && row._V2 && row._V3 && row._V4 && row._V5 && row._V6 && row._V7;
+  getModoPagosData(index: number): void {
+    this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago) => {
+        this.modoPagosData[index] = modosPago;
+    });
+  }
+
+  buttton_V1_V7(row: any, index: number): boolean {
+    const hasBasicFields = row._V1 && row._V2 && row._V3 && row._V4 && row._V6 && row._V7;
+    const hasSelectedPaymentMethod = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
+
+    return hasBasicFields && hasSelectedPaymentMethod;
   }
 
   buttton_V1_V8(row: any): boolean {
     return row._V1 && row._V2 && row._V3 && row._V4 && row._V5 && row._V6 && row._V7;
+  }
+
+  toggleDropDown(index: number) {
+    if (this.showDropDown) {
+      // Si está abierto y se va a cerrar, activa la transición rápida
+      this.closing = true;
+      setTimeout(() => {
+        this.showDropDown[index] = !this.showDropDown[index];
+        this.closing = false; // Restablece el estado después de cerrar
+      }, 30); // Espera el tiempo de la transición de cierre
+    }
   }
   
   checkSDLoading() {

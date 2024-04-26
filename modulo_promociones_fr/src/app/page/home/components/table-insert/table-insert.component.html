@@ -48,14 +48,14 @@
                     </select>
                 </td>
                 <td>
-                    <button id="button">Forma de Pago</button>
-                    <!-- <select name="_V5" [(ngModel)]="row._V5">
-                        <option value="">Elije Forma Pago</option>
-                        <option *ngFor=" let mdpg of modoPagosData" [value]="mdpg.ID">{{mdpg.NAME}}</option>
-                    </select> -->
-                    <!-- <div id="checkbox_container" *ngFor="let mdpg of modoPagosData">
-                        <input type="checkbox" name="_V5" [(ngModel)]="row._V5" [value]="mdpg.ID">{{ mdpg.NAME }}
-                    </div> -->
+                    <button id="button" (click)="toggleDropDown(i)">Forma de Pago</button>
+                    <div [ngClass]="{'show': showDropDown[i], 'closing': closing}" class="dropdown">
+                        <ul>
+                            <li *ngFor="let mdpg of modoPagosData[i]">
+                                <input type="checkbox" name="_V5" [(ngModel)]="mdpg.selected" [value]="mdpg.ID">{{ mdpg.NAME }} 
+                            </li>
+                        </ul>
+                    </div>
                 </td>
                 <td>
                     <select name="_V6" [(ngModel)]="row._V6">
@@ -71,7 +71,7 @@
                         <option *ngFor=" let provincia of provinciaData[i]" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
                     </select>
                 </td>
-                <td><button id="button" [disabled]="!buttton_V1_V7(row)">Seleccionar</button></td>
+                <td><button id="button" [disabled]="!buttton_V1_V7(row, i)">Seleccionar</button></td>
             </tr>
             <tr class="mas" (click)="addRow()">
                 <td>+</td>
