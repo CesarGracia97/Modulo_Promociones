@@ -14,7 +14,6 @@
                 <th>Buro</th>
                 <th>Provincia</th>
                 <th>Ciudad y Sectores</th>
-                <th>Enviar</th>
             </tr>
         </thead>
         <tbody>
@@ -49,10 +48,14 @@
                     </select>
                 </td>
                 <td>
-                    <select name="_V5" [(ngModel)]="row._V5">
+                    <button id="button">Forma de Pago</button>
+                    <!-- <select name="_V5" [(ngModel)]="row._V5">
                         <option value="">Elije Forma Pago</option>
                         <option *ngFor=" let mdpg of modoPagosData" [value]="mdpg.ID">{{mdpg.NAME}}</option>
-                    </select>
+                    </select> -->
+                    <!-- <div id="checkbox_container" *ngFor="let mdpg of modoPagosData">
+                        <input type="checkbox" name="_V5" [(ngModel)]="row._V5" [value]="mdpg.ID">{{ mdpg.NAME }}
+                    </div> -->
                 </td>
                 <td>
                     <select name="_V6" [(ngModel)]="row._V6">
@@ -69,7 +72,6 @@
                     </select>
                 </td>
                 <td><button id="button" [disabled]="!buttton_V1_V7(row)">Seleccionar</button></td>
-                <td><button id="button">Enviar Carga</button></td>
             </tr>
             <tr class="mas" (click)="addRow()">
                 <td>+</td>
