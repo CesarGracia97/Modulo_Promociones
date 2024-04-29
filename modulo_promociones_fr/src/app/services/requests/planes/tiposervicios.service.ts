@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
+import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({

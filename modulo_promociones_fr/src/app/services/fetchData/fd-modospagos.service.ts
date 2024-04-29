@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModosPago } from '../../interfaces/financial/modos-pago.interface';
-import { FormaspagoService } from '../FinancialInfo/formaspago.service';
+import { FormaspagoService } from '../requests/FinancialInfo/formaspago.service';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { map, Observable } from 'rxjs';
 
@@ -32,7 +32,7 @@ export class FdModospagosService {
   }
 
   fetchDataModosPago_RETURN(): Observable<ModosPago[]> {
-    console.log("ModosPagosData");
+    console.log("ModosPagosData-R");
     return this.modp.getModosPago().pipe(
       map((response: any) =>{
         console.log(response); 

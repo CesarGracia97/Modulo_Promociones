@@ -4,7 +4,7 @@ import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { Provincias } from '../../interfaces/places/provincias.interface';
 import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface';
-import { CombosService } from '../planes/combos.service';
+import { CombosService } from '../requests/planes/combos.service';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { CommunicationVisibleService } from '../communication/communicationVisible.service';
 import { map, Observable } from 'rxjs';

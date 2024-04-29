@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ServiciosService } from '../planes/servicios.service';
-import { TiposerviciosService } from '../planes/tiposervicios.service';
-import { TariffplanesService } from '../planes/tariffplanes.service';
-import { TecnologiasService } from '../planes/tecnologias.service';
+import { ServiciosService } from '../requests/planes/servicios.service';
+import { TiposerviciosService } from '../requests/planes/tiposervicios.service';
+import { TariffplanesService } from '../requests/planes/tariffplanes.service';
+import { TecnologiasService } from '../requests/planes/tecnologias.service';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
 import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';

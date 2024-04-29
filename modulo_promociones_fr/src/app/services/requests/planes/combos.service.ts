@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
+import { Tecnologias } from '../../../interfaces/planes/tecnologias.interface';
 import { Observable } from 'rxjs';
-import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
-import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
-import { Provincias } from '../../interfaces/places/provincias.interface';
-import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface';
+import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
+import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
+import { Provincias } from '../../../interfaces/places/provincias.interface';
+import { C_Ciudades, C_Sectores } from '../../../interfaces/planes/combos.interface';
 
 @Injectable({
   providedIn: 'root'

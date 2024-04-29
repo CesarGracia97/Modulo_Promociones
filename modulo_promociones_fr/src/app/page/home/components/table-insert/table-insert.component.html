@@ -71,7 +71,7 @@
                         <option *ngFor=" let provincia of provinciaData[i]" [value]="provincia.PROVINCIA_ID">{{provincia.PROVINCIA}}</option>
                     </select>
                 </td>
-                <td><button id="button" [disabled]="!buttton_V1_V7(row, i)">Seleccionar</button></td>
+                <td><button id="button" [disabled]="!buttton_V1_V7(row, i)" (click)="openModal(i + 1)">Seleccionar</button></td>
             </tr>
             <tr class="mas" (click)="addRow()">
                 <td>+</td>
@@ -79,4 +79,14 @@
             </tr>
         </tbody>
     </table>
+    <div *ngIf="modalVisible" class="modal" [ngClass]="{'door-open': modalVisible}" id="modal-{{ selectedRowId }}">
+        <div class="modal-header">
+            <span>Seleccionar Ciudades y Sectores</span>
+            <button (click)="closeModal()">X</button>
+        </div>
+        <div class="modal-body">
+            <!-- Contenido del modal -->
+
+        </div>
+    </div>
 </div>

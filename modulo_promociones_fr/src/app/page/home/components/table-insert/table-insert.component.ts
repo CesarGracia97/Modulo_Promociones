@@ -39,13 +39,16 @@ export class TableInsertComponent implements OnInit  {
   modoPagosData: ModosPago[][] = [];
 
   showDropDown: boolean[] = []; 
-  closing: boolean = false; // Controla si el dropdown está en proceso de cierre
+  closing: boolean = false;
+
+  modalVisible: boolean = false;
+  selectedRowId: number | null = null;
  
   constructor(
     private comData: CommunicationDataService,
     private fdpl: FdPlacesService,
     private fdcb: FdCombosService,
-    private fdmp: FdModospagosService
+    private fdmp: FdModospagosService,
   ){}
 
   ngOnInit(): void {
@@ -55,7 +58,6 @@ export class TableInsertComponent implements OnInit  {
     this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
     this.comData.dSectores$.subscribe(data => {this.sectoresData = data;});
     this.comData.dBuro$.subscribe(data => {this.buroData = data;});
-    //this.comData.dModoPago$.subscribe(data => { this.modoPagosData = [data]; });
   }
 
   addRow(): void {
@@ -165,4 +167,13 @@ export class TableInsertComponent implements OnInit  {
   checkMPDLoading(){
     return this.modoPagosData.length === 0;
   }
+
+  openModal(rowId: number): void {
+    this.selectedRowId = rowId;
+    this.modalVisible = true;
+}
+
+closeModal(): void {
+    this.modalVisible = false;
+}
 }

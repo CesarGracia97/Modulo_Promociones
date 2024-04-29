@@ -6,13 +6,6 @@
 
     //Explicacion . sidebar por su posicionamiento es la barra de anvegacion lateral
     //width representa su anchura mientra que height representa a su altura que en este caso es total
-    app-side-bar{
-        display: block;
-        width: 200px;
-        height: 100%;
-        transform: translate(-100%);
-        transition: transform 0.3s ease-in-out;
-    }
 
     #contentContainer{
         flex-grow: 1;
@@ -34,4 +27,12 @@
 }
 #content{
     width: 100%;
+    height: 90%;
+}
+app-side-bar{
+    display: block;
+    width: 200px;
+    height: 100%;
+    transform: translate(-100%);
+    transition: transform 0.3s ease-in-out;
 }

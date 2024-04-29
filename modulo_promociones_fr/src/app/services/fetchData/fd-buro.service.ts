@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { Buro } from '../../interfaces/financial/buro.interface';
-import { BuroService } from '../FinancialInfo/buro.service';
+import { BuroService } from '../requests/FinancialInfo/buro.service';
 
 @Injectable({
   providedIn: 'root'

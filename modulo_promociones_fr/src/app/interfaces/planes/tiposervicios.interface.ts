@@ -1,4 +1,3 @@
-export interface TipoServicios 
-{
+export interface TipoServicios {
     TIPO_SERVICIO: string;
 }
