@@ -33,7 +33,7 @@ export class TableInsertComponent implements OnInit  {
   redData: Tecnologias[][] = [];
   planData: TariffPlanesVariant[][] = [];
   provinciaData: Provincias[][] = [];
-  ciudadData: Ciudades[] = [];
+  ciudadData: Ciudades[][] = [];
   sectoresData: Sectores[] = [];
   buroData: Buro[] = [];
   modoPagosData: ModosPago[][] = [];
@@ -42,7 +42,7 @@ export class TableInsertComponent implements OnInit  {
   closing: boolean = false;
 
   modalVisible: boolean = false;
-  selectedRowId: number | null = null;
+  selectedRowId: number = 0;
  
   constructor(
     private comData: CommunicationDataService,
@@ -55,8 +55,6 @@ export class TableInsertComponent implements OnInit  {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.comData.dTipoServicios$.subscribe(data => {this.tiposervicioData = data;});
-    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data;});
-    this.comData.dSectores$.subscribe(data => {this.sectoresData = data;});
     this.comData.dBuro$.subscribe(data => {this.buroData = data;});
   }
 
@@ -72,12 +70,14 @@ export class TableInsertComponent implements OnInit  {
       _V7: '',
       redData: [],
       planData: [],
-      provinciaData: []
+      provinciaData: [],
+      ciudadData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.redData.push([]); // Inicializar redData específico para la nueva fila
     this.planData.push([]);
     this.provinciaData.push([]);
+    this.ciudadData.push([]);
     this.showDropDown.push(false); // Agrega un estado inicial para el nuevo dropdown
     this.getModoPagosData(this.rows.length - 1);
   }
@@ -110,10 +110,12 @@ export class TableInsertComponent implements OnInit  {
   getDataProvincias(tecnologias: string, tariffPlanesVariantID: string, index: number): void {
     try{
       if(tecnologias && tariffPlanesVariantID){
-        this.fdpl.fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologias, parseInt(tariffPlanesVariantID))
-        .subscribe((prv: Provincias[]) => {
-          this.provinciaData[index] = prv;
-        });
+        if(tecnologias && tariffPlanesVariantID){
+          this.fdpl.fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologias, parseInt(tariffPlanesVariantID))
+          .subscribe((prv: Provincias[]) => {
+            this.provinciaData[index] = prv;
+          });
+        }
       }
     }  catch (error) {
       console.log("Error detectado: ",error)
@@ -122,28 +124,33 @@ export class TableInsertComponent implements OnInit  {
 
   getModoPagosData(index: number): void {
     this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago) => {
-        this.modoPagosData[index] = modosPago;
+      this.modoPagosData[index] = modosPago;
     });
+  }
+  
+  getCiudadesxTT(tecnologia: string, tariffplanvariant: number, id_Prov: number, index: number): void {
+    console.log("Tecn: ",tecnologia);
+    console.log("tarf: ",tariffplanvariant);
+    console.log("IdProv: ",id_Prov);
+    if( id_Prov && tecnologia && tariffplanvariant){
+      this.fdpl.fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov, tecnologia, tariffplanvariant).subscribe((ciudades) => {
+        this.ciudadData[index] = ciudades;
+      });
+    }
   }
 
   buttton_V1_V7(row: any, index: number): boolean {
     const hasBasicFields = row._V1 && row._V2 && row._V3 && row._V4 && row._V6 && row._V7;
     const hasSelectedPaymentMethod = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
-
     return hasBasicFields && hasSelectedPaymentMethod;
-  }
-
-  buttton_V1_V8(row: any): boolean {
-    return row._V1 && row._V2 && row._V3 && row._V4 && row._V5 && row._V6 && row._V7;
   }
 
   toggleDropDown(index: number) {
     if (this.showDropDown) {
-      // Si está abierto y se va a cerrar, activa la transición rápida
-      this.closing = true;
+      this.closing = true;// Si está abierto y se va a cerrar, activa la transición rápida
       setTimeout(() => {
         this.showDropDown[index] = !this.showDropDown[index];
-        this.closing = false; // Restablece el estado después de cerrar
+        this.closing = false;
       }, 30); // Espera el tiempo de la transición de cierre
     }
   }

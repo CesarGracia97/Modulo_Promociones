@@ -7,6 +7,7 @@ import { CommunicationDataService } from '../communication/communicationData.ser
 import { SectorService } from '../requests/places/sector.service';
 import { Sectores } from '../../interfaces/places/sector.interface';
 import { map, Observable } from 'rxjs';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -131,6 +132,20 @@ export class FdPlacesService {
     );
   }
   fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov: number, tecnologia: string, tariffplanvariant: number): Observable<Ciudades[]>{
-    console.log("ProvinciaTTDataR");
+    console.log("ProvinciaTTData-R");
+    console.log(tariffplanvariant);
+    return this.city.getCiudadesXTecnologiaXTariffplanVariant(id_Prov, tecnologia, tariffplanvariant)
+    .pipe(map((response:any) =>{
+      console.log(response);
+      if (response && response.CITIESxPROV){
+        return response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            selected: false
+          }
+        })
+      }
+    }));
   }
 }

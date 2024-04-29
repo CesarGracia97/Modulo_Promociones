@@ -89,9 +89,9 @@ class FrontEndpointController:
                 return response.text, response.status_code
             elif _type.upper() == 'SECTOR_SPECIFIC':
                 print("SECTOR ESPECIFICO POR CIUDAD ENDPOINT ACTIVO\n")
-                _idCity = request.args.get('id_City')
+                _idProv = request.args.get('id_Prov')
                 params = {'type': 'SECTOR_SPECIFIC',
-                          'id_City': _idCity}
+                          'id_Prov': _idProv}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             elif _type.upper() == 'SPECIFIC_SECTXTT':
