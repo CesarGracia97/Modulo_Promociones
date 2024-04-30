@@ -65,12 +65,21 @@ class BackEndpointController:
                     return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": "SUB_SECTOR_SPECIFIC", "id_Sector": _idSector})
                 elif _type == 'SPECIFIC_SECTXTT':
-                    _idSector = request.args.get('id_Sector')
+                    _idCity = request.args.get('id_City')
                     TECNOLOGIA = request.args.get('TECNOLOGIA')
                     TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                     return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                {"type": _type,
-                                                                "id_Sector": _idSector,
+                                                                "id_City": _idCity,
+                                                                "_V1": TECNOLOGIA,
+                                                                "_V2": TARIFFPLANVARIANT})
+                elif _type == 'SPECIFIC_SECTMXTT':
+                    _idCities = request.args.getlist('id_Cities')
+                    TECNOLOGIA = request.args.get('TECNOLOGIA')
+                    TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
+                    return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
+                                                               {"type": _type,
+                                                                "id_Cities": _idCities,
                                                                 "_V1": TECNOLOGIA,
                                                                 "_V2": TARIFFPLANVARIANT})
                 else:

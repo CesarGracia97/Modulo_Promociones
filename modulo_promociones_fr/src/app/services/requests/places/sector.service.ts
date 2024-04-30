@@ -25,9 +25,18 @@ export class SectorService {
 
   getSectoresXTecnologiaXTariffplanVariant(id_City: number, tecnologia: string, tariffplanvariant: number):Observable<Sectores[]>{
     let params = new HttpParams().set('type', 'SPECIFIC_SECTXTT')
-    .set('id_City', id_City.toString())
-    .set('TECNOLOGIA', tecnologia)
-    .set('TARIFFPLANVARIANT', tariffplanvariant);
+                                  .set('id_City', id_City)
+                                  .set('TECNOLOGIA', tecnologia)
+                                  .set('TARIFFPLANVARIANT', tariffplanvariant);
+    return this.http.get<Sectores[]>(this.baseUrl, { params: params });
+  }
+
+  getSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities: number[], tecnologia: string, tariffplanvariant: number):Observable<Sectores[]>{
+    const a_idCities = id_Cities.join(',');
+    let params = new HttpParams().set('type', 'SPECIFIC_SECTMXTT')
+                                .set('id_Cities', a_idCities)
+                                .set('TECNOLOGIA', tecnologia)
+                                .set('TARIFFPLANVARIANT', tariffplanvariant.toString());
     return this.http.get<Sectores[]>(this.baseUrl, { params: params });
   }
 }

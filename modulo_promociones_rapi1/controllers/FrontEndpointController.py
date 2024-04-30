@@ -89,9 +89,9 @@ class FrontEndpointController:
                 return response.text, response.status_code
             elif _type.upper() == 'SECTOR_SPECIFIC':
                 print("SECTOR ESPECIFICO POR CIUDAD ENDPOINT ACTIVO\n")
-                _idProv = request.args.get('id_Prov')
+                _idCity = request.args.get('id_City')
                 params = {'type': 'SECTOR_SPECIFIC',
-                          'id_Prov': _idProv}
+                          'id_City': _idCity}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             elif _type.upper() == 'SPECIFIC_SECTXTT':
@@ -101,6 +101,17 @@ class FrontEndpointController:
                 TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                 params = {'type': _type,
                           'id_City': _idCity,
+                          'TECNOLOGIA': TECNOLOGIA,
+                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                return response.text, response.status_code
+            elif _type.upper() == 'SPECIFIC_SECTMXTT':
+                print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
+                _idCities = request.args.getlist('id_Cities')
+                TECNOLOGIA = request.args.get('TECNOLOGIA')
+                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
+                params = {'type': _type,
+                          'id_Cities': _idCities,
                           'TECNOLOGIA': TECNOLOGIA,
                           'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)

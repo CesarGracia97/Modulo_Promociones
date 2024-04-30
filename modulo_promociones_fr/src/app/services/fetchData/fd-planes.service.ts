@@ -49,12 +49,9 @@ export class FdPlanesService {
   }
 
   fetchDataServicio(){
-    console.log("ServiciosData");
     this.serv.getServiciosALL().subscribe((response: any) => {
-      console.log(response);
       if (response && response.SERVICIOS) {
         this.serviciosData = response.SERVICIOS.map((servicio: any) => servicio.SERVICIO);
-        console.log(this.serviciosData); 
         this.comData.sendDataServicio(this.serviciosData);
       } else {
         console.error("La respuesta no contiene la propiedad 'SERVICIOS'.");
@@ -63,12 +60,9 @@ export class FdPlanesService {
   }
 
   fetchDataTipoServicio(){
-    console.log("TipoServiciosData");
     this.tise.getTipoServicioALL().subscribe((response: any) =>{
-      console.log(response); 
       if (response && response.TIPO_SERVICIO){
         this.tiposervicioData = response.TIPO_SERVICIO.map((tipo_servicio: any) => tipo_servicio.TIPO_SERVICIO);
-        console.log(this.tiposervicioData); 
         this.comData.sendDataTipoServicios(this.tiposervicioData);
       } else {
         console.error("La respuesta no contiene la propiedad 'TIPO_SERVICIO'.");
@@ -77,12 +71,9 @@ export class FdPlanesService {
   }
 
   fetchDataTecnologias(){
-    console.log("TecnologiasData");
     this.tecn.getTecnologiasALL().subscribe((response: any) =>{
-      console.log(response); 
       if (response && response.TECNOLOGIAS){
         this.tecnologiaData = response.TECNOLOGIAS.map((tecnologia: any) => tecnologia.TECNOLOGIA);
-        console.log(this.tecnologiaData); 
         this.comData.sendDataTecnologias(this.tecnologiaData);
       } else {
         console.error("La respuesta no contiene la propiedad 'TECNOLOGIAS'.");
@@ -91,9 +82,7 @@ export class FdPlanesService {
   }
   
   fetchDataTariffPlanVariant(servicio: string, tipoServicio: string, tecnologia: string){
-    console.log("TariffPlanesVariantData");
     this.plan.getTariffPlanesVariantALL(servicio, tipoServicio, tecnologia).subscribe((response: any) =>{
-      console.log(response); 
       if (response && response.PLANES){
         this.planData = response.PLANES.map((plan: any) => {
           return {
@@ -101,7 +90,6 @@ export class FdPlanesService {
             TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
           };
         });
-        console.log(this.planData); 
         this.comData.sendDataPlanes(this.planData);
       }
     });

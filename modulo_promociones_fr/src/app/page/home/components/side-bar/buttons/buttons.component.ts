@@ -66,8 +66,6 @@ export class ButtonsComponent implements OnInit {
           this.fdplace.fetchDataProvincias();
       } else if(value = 'TI'){
         this.fdplan.fetchDataServicio();
-        this.fdplan.fetchDataTipoServicio();
-        this.fdburo.fetchDataBuro();
         this.comVisual.visiblePrincipalComponent(value);
       }
     }

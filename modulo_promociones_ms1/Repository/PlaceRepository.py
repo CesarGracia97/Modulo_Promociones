@@ -190,6 +190,8 @@ class PlaceRepository:
                             print("\n**** SECTORES ESPECIFICOS TT - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
+                        elif _sopcion == 7:
+                            _Qdiccionario["name_Query"] = "SPECIFIC_SECTMXTT"
                         else:
                             self.db.close()
                             print("Segunda Opción no válida: ", _sopcion)

@@ -16,9 +16,7 @@ export class FdModospagosService {
   ) { }
 
   fetchDataModosPago(){
-    console.log("ModosPagosData");
     this.modp.getModosPago().subscribe((response: any) => {
-      console.log(response);
       if(response && response.MPAGOS){
         this.modoPagoData = response.MPAGOS.map((mdpg: any) => {
           return {
@@ -32,10 +30,8 @@ export class FdModospagosService {
   }
 
   fetchDataModosPago_RETURN(): Observable<ModosPago[]> {
-    console.log("ModosPagosData-R");
     return this.modp.getModosPago().pipe(
       map((response: any) =>{
-        console.log(response); 
         if(response && response.MPAGOS){
           return response.MPAGOS.map((mdpg: any) => {
             return {

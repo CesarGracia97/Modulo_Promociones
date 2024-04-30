@@ -1,8 +1,8 @@
 <div id="content">
-    <div id="waitCharge" *ngIf="checkSDLoading() || checkTSDLoading() || checkBDLoading() || checkMPDLoading()">
+    <div id="waitCharge" *ngIf="checkSDLoading()">
         Por favor espera, Los datos se estan Cargando. Si notas latencia Informa a Cesar Gracia de TI
     </div>
-    <table id="principalTable" *ngIf="!checkSDLoading() && !checkTSDLoading()  && !checkBDLoading() && !checkMPDLoading()">
+    <table id="principalTable" *ngIf="!checkSDLoading()">
         <thead>
             <tr>
                 <th>#</th>
@@ -22,7 +22,7 @@
             <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
                 <td>{{ row.id }}</td>
                 <td>
-                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
+                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataTISE(row._V1, i); getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
@@ -30,7 +30,9 @@
                 <td>
                     <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el T. Servicio</option>
-                        <option *ngFor=" let tiposervicio of tiposervicioData" [value]="tiposervicio" >{{tiposervicio}}</option>    
+                        <option value="" *ngIf="tiposervicioData[i].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="tiposervicioData[i].length === 0 && row._V1">Cargando Datos..</option>
+                        <option *ngFor=" let tiposervicio of tiposervicioData[i]" [value]="tiposervicio" >{{tiposervicio}}</option>    
                     </select>
                 </td>
                 <td>
@@ -50,8 +52,8 @@
                     </select>
                 </td>
                 <td>
-                    <button id="button" (click)="toggleDropDown(i)">Forma de Pago</button>
-                    <div [ngClass]="{'show': showDropDown[i], 'closing': closing}" class="dropdown">
+                    <button id="button" (click)="toggDDMP(i)">Forma de Pago</button>
+                    <div [ngClass]="{'show': showMDPDD[i], 'closing': closing}" class="dropdown">
                         <ul>
                             <li *ngFor="let mdpg of modoPagosData[i]">
                                 <input type="checkbox" name="_V5" [(ngModel)]="mdpg.selected" [value]="mdpg.ID" />{{ mdpg.NAME }} 
@@ -60,10 +62,19 @@
                     </div>
                 </td>
                 <td>
-                    <select name="_V6" [(ngModel)]="row._V6">
+                    <button id="button" (click)="toggDDB(i)">Buro de Credito</button>
+                    <div [ngClass]="{'show': showBDD[i], 'closing': closing}" class="dropdown">
+                        <ul>
+                            <li *ngFor="let buro of buroData[i]">
+                                <input type="checkbox" name="_V6" [(ngModel)]="buro.selected" [value]="buro.ID"/>{{buro.NAME}}
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- <select name="_V6" [(ngModel)]="row._V6">
                         <option value="">Elije Categoria del Buro</option>
-                        <option *ngFor=" let buro of buroData" [value]="buro.ID">{{buro.NAME}}</option>
-                    </select>
+                        <option *ngFor=" let buro of buroData[i]" [value]="buro.ID">{{buro.NAME}}</option>
+                    </select> -->
                 </td>
                 <td>
                     <select name="_V7" [(ngModel)]="row._V7" (ngModelChange)="getCiudadesxTT(row._V3, row._V4, row._V7 , i)">
@@ -102,7 +113,7 @@
                         <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{ city.CIUDAD }}
                     </li>
                 </ul>
-                <button>Buscar Sectores</button>
+                <button (click)="buscarSectores()">Buscar Sectores</button>
             </div>
             <div id="sectores_checklist">
                 <span>Sectores</span>

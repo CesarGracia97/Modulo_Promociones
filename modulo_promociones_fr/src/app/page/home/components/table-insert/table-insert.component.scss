@@ -120,6 +120,7 @@ tr.mas td {
     width: 100%; /* Ocupa el ancho completo para centrar los botones internamente */
     display: flex; /* Utiliza flex para facilitar la alineación */
     flex-direction: column; /* Alinea los elementos verticalmente */
+    font-size: 7pt;
 }
   
 .dropdown li {
@@ -170,22 +171,24 @@ tr.mas td {
         flex: 1; /* Asigna el mismo espacio a cada columna */
         display: flex; /* Hace que cada checklist sea también un contenedor flex */
         flex-direction: column; /* Alinea verticalmente los contenidos internos */
-        font-size: 9pt;
         display: flex;
         flex-direction: column;
         width: 100%; /* Asegura que el contenedor del dropdown toma el ancho completo */
-        background-color: #ccc5c5f9;
         border-radius: 10px;
         align-items: center;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 5px 5px;
     }
 
     #ciudades_checklist ul, #sectores_checklist ul{
         list-style: none;  /* Elimina los puntos de los items de lista */
         padding: 0;        /* Elimina el padding predeterminado */
-        margin: 0;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
+        margin: 5px 5px;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
         width: 100%; /* Ocupa el ancho completo para centrar los botones internamente */
         display: flex; /* Utiliza flex para facilitar la alineación */
         flex-direction: column; /* Alinea los elementos verticalmente */
+        font-size: 6pt;
     }
 
     #ciudades_checklist li, #sectores_checklist li{

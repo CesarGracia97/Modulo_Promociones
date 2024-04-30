@@ -129,6 +129,20 @@ class PeticionPlacesController:
                 data_ssct = repository.getData_Places(_diccionario)
                 dt_ssct = frt.formated_specific_sector(data_ssct)
                 return jsonify(dt_ssct), 200
+            elif _type.upper() == "SPECIFIC_SECTMXTT":
+                _idCities = request.args.getlist('id_Cities')
+                _V1 = data.get('_V1')
+                _V2 = data.get('_V2')
+                _diccionario = {
+                    "popcion": "PARAMETRE_DATA",
+                    "sopcion": 7,
+                    "id_City": _idCities,
+                    "_V1": _V1,
+                    "_V2": _V2
+                }
+                data_ssct = repository.getData_Places(_diccionario)
+                dt_ssct = frt.formated_specific_sector(data_ssct)
+                return jsonify(dt_ssct), 200
             else:
                 return jsonify({'error': 'El valor del campo "tipo" no es válido'}), 400
 

@@ -1,4 +1,5 @@
 export interface Buro{
-    ID: number,
-    NAME: string
+    ID: number;
+    NAME: string;
+    selected: boolean;
 }
