@@ -5,6 +5,7 @@ provp_bp = Blueprint('rapi_provp_GET', __name__)
 cityp_bp = Blueprint('rapi_cityp_GET', __name__)
 sectp_bp = Blueprint('rapi_sectp_GET', __name__)
 ssecp_bp = Blueprint('rapi_ssecp_GET', __name__)
+infmv_bp = Blueprint('rapi_infmv_GET', __name__)
 
 
 class FrontEndpointController:
@@ -105,17 +106,6 @@ class FrontEndpointController:
                           'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
-            elif _type.upper() == 'SPECIFIC_SECTMXTT':
-                print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
-                _idCities = request.args.getlist('id_Cities')
-                TECNOLOGIA = request.args.get('TECNOLOGIA')
-                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
-                params = {'type': _type,
-                          'id_Cities': _idCities,
-                          'TECNOLOGIA': TECNOLOGIA,
-                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
             else:
                 print("sectors_endpoint - FrontEndpointController | Tipo de Peticion no valido")
                 return jsonify({'error': 'Tipo de petición no válido'}), 400
@@ -151,6 +141,28 @@ class FrontEndpointController:
             print("--------------------------------------------------------------------")
             return jsonify({'Error': e})
 
+    @infmv_bp.route('/api/ra/plcinfomasiva_endpoint', methods=['GET'])
+    def infomasiva_endpoint():
+        try:
+            print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
+            print("INFORMACION MASIVA ENDPOINT ACTIVO\n")
+            _type = request.args.get('type')
+            if _type.upper() == 'SECTMXTT':
+                print("Tipo de Peticion: "+_type)
+                print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
+                _idCities = request.args.getlist('id_Cities')
+                TECNOLOGIA = request.args.get('TECNOLOGIA')
+                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
+                params = {'type': _type,
+                          'id_Cities': _idCities,
+                          'TECNOLOGIA': TECNOLOGIA,
+                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                return response.text, response.status_code
 
-
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("infomasiva_endpoint - FrontEndpointController | Error Detectado: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': e})
 

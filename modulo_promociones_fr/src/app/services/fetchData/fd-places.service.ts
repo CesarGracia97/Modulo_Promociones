@@ -7,7 +7,6 @@ import { CommunicationDataService } from '../communication/communicationData.ser
 import { SectorService } from '../requests/places/sector.service';
 import { Sectores } from '../../interfaces/places/sector.interface';
 import { map, Observable } from 'rxjs';
-import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -115,14 +114,31 @@ export class FdPlacesService {
       })
     );
   }
+
   fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov: number, tecnologia: string, tariffplanvariant: number): Observable<Ciudades[]>{
     return this.city.getCiudadesXTecnologiaXTariffplanVariant(id_Prov, tecnologia, tariffplanvariant)
-    .pipe(map((response:any) =>{
+    .pipe(map((response: any) => {
       if (response && response.CITIESxPROV){
         return response.CITIESxPROV.map((city: any) => {
           return {
             CIUDAD_ID: city.CIUDAD_ID,
             CIUDAD: city.CIUDAD,
+            selected: false
+          }
+        })
+      }
+    }));
+  }
+
+  fetchDataSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities: number[], tecnologia: string, tariffplanvariant: number):Observable<Sectores[]> {
+    return this.sect.getSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities, tecnologia, tariffplanvariant)
+    .pipe(map((response: any) => {
+      if(response && response.SECTORSxCITY){
+        return response.SECTORSxCITY.map((sect: any) => {
+          return {
+            CIUDAD_ID: sect.CIUDAD_ID,
+            SECTOR_ID: sect.SECTOR_ID,
+            SECTOR: sect.SECTOR,
             selected: false
           }
         })

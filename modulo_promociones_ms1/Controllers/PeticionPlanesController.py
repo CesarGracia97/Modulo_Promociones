@@ -12,16 +12,15 @@ class PeticionPlanesController:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
             frt = FormattedPlans()
             repository = PlansRepository()
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             print(_type)
             if _type is None:
                 return jsonify({'error': 'El campo "type" es requerido'}), 400
             if _type.upper() == 'ALL_DATA':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 print(_stype)
                 if _stype.upper() == 'OFER':
-                    _ttype = data.get('ttype')
+                    _ttype = request.args.get('ttype')
                     if _ttype == '1':
                         _diccionario = {
                             "popcion": "ALL_DATA",
@@ -31,7 +30,7 @@ class PeticionPlanesController:
                         dt_dtofe = frt.formated_ADOferta(data_dtofe)
                         return jsonify(dt_dtofe), 200
                 if _stype.upper() == 'SERV':
-                    _ttype = data.get('ttype')
+                    _ttype = request.args.get('ttype')
                     if _ttype == '1':
                         _diccionario = {
                             "popcion": "ALL_DATA",
@@ -41,7 +40,7 @@ class PeticionPlanesController:
                         dt_dtof = frt.formated_ADServicio(data_dtof)
                         return jsonify(dt_dtof), 200
                 if _stype.upper() == 'TECN':
-                    _ttype = data.get('ttype')
+                    _ttype = request.args.get('ttype')
                     if _ttype == '1':
                         _diccionario = {
                             "popcion": "ALL_DATA",
@@ -51,7 +50,7 @@ class PeticionPlanesController:
                         dt_dttec = frt.formated_ADTecnologia(data_dttec)
                         return jsonify(dt_dttec), 200
                 if _stype.upper() == 'TISE':
-                    _ttype = data.get('ttype')
+                    _ttype = request.args.get('ttype')
                     if _ttype == '1':
                         _diccionario = {
                             "popcion": "ALL_DATA",
@@ -61,7 +60,7 @@ class PeticionPlanesController:
                         dt_dttis = frt.formated_ADTipoServicio(data_dttis)
                         return jsonify(dt_dttis), 200
                 if _stype.upper() == 'PLAN':
-                    _ttype = data.get('ttype')
+                    _ttype = request.args.get('ttype')
                     if _ttype == '1':
                         _diccionario = {
                             "popcion": "ALL_DATA",
@@ -72,9 +71,9 @@ class PeticionPlanesController:
                         dt_dtpl1 = frt.formated_ADPlan(data_dtpl1, 1)
                         return jsonify(dt_dtpl1), 200
                     if _ttype == '2':
-                        _V1 = data.get('_V1')
-                        _V2 = data.get('_V2')
-                        _V3 = data.get('_V3')
+                        _V1 = request.args.get('_V1')
+                        _V2 = request.args.get('_V2')
+                        _V3 = request.args.get('_V3')
                         _diccionario = {
                             "popcion": "ALL_DATA",
                             "sopcion": "PLAN",
@@ -96,9 +95,9 @@ class PeticionPlanesController:
                         dt_dtpl3 = frt.formated_ADPlan(data_dtpl3, 3)
                         return jsonify(dt_dtpl3), 200
             elif _type.upper() == 'COMBO':
-                _stype = data.get('stype')
+                _stype = request.args.get('stype')
                 if _stype.upper() == 'TIPO_SERVICIOS':
-                    _V1 = data.get('_V1')
+                    _V1 = request.args.get('_V1')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 1,
@@ -108,8 +107,8 @@ class PeticionPlanesController:
                     dt_cts = frt.formated_COTipoServicio(data_cts)
                     return jsonify(dt_cts), 200
                 if _stype.upper() == 'RED_TECNOLOGIA':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 2,
@@ -121,9 +120,9 @@ class PeticionPlanesController:
                     return jsonify(dt_crt), 200
 
                 if _stype.upper() == 'PLANES':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 3,
@@ -136,10 +135,10 @@ class PeticionPlanesController:
                     return jsonify(dt_cpl), 200
 
                 if _stype.upper() == 'PROVINCIA':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
-                    _V4 = data.get('_V4')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
+                    _V4 = request.args.get('_V4')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 4,
@@ -152,11 +151,11 @@ class PeticionPlanesController:
                     dt_cpr = frt.formated_COProvincia(data_cpr)
                     return jsonify(dt_cpr), 200
                 if _stype.upper() == 'CIUDAD':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
-                    _V4 = data.get('_V4')
-                    _V5 = data.get('_V5')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
+                    _V4 = request.args.get('_V4')
+                    _V5 = request.args.get('_V5')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 5,
@@ -171,12 +170,12 @@ class PeticionPlanesController:
                     return jsonify(dt_cct), 200
 
                 if _stype.upper() == 'SECTOR':
-                    _V1 = data.get('_V1')
-                    _V2 = data.get('_V2')
-                    _V3 = data.get('_V3')
-                    _V4 = data.get('_V4')
-                    _V5 = data.get('_V5')
-                    _V6 = data.get('_V6')
+                    _V1 = request.args.get('_V1')
+                    _V2 = request.args.get('_V2')
+                    _V3 = request.args.get('_V3')
+                    _V4 = request.args.get('_V4')
+                    _V5 = request.args.get('_V5')
+                    _V6 = request.args.get('_V6')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 6,

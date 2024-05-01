@@ -191,7 +191,25 @@ class PlaceRepository:
                             self.db.close()
                             return data
                         elif _sopcion == 7:
-                            _Qdiccionario["name_Query"] = "SPECIFIC_SECTMXTT"
+                            _Qdiccionario["name_Query"] = "SECTMXTT"
+                            for i, city_id in enumerate(_diccionario["id_Cities"]):
+                                key = f"_V1_{i + 1}"  # Nombre único para cada valor de id_Cities
+                                _Qdiccionario[key] = city_id
+                            _Qdiccionario["_V2"] = _diccionario["_V1"]
+                            _Qdiccionario["_V3"] = _diccionario["_V2"]
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'SECTORSxCITY': []
+                            }
+                            for result in results:
+                                sector = SectorxCiudad(result[0], result[1])
+                                data['SECTORSxCITY'].append(sector)
+                            print("\n**** SECTORES ESPECIFICOS TT - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
                         else:
                             self.db.close()
                             print("Segunda Opción no válida: ", _sopcion)

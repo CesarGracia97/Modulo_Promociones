@@ -36,7 +36,7 @@ export class TableInsertComponent implements OnInit  {
   planData: TariffPlanesVariant[][] = [];
   provinciaData: Provincias[][] = [];
   ciudadData: Ciudades[][] = [];
-  sectoresData: Sectores[] = [];
+  sectoresData: Sectores[][] = [];
   buroData: Buro[][] = [];
   modoPagosData: ModosPago[][] = [];
 
@@ -75,7 +75,8 @@ export class TableInsertComponent implements OnInit  {
       redData: [],
       planData: [],
       provinciaData: [],
-      ciudadData: []
+      ciudadData: [],
+      sectoresData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.tiposervicioData.push([]);
@@ -160,7 +161,8 @@ export class TableInsertComponent implements OnInit  {
   
   getCiudadesxTT(tecnologia: string, tariffplanvariant: number, id_Prov: number, index: number): void {
     if( id_Prov && tecnologia && tariffplanvariant){
-      this.fdpl.fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov, tecnologia, tariffplanvariant).subscribe((ciudades) => {
+      this.fdpl.fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov, tecnologia, tariffplanvariant)
+      .subscribe((ciudades) => {
         this.ciudadData[index] = ciudades;
       });
     }
@@ -173,7 +175,10 @@ export class TableInsertComponent implements OnInit  {
     const _V4 = indexRow._V4;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
     console.log("Tecnologia: "+_V3+" | Ciudades: "+ciudades+" | TFPV: "+_V4);
-    this.fdsect.getSectoresMasivosXTecnologiaXTariffplanVariant(ciudades, _V3, _V4)
+    this.fdpl.fetchDataSectoresMasivosXTecnologiaXTariffplanVariant(ciudades, _V3, _V4)
+    .subscribe((sectores) => {
+      this.sectoresData[index] = sectores;
+    });
   }
 
   buttton_V1_V7(row: any, index: number): boolean {

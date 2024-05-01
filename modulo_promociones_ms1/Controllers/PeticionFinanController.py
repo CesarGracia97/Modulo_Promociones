@@ -13,8 +13,7 @@ class PeticionFinanController:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
             frt = FormattedFinance()
             repository = FinancialRepository()
-            data = request.json
-            _type = data.get('type')
+            _type = request.args.get('type')
             print(_type)
             if _type is None:
                 return jsonify({'error': 'El campo "type" es requerido'}), 400

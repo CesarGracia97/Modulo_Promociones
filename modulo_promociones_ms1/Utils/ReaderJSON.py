@@ -23,6 +23,9 @@ class ReaderJSON:
                                                                                 f"{_popcion}, {_sopcion}")
                         if _sopcion == "PARAMETRE_DATA":
                             _nameQuery = _diccionario["name_Query"]
+                            if _nameQuery == "SECTMXTT":
+                                _V2 = _diccionario["_V2"]
+                                _V3 = _diccionario["_V3"]
                             if _nameQuery == "SPECIFIC_PROVXTT":
                                 _V1 = _diccionario["_V1"]
                                 _V2 = _diccionario["_V2"]

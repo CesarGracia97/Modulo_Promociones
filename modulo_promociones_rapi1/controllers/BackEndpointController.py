@@ -8,7 +8,7 @@ class BackEndpointController:
     @staticmethod
     def make_request(endpoint, payload):
         try:
-            response = requests.get(endpoint, json=payload)
+            response = requests.get(endpoint, params=payload)
             response.raise_for_status()
             return response.json(), response.status_code
         except requests.exceptions.RequestException as e:
@@ -73,7 +73,7 @@ class BackEndpointController:
                                                                 "id_City": _idCity,
                                                                 "_V1": TECNOLOGIA,
                                                                 "_V2": TARIFFPLANVARIANT})
-                elif _type == 'SPECIFIC_SECTMXTT':
+                elif _type == 'SECTMXTT':
                     _idCities = request.args.getlist('id_Cities')
                     TECNOLOGIA = request.args.get('TECNOLOGIA')
                     TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')

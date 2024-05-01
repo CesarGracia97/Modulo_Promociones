@@ -9,6 +9,7 @@ import { Sectores } from '../../../interfaces/places/sector.interface';
 export class SectorService {
 
   private baseUrl ='http://127.0.0.1:5012/api/ra/plcsector_endpoint';
+  private baseUrlIM = 'http://127.0.0.1:5012/api/ra/plcinfomasiva_endpoint';
 
   constructor(private http:HttpClient) { }
 
@@ -33,10 +34,10 @@ export class SectorService {
 
   getSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities: number[], tecnologia: string, tariffplanvariant: number):Observable<Sectores[]>{
     const a_idCities = id_Cities.join(',');
-    let params = new HttpParams().set('type', 'SPECIFIC_SECTMXTT')
+    let params = new HttpParams().set('type', 'SECTMXTT')
                                 .set('id_Cities', a_idCities)
                                 .set('TECNOLOGIA', tecnologia)
                                 .set('TARIFFPLANVARIANT', tariffplanvariant.toString());
-    return this.http.get<Sectores[]>(this.baseUrl, { params: params });
+    return this.http.get<Sectores[]>(this.baseUrlIM, { params: params });
   }
 }

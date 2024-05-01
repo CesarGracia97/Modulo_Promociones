@@ -10,11 +10,10 @@ class PeticionPlacesController:
     def faseEscucha():
         try:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
+            print(request.args)
             frt = FormattedPlace()
             repository = PlaceRepository()
-            data = request.json
-            _type = data.get('type')
-            print(_type)
+            _type = request.args.get('type')
             if _type is None:
                 return jsonify({'error': 'El campo "type" es requerido'}), 400
 
@@ -55,7 +54,7 @@ class PeticionPlacesController:
                 return jsonify(dt_sst), 200
 
             elif _type.upper() == "CITY_SPECIFIC":
-                _idProv = data.get('id_Prov')
+                _idProv = request.args.get('id_Prov')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 1,
@@ -66,7 +65,7 @@ class PeticionPlacesController:
                 return jsonify(dt_scts), 200
 
             elif _type.upper() == "SECTOR_SPECIFIC":
-                _idCity = data.get('id_City')
+                _idCity = request.args.get('id_City')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 2,
@@ -77,7 +76,7 @@ class PeticionPlacesController:
                 return jsonify(dt_ssct), 200
 
             elif _type.upper() == "SUB_SECTOR_SPECIFIC":
-                _idSector = data.get('id_Sector')
+                _idSector = request.args.get('id_Sector')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 3,
@@ -88,8 +87,8 @@ class PeticionPlacesController:
                 return jsonify(dt_ssst), 200
 
             elif _type.upper() == "SPECIFIC_PROVXTT":
-                _V1 = data.get('_V1')
-                _V2 = data.get('_V2')
+                _V1 = request.args.get('_V1')
+                _V2 = request.args.get('_V2')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 4,
@@ -101,9 +100,9 @@ class PeticionPlacesController:
                 return jsonify(dt_prv), 200
 
             elif _type.upper() == "SPECIFIC_CITYXTT":
-                _idProv = data.get('id_Prov')
-                _V1 = data.get('_V1')
-                _V2 = data.get('_V2')
+                _idProv = request.args.get('id_Prov')
+                _V1 = request.args.get('_V1')
+                _V2 = request.args.get('_V2')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 5,
@@ -116,9 +115,9 @@ class PeticionPlacesController:
                 return jsonify(dt_scts), 200
 
             elif _type.upper() == "SPECIFIC_SECTXTT":
-                _idCity = data.get('id_City')
-                _V1 = data.get('_V1')
-                _V2 = data.get('_V2')
+                _idCity = request.args.get('id_City')
+                _V1 = request.args.get('_V1')
+                _V2 = request.args.get('_V2')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 6,
@@ -129,14 +128,16 @@ class PeticionPlacesController:
                 data_ssct = repository.getData_Places(_diccionario)
                 dt_ssct = frt.formated_specific_sector(data_ssct)
                 return jsonify(dt_ssct), 200
-            elif _type.upper() == "SPECIFIC_SECTMXTT":
-                _idCities = request.args.getlist('id_Cities')
-                _V1 = data.get('_V1')
-                _V2 = data.get('_V2')
+            elif _type.upper() == "SECTMXTT":
+                _idCities = request.args.get('id_Cities')
+                _V1 = request.args.get('_V1')
+                _V2 = request.args.get('_V2')
+                if _idCities:
+                    _idCities = _idCities.split(',')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 7,
-                    "id_City": _idCities,
+                    "id_Cities": _idCities,
                     "_V1": _V1,
                     "_V2": _V2
                 }
