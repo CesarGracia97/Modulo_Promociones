@@ -118,8 +118,8 @@
             <div id="sectores_checklist">
                 <span>Sectores</span>
                 <ul>
-                    <li>
-
+                    <li *ngFor="let sect of sectoresData[selectedRowId-1]">
+                        <input type="checkbox" [(ngModel)]="sect.selected" [value]="sect.SECTOR_ID"/>{{sect.SECTOR}}
                     </li>
                 </ul>
             </div>

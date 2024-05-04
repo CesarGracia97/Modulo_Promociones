@@ -114,6 +114,25 @@ class FormattedPlace:
             return jsonify({'Error': str(e)})
 
     @staticmethod
+    def formated_specific_sectortt(data):
+        try:
+            json_data = {
+                'SECTORSxCITY': []
+            }
+            for sector in data['SECTORSxCITY']:
+                json_data['SECTORSxCITY'].append({
+                    'SECTOR_ID': sector.SECTOR_ID,
+                    'SECTOR': sector.SECTOR,
+                    'CIUDAD': sector.CIUDAD
+                })
+            return json_data
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("FormattedPlace - formated_specific_sector | Error: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': str(e)})
+
+    @staticmethod
     def formated_specific_sub_sector(data):
         try:
             json_data = {

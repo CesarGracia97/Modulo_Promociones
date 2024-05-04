@@ -25,19 +25,7 @@ export class FdPlacesService {
     private comData: CommunicationDataService
   ) { }
 
-  fetchDataCiudad(id_Prov: number){
-    this.city.getCiudadesESP(id_Prov).subscribe((response: any) => {
-      if(response && response.CITIESxPROV){
-        this.ciudadData = response.CITIESxPROV.map((city: any) =>{
-          return{
-            CIUDAD_ID: city.CIUDAD_ID,
-            CIUDAD: city.CIUDAD
-          };
-        });
-        this.comData.sendDataCiudades(this.ciudadData);
-      }
-    });
-  }
+  //Retorno por Subscripciones
 
   fetchDataProvincias(){
     this.prov.getProvincias().subscribe((response: any) =>{
@@ -68,6 +56,20 @@ export class FdPlacesService {
     });
   }
 
+  fetchDataCiudad(id_Prov: number){
+    this.city.getCiudadesESP(id_Prov).subscribe((response: any) => {
+      if(response && response.CITIESxPROV){
+        this.ciudadData = response.CITIESxPROV.map((city: any) =>{
+          return{
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD
+          };
+        });
+        this.comData.sendDataCiudades(this.ciudadData);
+      }
+    });
+  }
+  
   fetchDataCiudadXTecnologiaXTariffplanVariant(id_Prov: number, tecnologia: string, tariffplanvariant: number){
     this.city.getCiudadesXTecnologiaXTariffplanVariant(id_Prov, tecnologia, tariffplanvariant).subscribe((response: any) => {
       if(response && response.CITIESxPROV){
@@ -134,11 +136,12 @@ export class FdPlacesService {
     return this.sect.getSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities, tecnologia, tariffplanvariant)
     .pipe(map((response: any) => {
       if(response && response.SECTORSxCITY){
+        console.log(response);
         return response.SECTORSxCITY.map((sect: any) => {
           return {
-            CIUDAD_ID: sect.CIUDAD_ID,
             SECTOR_ID: sect.SECTOR_ID,
             SECTOR: sect.SECTOR,
+            CIUDAD: sect.CIUDAD,
             selected: false
           }
         })

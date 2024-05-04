@@ -10,7 +10,6 @@ class PeticionPlacesController:
     def faseEscucha():
         try:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
-            print(request.args)
             frt = FormattedPlace()
             repository = PlaceRepository()
             _type = request.args.get('type')
@@ -142,7 +141,7 @@ class PeticionPlacesController:
                     "_V2": _V2
                 }
                 data_ssct = repository.getData_Places(_diccionario)
-                dt_ssct = frt.formated_specific_sector(data_ssct)
+                dt_ssct = frt.formated_specific_sectortt(data_ssct)
                 return jsonify(dt_ssct), 200
             else:
                 return jsonify({'error': 'El valor del campo "tipo" no es válido'}), 400

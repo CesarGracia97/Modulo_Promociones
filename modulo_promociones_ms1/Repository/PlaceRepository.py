@@ -205,7 +205,7 @@ class PlaceRepository:
                                 'SECTORSxCITY': []
                             }
                             for result in results:
-                                sector = SectorxCiudad(result[0], result[1])
+                                sector = Sector(result[0], result[1], result[2])
                                 data['SECTORSxCITY'].append(sector)
                             print("\n**** SECTORES ESPECIFICOS TT - DATOS OBTENIDOS ****\n")
                             self.db.close()

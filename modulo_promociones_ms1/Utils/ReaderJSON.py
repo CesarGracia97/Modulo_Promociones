@@ -24,8 +24,16 @@ class ReaderJSON:
                         if _sopcion == "PARAMETRE_DATA":
                             _nameQuery = _diccionario["name_Query"]
                             if _nameQuery == "SECTMXTT":
+                                _V1_values = [_diccionario[key] for key in _diccionario if key.startswith('_V1_')]
+                                _V1 = ', '.join(map(str, _V1_values))
                                 _V2 = _diccionario["_V2"]
                                 _V3 = _diccionario["_V3"]
+                                modified_query = (data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
+                                                                                               f"Consulta no encontrada en "f"{_popcion}, {_sopcion}")
+                                                  .replace("_V1", _V1).replace("_V2", str(_V2)).replace("_V3",
+                                                                                                        str(_V3)))
+                                print("Consulta modificada:", modified_query)
+                                return modified_query
                             if _nameQuery == "SPECIFIC_PROVXTT":
                                 _V1 = _diccionario["_V1"]
                                 _V2 = _diccionario["_V2"]
