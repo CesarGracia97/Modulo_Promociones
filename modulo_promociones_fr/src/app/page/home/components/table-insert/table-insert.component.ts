@@ -15,7 +15,6 @@ import { FdCombosService } from '../../../../services/fetchData/fd-combos.servic
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
 import { FdModospagosService } from '../../../../services/fetchData/fd-modospagos.service';
 import { FdBuroService } from '../../../../services/fetchData/fd-buro.service';
-import { SectorService } from '../../../../services/requests/places/sector.service';
 
 @Component({
   selector: 'app-table-insert',
@@ -27,7 +26,7 @@ import { SectorService } from '../../../../services/requests/places/sector.servi
 export class TableInsertComponent implements OnInit  {  
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; _V4: string = '';
-  _V5: string = ''; _V8: string = ''; _V9: string = '';
+  _V5: string = ''; 
   @Input() rows: any[] = []; // Arreglo para almacenar las filas y sus datos
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
@@ -44,16 +43,16 @@ export class TableInsertComponent implements OnInit  {
   showBDD: boolean[] = [];
   closing: boolean = false;
 
-  modalVisible: boolean = false;
-  selectedRowId: number = 0;
+  modal_cs: boolean = false;
+  modal_dp: boolean = false;
+  rowId: number = 0;
  
   constructor(
     private comData: CommunicationDataService,
     private fdpl: FdPlacesService,
     private fdcb: FdCombosService,
     private fdmp: FdModospagosService,
-    private fdb: FdBuroService,
-    private fdsect: SectorService
+    private fdb: FdBuroService
   ){}
 
   ngOnInit(): void {
@@ -64,19 +63,9 @@ export class TableInsertComponent implements OnInit  {
   addRow(): void {
     const newRow = {
       id: this.rows.length + 1,
-      _V1: '',
-      _V2: '',
-      _V3: '',
-      _V4: '',
-      _V5: '',
-      _V6: '',
-      _V7: '',
-      tiposervicioData: [],
-      redData: [],
-      planData: [],
-      provinciaData: [],
-      ciudadData: [],
-      sectoresData: []
+      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '', _V6: '', _V7: '',
+      tiposervicioData: [], redData: [], planData: [], provinciaData: [],
+      ciudadData: [], sectoresData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.tiposervicioData.push([]);
@@ -169,7 +158,7 @@ export class TableInsertComponent implements OnInit  {
   }
 
   buscarSectores() {
-    const index = this.selectedRowId - 1;
+    const index = this.rowId;
     const indexRow = this.rows[index];
     const _V3 = indexRow._V3;
     const _V4 = indexRow._V4;
@@ -181,43 +170,80 @@ export class TableInsertComponent implements OnInit  {
     });
   }
 
-  buttton_V1_V7(row: any, index: number): boolean {
+  button_V1_V7(row: any, index: number): boolean {
     const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V7;
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
     const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     return trueSelect && trueMP && trueB;
   }
 
-  toggDDMP(index: number) {
-    if (this.showMDPDD) {
-      this.closing = true;// Si está abierto y se va a cerrar, activa la transición rápida
-      setTimeout(() => {
-        this.showMDPDD[index] = !this.showMDPDD[index];
-        this.closing = false;
-      }, 30); // Espera el tiempo de la transición de cierre
-    }
+  button_V1_V8(row: any, index: number): boolean {
+    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V7;
+    const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
+    const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
+    const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);
+    const trueS = this.sectoresData[index] && this.sectoresData[index].some(sectores => sectores.selected);
+    return trueSelect && trueMP && trueB && trueC && trueS;
   }
 
-  toggDDB(index:number) {
-    if (this.showBDD) {
-      this.closing = true;// Si está abierto y se va a cerrar, activa la transición rápida
-      setTimeout(() => {
-        this.showBDD[index] = !this.showBDD[index];
-        this.closing = false;
-      }, 30); // Espera el tiempo de la transición de cierre
-    }
+  button_V1_V9(row: any, index: number): boolean {
+    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V7;
+    const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
+    const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
+    const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);
+    const trueS = this.sectoresData[index] && this.sectoresData[index].some(sectores => sectores.selected);
+    return trueSelect && trueMP && trueB && trueC && trueS;
   }
-  
+
+  toggDD(index: number, type: string) {
+    switch(type){
+      case 'MP':
+        if (this.showMDPDD) {
+          this.closing = true;// Si está abierto y se va a cerrar, activa la transición rápida
+          setTimeout(() => {
+            this.showMDPDD[index] = !this.showMDPDD[index];
+            this.closing = false;
+          }, 30); // Espera el tiempo de la transición de cierre
+        }
+      break;
+      case 'B':
+        if (this.showBDD) {
+          this.closing = true;// Si está abierto y se va a cerrar, activa la transición rápida
+          setTimeout(() => {
+            this.showBDD[index] = !this.showBDD[index];
+            this.closing = false;
+          }, 30); // Espera el tiempo de la transición de cierre
+        }
+      break;
+    }
+
+  }
+
   checkSDLoading() {
     return this.serviciosData.length === 0;
   }
 
-  openModal(rowId: number): void {
-    this.selectedRowId = rowId;
-    this.modalVisible = true;
+  openModal(row: number, type: string): void {
+    this.rowId = row;
+    switch(type){
+      case 'CS':
+        this.modal_cs = true;
+      break;
+      case 'DP':
+        this.modal_dp = true;
+      break;
+    }
   }
 
-  closeModal(): void {
-    this.modalVisible = false;
+  closeModal(type: string): void {
+    switch(type){
+      case 'CS':
+        this.modal_cs = false;
+      break;
+      case 'DP':
+        this.modal_dp = false;
+      break;
+    }
+    
   }
 }

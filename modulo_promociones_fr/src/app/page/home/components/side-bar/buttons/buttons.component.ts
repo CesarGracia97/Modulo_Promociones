@@ -3,8 +3,6 @@ import { CommunicationVisibleService } from '../../../../../services/communicati
 import { CommonModule } from '@angular/common';
 import { FdPlanesService } from '../../../../../services/fetchData/fd-planes.service';
 import { FdPlacesService } from '../../../../../services/fetchData/fd-places.service';
-import { FdBuroService } from '../../../../../services/fetchData/fd-buro.service';
-import { FdModospagosService } from '../../../../../services/fetchData/fd-modospagos.service';
 
 @Component({
   selector: 'app-buttons',
@@ -14,14 +12,7 @@ import { FdModospagosService } from '../../../../../services/fetchData/fd-modosp
   styleUrl: './buttons.component.scss'
 })
 export class ButtonsComponent implements OnInit {
-  options = [
-    {name: 'Tipo de Servicio', value:'TISE'},
-    {name: 'Red', value:'RED'},
-    {name: 'Plan', value:'PLAN'},
-    {name: 'Provincial', value:'PROV'},
-    {name: 'Ciudad', value:'CITY'},
-    {name: 'Sector', value:'SECT'}
-  ];
+
   showDropDown: boolean = false;
   closing: boolean = false; // Controla si el dropdown está en proceso de cierre
   visibleValueDiv: string | null = null;
@@ -29,9 +20,7 @@ export class ButtonsComponent implements OnInit {
   constructor(
     private comVisual: CommunicationVisibleService,
     private fdplan: FdPlanesService,
-    private fdplace: FdPlacesService,
-    private fdburo: FdBuroService,
-    private fdmopg: FdModospagosService
+    private fdplace: FdPlacesService
   ){}
 
   ngOnInit(): void {

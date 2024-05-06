@@ -15,7 +15,6 @@
                 <th>Provincia</th>
                 <th>Ciudad y Sectores</th>
                 <th>Datos Promocion</th>
-                <th>Productos Adcionales</th>
             </tr>
         </thead>
         <tbody>
@@ -52,7 +51,7 @@
                     </select>
                 </td>
                 <td>
-                    <button id="button" (click)="toggDDMP(i)">Forma de Pago</button>
+                    <button id="button" (click)="toggDD(i, 'MP')">Forma de Pago</button>
                     <div [ngClass]="{'show': showMDPDD[i], 'closing': closing}" class="dropdown">
                         <ul>
                             <li *ngFor="let mdpg of modoPagosData[i]">
@@ -62,7 +61,7 @@
                     </div>
                 </td>
                 <td>
-                    <button id="button" (click)="toggDDB(i)">Buro de Credito</button>
+                    <button id="button" (click)="toggDD(i, 'B')">Buro de Credito</button>
                     <div [ngClass]="{'show': showBDD[i], 'closing': closing}" class="dropdown">
                         <ul>
                             <li *ngFor="let buro of buroData[i]">
@@ -71,10 +70,6 @@
                         </ul>
 
                     </div>
-                    <!-- <select name="_V6" [(ngModel)]="row._V6">
-                        <option value="">Elije Categoria del Buro</option>
-                        <option *ngFor=" let buro of buroData[i]" [value]="buro.ID">{{buro.NAME}}</option>
-                    </select> -->
                 </td>
                 <td>
                     <select name="_V7" [(ngModel)]="row._V7" (ngModelChange)="getCiudadesxTT(row._V3, row._V4, row._V7 , i)">
@@ -85,13 +80,10 @@
                     </select>
                 </td>
                 <td>
-                    <button id="button" [disabled]="!buttton_V1_V7(row, i)" (click)="openModal(i + 1)">Seleccionar</button>
+                    <button id="button" [disabled]="!button_V1_V7(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
-                    <button id="button">Elejir</button>
-                </td>
-                <td>
-                    <button id="button">Elejir</button>
+                    <button id="button" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
                 </td>
             </tr>
             <tr class="mas" (click)="addRow()">
@@ -100,16 +92,16 @@
             </tr>
         </tbody>
     </table>
-    <div *ngIf="modalVisible" class="modal" [ngClass]="{'door-open': modalVisible}" id="modal-{{ selectedRowId }}">
+    <div *ngIf="modal_cs" class="modal_cs" [ngClass]="{'door-open': modal_cs}" id="modal_cs-{{ rowId+1 }}">
         <div class="modal-header">
-            <span>Seleccionar Ciudades y Sectores - F# {{selectedRowId}}</span>
-            <button (click)="closeModal()">X</button>
+            <span>Seleccionar Ciudades y Sectores - F# {{rowId+1}}</span>
+            <button (click)="closeModal('CS')">X</button>
         </div>
         <div class="modal-body">
             <div id="ciudades_checklist">
                 <span>Ciudades</span>
                 <ul>
-                    <li *ngFor="let city of ciudadData[selectedRowId-1]">
+                    <li *ngFor="let city of ciudadData[rowId]">
                         <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{ city.CIUDAD }}
                     </li>
                 </ul>
@@ -118,11 +110,20 @@
             <div id="sectores_checklist">
                 <span>Sectores</span>
                 <ul>
-                    <li *ngFor="let sect of sectoresData[selectedRowId-1]">
+                    <li *ngFor="let sect of sectoresData[rowId]">
                         <input type="checkbox" [(ngModel)]="sect.selected" [value]="sect.SECTOR_ID"/>{{sect.SECTOR}}
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+    <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
+        <div class="modal-header">
+            <span>Datos de Promocion- F# {{rowId+1}}</span>
+            <button (click)="closeModal('DP')">X</button>
+        </div>
+        <div class="modal-body">
+
         </div>
     </div>
 </div>
