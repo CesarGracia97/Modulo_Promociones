@@ -28,7 +28,7 @@ class FrontEndpointController:
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
-                elif _stype.upper() == 'RED_TECNOLOGIA':
+                elif _stype.upper() == 'PRODUCTOS':
                     _V1 = request.args.get('_V1')
                     _V2 = request.args.get('_V2')
                     params = {'type': _type,

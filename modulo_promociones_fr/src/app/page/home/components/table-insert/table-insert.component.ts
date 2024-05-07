@@ -15,6 +15,7 @@ import { FdCombosService } from '../../../../services/fetchData/fd-combos.servic
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
 import { FdModospagosService } from '../../../../services/fetchData/fd-modospagos.service';
 import { FdBuroService } from '../../../../services/fetchData/fd-buro.service';
+import { Productos } from '../../../../interfaces/planes/productos.interface';
 
 @Component({
   selector: 'app-table-insert',
@@ -31,7 +32,7 @@ export class TableInsertComponent implements OnInit  {
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   tiposervicioData: TipoServicios[][] = [];
-  redData: Tecnologias[][] = [];
+  productosData: Productos[][] = [];
   planData: TariffPlanesVariant[][] = [];
   provinciaData: Provincias[][] = [];
   ciudadData: Ciudades[][] = [];
@@ -69,7 +70,7 @@ export class TableInsertComponent implements OnInit  {
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.tiposervicioData.push([]);
-    this.redData.push([]); // Inicializar redData específico para la nueva fila
+    this.productosData.push([]); // Inicializar redData específico para la nueva fila
     this.planData.push([]);
     this.provinciaData.push([]);
     this.ciudadData.push([]);
@@ -90,11 +91,11 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  getDataREDT(value1: string, value2: string, index: number): void {
+  getDataPROD(value1: string, value2: string, index: number): void {
     try{
       if(value1 && value2){
-        this.fdcb.getComboRED_RETURN(value1, value2).subscribe((red: Tecnologias[]) => {
-          this.redData[index] = red;
+        this.fdcb.getComboPROD_RETURN(value1, value2).subscribe((red: Productos[]) => {
+          this.productosData[index] = red;
         });
       }
     } catch(error){
@@ -105,7 +106,7 @@ export class TableInsertComponent implements OnInit  {
   getDataPLAN(value1: string, value2:string, value3: string, index: number): void {
     try{
       if(value1 && value2 && value3){
-        this.fdcb.getComboPLAN_RETURN(value1, value2, value3).subscribe((plan: TariffPlanesVariant[]) => {
+        this.fdcb.getComboPLAN_RETURN(value1, value2, parseInt(value3)).subscribe((plan: TariffPlanesVariant[]) => {
           this.planData[index] = plan;
         })
       }

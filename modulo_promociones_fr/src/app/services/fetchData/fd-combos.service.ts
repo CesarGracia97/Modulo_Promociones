@@ -8,6 +8,7 @@ import { CombosService } from '../requests/planes/combos.service';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { CommunicationVisibleService } from '../communication/communicationVisible.service';
 import { map, Observable } from 'rxjs';
+import { Productos } from '../../interfaces/planes/productos.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class FdCombosService {
     let _V1, _V2;
     _V1 = diccionario['_V1'];
     _V2 = diccionario['_V2'];
-    this.combo.getCombosRedTecnologia(_V1,_V2).subscribe((response: any) => {
+    this.combo.getCombosProductos(_V1,_V2).subscribe((response: any) => {
       if(response && response.C_TECNOLOGIA){
         this.c_redt = response.C_TECNOLOGIA.map((red: any) => red.TECNOLOGIA);
         this.comData.sendDataRED(this.c_redt);
@@ -159,12 +160,16 @@ export class FdCombosService {
 
   // Retornar informacion Directamente
 
-  getComboRED_RETURN(SERVICIO: string, TIPO_SERVICIOS:string): Observable<Tecnologias []>{
-    
-    return this.combo.getCombosRedTecnologia(SERVICIO, TIPO_SERVICIOS).pipe(
+  getComboPROD_RETURN(SERVICIO: string, TIPO_SERVICIOS:string): Observable<Productos[]>{
+    return this.combo.getCombosProductos(SERVICIO, TIPO_SERVICIOS).pipe(
       map((response: any) => {
-        if(response && response.C_TECNOLOGIA){
-          return response.C_TECNOLOGIA.map((red: any) => red.TECNOLOGIA); 
+        if(response && response.C_PRODUCTOS){
+          return response.C_PRODUCTOS.map((pro: any) => {
+            return {
+              PRODUCTID: pro.PRODUCTID,
+              PRODUCTO: pro.PRODUCTO
+            }
+          }); 
         } else {
           return [];
         }
@@ -172,8 +177,8 @@ export class FdCombosService {
     );
   }
 
-  getComboPLAN_RETURN(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string): Observable<TariffPlanesVariant []>{
-     return this.combo.getCombosPlanes(SERVICIO, TIPO_SERVICIOS, TECNOLOGIA).pipe(
+  getComboPLAN_RETURN(SERVICIO: string, TIPO_SERVICIOS:string, PRODUCTID: number): Observable<TariffPlanesVariant []>{
+     return this.combo.getCombosPlanes(SERVICIO, TIPO_SERVICIOS, PRODUCTID).pipe(
       map((response: any) => {
         if (response && response.C_PLANES){
           return response.C_PLANES.map((plan: any) => {

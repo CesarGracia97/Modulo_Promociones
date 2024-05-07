@@ -6,6 +6,7 @@ import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interfac
 import { TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
 import { Provincias } from '../../../interfaces/places/provincias.interface';
 import { C_Ciudades, C_Sectores } from '../../../interfaces/planes/combos.interface';
+import { Productos } from '../../../interfaces/planes/productos.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,22 +25,22 @@ export class CombosService {
     return this.http.get<TipoServicios[]>(this.baseUrl, { params: params });
   }
 
-  getCombosRedTecnologia(SERVICIO: string, TIPO_SERVICIOS:string):Observable<Tecnologias[]>{
+  getCombosProductos(SERVICIO: string, TIPO_SERVICIOS:string):Observable<Productos[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
-    .set('stype', 'RED_TECNOLOGIA')
+    .set('stype', 'PRODUCTOS')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString());
-    return this.http.get<Tecnologias[]>(this.baseUrl, { params: params });
+    return this.http.get<Productos[]>(this.baseUrl, { params: params });
   }
 
-  getCombosPlanes(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string):Observable<TariffPlanesVariant[]>{
+  getCombosPlanes(SERVICIO: string, TIPO_SERVICIOS:string, PRODUCTID: number):Observable<TariffPlanesVariant[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
     .set('stype', 'PLANES')
     .set('_V1', SERVICIO.toString())
     .set('_V2', TIPO_SERVICIOS.toString())
-    .set('_V3', TECNOLOGIA.toString());
+    .set('_V3', PRODUCTID.toString());
     return this.http.get<TariffPlanesVariant[]>(this.baseUrl, { params: params });
   }
 

@@ -107,7 +107,7 @@ class ReaderJSON:
                                     else:
                                         raise ValueError("Se requiere un parámetro para esta consulta específica.")
 
-                                if _nameQuery == "COMBO_RED_TECNOLOGIA":
+                                if _nameQuery == "COMBO_PRODUCTO":
                                     _nameQuery = _diccionario["name_Query"]
                                     _V1 = _diccionario["_V1"]
                                     _V2 = _diccionario["_V2"]

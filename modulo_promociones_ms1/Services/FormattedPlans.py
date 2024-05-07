@@ -124,19 +124,20 @@ class FormattedPlans:
             return jsonify({'Error': str(e)})
 
     @staticmethod
-    def formated_CORedTecnologia(data):
+    def formated_COProducto(data):
         try:
             json_data = {
-                'C_TECNOLOGIA': []
+                'C_PRODUCTOS': []
             }
-            for tecnologia in data['C_TECNOLOGIA']:
-                json_data['C_TECNOLOGIA'].append({
-                    'TECNOLOGIA': tecnologia.TECNOLOGIA
+            for producto in data['C_PRODUCTOS']:
+                json_data['C_PRODUCTOS'].append({
+                    'PRODUCTID': producto.PRODUCTID,
+                    'PRODUCTO': producto.PRODUCTO
                 })
             return json_data
         except Exception as e:
             print("--------------------------------------------------------------------")
-            print("FormattedPlanes - formated_CORedTecnologia | Error: ", e)
+            print("FormattedPlanes - formated_COProducto | Error: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': str(e)})
 

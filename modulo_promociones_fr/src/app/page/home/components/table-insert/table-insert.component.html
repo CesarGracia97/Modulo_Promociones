@@ -8,7 +8,7 @@
                 <th>#</th>
                 <th>Servicio</th>
                 <th>Tipo de Servicio</th>
-                <th>Red</th>
+                <th>Productos</th>
                 <th>Plan</th>
                 <th>Forma de Pago</th>
                 <th>Buro</th>
@@ -21,13 +21,13 @@
             <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
                 <td>{{ row.id }}</td>
                 <td>
-                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataTISE(row._V1, i); getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
+                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataTISE(row._V1, i); getDataPROD(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
                 </td>
                 <td>
-                    <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataREDT(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
+                    <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataPROD(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el T. Servicio</option>
                         <option value="" *ngIf="tiposervicioData[i].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="tiposervicioData[i].length === 0 && row._V1">Cargando Datos..</option>
@@ -36,10 +36,10 @@
                 </td>
                 <td>
                     <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPLAN(row._V1, row._V2, row._V3, i); getDataProvincias(row._V3, row._V4, i); getCiudadesxTT(row._V3, row._V4, row._V7 , i)">
-                        <option value="">Elije una Red</option>
-                        <option value="" *ngIf="redData[i].length === 0 && !row._V1 || !row._V2">Selecc. antes los otros elementos</option>
-                        <option value="" *ngIf="redData[i].length === 0 && row._V1 && row._V2">Cargando Datos..</option>
-                        <option *ngFor="let red of redData[i]" [value]="red">{{red}}</option>
+                        <option value="">Elije una Producto</option>
+                        <option value="" *ngIf="productosData[i].length === 0 && !row._V1 || !row._V2">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="productosData[i].length === 0 && row._V1 && row._V2">Cargando Datos..</option>
+                        <option *ngFor="let prod of productosData[i]" [value]="prod.PRODUCTID">{{prod.PRODUCTO}}</option>
                     </select>
                 </td>
                 <td>
@@ -123,7 +123,42 @@
             <button (click)="closeModal('DP')">X</button>
         </div>
         <div class="modal-body">
-
+            <div id="dat_promo">
+                <div id="dat_promo_ing">
+                    <div id="precios">
+                        <label>Precio Regular: ${{rowId+593}}</label>
+                        <label>Precio Promocional</label>
+                        <input type="number" required/>
+                    </div>
+                    <div id="dias">
+                        <label>Dias Gozados</label>
+                        <ul>
+                            <li>
+                                <input type="checkbox" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="upgrade">
+                        <label>UPGRADE</label>
+                        <select>
+                            <option value="">Selecc. un Upgrade</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="dat_promo_butt">
+                    <button id="btn_npro"></button>
+                    <button id="enviar"></button>
+                </div>
+            </div>
+            <div id="pro_adici">
+                <div id="streaming"></div>
+                <div id="telefonia"></div>
+                <div id="television"></div>
+                <div id="router"></div>
+            </div>
+            <div id="modal_dp_button">
+                
+            </div>
         </div>
     </div>
 </div>

@@ -106,7 +106,7 @@ class PeticionPlanesController:
                     data_cts = repository.getData_Planes(_diccionario)
                     dt_cts = frt.formated_COTipoServicio(data_cts)
                     return jsonify(dt_cts), 200
-                if _stype.upper() == 'RED_TECNOLOGIA':
+                if _stype.upper() == 'PRODUCTOS':
                     _V1 = request.args.get('_V1')
                     _V2 = request.args.get('_V2')
                     _diccionario = {
@@ -115,9 +115,9 @@ class PeticionPlanesController:
                         "_V1": _V1,
                         "_V2": _V2
                     }
-                    data_crt = repository.getData_Planes(_diccionario)
-                    dt_crt = frt.formated_CORedTecnologia(data_crt)
-                    return jsonify(dt_crt), 200
+                    data_cpd = repository.getData_Planes(_diccionario)
+                    dt_cpd = frt.formated_COProducto(data_cpd)
+                    return jsonify(dt_cpd), 200
 
                 if _stype.upper() == 'PLANES':
                     _V1 = request.args.get('_V1')

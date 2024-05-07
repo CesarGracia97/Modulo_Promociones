@@ -1,6 +1,6 @@
 from Models.model_place import Provincia, Ciudad, Sector
 from Models.model_plane import Ofertas, Servicios, Tipo_Servicios, TariffPlanes, TariffPlanVariant, \
-    TariffPlan_X_TariffPlanVariant, Tecnologias
+    TariffPlan_X_TariffPlanVariant, Tecnologias, Productos
 from Resources.database.connection import connection
 from Utils.ReaderJSON import ReaderJSON
 
@@ -187,7 +187,7 @@ class PlansRepository:
                             _V2 = _diccionario["_V2"]
                             _Qdiccionario = {"popcion": "Planes",
                                              "sopcion": "COMBO",
-                                             "name_Query": "COMBO_RED_TECNOLOGIA",
+                                             "name_Query": "COMBO_PRODUCTO",
                                              "_V1": _V1,
                                              "_V2": _V2}
                             query = self.reader_json.getQuery(_Qdiccionario)
@@ -195,12 +195,12 @@ class PlansRepository:
                             if results is None:
                                 return {}
                             data = {
-                                'C_TECNOLOGIA': []
+                                'C_PRODUCTOS': []
                             }
                             for result in results:
-                                _CTecnologia = Tecnologias(result[0])
-                                data['C_TECNOLOGIA'].append(_CTecnologia)
-                            print("\n**** C_TECNOLOGIAS- DATOS OBTENIDOS ****\n")
+                                _CProductos = Productos(result[0], result[1])
+                                data['C_PRODUCTOS'].append(_CProductos)
+                            print("\n**** C_PRODUCTOS- DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
 
