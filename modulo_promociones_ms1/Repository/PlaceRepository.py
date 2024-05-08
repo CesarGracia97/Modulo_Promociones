@@ -141,7 +141,6 @@ class PlaceRepository:
                         elif _sopcion == 4:
                             _Qdiccionario["name_Query"] = "SPECIFIC_PROVXTT"
                             _Qdiccionario["_V1"] = _diccionario["_V1"]
-                            _Qdiccionario["_V2"] = _diccionario["_V2"]
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
@@ -195,7 +194,6 @@ class PlaceRepository:
                                 key = f"_V1_{i + 1}"  # Nombre único para cada valor de id_Cities
                                 _Qdiccionario[key] = city_id
                             _Qdiccionario["_V2"] = _diccionario["_V1"]
-                            _Qdiccionario["_V3"] = _diccionario["_V2"]
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:

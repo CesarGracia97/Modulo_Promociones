@@ -3,10 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Servicios } from '../../../../interfaces/planes/servicios.interface';
 import { TipoServicios } from '../../../../interfaces/planes/tiposervicios.interface';
-import { Tecnologias } from '../../../../interfaces/planes/tecnologias.interface';
 import { Ciudades } from '../../../../interfaces/places/ciudad.interface';
 import { Provincias } from '../../../../interfaces/places/provincias.interface';
-import { TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
+import { TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../../../../services/communication/communicationData.service';
 import { Buro } from '../../../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
@@ -26,14 +25,15 @@ import { Productos } from '../../../../interfaces/planes/productos.interface';
 })
 export class TableInsertComponent implements OnInit  {  
 
-  _V1: string = ''; _V2: string = ''; _V3: string = ''; _V4: string = '';
-  _V5: string = ''; 
+  _V1: string = ''; _V2: string = ''; _V3: string = ''; 
+  _V4: string = '';   _V5: string = ''; 
   @Input() rows: any[] = []; // Arreglo para almacenar las filas y sus datos
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   tiposervicioData: TipoServicios[][] = [];
   productosData: Productos[][] = [];
-  planData: TariffPlanesVariant[][] = [];
+  planData: TariffPlanes[][] = [];
+  planVData: TariffPlanesVariant[][] = [];
   provinciaData: Provincias[][] = [];
   ciudadData: Ciudades[][] = [];
   sectoresData: Sectores[][] = [];
@@ -64,49 +64,27 @@ export class TableInsertComponent implements OnInit  {
   addRow(): void {
     const newRow = {
       id: this.rows.length + 1,
-      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '', _V6: '', _V7: '',
-      tiposervicioData: [], redData: [], planData: [], provinciaData: [],
-      ciudadData: [], sectoresData: []
+      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '',
+      planData: [], planVData: [], productosData: [], 
+      tiposervicioData: [], provinciaData: [], ciudadData: [], 
+      sectoresData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
-    this.tiposervicioData.push([]);
-    this.productosData.push([]); // Inicializar redData específico para la nueva fila
     this.planData.push([]);
+    this.planVData.push([]);
+    this.productosData.push([]); 
+    this.tiposervicioData.push([]);
+    this.getModoPagosData(this.rows.length - 1);
+    this.getBuroData(this.rows.length - 1)
     this.provinciaData.push([]);
     this.ciudadData.push([]);
     this.showMDPDD.push(false); // Agrega un estado inicial para el nuevo dropdown
-    this.getModoPagosData(this.rows.length - 1);
-    this.getBuroData(this.rows.length - 1)
   }
 
-  getDataTISE(value1: string, index: number): void {
-    try{
-      if(value1){
-        this.fdcb.getComboTISE_RETURN(value1).subscribe((tise: TipoServicios[]) => {
-          this.tiposervicioData[index] = tise;
-        })
-      }
-    } catch(error) {
-      console.log("Error Detectado: ",error)
-    }
-  }
-
-  getDataPROD(value1: string, value2: string, index: number): void {
-    try{
-      if(value1 && value2){
-        this.fdcb.getComboPROD_RETURN(value1, value2).subscribe((red: Productos[]) => {
-          this.productosData[index] = red;
-        });
-      }
-    } catch(error){
-      console.log("Error Detectado: ",error)
-    }
-  }
-
-  getDataPLAN(value1: string, value2:string, value3: string, index: number): void {
-    try{
-      if(value1 && value2 && value3){
-        this.fdcb.getComboPLAN_RETURN(value1, value2, parseInt(value3)).subscribe((plan: TariffPlanesVariant[]) => {
+  getDataPLAN(servicio: string, index: number): void {
+    try {
+      if(servicio){
+        this.fdcb.getComboPLAN_RETURN(servicio).subscribe((plan: TariffPlanes[]) => {
           this.planData[index] = plan;
         })
       }
@@ -115,8 +93,44 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
+  getDataPLANVARIANT(id_Plan: number, index: number): void {
+    try {
+      if(id_Plan){
+        this.fdcb.getComboPLANVARIANT_RETURN(id_Plan).subscribe((planv: TariffPlanesVariant[]) => {
+          this.planVData[index] = planv;
+        });
+      }
+    } catch (error) {
+      console.log("Error Detectado: ",error)
+    }
+  }
+
+  getDataPROD(TPV: number, index: number): void {
+    try {
+      if(TPV){
+        this.fdcb.getComboPROD_RETURN(TPV).subscribe((prod: Productos[]) => {
+          this.productosData[index] = prod;
+        });
+      }
+    } catch(error){
+      console.log("Error Detectado: ",error)
+    }
+  }
+
+  getDataTISE(TPV: number, index: number): void {
+    try {
+      if(TPV){
+        this.fdcb.getComboTISE_RETURN(TPV).subscribe((tise: TipoServicios[]) => {
+          this.tiposervicioData[index] = tise;
+        })
+      }
+    } catch(error) {
+      console.log("Error Detectado: ",error)
+    }
+  }
+
   getModoPagosData(index: number): void {
-    try{
+    try {
       this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago) => {
         this.modoPagosData[index] = modosPago;
       });
@@ -125,8 +139,30 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
+  getDataProvincias(TPV: number , index: number): void {
+    try {
+      if(TPV){
+        this.fdpl.fetchDataProvinciasXTariffplanVariant_RETURN(TPV)
+        .subscribe((prv: Provincias[]) => {
+          this.provinciaData[index] = prv;
+        });
+      }
+    }  catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
+  
+  getCiudadesxTT(tariffplanvariant: number, id_Prov: number, index: number): void {
+    if(id_Prov && tariffplanvariant){
+      this.fdpl.fetchDataCiudadXTariffplanVariant_RETURN(id_Prov, tariffplanvariant)
+      .subscribe((ciudades) => {
+        this.ciudadData[index] = ciudades;
+      });
+    }
+  }
+
   getBuroData(index: number): void{
-    try{
+    try {
       this.fdb.fetchDataBuro_RETURN().subscribe((buro) => {
         this.buroData[index] = buro;
       });
@@ -134,61 +170,27 @@ export class TableInsertComponent implements OnInit  {
       console.log("Error detectado: ",error)
     }
   }
-  getDataProvincias(tecnologias: string, tariffPlanesVariantID: string, index: number): void {
-    try{
-      if(tecnologias && tariffPlanesVariantID){
-        if(tecnologias && tariffPlanesVariantID){
-          this.fdpl.fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologias, parseInt(tariffPlanesVariantID))
-          .subscribe((prv: Provincias[]) => {
-            this.provinciaData[index] = prv;
-          });
-        }
-      }
-    }  catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
-  
-  getCiudadesxTT(tecnologia: string, tariffplanvariant: number, id_Prov: number, index: number): void {
-    if( id_Prov && tecnologia && tariffplanvariant){
-      this.fdpl.fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov, tecnologia, tariffplanvariant)
-      .subscribe((ciudades) => {
-        this.ciudadData[index] = ciudades;
-      });
-    }
-  }
 
   buscarSectores() {
     const index = this.rowId;
     const indexRow = this.rows[index];
     const _V3 = indexRow._V3;
-    const _V4 = indexRow._V4;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
-    console.log("Tecnologia: "+_V3+" | Ciudades: "+ciudades+" | TFPV: "+_V4);
-    this.fdpl.fetchDataSectoresMasivosXTecnologiaXTariffplanVariant(ciudades, _V3, _V4)
+    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant(ciudades, _V3)
     .subscribe((sectores) => {
       this.sectoresData[index] = sectores;
     });
   }
 
   button_V1_V7(row: any, index: number): boolean {
-    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V7;
+    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V5;
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
     const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     return trueSelect && trueMP && trueB;
   }
 
   button_V1_V8(row: any, index: number): boolean {
-    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V7;
-    const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
-    const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
-    const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);
-    const trueS = this.sectoresData[index] && this.sectoresData[index].some(sectores => sectores.selected);
-    return trueSelect && trueMP && trueB && trueC && trueS;
-  }
-
-  button_V1_V9(row: any, index: number): boolean {
-    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V7;
+    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V5;
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
     const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);

@@ -18,7 +18,7 @@ export class CombosService {
   getCombosPlan(SERVICIO: string):Observable<TariffPlanes[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
-    .set('stype', 'COMBO_PLAN')
+    .set('stype', 'PLAN')
     .set('_V1', SERVICIO.toString());
     return this.http.get<TariffPlanes[]>(this.baseUrl, { params: params });
   }
@@ -26,7 +26,7 @@ export class CombosService {
   getCombosPlanVariant(Id_Plan: number):Observable<TariffPlanesVariant[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
-    .set('stype', 'COMBO_PLANVARIANT')
+    .set('stype', 'PLANVARIANT')
     .set('_V1', Id_Plan.toString());
     return this.http.get<TariffPlanesVariant[]>(this.baseUrl, { params: params });
   }
@@ -34,7 +34,7 @@ export class CombosService {
   getCombosProductos(Id_TPV: number):Observable<Productos[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
-    .set('stype', 'COMBO_PRODUCTO')
+    .set('stype', 'PRODUCTO')
     .set('_V1', Id_TPV.toString());
     return this.http.get<Productos[]>(this.baseUrl, { params: params });
   }
@@ -42,7 +42,7 @@ export class CombosService {
   getCombosTipoServicios(Id_TPV: number):Observable<TipoServicios[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
-    .set('stype', 'COMBO_TIPO_SERVICIO')
+    .set('stype', 'TIPO_SERVICIO')
     .set('_V1', Id_TPV.toString());
     return this.http.get<TipoServicios[]>(this.baseUrl, { params: params });
   }

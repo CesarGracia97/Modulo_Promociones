@@ -24,14 +24,14 @@ export class SectorService {
     return this.http.get<Sectores[]>(this.baseUrl, { params: params });
   }
 
-  getSectoresXTecnologiaXTariffplanVariant(id_City: number,tariffplanvariant: number):Observable<Sectores[]>{
+  getSectoresXTariffplanVariant(id_City: number,tariffplanvariant: number):Observable<Sectores[]>{
     let params = new HttpParams().set('type', 'SPECIFIC_SECTXTT')
                                   .set('id_City', id_City)
                                   .set('TARIFFPLANVARIANT', tariffplanvariant);
     return this.http.get<Sectores[]>(this.baseUrl, { params: params });
   }
 
-  getSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]>{
+  getSectoresMasivosXTariffplanVariant(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]>{
     const a_idCities = id_Cities.join(',');
     let params = new HttpParams().set('type', 'SECTMXTT')
                                 .set('id_Cities', a_idCities)

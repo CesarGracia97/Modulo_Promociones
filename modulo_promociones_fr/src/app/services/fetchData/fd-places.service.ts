@@ -41,9 +41,9 @@ export class FdPlacesService {
     });
   }
 
-  fetchDataProvinciasXTecnologiaXTariffplanVariant(tecnologia: string, tariffplanvariant: number){
+  fetchDataProvinciasXTecnologiaXTariffplanVariant(tariffplanvariant: number){
     console.log("ProvinciaTTData");
-    this.prov.getProvinciasXTecnologiasXTariffplanVariant(tecnologia, tariffplanvariant).subscribe((response: any) =>{
+    this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).subscribe((response: any) =>{
       if (response && response.PROVINCIES){
         this.provinciaData = response.PROVINCIES.map((provincia: any) => {
           return {
@@ -70,38 +70,10 @@ export class FdPlacesService {
     });
   }
   
-  fetchDataCiudadXTecnologiaXTariffplanVariant(id_Prov: number, tecnologia: string, tariffplanvariant: number){
-    this.city.getCiudadesXTecnologiaXTariffplanVariant(id_Prov, tecnologia, tariffplanvariant).subscribe((response: any) => {
-      if(response && response.CITIESxPROV){
-        this.ciudadData = response.CITIESxPROV.map((city: any) =>{
-          return{
-            CIUDAD_ID: city.CIUDAD_ID,
-            CIUDAD: city.CIUDAD
-          };
-        });
-        this.comData.sendDataCiudades(this.ciudadData);
-      }
-    });
-  }
-
-  fetchDataSectorXTecnologiaXTariffplanVariant(id_City: number, tecnologia: string, tariffplanvariant: number){
-    this.sect.getSectoresXTecnologiaXTariffplanVariant(id_City, tecnologia,tariffplanvariant).subscribe((response: any) => {
-      if(response && response.SECTORSxCITY){
-        this.sectorData = response.SECTORSxCITY.map((sect: any) =>{
-          return{
-            SECTOR_ID: sect.SECTOR_ID,
-            SECTOR: sect.SECTOR_ID
-          };
-        });
-        this.comData.sendDataSectores(this.sectorData);
-      }
-    });
-  }
-
   //Retornar directamente
 
-  fetchDataProvinciasXTecnologiaXTariffplanVariant_RETURN(tecnologia: string, tariffplanvariant: number): Observable<Provincias[]> {
-    return this.prov.getProvinciasXTecnologiasXTariffplanVariant(tecnologia, tariffplanvariant).pipe(
+  fetchDataProvinciasXTariffplanVariant_RETURN(tariffplanvariant: number): Observable<Provincias[]> {
+    return this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).pipe(
       map((response: any) => {
         if (response && response.PROVINCIES){
           return response.PROVINCIES.map((provincia: any) => {
@@ -117,8 +89,8 @@ export class FdPlacesService {
     );
   }
 
-  fetchDataCiudadXTecnologiaXTariffplanVariant_RETURN(id_Prov: number, tecnologia: string, tariffplanvariant: number): Observable<Ciudades[]>{
-    return this.city.getCiudadesXTecnologiaXTariffplanVariant(id_Prov, tecnologia, tariffplanvariant)
+  fetchDataCiudadXTariffplanVariant_RETURN(id_Prov: number, tariffplanvariant: number): Observable<Ciudades[]>{
+    return this.city.getCiudadesXTariffplanVariant(id_Prov, tariffplanvariant)
     .pipe(map((response: any) => {
       if (response && response.CITIESxPROV){
         return response.CITIESxPROV.map((city: any) => {
@@ -132,8 +104,8 @@ export class FdPlacesService {
     }));
   }
 
-  fetchDataSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities: number[], tecnologia: string, tariffplanvariant: number):Observable<Sectores[]> {
-    return this.sect.getSectoresMasivosXTecnologiaXTariffplanVariant(id_Cities, tecnologia, tariffplanvariant)
+  fetchDataSectoresMasivosXTariffplanVariant(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]> {
+    return this.sect.getSectoresMasivosXTariffplanVariant(id_Cities, tariffplanvariant)
     .pipe(map((response: any) => {
       if(response && response.SECTORSxCITY){
         console.log(response);

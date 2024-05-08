@@ -1,6 +1,6 @@
 from Models.model_place import Provincia, Ciudad, Sector
 from Models.model_plane import Ofertas, Servicios, Tipo_Servicios, TariffPlanes, TariffPlanVariant, \
-    TariffPlan_X_TariffPlanVariant, Tecnologias, Productos
+    TariffPlan_X_TariffPlanVariant, Tecnologias, Producto
 from Resources.database.connection import connection
 from Utils.ReaderJSON import ReaderJSON
 
@@ -216,7 +216,7 @@ class PlansRepository:
                                 'COMBO_PRODUCTO': []
                             }
                             for result in results:
-                                _COMBO_PRODUCTO = Productos(result[0], result[1])
+                                _COMBO_PRODUCTO = Producto(result[0], result[1])
                                 data['COMBO_PRODUCTO'].append(_COMBO_PRODUCTO)
                             print("\n**** COMBO_PRODUCTO - DATOS OBTENIDOS ****\n")
                             self.db.close()

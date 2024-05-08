@@ -20,8 +20,8 @@ class FrontEndpointController:
             _type = request.args.get('type')
             if _type.upper() == 'COMBO':
                 _stype = request.args.get('stype')
-                valid_stype = {"COMBO_PLAN", "COMBO_PLANVARIANT", "COMBO_PRODUCTO",
-                               "COMBO_TIPO_SERVICIO"}
+                valid_stype = {"PLAN", "PLANVARIANT", "PRODUCTO",
+                               "TIPO_SERVICIO"}
                 if _stype.upper() in valid_stype:
                     _V1 = request.args.get('_V1')
                     params = {'type': _type,

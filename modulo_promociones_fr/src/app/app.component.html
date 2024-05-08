@@ -3,7 +3,6 @@
 	<div id="contentContainer">
 		<app-header (toggleSidebar)="sidebarActive = !sidebarActive" [sidebarActive]="sidebarActive"></app-header>
 		<div id="content">
-			<app-table-query  [hidden]="visibleDivId !== 'TQ'"></app-table-query>
 			<app-table-insert [hidden]="visibleDivId !== 'TI'"></app-table-insert>
 		</div>
 	</div>

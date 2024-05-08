@@ -14,10 +14,10 @@ class Tecnologias:
         self.TECNOLOGIA = TECNOLOGIA
 
 
-class Productos:
+class Producto:
     def __init__(self, PRODUCTID, PRODUCTO):
-        self.PRODUCTID: PRODUCTID
-        self.PRODUCTO: PRODUCTO
+        self.PRODUCTID = PRODUCTID
+        self.PRODUCTO = PRODUCTO
 
 
 class Tipo_Servicios:

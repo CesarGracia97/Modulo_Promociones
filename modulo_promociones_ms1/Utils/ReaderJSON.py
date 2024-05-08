@@ -43,19 +43,29 @@ class ReaderJSON:
                                 else:
                                     # Preparación de parámetros comunes
                                     _V1 = _diccionario["_V1"]
-                                    _V2 = _diccionario["_V2"]
-                                    if "_V3" in _diccionario:
-                                        # Caso donde existe el argumento "_V3"
-                                        _V3 = _diccionario["_V3"]
+                                    if "_V2" in _diccionario:
+                                        _V2 = _diccionario["_V2"]
+                                        if "_V3" in _diccionario:
+                                            _V3 = _diccionario["_V3"]
+                                            if "_V3" in _diccionario:
+                                                # Caso donde existe el argumento "_V3"
+                                                _V3 = _diccionario["_V3"]
+                                                return (data["Type_Queries"][_popcion][_sopcion]
+                                                        .get(_nameQuery,
+                                                             f"Consulta no encontrada en {_popcion}, {_sopcion}")
+                                                        .replace("_V1", str(_V1)).replace("_V2", str(_V2)).replace(
+                                                    "_V3",
+                                                    str(_V3)))
+
                                         return (data["Type_Queries"][_popcion][_sopcion]
                                                 .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1)).replace("_V2", str(_V2)).replace("_V3",
-                                                                                                           str(_V3)))
+                                                .replace("_V1", str(_V1)).replace("_V2", str(_V2)))
+
                                     else:
                                         # Retorno sin "_V3"
                                         return (data["Type_Queries"][_popcion][_sopcion]
                                                 .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1)).replace("_V2", str(_V2)))
+                                                .replace("_V1", str(_V1)))
                             else:
                                 # Agregar manejo para otras posibles consultas o un error
                                 raise ValueError(f"Consulta {_nameQuery} no es reconocida.")
@@ -108,60 +118,6 @@ class ReaderJSON:
                                     else:
                                         raise ValueError("Se requiere un parámetro para esta consulta específica.")
 
-                                if _nameQuery == "COMBO_PROVINCIA":
-                                    _nameQuery = _diccionario["name_Query"]
-                                    _V1 = _diccionario["_V1"]
-                                    _V2 = _diccionario["_V2"]
-                                    _V3 = _diccionario["_V3"]
-                                    _V4 = _diccionario["_V4"]
-                                    if _V1 and _V2 and _V3 and _V4 is not None:
-                                        return (data["Type_Queries"][_popcion][_sopcion]
-                                                .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1))
-                                                .replace("_V2", str(_V2))
-                                                .replace("_V3", str(_V3))
-                                                .replace("_V4", str(_V4)))
-                                    else:
-                                        raise ValueError(
-                                            "Se requieren todos los parametros para esta consulta específica.")
-                                if _nameQuery == "COMBO_CIUDAD":
-                                    _nameQuery = _diccionario["name_Query"]
-                                    _V1 = _diccionario["_V1"]
-                                    _V2 = _diccionario["_V2"]
-                                    _V3 = _diccionario["_V3"]
-                                    _V4 = _diccionario["_V4"]
-                                    _V5 = _diccionario["_V5"]
-                                    if _V1 and _V2 and _V3 and _V4 and _V5 is not None:
-                                        return (data["Type_Queries"][_popcion][_sopcion]
-                                                .get(_nameQuery,f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1))
-                                                .replace("_V2", str(_V2))
-                                                .replace("_V3", str(_V3))
-                                                .replace("_V4", str(_V4))
-                                                .replace("_V5", str(_V5)))
-                                    else:
-                                        raise ValueError(
-                                            "Se requieren todos los parametros para esta consulta específica.")
-                                if _nameQuery == "COMBO_SECTOR":
-                                    _nameQuery = _diccionario["name_Query"]
-                                    _V1 = _diccionario["_V1"]
-                                    _V2 = _diccionario["_V2"]
-                                    _V3 = _diccionario["_V3"]
-                                    _V4 = _diccionario["_V4"]
-                                    _V5 = _diccionario["_V5"]
-                                    _V6 = _diccionario["_V6"]
-                                    if _V1 and _V2 and _V3 and _V4 and _V5 and _V6 is not None:
-                                        return (data["Type_Queries"][_popcion][_sopcion]
-                                                .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1))
-                                                .replace("_V2", str(_V2))
-                                                .replace("_V3", str(_V3))
-                                                .replace("_V4", str(_V4))
-                                                .replace("_V5", str(_V5))
-                                                .replace("_V6", str(_V6)))
-                                    else:
-                                        raise ValueError(
-                                            "Se requieren todos los parametros para esta consulta específica.")
                 if _popcion == "Finance":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]

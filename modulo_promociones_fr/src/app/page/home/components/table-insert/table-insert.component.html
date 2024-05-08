@@ -7,9 +7,9 @@
             <tr>
                 <th>#</th>
                 <th>Servicio</th>
-                <th>Tipo de Servicio</th>
-                <th>Productos</th>
-                <th>Plan</th>
+                <th>TariffPlan</th>
+                <th>Variant</th>
+                <th>Producto</th>
                 <th>Forma de Pago</th>
                 <th>Buro</th>
                 <th>Provincia</th>
@@ -21,33 +21,33 @@
             <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
                 <td>{{ row.id }}</td>
                 <td>
-                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataTISE(row._V1, i); getDataPROD(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
+                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataPLAN(row._V1, i)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
                 </td>
                 <td>
-                    <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataPROD(row._V1, row._V2, i); getDataPLAN(row._V1, row._V2, row._V3, i)">
-                        <option value="">Elija el T. Servicio</option>
-                        <option value="" *ngIf="tiposervicioData[i].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
-                        <option value="" *ngIf="tiposervicioData[i].length === 0 && row._V1">Cargando Datos..</option>
-                        <option *ngFor=" let tiposervicio of tiposervicioData[i]" [value]="tiposervicio" >{{tiposervicio}}</option>    
+                    <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataPLANVARIANT(row._V2, i)">
+                        <option value="">Elija un Plan</option>
+                        <option value="" *ngIf="planData[i].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="planData[i].length === 0 && row._V1">Cargando Datos..</option>
+                        <option *ngFor=" let plan of planData[i]" [value]="plan.TARIFFPLANID" >{{plan.TARIFFPLAN}}</option>    
                     </select>
                 </td>
                 <td>
-                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPLAN(row._V1, row._V2, row._V3, i); getDataProvincias(row._V3, row._V4, i); getCiudadesxTT(row._V3, row._V4, row._V7 , i)">
-                        <option value="">Elije una Producto</option>
-                        <option value="" *ngIf="productosData[i].length === 0 && !row._V1 || !row._V2">Selecc. antes los otros elementos</option>
-                        <option value="" *ngIf="productosData[i].length === 0 && row._V1 && row._V2">Cargando Datos..</option>
-                        <option *ngFor="let prod of productosData[i]" [value]="prod.PRODUCTID">{{prod.PRODUCTO}}</option>
+                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPROD(row._V3, i); getDataTISE(row._V3, i); getDataProvincias(row._V3, i)">
+                        <option value="">Elija un Plan Variant</option>
+                        <option value="" *ngIf="planVData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="planVData[i].length === 0 && row._V2">Cargando Datos..</option>
+                        <option *ngFor=" let planV of planVData[i]" [value]="planV.TARIFFPLANVARIANTID" >{{planV.TARIFFPLANVARIANT}}</option>    
                     </select>
                 </td>
                 <td>
-                    <select name="_V4" [(ngModel)]="row._V4" (ngModelChange)="getDataProvincias(row._V3, row._V4, i); getCiudadesxTT(row._V3, row._V4, row._V7 , i)">
-                        <option value="">Elije un Plan</option>
-                        <option value="" *ngIf="planData[i].length === 0 && !row._V1 || !row._V2 || !row._V3">Selecc. antes los otros elementos</option>
-                        <option value="" *ngIf="planData[i].length === 0 && row._V1 && row._V2 && row._V3">Cargando datos...</option>
-                        <option *ngFor=" let plan of planData[i]" [value]="plan.TARIFFPLANVARIANTID" >{{plan.TARIFFPLANVARIANT}}</option>
+                    <select name="_V4" [(ngModel)]="row._V4">
+                        <option value="">Elija un Producto</option>
+                        <option value="" *ngIf="productosData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
+                        <option value="" *ngIf="productosData[i].length === 0 && row._V2">Cargando Datos..</option>
+                        <option *ngFor=" let prod of productosData[i]" [value]="prod.PRODUCTID" >{{prod.PRODUCTO}}</option>    
                     </select>
                 </td>
                 <td>
@@ -72,7 +72,7 @@
                     </div>
                 </td>
                 <td>
-                    <select name="_V7" [(ngModel)]="row._V7" (ngModelChange)="getCiudadesxTT(row._V3, row._V4, row._V7 , i)">
+                    <select name="_V5" [(ngModel)]="row._V5" (ngModelChange)="getCiudadesxTT(row._V3, row._V5, i)">
                         <option value="">Selecciona una Provincia</option>
                         <option value="" *ngIf="provinciaData[i].length === 0 && !row._V3 || !row._V4">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="provinciaData[i].length === 0 && row._V3 && row._V4">Cargando datos...</option>
