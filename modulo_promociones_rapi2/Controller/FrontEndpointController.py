@@ -20,33 +20,13 @@ class FrontEndpointController:
             _type = request.args.get('type')
             if _type.upper() == 'COMBO':
                 _stype = request.args.get('stype')
-                if _stype.upper() == 'TIPO_SERVICIOS':
+                valid_stype = {"COMBO_PLAN", "COMBO_PLANVARIANT", "COMBO_PRODUCTO",
+                               "COMBO_TIPO_SERVICIO"}
+                if _stype.upper() in valid_stype:
                     _V1 = request.args.get('_V1')
                     params = {'type': _type,
                               'stype': _stype,
                               '_V1': _V1}
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
-                    return response.text, response.status_code
-
-                elif _stype.upper() == 'PRODUCTOS':
-                    _V1 = request.args.get('_V1')
-                    _V2 = request.args.get('_V2')
-                    params = {'type': _type,
-                              'stype': _stype,
-                              '_V1': _V1,
-                              '_V2': _V2}
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
-                    return response.text, response.status_code
-
-                elif _stype.upper() == 'PLANES':
-                    _V1 = request.args.get('_V1')
-                    _V2 = request.args.get('_V2')
-                    _V3 = request.args.get('_V3')
-                    params = {'type': _type,
-                              'stype': _stype,
-                              '_V1': _V1,
-                              '_V2': _V2,
-                              '_V3': _V3}
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 

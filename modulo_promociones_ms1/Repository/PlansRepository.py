@@ -166,69 +166,83 @@ class PlansRepository:
                             _V1 = _diccionario["_V1"]
                             _Qdiccionario = {"popcion": "Planes",
                                              "sopcion": "COMBO",
-                                             "name_Query": "COMBO_TIPO_SERVICIOS",
+                                             "name_Query": "COMBO_PLAN",
                                              "_V1": _V1}
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
                                 return {}
                             data = {
-                                'C_TIPO_SERVICIOS': []
+                                'COMBO_PLAN': []
                             }
                             for result in results:
-                                _CTipoSer = Tipo_Servicios(result[0])
-                                data['C_TIPO_SERVICIOS'].append(_CTipoSer)
-                            print("\n**** C_TIPO DE SERVICIOS - DATOS OBTENIDOS ****\n")
+                                _COMBO_PLAN = TariffPlanes(result[0], result[1])
+                                data['COMBO_PLAN'].append(_COMBO_PLAN)
+                            print("\n**** COMBO_PLAN - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
 
                         if _sopcion == 2:
                             _V1 = _diccionario["_V1"]
-                            _V2 = _diccionario["_V2"]
                             _Qdiccionario = {"popcion": "Planes",
                                              "sopcion": "COMBO",
-                                             "name_Query": "COMBO_PRODUCTO",
-                                             "_V1": _V1,
-                                             "_V2": _V2}
+                                             "name_Query": "COMBO_PLANVARIANT",
+                                             "_V1": _V1}
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
                                 return {}
                             data = {
-                                'C_PRODUCTOS': []
+                                'COMBO_PLANVARIANT': []
                             }
                             for result in results:
-                                _CProductos = Productos(result[0], result[1])
-                                data['C_PRODUCTOS'].append(_CProductos)
-                            print("\n**** C_PRODUCTOS- DATOS OBTENIDOS ****\n")
+                                _COMBO_PLANVARIANT = TariffPlanVariant(result[0], result[1])
+                                data['COMBO_PLANVARIANT'].append(_COMBO_PLANVARIANT)
+                            print("\n**** COMBO_PLANVARIANT - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
 
                         if _sopcion == 3:
                             _V1 = _diccionario["_V1"]
-                            _V2 = _diccionario["_V2"]
-                            _V3 = _diccionario["_V3"]
                             _Qdiccionario = {"popcion": "Planes",
                                              "sopcion": "COMBO",
-                                             "name_Query": "COMBO_PLANES",
-                                             "_V1": _V1,
-                                             "_V2": _V2,
-                                             "_V3": _V3}
+                                             "name_Query": "COMBO_PRODUCTO",
+                                             "_V1": _V1}
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
                                 return {}
                             data = {
-                                'C_PLANES': []
+                                'COMBO_PRODUCTO': []
                             }
                             for result in results:
-                                _CTariffPlanVariant = TariffPlanVariant(result[0], result[1])
-                                data['C_PLANES'].append(_CTariffPlanVariant)
-                            print("\n**** C_PLANES - DATOS OBTENIDOS ****\n")
+                                _COMBO_PRODUCTO = Productos(result[0], result[1])
+                                data['COMBO_PRODUCTO'].append(_COMBO_PRODUCTO)
+                            print("\n**** COMBO_PRODUCTO - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
 
                         if _sopcion == 4:
+                            _V1 = _diccionario["_V1"]
+                            _Qdiccionario = {"popcion": "Planes",
+                                             "sopcion": "COMBO",
+                                             "name_Query": "COMBO_TIPO_SERVICIO",
+                                             "_V1": _V1}
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'COMBO_TIPO_SERVICIO': []
+                            }
+                            for result in results:
+                                _COMBO_TIPO_SERVICIO = Tipo_Servicios(result[0])
+                                data['COMBO_TIPO_SERVICIO'].append(_COMBO_TIPO_SERVICIO)
+                            print("\n**** COMBO_TIPO_SERVICIO - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
+
+                        if _sopcion == 5:
                             _V1 = _diccionario["_V1"]
                             _V2 = _diccionario["_V2"]
                             _V3 = _diccionario["_V3"]
@@ -254,7 +268,7 @@ class PlansRepository:
                             self.db.close()
                             return data
 
-                        if _sopcion == 5:
+                        if _sopcion == 6:
                             _V1 = _diccionario["_V1"]
                             _V2 = _diccionario["_V2"]
                             _V3 = _diccionario["_V3"]
@@ -282,7 +296,7 @@ class PlansRepository:
                             self.db.close()
                             return data
 
-                        if _sopcion == 6:
+                        if _sopcion == 7:
                             _V1 = _diccionario["_V1"]
                             _V2 = _diccionario["_V2"]
                             _V3 = _diccionario["_V3"]

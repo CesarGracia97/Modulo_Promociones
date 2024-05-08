@@ -107,19 +107,38 @@ class FormattedPlans:
             return jsonify({'Error': str(e)})
 
     @staticmethod
-    def formated_COTipoServicio(data):
+    def formated_COPlan(data):
         try:
             json_data = {
-                'C_TIPO_SERVICIOS': []
+                'COMBO_PLAN': []
             }
-            for tiposervicio in data['C_TIPO_SERVICIOS']:
-                json_data['C_TIPO_SERVICIOS'].append({
-                    'TIPO_SERVICIO': tiposervicio.TIPO_SERVICIO
+            for plan in data['COMBO_PLAN']:
+                json_data['COMBO_PLAN'].append({
+                    'TARIFFPLANID': plan.TARIFFPLANID,
+                    'TARIFFPLAN': plan.TARIFFPLAN
                 })
             return json_data
         except Exception as e:
             print("--------------------------------------------------------------------")
-            print("FormattedPlans - formated_COTipoServicio | Error: ", e)
+            print("FormattedPlanes - formated_COPlan | Error: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': str(e)})
+
+    @staticmethod
+    def formated_COPlanVariant(data):
+        try:
+            json_data = {
+                'COMBO_PLANVARIANT': []
+            }
+            for plan in data['COMBO_PLANVARIANT']:
+                json_data['COMBO_PLANVARIANT'].append({
+                    'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,
+                    'TARIFFPLANVARIANT': plan.TARIFFPLANVARIANT
+                })
+            return json_data
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("FormattedPlanes - formated_COPlanVariant | Error: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': str(e)})
 
@@ -127,10 +146,10 @@ class FormattedPlans:
     def formated_COProducto(data):
         try:
             json_data = {
-                'C_PRODUCTOS': []
+                'COMBO_PRODUCTO': []
             }
-            for producto in data['C_PRODUCTOS']:
-                json_data['C_PRODUCTOS'].append({
+            for producto in data['COMBO_PRODUCTO']:
+                json_data['COMBO_PRODUCTO'].append({
                     'PRODUCTID': producto.PRODUCTID,
                     'PRODUCTO': producto.PRODUCTO
                 })
@@ -142,20 +161,19 @@ class FormattedPlans:
             return jsonify({'Error': str(e)})
 
     @staticmethod
-    def formated_COPlanes(data):
+    def formated_COTipoServicio(data):
         try:
             json_data = {
-                'C_PLANES': []
+                'COMBO_TIPO_SERVICIO': []
             }
-            for plan in data['C_PLANES']:
-                json_data['C_PLANES'].append({
-                    'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,
-                    'TARIFFPLANVARIANT': plan.TARIFFPLANVARIANT
+            for tiposervicio in data['COMBO_TIPO_SERVICIO']:
+                json_data['COMBO_TIPO_SERVICIO'].append({
+                    'TIPO_SERVICIO': tiposervicio.TIPO_SERVICIO
                 })
             return json_data
         except Exception as e:
             print("--------------------------------------------------------------------")
-            print("FormattedPlanes - formated_COPlanes | Error: ", e)
+            print("FormattedPlans - formated_COTipoServicio | Error: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': str(e)})
 

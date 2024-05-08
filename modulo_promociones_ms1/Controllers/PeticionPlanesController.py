@@ -96,43 +96,48 @@ class PeticionPlanesController:
                         return jsonify(dt_dtpl3), 200
             elif _type.upper() == 'COMBO':
                 _stype = request.args.get('stype')
-                if _stype.upper() == 'TIPO_SERVICIOS':
+                if _stype.upper() == 'PLAN':
                     _V1 = request.args.get('_V1')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 1,
                         "_V1": _V1
                     }
-                    data_cts = repository.getData_Planes(_diccionario)
-                    dt_cts = frt.formated_COTipoServicio(data_cts)
-                    return jsonify(dt_cts), 200
-                if _stype.upper() == 'PRODUCTOS':
+                    data_cpl = repository.getData_Planes(_diccionario)
+                    dt_cpl = frt.formated_COPlan(data_cpl)
+                    return jsonify(dt_cpl), 200
+                if _stype.upper() == 'PLANVARIANT':
                     _V1 = request.args.get('_V1')
-                    _V2 = request.args.get('_V2')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 2,
-                        "_V1": _V1,
-                        "_V2": _V2
+                        "_V1": _V1
                     }
-                    data_cpd = repository.getData_Planes(_diccionario)
-                    dt_cpd = frt.formated_COProducto(data_cpd)
-                    return jsonify(dt_cpd), 200
+                    data_cpl = repository.getData_Planes(_diccionario)
+                    dt_cpl = frt.formated_COPlanVariant(data_cpl)
+                    return jsonify(dt_cpl), 200
 
-                if _stype.upper() == 'PLANES':
+                if _stype.upper() == 'PRODUCTO':
                     _V1 = request.args.get('_V1')
-                    _V2 = request.args.get('_V2')
-                    _V3 = request.args.get('_V3')
                     _diccionario = {
                         "popcion": "COMBO",
                         "sopcion": 3,
-                        "_V1": _V1,
-                        "_V2": _V2,
-                        "_V3": _V3
+                        "_V1": _V1
                     }
-                    data_cpl = repository.getData_Planes(_diccionario)
-                    dt_cpl = frt.formated_COPlanes(data_cpl)
-                    return jsonify(dt_cpl), 200
+                    data_prd = repository.getData_Planes(_diccionario)
+                    dt_prd = frt.formated_COProducto(data_prd)
+                    return jsonify(dt_prd), 200
+
+                if _stype.upper() == 'TIPO_SERVICIO':
+                    _V1 = request.args.get('_V1')
+                    _diccionario = {
+                        "popcion": "COMBO",
+                        "sopcion": 4,
+                        "_V1": _V1
+                    }
+                    data_cts = repository.getData_Planes(_diccionario)
+                    dt_cts = frt.formated_COTipoServicio(data_cts)
+                    return jsonify(dt_cts), 200
 
                 if _stype.upper() == 'PROVINCIA':
                     _V1 = request.args.get('_V1')
@@ -141,7 +146,7 @@ class PeticionPlanesController:
                     _V4 = request.args.get('_V4')
                     _diccionario = {
                         "popcion": "COMBO",
-                        "sopcion": 4,
+                        "sopcion": 5,
                         "_V1": _V1,
                         "_V2": _V2,
                         "_V3": _V3,
@@ -150,6 +155,7 @@ class PeticionPlanesController:
                     data_cpr = repository.getData_Planes(_diccionario)
                     dt_cpr = frt.formated_COProvincia(data_cpr)
                     return jsonify(dt_cpr), 200
+
                 if _stype.upper() == 'CIUDAD':
                     _V1 = request.args.get('_V1')
                     _V2 = request.args.get('_V2')
@@ -158,7 +164,7 @@ class PeticionPlanesController:
                     _V5 = request.args.get('_V5')
                     _diccionario = {
                         "popcion": "COMBO",
-                        "sopcion": 5,
+                        "sopcion": 6,
                         "_V1": _V1,
                         "_V2": _V2,
                         "_V3": _V3,
@@ -178,7 +184,7 @@ class PeticionPlanesController:
                     _V6 = request.args.get('_V6')
                     _diccionario = {
                         "popcion": "COMBO",
-                        "sopcion": 6,
+                        "sopcion": 7,
                         "_V1": _V1,
                         "_V2": _V2,
                         "_V3": _V3,
