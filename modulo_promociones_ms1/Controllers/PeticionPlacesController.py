@@ -87,12 +87,10 @@ class PeticionPlacesController:
 
             elif _type.upper() == "SPECIFIC_PROVXTT":
                 _V1 = request.args.get('_V1')
-                _V2 = request.args.get('_V2')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 4,
-                    "_V1": _V1,
-                    "_V2": _V2
+                    "_V1": _V1
                 }
                 data_prv = repository.getData_Places(_diccionario)
                 dt_prv = frt.formated_provinces(data_prv)
@@ -101,13 +99,11 @@ class PeticionPlacesController:
             elif _type.upper() == "SPECIFIC_CITYXTT":
                 _idProv = request.args.get('id_Prov')
                 _V1 = request.args.get('_V1')
-                _V2 = request.args.get('_V2')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 5,
                     "id_Prov": _idProv,
-                    "_V1": _V1,
-                    "_V2": _V2
+                    "_V1": _V1
                 }
                 data_scts = repository.getData_Places(_diccionario)
                 dt_scts = frt.formated_specific_city(data_scts)
@@ -116,13 +112,11 @@ class PeticionPlacesController:
             elif _type.upper() == "SPECIFIC_SECTXTT":
                 _idCity = request.args.get('id_City')
                 _V1 = request.args.get('_V1')
-                _V2 = request.args.get('_V2')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 6,
                     "id_City": _idCity,
-                    "_V1": _V1,
-                    "_V2": _V2
+                    "_V1": _V1
                 }
                 data_ssct = repository.getData_Places(_diccionario)
                 dt_ssct = frt.formated_specific_sector(data_ssct)
@@ -130,15 +124,13 @@ class PeticionPlacesController:
             elif _type.upper() == "SECTMXTT":
                 _idCities = request.args.get('id_Cities')
                 _V1 = request.args.get('_V1')
-                _V2 = request.args.get('_V2')
                 if _idCities:
                     _idCities = _idCities.split(',')
                 _diccionario = {
                     "popcion": "PARAMETRE_DATA",
                     "sopcion": 7,
                     "id_Cities": _idCities,
-                    "_V1": _V1,
-                    "_V2": _V2
+                    "_V1": _V1
                 }
                 data_ssct = repository.getData_Places(_diccionario)
                 dt_ssct = frt.formated_specific_sectortt(data_ssct)

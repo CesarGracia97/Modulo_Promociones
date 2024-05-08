@@ -82,6 +82,7 @@ class PlaceRepository:
 
                             self.db.close()
                             return data
+
                 elif _popcion == "PARAMETRE_DATA":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]
@@ -158,7 +159,6 @@ class PlaceRepository:
                             _Qdiccionario["name_Query"] = "SPECIFIC_CITYXTT"
                             _Qdiccionario["_V1"] = _diccionario["id_Prov"]
                             _Qdiccionario["_V2"] = _diccionario["_V1"]
-                            _Qdiccionario["_V3"] = _diccionario["_V2"]
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
@@ -176,7 +176,6 @@ class PlaceRepository:
                             _Qdiccionario["name_Query"] = "SPECIFIC_SECTXTT"
                             _Qdiccionario["_V1"] = _diccionario["id_City"]
                             _Qdiccionario["_V2"] = _diccionario["_V1"]
-                            _Qdiccionario["_V3"] = _diccionario["_V2"]
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:

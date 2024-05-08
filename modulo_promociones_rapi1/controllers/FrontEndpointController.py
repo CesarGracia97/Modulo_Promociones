@@ -25,10 +25,8 @@ class FrontEndpointController:
                 return response.text, response.status_code
             elif _type and _type.upper() == 'SPECIFIC_PROVXTT':
                 print("PROVINCIA ESPECIFICA POR TECNOLOGIA Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
-                TECNOLOGIA = request.args.get('TECNOLOGIA')
                 TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                 params = {'type': 'SPECIFIC_PROVXTT',
-                          'TECNOLOGIA': TECNOLOGIA,
                           'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
@@ -61,11 +59,9 @@ class FrontEndpointController:
             elif _type.upper() == 'SPECIFIC_CITYXTT':
                 print("CIUDAD ESPECIFICA POR PROVINCIA, TECNOLOGIA Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
                 _idProv = request.args.get('id_Prov')
-                TECNOLOGIA = request.args.get('TECNOLOGIA')
                 TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                 params = {'type': _type,
                           'id_Prov': _idProv,
-                          'TECNOLOGIA': TECNOLOGIA,
                           'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
@@ -98,11 +94,9 @@ class FrontEndpointController:
             elif _type.upper() == 'SPECIFIC_SECTXTT':
                 print("SECTOR ESPECIFICO POR CIUDAD, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
                 _idCity = request.args.get('id_City')
-                TECNOLOGIA = request.args.get('TECNOLOGIA')
                 TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                 params = {'type': _type,
                           'id_City': _idCity,
-                          'TECNOLOGIA': TECNOLOGIA,
                           'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
@@ -151,11 +145,9 @@ class FrontEndpointController:
                 print("Tipo de Peticion: "+_type)
                 print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
                 _idCities = request.args.getlist('id_Cities')
-                TECNOLOGIA = request.args.get('TECNOLOGIA')
                 TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                 params = {'type': _type,
                           'id_Cities': _idCities,
-                          'TECNOLOGIA': TECNOLOGIA,
                           'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
