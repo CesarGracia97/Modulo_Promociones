@@ -47,40 +47,4 @@ export class CombosService {
     .set('_V1', Id_TPV.toString());
     return this.http.get<TipoServicios[]>(this.baseUrl, { params: params });
   }
-
-  getCombosProvincia(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string, TARIFFPLANIDVARIANTID: number):Observable<Provincias[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PROVINCIA')
-    .set('_V1', SERVICIO.toString())
-    .set('_V2', TIPO_SERVICIOS.toString())
-    .set('_V3', TECNOLOGIA.toString())
-    .set('_V4', TARIFFPLANIDVARIANTID.toString());
-    return this.http.get<Provincias[]>(this.baseUrl, { params: params });
-  }
-
-  getCombosCiudad(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string, TARIFFPLANIDVARIANTID: number, PROVINCIAID:number):Observable<C_Ciudades[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'CIUDAD')
-    .set('_V1', SERVICIO.toString())
-    .set('_V2', TIPO_SERVICIOS.toString())
-    .set('_V3', TECNOLOGIA.toString())
-    .set('_V4', TARIFFPLANIDVARIANTID.toString())
-    .set('_V5', PROVINCIAID.toString());
-    return this.http.get<C_Ciudades[]>(this.baseUrl, { params: params });
-  }
-
-  getCombosSectores(SERVICIO: string, TIPO_SERVICIOS:string, TECNOLOGIA: string, TARIFFPLANIDVARIANTID: number, PROVINCIAID:number, CIUDADID:number):Observable<C_Sectores[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'SECTOR')
-    .set('_V1', SERVICIO.toString())
-    .set('_V2', TIPO_SERVICIOS.toString())
-    .set('_V3', TECNOLOGIA.toString())
-    .set('_V4', TARIFFPLANIDVARIANTID.toString())
-    .set('_V5', PROVINCIAID.toString())
-    .set('_V6', CIUDADID.toString());
-    return this.http.get<C_Sectores[]>(this.baseUrl, { params: params });
-  }
 }

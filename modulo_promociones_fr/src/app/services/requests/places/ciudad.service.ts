@@ -23,10 +23,9 @@ export class CiudadService {
     return this.http.get<Ciudades[]>(this.baseUrl, { params: params });
   }
 
-  getCiudadesXTecnologiaXTariffplanVariant(id_Prov:number, tecnologia: string, tariffplanvariant: number):Observable<Ciudades[]>{
+  getCiudadesXTariffplanVariant(id_Prov:number, tariffplanvariant: number):Observable<Ciudades[]>{
     let params = new HttpParams().set('type', 'SPECIFIC_CITYXTT')
     .set('id_Prov', id_Prov.toString())
-    .set('TECNOLOGIA', tecnologia)
     .set('TARIFFPLANVARIANT', tariffplanvariant);
     return this.http.get<Ciudades[]>(this.baseUrl, { params: params });
   }
