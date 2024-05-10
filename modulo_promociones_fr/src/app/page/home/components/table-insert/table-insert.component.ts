@@ -177,6 +177,11 @@ export class TableInsertComponent implements OnInit  {
     return trueSelect && trueMP && trueB;
   }
 
+  button_search_sect(index: number): boolean {
+    const trueCiudadList = this.ciudadData[index].some(ciudad => ciudad.selected);
+    return trueCiudadList;
+  }
+
   button_V1_V8(row: any, index: number): boolean {
     const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V5;
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);

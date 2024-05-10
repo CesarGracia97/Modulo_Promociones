@@ -94,73 +94,34 @@
     </table>
     <div *ngIf="modal_cs" class="modal_cs" [ngClass]="{'door-open': modal_cs}" id="modal_cs-{{ rowId+1 }}">
         <div class="modal-header">
-            <span>Seleccionar Ciudades y Sectores - F# {{rowId+1}}</span>
-            <button (click)="closeModal('CS')">X</button>
-        </div>
+            <span class="modal-title">Seleccionar Ciudades y Sectores - F# {{rowId+1}}</span>
+            <button class="close-button" (click)="closeModal('CS')">×</button>
+          </div>
         <div class="modal-body">
-            <div id="ciudades_checklist">
-                <span>Ciudades</span>
-                <ul>
-                    <li *ngFor="let city of ciudadData[rowId]">
-                        <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{ city.CIUDAD }}
-                    </li>
-                </ul>
-                <button (click)="buscarSectores()">Buscar Sectores</button>
+            <div id="content_ciudades_checklist">
+                <div id="ciudades_checklist">
+                    <span>Ciudades</span>
+                    <ul>
+                        <li *ngFor="let city of ciudadData[rowId]">
+                            <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{ city.CIUDAD }}
+                        </li>
+                    </ul>
+                </div>
+                <button id="button"[disabled]="!button_search_sect(rowId)" (click)="buscarSectores()">Buscar Sectores</button>
             </div>
-            <div id="sectores_checklist">
-                <span>Sectores</span>
-                <ul>
-                    <li *ngFor="let sect of sectoresData[rowId]">
-                        <input type="checkbox" [(ngModel)]="sect.selected" [value]="sect.SECTOR_ID"/>{{sect.SECTOR}}
-                    </li>
-                </ul>
+            <div id="content_sectores_checklist">
+                <div id="sectores_checklist">
+                    <span>Sectores</span>
+                    <ul>
+                        <li *ngFor="let sect of sectoresData[rowId]">
+                            <input type="checkbox" [(ngModel)]="sect.selected" [value]="sect.SECTOR_ID"/>{{sect.SECTOR}}
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    <!-- <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
-        <div class="modal-header">
-            <span>Datos de Promocion- F# {{rowId+1}}</span>
-            <button (click)="closeModal('DP')">X</button>
-        </div>
-        <div class="modal-body">
-            <div id="dat_promo">
-                <div id="dat_promo_ing">
-                    <div id="precios">
-                        <label>Precio Regular: ${{rowId+593}}</label>
-                        <label>Precio Promocional</label>
-                        <input type="number" required/>
-                    </div>
-                    <div id="dias">
-                        <label>Dias Gozados</label>
-                        <ul>
-                            <li>
-                                <input type="checkbox" />
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="upgrade">
-                        <label>UPGRADE</label>
-                        <select>
-                            <option value="">Selecc. un Upgrade</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="dat_promo_butt">
-                    <button id="btn_npro"></button>
-                    <button id="enviar"></button>
-                </div>
-            </div>
-            <div id="pro_adici">
-                <div id="streaming"></div>
-                <div id="telefonia"></div>
-                <div id="television"></div>
-                <div id="router"></div>
-            </div>
-            <div id="modal_dp_button">
-                
-            </div>
-        </div>
-    </div> -->
+
     <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
         <div class="modal-header">
           <span class="modal-title">Datos de Promocion - F# {{rowId+1}}</span>

@@ -12,8 +12,8 @@ export class FdUpgradeService {
     private upgr: UpgradeService
   ) { }
 
-  getUpgrade_RETURN(): Observable<Upgrade[]> {
-    return this.getUpgrade_RETURN().pipe(
+  getUpgrade_RETURN(TFPV: number): Observable<Upgrade[]> {
+    return this.upgr.getUpgrade(TFPV).pipe(
       map((response: any) => {
         if(response && response.UPGRADE){
           return response.UPGRADE.map((upgrade: any) => {
