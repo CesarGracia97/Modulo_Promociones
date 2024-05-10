@@ -1,4 +1,4 @@
-from Models.model_finance import MPagos, Buro
+from Models.model_finance import MPagos, Buro, UPGRADE, Precio_Regular, Dias_Gozados
 from Resources.database.connection import connection
 from Utils.ReaderJSON import ReaderJSON
 
@@ -57,6 +57,36 @@ class FinancialRepository:
                             print("\n**** BURO - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
+                if _popcion == "UPGRADE" or _popcion == "PRECIO_REGULAR" or _popcion == "DIAS_GOZADOS":
+                    _Qdiccionario = {
+                        "popcion": "Finance",
+                        "sopcion": _popcion
+                    }
+                    if '_V1' in _diccionario:
+                        _Qdiccionario["_V1"] = _diccionario["_V1"]
+                        if '_V2' in _diccionario:
+                            _Qdiccionario["_V2"] = _diccionario["_V2"]
+                    query = self.reader_json.getQuery(_Qdiccionario)
+                    results = self.db.execute_query(query)
+                    if results is None:
+                        return {}
+                    data = {
+                        _popcion: []
+                    }
+                    for result in results:
+                        if _popcion == "UPGRADE":
+                            dt = UPGRADE(result[0], result[1])
+                            data[_popcion].append(dt)
+                        if _popcion == "PRECIO_REGULAR":
+                            dt = Precio_Regular(result[0], result[1])
+                            data[_popcion].append(dt)
+                        if _popcion == "DIAS_GOZADOS":
+                            dt = Dias_Gozados(result[0], result[1])
+                            data[_popcion].append(dt)
+                    print("\n**** "+_popcion+" - DATOS OBTENIDOS ****\n")
+                    self.db.close()
+                    return data
+
         except Exception as e:
             self.db.close()
             print("--------------------------------------------------------------------")

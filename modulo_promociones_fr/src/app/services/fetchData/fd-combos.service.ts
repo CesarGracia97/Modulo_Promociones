@@ -25,7 +25,7 @@ export class FdCombosService {
 
   
   constructor(
-    private combo: CombosService,
+    private combo: CombosService
   ) { }
 
   // Retornar informacion Directamente

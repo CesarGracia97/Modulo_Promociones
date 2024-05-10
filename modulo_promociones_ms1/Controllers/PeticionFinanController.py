@@ -33,7 +33,22 @@ class PeticionFinanController:
                 data_fnc = repository.getData_Financial(_diccionario)
                 dt_financ = frt.formatted_mpagos(data_fnc)
                 return jsonify(dt_financ), 200
-
+            if _type.upper() == 'UPGRADE' or _type.upper() == 'PRECIO_REGULAR' or _type.upper() == 'DIAS_GOZADOS':
+                _diccionario = {"popcion": _type}
+                if '_V1' in request.args:
+                    _diccionario['_V1'] = request.args.get('_V1')
+                    if '_V2' in request.args:
+                        _diccionario['_V2'] = request.args.get('_V2')
+                data_fnc = repository.getData_Financial(_diccionario)
+                if _type.upper() == 'UPGRADE':
+                    dt_ = frt.formatted_upgrade(data_fnc)
+                    return jsonify(dt_), 200
+                if _type.upper() == 'PRECIO_REGULAR':
+                    dt_ = frt.formatted_pregular(data_fnc)
+                    return jsonify(dt_), 200
+                if _type.upper() == 'DIAS_GOZADOS':
+                    dt_ = frt.formatted_dgozados(data_fnc)
+                    return jsonify(dt_), 200
         except Exception as e:
             print("--------------------------------------------------------------------")
             print("faseEscucha - PeticionFinanController | Error detectado: ", e)

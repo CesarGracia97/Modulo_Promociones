@@ -37,3 +37,57 @@ class FormattedFinance:
             print("FormattedFinance - formatted_mpagos | Error: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': str(e)})
+
+    @staticmethod
+    def formatted_dgozados(data):
+        try:
+            json_data = {
+                'DIAS_GOZADOS': []
+            }
+            for dt in data['DIAS_GOZADOS']:
+                json_data['DIAS_GOZADOS'].append({
+                    'ID': dt.ID,
+                    'NAME': dt.NAME
+                })
+            return json_data
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("FormattedFinance - formatted_dgozados | Error: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': str(e)})
+
+    @staticmethod
+    def formatted_pregular(data):
+        try:
+            json_data = {
+                'PRECIO_REGULAR': []
+            }
+            for dt in data['PRECIO_REGULAR']:
+                json_data['PRECIO_REGULAR'].append({
+                    'ID': dt.ID,
+                    'NAME': dt.NAME
+                })
+            return json_data
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("FormattedFinance - formatted_pregular | Error: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': str(e)})
+
+    @staticmethod
+    def formatted_upgrade(data):
+        try:
+            json_data = {
+                'UPGRADE': []
+            }
+            for dt in data['UPGRADE']:
+                json_data['UPGRADE'].append({
+                    'ID': dt.ID,
+                    'NAME': dt.NAME
+                })
+            return json_data
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("FormattedFinance - formatted_upgrade | Error: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': str(e)})

@@ -8,7 +8,7 @@ import { DiasGozados } from '../../../interfaces/DataPromocional/dias-gozados.in
 })
 export class DiasGozadosService {
 
-  private baseUrl ='';
+  private baseUrl ='http://127.0.0.1:5014/api/ra/dtpro_endpoint';
 
   constructor(private http:HttpClient) { }
 

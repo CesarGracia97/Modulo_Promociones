@@ -25,7 +25,6 @@
     padding: 12px 15px; /* Espaciado adecuado en las celdas */
     border-bottom: 1px solid #dddddd; /* Línea divisoria sutil */
     text-align: left; /* Alineación de texto a la izquierda */
-    max-width: 75px;
 }
 
 #principalTable th {
@@ -201,8 +200,8 @@ tr.mas td {
     }
 }
 
-.modal_dp{
-    position: fixed;
+/*.modal_dp{
+    position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -217,12 +216,12 @@ tr.mas td {
 
     .modal-header {
         display: flex;
-        justify-content: space-between; /* Alinea los elementos a los extremos */
+        justify-content: space-between;
         padding: 10px;
         background-color: #f1f1f1;
         border-bottom: 1px solid #ccc;
         .modal-header span {
-            flex: 1; /* Asegura que el título ocupe todo el espacio posible a la izquierda */
+            flex: 1; 
         }
         
     }
@@ -231,9 +230,138 @@ tr.mas td {
         padding: 20px;
         font-size: 9pt;
         text-align: center;
-        display: flex; /* Establece el modal-body como contenedor Flex */
-        flex-direction: row; /* Alinea los elementos hijos en fila */
-        text-align: left;
-        gap: 20px;
+        display: flex;
+        flex-direction: column; 
+        position: relative;
+
+        #dat_promo{
+            display: flex;
+            flex-direction: column; 
+            gap: 20px;
+
+            #dat_promo_ing {
+                display: flex;
+                flex-direction: row; 
+                gap: 20px; 
+                padding: 10px;
+
+                #precios, #dias, #upgrade {
+                    flex: 1;
+                    border: 2px solid #ccc;
+                    border-radius: 5px;
+                    padding: 10px 12px;
+                }
+
+                #btn_npro, #enviar {
+                    margin: 0 10px;
+                }
+            }
+
+            #dat_promo_butt {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        #pro_adici {
+            display: flex;
+            flex-direction: column; 
+            gap: 20px; 
+        }
+        
+    }
+}*/
+
+.modal_dp {
+    background-color: white;
+    border-radius: 10px;
+    //width: 70%;
+    max-width: 600px;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    animation: doorOpen 0.5s;
+    border: 2px solid #ccc;
+    z-index: 1000;
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+
+        .modal-title {
+            font-weight: bold;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+    
+    .modal-body {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column; 
+
+        #dat_promo, #pro_adici, #modal_dp_button {
+            padding: 5px;
+        }
+
+        #dat_promo {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            border: 0.5px solid #ccc;
+
+            #dat_promo_ing {
+                display: flex;
+                flex-direction: row; 
+                gap: 5px; 
+                margin: 5px;
+
+                #precios, #dias, #upgrade {
+                    flex: 1;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 10px 12px;
+                    font-size: 7pt;
+                }
+            }
+
+            #dat_promo_butt {
+                display: flex;
+                justify-content: center;
+    
+                .enviar, .btn_npro {
+                    margin: 0 7.5px;
+                }
+            }
+        }
+
+        #pro_adici {
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row; 
+            gap: 10px;
+
+            #television, #streaming, #router, #telefonia{
+                padding: 5px;
+                border-radius: 5px;
+                border: 0.5px solid #ccc;
+                font-size: 7pt;
+                width: 100%;
+                height: 200px;
+            }
+        }
     }
 }

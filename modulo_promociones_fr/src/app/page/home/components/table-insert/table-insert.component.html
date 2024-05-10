@@ -35,7 +35,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPROD(row._V3, i); getDataTISE(row._V3, i); getDataProvincias(row._V3, i)">
+                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPROD(row._V3, i); getDataProvincias(row._V3, i)">
                         <option value="">Elija un Plan Variant</option>
                         <option value="" *ngIf="planVData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="planVData[i].length === 0 && row._V2">Cargando Datos..</option>
@@ -83,7 +83,7 @@
                     <button id="button" [disabled]="!button_V1_V7(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
-                    <button id="button" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
+                    <button id="button" (click)="openModal(i, 'DP')">Elejir</button>
                 </td>
             </tr>
             <tr class="mas" (click)="addRow()">
@@ -117,7 +117,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
+    <!-- <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
         <div class="modal-header">
             <span>Datos de Promocion- F# {{rowId+1}}</span>
             <button (click)="closeModal('DP')">X</button>
@@ -159,6 +159,56 @@
             <div id="modal_dp_button">
                 
             </div>
+        </div>
+    </div> -->
+    <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
+        <div class="modal-header">
+          <span class="modal-title">Datos de Promocion - F# {{rowId+1}}</span>
+          <button class="close-button" (click)="closeModal('DP')">×</button>
+        </div>
+        <div class="modal-body">
+          <div id="dat_promo">
+            <div id="dat_promo_ing">
+                <div id="precios">
+                    <span>Precios</span>
+                    
+                </div>
+                <div id="dias">
+                    <span>Dias Gozados</span>
+                    <div id="checklist">
+                        <ul>
+                            <li>
+                                <input type="checkbox" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="upgrade">
+                    <span>UPGRADE</span>
+                </div>
+            </div>
+            <div id="dat_promo_butt">
+                <button class="btn_npro">Enviar</button>
+                <button class="enviar">Promoción Adicional</button>
+            </div>
+          </div>
+          <div id="pro_adici">
+            <div id="streaming">
+                <label>streaming</label>
+            </div>
+            <div id="telefonia">
+                <label>Telefonia</label>
+            </div>
+            <div id="television">
+                <label>Television</label>
+            </div>
+            <div id="router">
+                <label>Router</label>
+            </div>
+          </div>
+          <div class="modal_dp_button">
+
+          </div>
         </div>
     </div>
 </div>

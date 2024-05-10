@@ -117,18 +117,6 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  getDataTISE(TPV: number, index: number): void {
-    try {
-      if(TPV){
-        this.fdcb.getComboTISE_RETURN(TPV).subscribe((tise: TipoServicios[]) => {
-          this.tiposervicioData[index] = tise;
-        })
-      }
-    } catch(error) {
-      console.log("Error Detectado: ",error)
-    }
-  }
-
   getModoPagosData(index: number): void {
     try {
       this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago) => {
