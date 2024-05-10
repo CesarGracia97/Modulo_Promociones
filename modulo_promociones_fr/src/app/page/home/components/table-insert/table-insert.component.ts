@@ -12,8 +12,8 @@ import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface
 import { Sectores } from '../../../../interfaces/places/sector.interface';
 import { FdCombosService } from '../../../../services/fetchData/fd-combos.service';
 import { FdPlacesService } from '../../../../services/fetchData/fd-places.service';
-import { FdModospagosService } from '../../../../services/fetchData/fd-modospagos.service';
-import { FdBuroService } from '../../../../services/fetchData/fd-buro.service';
+import { FdModospagosService } from '../../../../services/fetchData/FinancialInfo/fd-modospagos.service';
+import { FdBuroService } from '../../../../services/fetchData/FinancialInfo/fd-buro.service';
 import { Productos } from '../../../../interfaces/planes/productos.interface';
 
 @Component({

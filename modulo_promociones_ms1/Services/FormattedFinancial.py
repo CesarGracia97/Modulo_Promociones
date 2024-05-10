@@ -65,7 +65,7 @@ class FormattedFinance:
             for dt in data['PRECIO_REGULAR']:
                 json_data['PRECIO_REGULAR'].append({
                     'ID': dt.ID,
-                    'NAME': dt.NAME
+                    'PRECIO': dt.PRECIO
                 })
             return json_data
         except Exception as e:

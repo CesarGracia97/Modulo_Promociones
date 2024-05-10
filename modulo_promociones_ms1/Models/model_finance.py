@@ -23,6 +23,6 @@ class UPGRADE:
 
 
 class Precio_Regular:
-    def __init__(self, ID, NAME):
+    def __init__(self, ID, PRECIO):
         self.ID = ID
-        self.NAME = NAME
+        self.PRECIO = PRECIO
