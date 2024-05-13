@@ -126,19 +126,6 @@ export class TableInsertComponent implements OnInit  {
       console.log("Error detectado: ",error)
     }
   }
-
-  getDataProvincias(TPV: number , index: number): void {
-    try {
-      if(TPV){
-        this.fdpl.fetchDataProvinciasXTariffplanVariant_RETURN(TPV)
-        .subscribe((prv: Provincias[]) => {
-          this.provinciaData[index] = prv;
-        });
-      }
-    }  catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
   
   getCiudadesxTT(tariffplanvariant: number, id_Prov: number, index: number): void {
     if(id_Prov && tariffplanvariant){
@@ -164,7 +151,7 @@ export class TableInsertComponent implements OnInit  {
     const indexRow = this.rows[index];
     const _V3 = indexRow._V3;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
-    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant(ciudades, _V3)
+    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant_RETURN(ciudades, _V3)
     .subscribe((sectores) => {
       this.sectoresData[index] = sectores;
     });
@@ -212,7 +199,6 @@ export class TableInsertComponent implements OnInit  {
         }
       break;
     }
-
   }
 
   checkSDLoading() {
@@ -240,6 +226,5 @@ export class TableInsertComponent implements OnInit  {
         this.modal_dp = false;
       break;
     }
-    
   }
 }

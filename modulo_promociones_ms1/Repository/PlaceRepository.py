@@ -207,6 +207,22 @@ class PlaceRepository:
                             print("\n**** SECTORES ESPECIFICOS TT - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
+                        elif _sopcion == 8:
+                            _Qdiccionario["name_Query"] = "CITYMXTT"
+                            _Qdiccionario["_V1"] = _diccionario["_V1"]
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'CITIESxPROV': []
+                            }
+                            for result in results:
+                                sector = Ciudad(result[0], result[1], result[2])
+                                data['CITIESxPROV'].append(sector)
+                            print("\n**** CIUDADES ESPECIFICAS POR PROVINCIA TT - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
                         else:
                             self.db.close()
                             print("Segunda Opción no válida: ", _sopcion)

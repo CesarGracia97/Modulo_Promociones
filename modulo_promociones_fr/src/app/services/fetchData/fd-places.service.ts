@@ -48,7 +48,8 @@ export class FdPlacesService {
         this.provinciaData = response.PROVINCIES.map((provincia: any) => {
           return {
             PROVINCIA_ID: provincia.PROVINCIA_ID,
-            PROVINCIA: provincia.PROVINCIA
+            PROVINCIA: provincia.PROVINCIA,
+            selected: false
           };
         });
         this.comData.sendDataProvincias(this.provinciaData);
@@ -104,18 +105,32 @@ export class FdPlacesService {
     }));
   }
 
-  fetchDataSectoresMasivosXTariffplanVariant(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]> {
+  fetchDataCiudadesMasivasXTariffplanVariant(tariffplanvariant: number): Observable <Provincias[]> {
+    return this.city.getCiudadesMasivasXTariffplanVariant(tariffplanvariant)
+    .pipe(map((response: any) => {
+      if(response && response.CITIESxPROV) {
+        return response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            selected: false
+          };
+        })
+      }
+    }));
+  }
+
+  fetchDataSectoresMasivosXTariffplanVariant_RETURN(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]> {
     return this.sect.getSectoresMasivosXTariffplanVariant(id_Cities, tariffplanvariant)
     .pipe(map((response: any) => {
       if(response && response.SECTORSxCITY){
-        console.log(response);
         return response.SECTORSxCITY.map((sect: any) => {
           return {
             SECTOR_ID: sect.SECTOR_ID,
             SECTOR: sect.SECTOR,
             CIUDAD: sect.CIUDAD,
             selected: false
-          }
+          };
         })
       }
     }));

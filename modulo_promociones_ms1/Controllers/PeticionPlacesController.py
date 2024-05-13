@@ -15,6 +15,13 @@ class PeticionPlacesController:
             _type = request.args.get('type')
             if _type is None:
                 return jsonify({'error': 'El campo "type" es requerido'}), 400
+            _valid_type_AD = {"ALL_PROVS", "ALL_CITIES", "ALL_SECTORS"}
+            _valid_type_SD = {"CIUDADES_ESPECIFICASxPROV", "SECTORES_ESPECIFICOSxCITY", "PROVINCIAS_ESPECIFICASxTFV",
+                              "CIUDADES_ESPECIFICASxTFV", "SECTORES_ESPECIFICOSxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
+                              "SECTORES_ESPECIFICOSxCITYxTFV"}
+            _valid_type_MD = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
+            if _type.upper() in _valid_type_AD:
+                _diccionario = {"popcion": "ALL_DATA", "name_Query": _type}
 
             if _type.upper() == 'ALL_PROVS':
                 _diccionario = {
@@ -43,15 +50,6 @@ class PeticionPlacesController:
                 dt_sct = frt.formated_sectors(data_sts)
                 return jsonify(dt_sct), 200
 
-            elif _type.upper() == "ALL_SUB_SECTORS":
-                _diccionario = {
-                    "popcion": "ALL_DATA",
-                    "sopcion": 4
-                }
-                data_sst = repository.getData_Places(_diccionario)
-                dt_sst = frt.formated_sub_sectors(data_sst)
-                return jsonify(dt_sst), 200
-
             elif _type.upper() == "CITY_SPECIFIC":
                 _idProv = request.args.get('id_Prov')
                 _diccionario = {
@@ -73,17 +71,6 @@ class PeticionPlacesController:
                 data_ssct = repository.getData_Places(_diccionario)
                 dt_ssct = frt.formated_specific_sector(data_ssct)
                 return jsonify(dt_ssct), 200
-
-            elif _type.upper() == "SUB_SECTOR_SPECIFIC":
-                _idSector = request.args.get('id_Sector')
-                _diccionario = {
-                    "popcion": "PARAMETRE_DATA",
-                    "sopcion": 3,
-                    "id_Sector": _idSector
-                }
-                data_ssst = repository.getData_Places(_diccionario)
-                dt_ssst = frt.formated_specific_sub_sector(data_ssst)
-                return jsonify(dt_ssst), 200
 
             elif _type.upper() == "SPECIFIC_PROVXTT":
                 _V1 = request.args.get('_V1')
@@ -132,9 +119,19 @@ class PeticionPlacesController:
                     "id_Cities": _idCities,
                     "_V1": _V1
                 }
-                data_ssct = repository.getData_Places(_diccionario)
-                dt_ssct = frt.formated_specific_sectortt(data_ssct)
-                return jsonify(dt_ssct), 200
+                _data = repository.getData_Places(_diccionario)
+                _dt = frt.formated_specific_sectortt(_data)
+                return jsonify(_dt), 200
+            elif _type.upper() == "CITYMXTT":
+                _V1 = request.args.get('_V1')
+                _diccionario = {
+                    "popcion": "PARAMETRE_DATA",
+                    "sopcion": 8,
+                    "_V1": _V1
+                }
+                _data = repository.getData_Places(_diccionario)
+                _dt = frt.formated_specific_city(_data)
+                return jsonify(_dt), 200
             else:
                 return jsonify({'error': 'El valor del campo "tipo" no es válido'}), 400
 

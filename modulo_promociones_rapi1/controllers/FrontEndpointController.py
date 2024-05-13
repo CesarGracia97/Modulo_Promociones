@@ -141,9 +141,18 @@ class FrontEndpointController:
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
             print("INFORMACION MASIVA ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
+            if _type.upper() == 'CITYMXTT':
+                print("Tipo de Peticion: "+_type)
+                print("CIUDADES MASIVAS ESPECIFICAS POR PROVINCIA Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
+                _idProvs = request.args.getlist('id_Provs')
+                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
+                params = {'type': _type,
+                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                return response.text, response.status_code
             if _type.upper() == 'SECTMXTT':
                 print("Tipo de Peticion: "+_type)
-                print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
+                print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
                 _idCities = request.args.getlist('id_Cities')
                 TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
                 params = {'type': _type,

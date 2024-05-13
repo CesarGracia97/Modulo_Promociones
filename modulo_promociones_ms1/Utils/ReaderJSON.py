@@ -18,58 +18,27 @@ class ReaderJSON:
                         _sopcion = _diccionario["sopcion"]
                         if _sopcion == "ALL_DATA":
                             _nameQuery = _diccionario["name_Query"]
-                            return data["Type_Queries"][_popcion][_sopcion].get(_nameQuery,
-                                                                                f"Consulta no encontrada en "
-                                                                                f"{_popcion}, {_sopcion}")
-                        if _sopcion == "PARAMETRE_DATA":
+                            return (data["Type_Queries"][_popcion][_sopcion]
+                                    .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}"))
+                        if _sopcion == "SPECIFIC_DATA":
                             _nameQuery = _diccionario["name_Query"]
-                            # Caso para SECTMXTT
-                            if _nameQuery == "SECTMXTT":
-                                _V1_values = [_diccionario[key] for key in _diccionario if key.startswith('_V1_')]
-                                _V1 = ', '.join(map(str, _V1_values))
+                            _V1 = _diccionario["_V1"]
+                            if "_V2" in _diccionario:
                                 _V2 = _diccionario["_V2"]
                                 return (data["Type_Queries"][_popcion][_sopcion]
                                         .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}").replace
                                         ("_V1", _V1).replace("_V2", str(_V2)))
-
-                            # Caso general para consultas que empiezan con "SPECIFIC_"
-                            elif _nameQuery.startswith("SPECIFIC_"):
-                                if "id" in _diccionario:
-                                    # Caso donde existe el argumento "id"
-                                    _parametro = _diccionario["id"]
-                                    return (data["Type_Queries"][_popcion][_sopcion]
-                                            .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                            .replace("_V1", str(_parametro)))
-                                else:
-                                    # Preparación de parámetros comunes
-                                    _V1 = _diccionario["_V1"]
-                                    if "_V2" in _diccionario:
-                                        _V2 = _diccionario["_V2"]
-                                        if "_V3" in _diccionario:
-                                            _V3 = _diccionario["_V3"]
-                                            if "_V3" in _diccionario:
-                                                # Caso donde existe el argumento "_V3"
-                                                _V3 = _diccionario["_V3"]
-                                                return (data["Type_Queries"][_popcion][_sopcion]
-                                                        .get(_nameQuery,
-                                                             f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                        .replace("_V1", str(_V1)).replace("_V2", str(_V2)).replace(
-                                                    "_V3",
-                                                    str(_V3)))
-
-                                        return (data["Type_Queries"][_popcion][_sopcion]
-                                                .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1)).replace("_V2", str(_V2)))
-
-                                    else:
-                                        # Retorno sin "_V3"
-                                        return (data["Type_Queries"][_popcion][_sopcion]
-                                                .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
-                                                .replace("_V1", str(_V1)))
-                            else:
-                                # Agregar manejo para otras posibles consultas o un error
-                                raise ValueError(f"Consulta {_nameQuery} no es reconocida.")
-
+                            return (data["Type_Queries"][_popcion][_sopcion]
+                                    .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
+                                    .replace("_V1", str(_V1)))
+                        if _sopcion == "MASIVE_DATA":
+                            _nameQuery = _diccionario["name_Query"]
+                            _V1_values = [_diccionario[key] for key in _diccionario if key.startswith('_V1_')]
+                            _V1 = ', '.join(map(str, _V1_values))
+                            _V2 = _diccionario["_V2"]
+                            return (data["Type_Queries"][_popcion][_sopcion]
+                                    .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}").replace
+                                    ("_V1", _V1).replace("_V2", str(_V2)))
                 if _popcion == "Planes":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]

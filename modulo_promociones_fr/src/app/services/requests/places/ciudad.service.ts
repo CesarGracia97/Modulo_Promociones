@@ -29,4 +29,10 @@ export class CiudadService {
     .set('TARIFFPLANVARIANT', tariffplanvariant);
     return this.http.get<Ciudades[]>(this.baseUrl, { params: params });
   }
+
+  getCiudadesMasivasXTariffplanVariant(tariffplanvariant: number):Observable<Ciudades[]> {
+    let params = new HttpParams().set('type', 'CITYMXTT')
+                                .set('TARIFFPLANVARIANT', tariffplanvariant.toString());
+    return this.http.get<Ciudades[]>(this.baseUrl, { params: params });
+  }
 }
