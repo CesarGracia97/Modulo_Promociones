@@ -14,12 +14,12 @@ export class ProvinciasService {
   
   getProvincias(): Observable<Provincias[]> {
     // Construir los parámetros de consulta
-    let params = new HttpParams().set('type', 'ALL_PROVS');
+    let params = new HttpParams().set('type', 'ALL_PROV');
     return this.http.get<Provincias[]>(this.baseUrl, { params: params });
   }
 
   getProvinciasXTariffplanVariant(tariffplanvariant: number):Observable<Provincias[]>{
-    let params = new HttpParams().set('type', 'SPECIFIC_PROVXTT')
+    let params = new HttpParams().set('type', 'PROVINCIAS_ESPECIFICASxTFV')
                                   .set('TARIFFPLANVARIANT', tariffplanvariant);
     return this.http.get<Provincias[]>(this.baseUrl, { params: params });
   }
