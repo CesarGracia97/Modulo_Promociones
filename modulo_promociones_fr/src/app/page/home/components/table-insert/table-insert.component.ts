@@ -30,11 +30,9 @@ export class TableInsertComponent implements OnInit  {
   @Input() rows: any[] = []; // Arreglo para almacenar las filas y sus datos
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
-  tiposervicioData: TipoServicios[][] = [];
   productosData: Productos[][] = [];
   planData: TariffPlanes[][] = [];
   planVData: TariffPlanesVariant[][] = [];
-  provinciaData: Provincias[][] = [];
   ciudadData: Ciudades[][] = [];
   sectoresData: Sectores[][] = [];
   buroData: Buro[][] = [];
@@ -63,20 +61,16 @@ export class TableInsertComponent implements OnInit  {
 
   addRow(): void {
     const newRow = {
-      id: this.rows.length + 1,
-      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '',
-      planData: [], planVData: [], productosData: [], 
-      tiposervicioData: [], provinciaData: [], ciudadData: [], 
-      sectoresData: []
+      id: this.rows.length,
+      _V1: '', _V2: '', _V3: '', _V4: '',
+      planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.planData.push([]);
     this.planVData.push([]);
     this.productosData.push([]); 
-    this.tiposervicioData.push([]);
     this.getModoPagosData(this.rows.length - 1);
     this.getBuroData(this.rows.length - 1)
-    this.provinciaData.push([]);
     this.ciudadData.push([]);
     this.showMDPDD.push(false); // Agrega un estado inicial para el nuevo dropdown
   }
@@ -117,6 +111,16 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
+  getCiudadesTariffplanVariant(TPV: number, index: number): void {
+    try {
+      this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV).subscribe((city: Ciudades[]) => {
+        this.ciudadData[index] = city;
+      });
+    } catch(error){
+      console.log("Error Detectado: ",error)
+    }
+  }
+
   getModoPagosData(index: number): void {
     try {
       this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago) => {
@@ -127,15 +131,6 @@ export class TableInsertComponent implements OnInit  {
     }
   }
   
-  getCiudadesxTT(tariffplanvariant: number, id_Prov: number, index: number): void {
-    if(id_Prov && tariffplanvariant){
-      this.fdpl.fetchDataCiudadXTariffplanVariant_RETURN(id_Prov, tariffplanvariant)
-      .subscribe((ciudades) => {
-        this.ciudadData[index] = ciudades;
-      });
-    }
-  }
-
   getBuroData(index: number): void{
     try {
       this.fdb.fetchDataBuro_RETURN().subscribe((buro) => {
@@ -157,8 +152,8 @@ export class TableInsertComponent implements OnInit  {
     });
   }
 
-  button_V1_V7(row: any, index: number): boolean {
-    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V5;
+  button_V1_V6(row: any, index: number): boolean {
+    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4;
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
     const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     return trueSelect && trueMP && trueB;
@@ -170,7 +165,7 @@ export class TableInsertComponent implements OnInit  {
   }
 
   button_V1_V8(row: any, index: number): boolean {
-    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4 && row._V5;
+    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4;
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
     const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);

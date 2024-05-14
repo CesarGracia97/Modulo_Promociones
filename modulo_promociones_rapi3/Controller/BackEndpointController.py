@@ -24,19 +24,15 @@ class BackEndpointController:
             _type = request.args.get('type')
             if _type:
                 _type = _type.upper()
-                valid_type = {"ALL_MPAGOS", "ALL_BURO", "DIAS_GOZADOS", "PRECIO_REGULAR",
-                              "UPGRADE"}
-                if _type.upper() in valid_type:
+                valid_type = {"ALL_MPAGOS", "ALL_BURO", "DIAS_GOZADOS", "PRECIO_REGULAR", "UPGRADE"}
+                payload = {"type": _type}
+                if _type in valid_type:
                     if '_V1' in request.args:
-                        _V1 = request.args.get('_V1')
+                        payload['_V1'] = request.args.get('_V1')
                         if '_V2' in request.args:
-                            _V2 = request.args.get('_V2')
-                            return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionFinance',
-                                                                       {"type": _type, "_V1": _V1, "_V2": _V2})
-                        return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionFinance',
-                                                                   {"type": _type, "_V1": _V1})
+                            payload['_V2'] = request.args.get('_V2')
                     return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionFinance',
-                                                               {"type": _type})
+                                                               payload)
         except Exception as e:
             print("--------------------------------------------------------------------")
             print("back_endpoint - back_endpoint | Error Detectado: ", e)

@@ -63,7 +63,8 @@ export class FdPlacesService {
         this.ciudadData = response.CITIESxPROV.map((city: any) =>{
           return{
             CIUDAD_ID: city.CIUDAD_ID,
-            CIUDAD: city.CIUDAD
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA
           };
         });
         this.comData.sendDataCiudades(this.ciudadData);
@@ -90,14 +91,15 @@ export class FdPlacesService {
     );
   }
 
-  fetchDataCiudadXTariffplanVariant_RETURN(id_Prov: number, tariffplanvariant: number): Observable<Ciudades[]>{
-    return this.city.getCiudadesXTariffplanVariant(id_Prov, tariffplanvariant)
+  fetchDataCiudadesALLXTariffplanVariant_RETURN(tariffplanvariant: number):  Observable<Ciudades[]> {
+    return this.city.getCiudadesALLXTariffplanVariant(tariffplanvariant)
     .pipe(map((response: any) => {
       if (response && response.CITIESxPROV){
         return response.CITIESxPROV.map((city: any) => {
           return {
             CIUDAD_ID: city.CIUDAD_ID,
             CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
             selected: false
           }
         })
@@ -105,14 +107,31 @@ export class FdPlacesService {
     }));
   }
 
-  fetchDataCiudadesMasivasXTariffplanVariant(tariffplanvariant: number): Observable <Provincias[]> {
-    return this.city.getCiudadesMasivasXTariffplanVariant(tariffplanvariant)
+  fetchDataCiudadXTariffplanVariant_RETURN(id_Prov: number, tariffplanvariant: number): Observable<Ciudades[]> {
+    return this.city.getCiudadesXTariffplanVariant(id_Prov, tariffplanvariant)
+    .pipe(map((response: any) => {
+      if (response && response.CITIESxPROV){
+        return response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          }
+        })
+      }
+    }));
+  }
+
+  fetchDataCiudadesMasivasXTariffplanVariant(id_Provs: number[], tariffplanvariant: number): Observable <Provincias[]> {
+    return this.city.getCiudadesMasivasXTariffplanVariant(id_Provs, tariffplanvariant)
     .pipe(map((response: any) => {
       if(response && response.CITIESxPROV) {
         return response.CITIESxPROV.map((city: any) => {
           return {
             CIUDAD_ID: city.CIUDAD_ID,
             CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
             selected: false
           };
         })

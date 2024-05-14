@@ -18,7 +18,7 @@
         </thead>
         <tbody>
             <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
-                <td>{{ row.id }}</td>
+                <td>{{ row.id+1 }}</td>
                 <td>
                     <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataPLAN(row._V1, i)">
                         <option value="">Elija el Servicio</option>
@@ -34,7 +34,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPROD(row._V3, i)">
+                    <select name="_V3" [(ngModel)]="row._V3" (ngModelChange)="getDataPROD(row._V3, i); getCiudadesTariffplanVariant(row._V3, i)">
                         <option value="">Elija un Plan Variant</option>
                         <option value="" *ngIf="planVData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="planVData[i].length === 0 && row._V2">Cargando Datos..</option>
@@ -71,7 +71,7 @@
                     </div>
                 </td>
                 <td>
-                    <button id="button" [disabled]="!button_V1_V7(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
+                    <button id="button" [disabled]="!button_V1_V6(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
                     <button id="button" (click)="openModal(i, 'DP')">Elejir</button>
@@ -94,7 +94,7 @@
                     <span>Ciudades</span>
                     <ul>
                         <li *ngFor="let city of ciudadData[rowId]">
-                            <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{ city.CIUDAD }}
+                            <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{city.PROVINCIA}} - {{ city.CIUDAD }}
                         </li>
                     </ul>
                 </div>
@@ -105,7 +105,7 @@
                     <span>Sectores</span>
                     <ul>
                         <li *ngFor="let sect of sectoresData[rowId]">
-                            <input type="checkbox" [(ngModel)]="sect.selected" [value]="sect.SECTOR_ID"/>{{sect.SECTOR}}
+                            <input type="checkbox" [(ngModel)]="sect.selected" [value]="sect.SECTOR_ID"/>{{sect.CIUDAD}} - {{sect.SECTOR}}
                         </li>
                     </ul>
                 </div>

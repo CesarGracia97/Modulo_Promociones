@@ -51,7 +51,7 @@
       "ALL_BURO": "SELECT ID, NAME FROM trepvaluelistitems a  WHERE a.valuelistsymbol = 'TVC_CalificacionBuro'",
       "ALL_MPAGOS": "SELECT ID, NAME FROM Trepvaluelistitems WHERE Valuelistsymbol IN ('PaymentType','ManualPaymentType')",
       "DIAS_GOZADOS": "SELECT ID, NAME FROM Trepvaluelistitems where VALUELISTSYMBOL = 'YN'",
-      "PRECIO_REGULAR": "YPKG_PROMOCIONESBS.FNGETREGULARPRICE(_V1, _V2)",
+      "PRECIO_REGULAR": "SELECT YPKG_PROMOCIONESBS.FNGETREGULARPRICE(_V1, _V2) FROM DUAL",
       "UPGRADE": ""
     }
   }

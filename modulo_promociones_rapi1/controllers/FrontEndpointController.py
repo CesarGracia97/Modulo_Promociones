@@ -46,7 +46,7 @@ class FrontEndpointController:
             _ciudades = {"ALL_CITIES", "CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV",
                          "CIUDADES_ESPECIFICASxPROVxTFV"}
 
-            if _type.upper() in _ciudades:
+            if _type in _ciudades:
                 params = {'type': _type}
                 if 'id_Prov' in request.args:
                     params['id_Prov'] = request.args.get('id_Prov')
@@ -103,7 +103,7 @@ class FrontEndpointController:
             _type = request.args.get('type')
             _masivos = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
 
-            if _type.upper() in _masivos:
+            if _type in _masivos:
                 print("Tipo de Peticion: "+_type)
                 params = {'type': _type}
                 if 'id_Provs' in request.args:

@@ -14,7 +14,7 @@ export class UpgradeService {
 
   getUpgrade(TFPV: number):Observable<Upgrade[]>{
     let params = new HttpParams().set('type', 'UPGRADE')
-                                  .set('TFPV', TFPV.toString());
+    .set('TARIFFPLANVARIANT', TFPV.toString());
     return this.http.get<Upgrade[]>(this.baseUrl, { params: params });
   }
 }

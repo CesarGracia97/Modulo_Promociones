@@ -86,30 +86,23 @@ class ReaderJSON:
                                                 .replace("_V1", str(_V1)))
                                     else:
                                         raise ValueError("Se requiere un parámetro para esta consulta específica.")
-
                 if _popcion == "Finance":
-                    if "sopcion" in _diccionario:
-                        _sopcion = _diccionario["sopcion"]
-                        if _sopcion in data["Type_Queries"][_popcion]:  # Verificar si _sopcion es una clave válida
-                            _nameQuery = _diccionario["name_Query"]
-                            if "_V1" in _diccionario:
-                                _V1 = _diccionario["_V1"]
-                                if "_V2" in _diccionario:
-                                    _V2 = _diccionario["_V2"]
-                                    return (data["Type_Queries"][_popcion]
-                                            .get(_nameQuery, f"Consulta no encontrada en "f"{_popcion}, {_sopcion}")
-                                            .replace("_V1", str(_V1)).replace("_V2", str(_V2)))
-
+                    if 'name_Query' in _diccionario:
+                        _nameQuery = _diccionario["name_Query"]
+                        if "_V1" in _diccionario:
+                            _V1 = _diccionario["_V1"]
+                            if "_V2" in _diccionario:
+                                _V2 = _diccionario["_V2"]
                                 return (data["Type_Queries"][_popcion]
-                                        .get(_nameQuery, f"Consulta no encontrada en "f"{_popcion}, {_sopcion}")
-                                        .replace("_V1", str(_V1)))
+                                        .get(_nameQuery, f"Consulta no encontrada en "f"{_popcion}")
+                                        .replace("_V1", str(_V1)).replace("_V2", str(_V2)))
 
                             return (data["Type_Queries"][_popcion]
-                                    .get(_nameQuery, f"Consulta no encontrada en " f"{_popcion}, {_sopcion}"))
+                                    .get(_nameQuery, f"Consulta no encontrada en "f"{_popcion}")
+                                    .replace("_V1", str(_V1)))
 
-                        else:
-                            return f"{_sopcion} no es una opción válida en {data['Type_Queries'][_popcion]}"
-
+                        return (data["Type_Queries"][_popcion]
+                                .get(_nameQuery, f"Consulta no encontrada en " f"{_popcion}"))
         except Exception as e:
             print("----------------------------------------------")
             print("getQuery - ReaderJSON | Error Detectado:", e)

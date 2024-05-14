@@ -1,4 +1,4 @@
-from Models.model_place import Provincia, Ciudad, Sector, Subsector, CiudadxProvincia, SectorxCiudad, SubsectorxSector
+from Models.model_place import Provincia, Ciudad, Sector
 from Resources.database.connection import connection
 from Utils.ReaderJSON import ReaderJSON
 
@@ -71,13 +71,13 @@ class PlaceRepository:
                         elif _diccionario["name_Query"] in _ciudades:
                             data['CITIESxPROV'] = []
                             for result in results:
-                                ciudades = CiudadxProvincia(result[0], result[1])
+                                ciudades = Ciudad(result[0], result[1], result[2])
                                 data['CITIESxPROV'].append(ciudades)
                             print("\n**** CIUDADES ESPECIFICAS POR PROVINCIA - DATOS OBTENIDOS ****\n")
                         elif _diccionario["name_Query"] in _sectores:
                             data['SECTORSxCITY'] = []
                             for result in results:
-                                sector = SectorxCiudad(result[0], result[1])
+                                sector = Sector(result[0], result[1], result[2])
                                 data['SECTORSxCITY'].append(sector)
                             print("\n**** SECTORES ESPECIFICOS POR CIUDAD - DATOS OBTENIDOS ****\n")
                         self.db.close()

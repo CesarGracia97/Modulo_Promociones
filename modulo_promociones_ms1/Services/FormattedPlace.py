@@ -81,7 +81,8 @@ class FormattedPlace:
                 for sector in data['SECTORSxCITY']:
                     json_data['SECTORSxCITY'].append({
                         'SECTOR_ID': sector.SECTOR_ID,
-                        'SECTOR': sector.SECTOR
+                        'SECTOR': sector.SECTOR,
+                        'CIUDAD': sector.CIUDAD
                     })
                 return json_data
         except Exception as e:

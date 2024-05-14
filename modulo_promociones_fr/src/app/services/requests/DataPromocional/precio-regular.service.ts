@@ -13,7 +13,8 @@ export class PrecioRegularService {
   constructor(private http:HttpClient) { }
 
   getPrecioRegular(id_Producto: number, TFPV: number):Observable<PrecioRegular[]>{
-    let params = new HttpParams().set('type', 'PRECIO_REGULAR').set('TFPV', TFPV.toString())
+    let params = new HttpParams().set('type', 'PRECIO_REGULAR')
+    .set('TARIFFPLANVARIANT', TFPV.toString())
     .set('id_Prod', id_Producto.toString());
     return this.http.get<PrecioRegular[]>(this.baseUrl, { params: params });
   }
