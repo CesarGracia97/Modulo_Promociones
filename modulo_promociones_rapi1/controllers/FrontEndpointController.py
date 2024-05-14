@@ -16,18 +16,14 @@ class FrontEndpointController:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
             print("PROVS ENDPOINT ACTIVO\n")
-            # Obtener parámetros de consulta de la URL
-            _type = request.args.get('type')
 
-            if _type and _type.upper() == 'ALL_PROVS':
-                params = {'type': 'ALL_PROVS'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
-            elif _type and _type.upper() == 'SPECIFIC_PROVXTT':
-                print("PROVINCIA ESPECIFICA POR TECNOLOGIA Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
-                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
-                params = {'type': 'SPECIFIC_PROVXTT',
-                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
+            _type = request.args.get('type')
+            _provincias = {"ALL_PROVS", "PROVINCIAS_ESPECIFICASxTFV"}
+
+            if _type.upper() in _provincias:
+                params = {'type': _type}
+                if 'TARIFFPLANVARIANT' in request.args:
+                    params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
@@ -42,29 +38,23 @@ class FrontEndpointController:
     @cityp_bp.route('/api/ra/plccity_endpoint', methods=['GET'])
     def city_endpoint():
         try:
+            print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
             print("CITY ENDPOINT ACTIVO\n")
+
             _type = request.args.get('type')
-            if _type.upper() == 'ALL_CITIES':
-                params = {'type': 'ALL_CITIES'}
+            _ciudades = {"ALL_CITIES", "CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV",
+                         "CIUDADES_ESPECIFICASxPROVxTFV"}
+
+            if _type.upper() in _ciudades:
+                params = {'type': _type}
+                if 'id_Prov' in request.args:
+                    params['id_Prov'] = request.args.get('id_Prov')
+                if 'TARIFFPLANVARIANT' in request.args:
+                    params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
-            if _type.upper() == 'CITY_SPECIFIC':
-                print("CIUDAD ESPECIFICA POR PROVINCIA ENDPOINT ACTIVO\n")
-                _idProv = request.args.get('id_Prov')
-                params = {'type': 'CITY_SPECIFIC',
-                          'id_Prov': _idProv}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
-            elif _type.upper() == 'SPECIFIC_CITYXTT':
-                print("CIUDAD ESPECIFICA POR PROVINCIA, TECNOLOGIA Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
-                _idProv = request.args.get('id_Prov')
-                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
-                params = {'type': _type,
-                          'id_Prov': _idProv,
-                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
+
             else:
                 print("city_endpoint - FrontEndpointController | Tipo de Peticion no valido")
                 return jsonify({'error': 'Tipo de petición no válido'}), 400
@@ -77,29 +67,23 @@ class FrontEndpointController:
     @sectp_bp.route('/api/ra/plcsector_endpoint', methods=['GET'])
     def sector_endpoint():
         try:
+            print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
             print("SECTOR ENDPOINT ACTIVO\n")
+
             _type = request.args.get('type')
-            if _type.upper() == 'ALL_SECTORS':
-                params = {'type': 'ALL_SECTORS'}
+            _sectores = {"ALL_SECTORS", "SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV",
+                         "SECTORES_ESPECIFICOSxCITYxTFV"}
+
+            if _type.upper() in _sectores:
+                params = {'type': _type}
+                if 'id_City' in request.args:
+                    params['id_City'] = request.args.get('id_City')
+                if 'TARIFFPLANVARIANT' in request.args:
+                    params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
-            elif _type.upper() == 'SECTOR_SPECIFIC':
-                print("SECTOR ESPECIFICO POR CIUDAD ENDPOINT ACTIVO\n")
-                _idCity = request.args.get('id_City')
-                params = {'type': 'SECTOR_SPECIFIC',
-                          'id_City': _idCity}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
-            elif _type.upper() == 'SPECIFIC_SECTXTT':
-                print("SECTOR ESPECIFICO POR CIUDAD, TECNOLOGIA Y TARIFFPLAN ENDPOINT ACTIVO\n")
-                _idCity = request.args.get('id_City')
-                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
-                params = {'type': _type,
-                          'id_City': _idCity,
-                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
+
             else:
                 print("sectors_endpoint - FrontEndpointController | Tipo de Peticion no valido")
                 return jsonify({'error': 'Tipo de petición no válido'}), 400
@@ -109,58 +93,32 @@ class FrontEndpointController:
             print("--------------------------------------------------------------------")
             return jsonify({'Error': e})
 
-    @ssecp_bp.route('/api/ra/plcssector_endpoint', methods=['GET'])
-    def sub_sector_endpoint():
-        try:
-            print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
-            print("SUB SECTOR ENDPOINT ACTIVO\n")
-            _type = request.args.get('type')
-            if _type.upper() == 'ALL_SUB_SECTORS':
-                params = {'type': 'ALL_SUB_SECTORS'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
-            elif _type.upper() == 'SUB_SECTOR_SPECIFIC':
-                print("SUB SECTOR ESPECIFICO POR SECTOR ENDPOINT ACTIVO\n")
-                _idSector = request.args.get('id_Sector')
-                params = {'type': 'SUB_SECTOR_SPECIFIC',
-                          'id_Sector': _idSector}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
-            else:
-                print("sub_sectors_endpoint - FrontEndpointController | Tipo de Peticion no valido")
-                return jsonify({'error': 'Tipo de petición no válido'}), 400
-        except Exception as e:
-            print("--------------------------------------------------------------------")
-            print("sub_sectors_endpoint - FrontEndpointController | Error Detectado: ", e)
-            print("--------------------------------------------------------------------")
-            return jsonify({'Error': e})
-
     @infmv_bp.route('/api/ra/plcinfomasiva_endpoint', methods=['GET'])
     def infomasiva_endpoint():
         try:
+            print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
             print("INFORMACION MASIVA ENDPOINT ACTIVO\n")
+
             _type = request.args.get('type')
-            if _type.upper() == 'CITYMXTT':
+            _masivos = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
+
+            if _type.upper() in _masivos:
                 print("Tipo de Peticion: "+_type)
-                print("CIUDADES MASIVAS ESPECIFICAS POR PROVINCIA Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
-                _idProvs = request.args.getlist('id_Provs')
-                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
-                params = {'type': _type,
-                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
-                return response.text, response.status_code
-            if _type.upper() == 'SECTMXTT':
-                print("Tipo de Peticion: "+_type)
-                print("SECTORES MASIVOS ESPECIFICOS POR CIUDADES Y TARIFFPLANVARIANT ENDPOINT ACTIVO\n")
-                _idCities = request.args.getlist('id_Cities')
-                TARIFFPLANVARIANT = request.args.get('TARIFFPLANVARIANT')
-                params = {'type': _type,
-                          'id_Cities': _idCities,
-                          'TARIFFPLANVARIANT': TARIFFPLANVARIANT}
+                params = {'type': _type}
+                if 'id_Provs' in request.args:
+                    params['id_Provs'] = request.args.getlist('id_Provs')
+                if 'id_Cities' in request.args:
+                    params['id_Cities'] = request.args.getlist('id_Cities')
+                if 'TARIFFPLANVARIANT' in request.args:
+                    params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
+                params['MASIVE'] = "YES"
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
 
+            else:
+                print("infomasiva_endpoint - FrontEndpointController | Tipo de Peticion no valido")
+                return jsonify({'error': 'Tipo de petición no válido'}), 400
         except Exception as e:
             print("--------------------------------------------------------------------")
             print("infomasiva_endpoint - FrontEndpointController | Error Detectado: ", e)
