@@ -18,7 +18,6 @@ export class FdPrecioRegularService {
         if(response && response.PRECIO_REGULAR){
           return response.PRECIO_REGULAR.map((precio: any) => {
             return {
-              ID: precio.ID,
               PRECIO: precio.PRECIO
             }
           })

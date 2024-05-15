@@ -10,6 +10,7 @@ import { Ciudades } from '../../interfaces/places/ciudad.interface';
 import { Sectores } from '../../interfaces/places/sector.interface';
 import { Buro } from '../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../interfaces/financial/modos-pago.interface';
+import { DiasGozados } from '../../interfaces/DataPromocional/dias-gozados.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,10 @@ export class CommunicationDataService {
   dBuro$ = this.dBuro_Subject.asObservable();
   private dModoPago_Subject = new Subject<ModosPago[]>();
   dModoPago$ = this.dModoPago_Subject.asObservable();
+
+  //Variables de Comunicacion de datos Tipo Financial
+  private dDiasGozados_Subject = new Subject<DiasGozados[]>();
+  dDiasGozados$ =  this.dDiasGozados_Subject.asObservable();
   
   constructor() { }
   
@@ -113,5 +118,9 @@ export class CommunicationDataService {
 
   sendDataModosPago(data: ModosPago[]){
     this.dModoPago_Subject.next(data);
+  }
+
+  sendDataDiasGozados(data: DiasGozados[]){
+    this.dDiasGozados_Subject.next(data);
   }
 }

@@ -42,7 +42,6 @@ export class FdPlacesService {
   }
 
   fetchDataProvinciasXTecnologiaXTariffplanVariant(tariffplanvariant: number){
-    console.log("ProvinciaTTData");
     this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).subscribe((response: any) =>{
       if (response && response.PROVINCIES){
         this.provinciaData = response.PROVINCIES.map((provincia: any) => {

@@ -241,13 +241,13 @@ tr.mas td {
 .modal_dp {
     background-color: white;
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 800px;
     padding: 20px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 40%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     animation: doorOpen 0.5s;
@@ -301,14 +301,62 @@ tr.mas td {
                     padding: 10px 12px;
                     font-size: 7pt;
                 }
+
+                #precios #precioRegular{
+                    margin-top: 5px;
+                    width: 90%;
+                    height: 20px;
+                    border: 0.5px solid #615a5a;
+                    border-radius: 4px;
+                }
+
+                #precios span {
+                    margin-bottom: 5px;
+                }
+
+                #dias {
+                    align-items: center;
+
+                    ul{
+                        list-style: none;  /* Elimina los puntos de los items de lista */
+                        padding: 0;        /* Elimina el padding predeterminado */
+                        margin: 5px 5px;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
+                        display: flex; /* Utiliza flex para facilitar la alineación */
+                        flex-direction: column; /* Alinea los elementos verticalmente */
+                        font-size: 6pt;
+                    }
+                    li{
+                        list-style: none;  /* Asegura que no hay marcadores de lista */
+                        width: 100%; /* Ocupa el ancho completo para mejor alineación */
+                        display: flex; /* Utiliza flexbox para facilitar la alineación */
+                        align-items: center; /* Alinea verticalmente los elementos */
+                    }
+                }
+
+                #upgrade select {
+                    margin-top: 5px;
+                }
             }
 
             #dat_promo_butt {
                 display: flex;
                 justify-content: center;
-    
-                .enviar, .btn_npro {
-                    margin: 0 7.5px;
+
+                #btn_dtpro{
+                    display: block; /* Hace que los botones se comporten como bloques */
+                    margin: 0 auto; /* Centra los botones horizontalmente */
+                    text-align: center; /* Alinea el texto dentro del botón al centro */
+                    cursor: pointer; /* Indica que es un elemento interactivo */
+                    padding: 8px; /* Más espacio dentro del select */
+                    border: 1px solid #ccc; /* Borde sutil */
+                    border-radius: 4px; /* Bordes ligeramente redondeados para el select */
+                    font-size: 7pt; /* Tamaño de fuente más grande para select */
+                    width: 20%; /* Hace que el select ocupe todo el espacio de la celda */
+                    box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+                    background-color: #ffffff;
+                    &:hover {
+                        background-color: #eee;
+                    }
                 }
             }
         }
@@ -326,6 +374,7 @@ tr.mas td {
                 font-size: 7pt;
                 width: 100%;
                 height: 200px;
+
             }
         }
     }

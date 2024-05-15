@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Servicios } from '../../../../interfaces/planes/servicios.interface';
-import { TipoServicios } from '../../../../interfaces/planes/tiposervicios.interface';
 import { Ciudades } from '../../../../interfaces/places/ciudad.interface';
-import { Provincias } from '../../../../interfaces/places/provincias.interface';
 import { TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../../../../services/communication/communicationData.service';
 import { Buro } from '../../../../interfaces/financial/buro.interface';
@@ -15,6 +13,10 @@ import { FdPlacesService } from '../../../../services/fetchData/fd-places.servic
 import { FdModospagosService } from '../../../../services/fetchData/FinancialInfo/fd-modospagos.service';
 import { FdBuroService } from '../../../../services/fetchData/FinancialInfo/fd-buro.service';
 import { Productos } from '../../../../interfaces/planes/productos.interface';
+import { DiasGozados } from '../../../../interfaces/DataPromocional/dias-gozados.interface';
+import { FdDiasGozadosService } from '../../../../services/fetchData/DataPromocional/fd-dias_gozados.service';
+import { FdPrecioRegularService } from '../../../../services/fetchData/DataPromocional/fd-precio_regular.service';
+import { PrecioRegular } from '../../../../interfaces/DataPromocional/precio-regular.interface';
 
 @Component({
   selector: 'app-table-insert',
@@ -37,10 +39,20 @@ export class TableInsertComponent implements OnInit  {
   sectoresData: Sectores[][] = [];
   buroData: Buro[][] = [];
   modoPagosData: ModosPago[][] = [];
+  diasGozadosData: DiasGozados[][] = [];
+  precioRegularData: PrecioRegular[][] = [];
+  options = [
+    {name: 'STREAMING', selected: false},
+    {name: 'TELEFONIA', selected: false},
+    {name: 'ROUTER', selected: false},
+    {name: 'TELEVISION', selected: false}
+  ];
 
   showMDPDD: boolean[] = []; 
   showBDD: boolean[] = [];
+  showPROAD: boolean[] = [];
   closing: boolean = false;
+  variant: string = "";
 
   modal_cs: boolean = false;
   modal_dp: boolean = false;
@@ -51,7 +63,9 @@ export class TableInsertComponent implements OnInit  {
     private fdpl: FdPlacesService,
     private fdcb: FdCombosService,
     private fdmp: FdModospagosService,
-    private fdb: FdBuroService
+    private fdb: FdBuroService,
+    private fddg: FdDiasGozadosService,
+    private fdpr: FdPrecioRegularService
   ){}
 
   ngOnInit(): void {
@@ -63,7 +77,8 @@ export class TableInsertComponent implements OnInit  {
     const newRow = {
       id: this.rows.length,
       _V1: '', _V2: '', _V3: '', _V4: '',
-      planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: []
+      planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
+      diasGozadosData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.planData.push([]);
@@ -72,7 +87,10 @@ export class TableInsertComponent implements OnInit  {
     this.getModoPagosData(this.rows.length - 1);
     this.getBuroData(this.rows.length - 1)
     this.ciudadData.push([]);
-    this.showMDPDD.push(false); // Agrega un estado inicial para el nuevo dropdown
+    this.sectoresData.push([]);
+    this.showMDPDD.push(false);
+    this.showBDD.push(false);
+    this.showPROAD.push(false);
   }
 
   getDataPLAN(servicio: string, index: number): void {
@@ -141,6 +159,34 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
+  getDiasGozados(index: number): void {
+    try {
+      this.fddg.getDiasGozados_RETURN().subscribe((digd) => {
+        this.diasGozadosData[index] = digd;
+      })
+    } catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
+
+  getPrecioRegular(id_Producto: number, TPV: number, index: number): void {
+    try{
+      if (id_Producto && TPV){
+        this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV).subscribe((prec) => {
+          this.precioRegularData[index] = prec;
+        })
+      }
+    } catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
+
+  nombreVariant(value: any, index: number) {
+    console.log("Valor: "+value);
+    this.variant = this.planVData[index].find(planV => planV.TARIFFPLANVARIANTID === value)?.TARIFFPLANVARIANT || '';
+    console.log("Variant: "+this.variant)
+}
+
   buscarSectores() {
     const index = this.rowId;
     const indexRow = this.rows[index];
@@ -189,6 +235,15 @@ export class TableInsertComponent implements OnInit  {
           this.closing = true;// Si está abierto y se va a cerrar, activa la transición rápida
           setTimeout(() => {
             this.showBDD[index] = !this.showBDD[index];
+            this.closing = false;
+          }, 30); // Espera el tiempo de la transición de cierre
+        }
+      break;
+      case 'PA':
+        if (this.showPROAD) {
+          this.closing = true;
+          setTimeout(() => {
+            this.showPROAD[index] = !this.showPROAD[index];
             this.closing = false;
           }, 30); // Espera el tiempo de la transición de cierre
         }

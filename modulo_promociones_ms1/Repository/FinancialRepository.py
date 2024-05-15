@@ -39,19 +39,19 @@ class FinancialRepository:
                     data["UPGRADE"] = []
                     for result in results:
                         dt = UPGRADE(result[0], result[1])
-                        data["UPGRADE"].append(dt)
+                        data['UPGRADE'].append(dt)
 
                 if _diccionario['name_Query'] == "PRECIO_REGULAR":
-                    data["PRECIO_REGULAR"] = []
+                    data['PRECIO_REGULAR'] = []
                     for result in results:
                         dt = Precio_Regular(result[0])
                         data[_diccionario['name_Query']].append(dt)
 
                 if _diccionario['name_Query'] == "DIAS_GOZADOS":
-                    data["DIAS_GOZADOS"] = []
+                    data['DIAS_GOZADOS'] = []
                     for result in results:
                         dt = Dias_Gozados(result[0], result[1])
-                        data["DIAS_GOZADOS"].append(dt)
+                        data['DIAS_GOZADOS'].append(dt)
 
                 print("\n**** " + _diccionario['name_Query'] + " - DATOS OBTENIDOS ****\n")
                 self.db.close()
