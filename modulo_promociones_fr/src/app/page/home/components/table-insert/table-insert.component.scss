@@ -86,7 +86,6 @@ tr.mas td {
     max-height: 0;
     transition: max-height 0.3s ease-in-out;
     width: 100%; /* Asegura que el contenedor del dropdown toma el ancho completo */
-
     background-color: #f9f9f9f9;
     border-radius: 10px;
     &.closing {
@@ -102,7 +101,7 @@ tr.mas td {
 .dropdown ul {
     list-style: none;  /* Elimina los puntos de los items de lista */
     padding: 0;        /* Elimina el padding predeterminado */
-    margin: 0;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
+    margin: 5px 5px;         /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
     width: 100%; /* Ocupa el ancho completo para centrar los botones internamente */
     display: flex; /* Utiliza flex para facilitar la alineación */
     flex-direction: column; /* Alinea los elementos verticalmente */
@@ -113,6 +112,7 @@ tr.mas td {
     list-style: none;  /* Asegura que no hay marcadores de lista */
     width: 100%; /* Ocupa el ancho completo para mejor alineación */
     display: flex; /* Utiliza flexbox para facilitar la alineación */
+    align-items: center; /* Alinea verticalmente los elementos */
 }
 
 // --- Modal
@@ -340,22 +340,36 @@ tr.mas td {
 
             #dat_promo_butt {
                 display: flex;
-                justify-content: center;
+                flex-direction: row; 
+                margin: 5px;
+                gap: 10px;
 
-                #btn_dtpro{
-                    display: block; /* Hace que los botones se comporten como bloques */
-                    margin: 0 auto; /* Centra los botones horizontalmente */
-                    text-align: center; /* Alinea el texto dentro del botón al centro */
-                    cursor: pointer; /* Indica que es un elemento interactivo */
-                    padding: 8px; /* Más espacio dentro del select */
-                    border: 1px solid #ccc; /* Borde sutil */
-                    border-radius: 4px; /* Bordes ligeramente redondeados para el select */
-                    font-size: 7pt; /* Tamaño de fuente más grande para select */
-                    width: 20%; /* Hace que el select ocupe todo el espacio de la celda */
-                    box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+                #btn_dtpro_promo, #btn_dtpro_send {
+                    display: block;
+                    text-align: center;
+                    cursor: pointer;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    height: 30px;
+                    border-radius: 4px;
+                    font-size: 7pt;
+                    box-sizing: border-box;
                     background-color: #ffffff;
-                    &:hover {
-                        background-color: #eee;
+                }
+
+                #btn_dtpro_send {
+                    width: 20%;
+                }
+                
+
+                #btn_dtpro_promo:hover, #btn_dtpro_send:hover {
+                    background-color: #eee;
+                }
+                
+                #content_btn_dtpro_dropdown {
+                    width: 20%;
+                    #btn_dtpro_promo{
+                        width: 100%;
                     }
                 }
             }

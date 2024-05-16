@@ -17,6 +17,8 @@ import { DiasGozados } from '../../../../interfaces/DataPromocional/dias-gozados
 import { FdDiasGozadosService } from '../../../../services/fetchData/DataPromocional/fd-dias_gozados.service';
 import { FdPrecioRegularService } from '../../../../services/fetchData/DataPromocional/fd-precio_regular.service';
 import { PrecioRegular } from '../../../../interfaces/DataPromocional/precio-regular.interface';
+import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional/fd-upgrade.service';
+import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 
 @Component({
   selector: 'app-table-insert',
@@ -28,7 +30,7 @@ import { PrecioRegular } from '../../../../interfaces/DataPromocional/precio-reg
 export class TableInsertComponent implements OnInit  {  
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
-  _V4: string = '';   _V5: string = ''; 
+  _V4: string = '';   _V5: string = '';
   @Input() rows: any[] = []; // Arreglo para almacenar las filas y sus datos
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
@@ -41,7 +43,10 @@ export class TableInsertComponent implements OnInit  {
   modoPagosData: ModosPago[][] = [];
   diasGozadosData: DiasGozados[][] = [];
   precioRegularData: PrecioRegular[][] = [];
+  upgradeData: Upgrade [][] = [];
+
   options = [
+    {name: 'NO APLICAR', selected: false},
     {name: 'STREAMING', selected: false},
     {name: 'TELEFONIA', selected: false},
     {name: 'ROUTER', selected: false},
@@ -52,7 +57,6 @@ export class TableInsertComponent implements OnInit  {
   showBDD: boolean[] = [];
   showPROAD: boolean[] = [];
   closing: boolean = false;
-  variant: string = "";
 
   modal_cs: boolean = false;
   modal_dp: boolean = false;
@@ -65,7 +69,8 @@ export class TableInsertComponent implements OnInit  {
     private fdmp: FdModospagosService,
     private fdb: FdBuroService,
     private fddg: FdDiasGozadosService,
-    private fdpr: FdPrecioRegularService
+    private fdpr: FdPrecioRegularService,
+    private fdup: FdUpgradeService
   ){}
 
   ngOnInit(): void {
@@ -76,18 +81,20 @@ export class TableInsertComponent implements OnInit  {
   addRow(): void {
     const newRow = {
       id: this.rows.length,
-      _V1: '', _V2: '', _V3: '', _V4: '',
+      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '',
       planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
-      diasGozadosData: []
+      diasGozadosData: [], upgradeData: []
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.planData.push([]);
     this.planVData.push([]);
     this.productosData.push([]); 
+    this.upgradeData.push([]);
     this.getModoPagosData(this.rows.length - 1);
     this.getBuroData(this.rows.length - 1)
     this.ciudadData.push([]);
     this.sectoresData.push([]);
+    this.upgradeData.push([]);
     this.showMDPDD.push(false);
     this.showBDD.push(false);
     this.showPROAD.push(false);
@@ -181,11 +188,17 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  nombreVariant(value: any, index: number) {
-    console.log("Valor: "+value);
-    this.variant = this.planVData[index].find(planV => planV.TARIFFPLANVARIANTID === value)?.TARIFFPLANVARIANT || '';
-    console.log("Variant: "+this.variant)
-}
+  getDataUpgrade(tariffplanes: number, TFPV: number, index: number): void {
+    try{
+      if (tariffplanes && TFPV){
+        this.fdup.getUpgrade_RETURN(tariffplanes, TFPV).subscribe((upgr) => {
+          this.upgradeData[index] = upgr
+        })
+      }
+    } catch (error) {
+      console.log("Error detectado: ",error)
+    }
+  }
 
   buscarSectores() {
     const index = this.rowId;
@@ -275,6 +288,18 @@ export class TableInsertComponent implements OnInit  {
       case 'DP':
         this.modal_dp = false;
       break;
+    }
+  }
+
+  updateSelection(index: number): void {
+    if (this.options[index].name === 'NO APLICAR' && this.options[index].selected) {
+      // Desmarcar todos excepto "NO APLICAR"
+      this.options.forEach((option, idx) => {
+        if (idx !== index) option.selected = false;
+      });
+    } else if (this.options.some(option => option.selected)) {
+      // Desmarcar "NO APLICAR" si cualquier otra opción es seleccionada
+      this.options[0].selected = false;
     }
   }
 }

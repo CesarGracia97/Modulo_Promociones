@@ -7,8 +7,8 @@ class connection:
         self.host = "192.168.21.165"
         self.port = "1521"
         self.service_name = "SQL"
-        self.username = "consulta"
-        self.password = "consulta"
+        self.username = "bscc"
+        self.password = "titan66"
         self.connection = None
 
     def connect(self):
