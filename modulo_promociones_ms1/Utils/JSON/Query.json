@@ -52,7 +52,7 @@
       "ALL_MPAGOS": "SELECT ID, NAME FROM Trepvaluelistitems WHERE Valuelistsymbol IN ('PaymentType','ManualPaymentType')",
       "DIAS_GOZADOS": "SELECT ID, NAME FROM Trepvaluelistitems where VALUELISTSYMBOL = 'YN'",
       "PRECIO_REGULAR": "SELECT YPKG_PROMOCIONESBS.FNGETREGULARPRICE(_V1, _V2) FROM DUAL",
-      "UPGRADE": ""
+      "UPGRADE": "SELECT ID, NAME || '(' || YPKG_ASIGNAPROMO.YFN_DevuelveVelocidadPorPlan(ID) || ' MB)' PLAN_UPGRADE FROM Ttatariffplanvariants WHERE Tariffplan_Id = _V1 AND ID <> _V2 AND YPKG_ASIGNAPROMO.YFN_DevuelveVelocidadPorPlan(ID) > YPKG_ASIGNAPROMO.YFN_DevuelveVelocidadPorPlan(_V2)"
     }
   }
 }

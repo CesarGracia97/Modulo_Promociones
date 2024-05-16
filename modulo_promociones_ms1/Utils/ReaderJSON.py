@@ -8,6 +8,7 @@ class ReaderJSON:
         self._PATH = os.path.join(current_dir, "..", "Utils", "JSON", "Query.json")
 
     def getQuery(self, _diccionario: dict):
+        _type = ""
         try:
             if "popcion" in _diccionario:
                 _popcion = _diccionario["popcion"]
@@ -17,11 +18,11 @@ class ReaderJSON:
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]
                         if _sopcion == "ALL_DATA":
-                            _nameQuery = _diccionario["name_Query"]
+                            _type = _nameQuery = _diccionario["name_Query"]
                             return (data["Type_Queries"][_popcion][_sopcion]
                                     .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}"))
                         if _sopcion == "SPECIFIC_DATA":
-                            _nameQuery = _diccionario["name_Query"]
+                            _type = _nameQuery = _diccionario["name_Query"]
                             _V1 = _diccionario["_V1"]
                             if "_V2" in _diccionario:
                                 _V2 = _diccionario["_V2"]
@@ -32,7 +33,7 @@ class ReaderJSON:
                                     .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
                                     .replace("_V1", str(_V1)))
                         if _sopcion == "MASIVE_DATA":
-                            _nameQuery = _diccionario["name_Query"]
+                            _type = _nameQuery = _diccionario["name_Query"]
                             _V1_values = [_diccionario[key] for key in _diccionario if key.startswith('_V1_')]
                             _V1 = ', '.join(map(str, _V1_values))
                             _V2 = _diccionario["_V2"]
@@ -41,7 +42,7 @@ class ReaderJSON:
                                     ("_V1", _V1).replace("_V2", str(_V2)))
                 if _popcion == "Planes":
                     if "sopcion" in _diccionario:
-                        _sopcion = _diccionario["sopcion"]
+                        _type = _sopcion = _diccionario["sopcion"]
                         if _sopcion == "ALL_DATA":
                             if "topcion" in _diccionario:
                                 _topcion = _diccionario["topcion"]
@@ -76,7 +77,7 @@ class ReaderJSON:
                             if "name_Query" in _diccionario:
                                 valid_topcions = {"COMBO_PLAN", "COMBO_PLANVARIANT", "COMBO_PRODUCTO",
                                                   "COMBO_TIPO_SERVICIO"}
-                                _nameQuery = _diccionario["name_Query"]
+                                _type = _nameQuery = _diccionario["name_Query"]
                                 if _nameQuery in valid_topcions:
                                     _nameQuery = _diccionario["name_Query"]
                                     _V1 = _diccionario["_V1"]
@@ -88,7 +89,7 @@ class ReaderJSON:
                                         raise ValueError("Se requiere un parámetro para esta consulta específica.")
                 if _popcion == "Finance":
                     if 'name_Query' in _diccionario:
-                        _nameQuery = _diccionario["name_Query"]
+                        _type = _nameQuery = _diccionario["name_Query"]
                         if "_V1" in _diccionario:
                             _V1 = _diccionario["_V1"]
                             if "_V2" in _diccionario:
@@ -105,5 +106,6 @@ class ReaderJSON:
                                 .get(_nameQuery, f"Consulta no encontrada en " f"{_popcion}"))
         except Exception as e:
             print("----------------------------------------------")
-            print("getQuery - ReaderJSON | Error Detectado:", e)
+            print("getQuery - ReaderJSON | "+_type)
+            print("Error Detectado:", e)
             print("----------------------------------------------")

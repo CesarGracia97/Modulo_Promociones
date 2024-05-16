@@ -1,4 +1,4 @@
 export interface Upgrade {
-    ID_UPGRADE: number;
-    UPGRADE: string;
+    ID: number;
+    PLAN_UPGRADE: string;
 }

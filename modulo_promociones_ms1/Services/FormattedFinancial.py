@@ -28,7 +28,7 @@ class FormattedFinance:
                 for dt in data['UPGRADE']:
                     json_data['UPGRADE'].append({
                         'ID': dt.ID,
-                        'NAME': dt.NAME
+                        'PLAN_UPGRADE': dt.PLAN_UPGRADE
                     })
             if _type == "PRECIO_REGULAR":
                 json_data['PRECIO_REGULAR'] = []

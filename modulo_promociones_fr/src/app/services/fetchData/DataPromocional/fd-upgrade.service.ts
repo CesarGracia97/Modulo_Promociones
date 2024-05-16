@@ -12,14 +12,14 @@ export class FdUpgradeService {
     private upgr: UpgradeService
   ) { }
 
-  getUpgrade_RETURN(TFPV: number): Observable<Upgrade[]> {
-    return this.upgr.getUpgrade(TFPV).pipe(
+  getUpgrade_RETURN(Tariffplan: number, TFPV: number): Observable<Upgrade[]> {
+    return this.upgr.getUpgrade(Tariffplan, TFPV).pipe(
       map((response: any) => {
         if(response && response.UPGRADE){
           return response.UPGRADE.map((upgrade: any) => {
             return {
               ID: upgrade.ID,
-              NAME: upgrade.NAME
+              PLAN_UPGRADE: upgrade.PLAN_UPGRADE
             }
           })
         }

@@ -34,8 +34,8 @@ class FrontEndpointController:
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("COMBO ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
-            if _type  == 'ALL_MPAGOS':
-                params = {'type': _type }
+            if _type == 'ALL_MPAGOS':
+                params = {'type': _type}
                 response = requests.get('http://localhost:5014/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
             else:
@@ -57,7 +57,11 @@ class FrontEndpointController:
             valid_type = {"DIAS_GOZADOS", "PRECIO_REGULAR", "UPGRADE"}
             if _type in valid_type:
                 params = {'type': _type}
-                if 'TARIFFPLANVARIANT' in request.args:
+                if 'TARIFFPLAN' in request.args:
+                    params['_V1'] = request.args.get('TARIFFPLAN')
+                    if 'TARIFFPLANVARIANT' in request.args:
+                        params['_V2'] = request.args.get('TARIFFPLANVARIANT')
+                if 'TARIFFPLANVARIANT' in request.args and '_V1' not in params:
                     params['_V1'] = request.args.get('TARIFFPLANVARIANT')
                     if 'id_Prod' in request.args:
                         params['_V2'] = request.args.get('id_Prod')
