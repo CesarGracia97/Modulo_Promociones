@@ -19,6 +19,7 @@ import { FdPrecioRegularService } from '../../../../services/fetchData/DataPromo
 import { PrecioRegular } from '../../../../interfaces/DataPromocional/precio-regular.interface';
 import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional/fd-upgrade.service';
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
+import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
 
 @Component({
   selector: 'app-table-insert',
@@ -27,11 +28,11 @@ import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interfac
   templateUrl: './table-insert.component.html',
   styleUrl: './table-insert.component.scss'
 })
-export class TableInsertComponent implements OnInit  {  
-
+export class TableInsertComponent implements OnInit {  
+  @Input() rows: any[] = [];
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
-  _V4: string = '';   _V5: string = '';
-  @Input() rows: any[] = []; // Arreglo para almacenar las filas y sus datos
+  _V4: string = ''; _V9: string = ''; _V11: string = '';
+
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   productosData: Productos[][] = [];
@@ -44,14 +45,7 @@ export class TableInsertComponent implements OnInit  {
   diasGozadosData: DiasGozados[][] = [];
   precioRegularData: PrecioRegular[][] = [];
   upgradeData: Upgrade [][] = [];
-
-  options = [
-    {name: 'NO APLICAR', selected: false},
-    {name: 'STREAMING', selected: false},
-    {name: 'TELEFONIA', selected: false},
-    {name: 'ROUTER', selected: false},
-    {name: 'TELEVISION', selected: false}
-  ];
+  optionsData: Options_PA[][] = [];
 
   showMDPDD: boolean[] = []; 
   showBDD: boolean[] = [];
@@ -81,7 +75,7 @@ export class TableInsertComponent implements OnInit  {
   addRow(): void {
     const newRow = {
       id: this.rows.length,
-      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '',
+      _V1: '', _V2: '', _V3: '', _V4: '', _V9: '', _V11: '',
       planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
       diasGozadosData: [], upgradeData: []
     };
@@ -98,6 +92,14 @@ export class TableInsertComponent implements OnInit  {
     this.showMDPDD.push(false);
     this.showBDD.push(false);
     this.showPROAD.push(false);
+    this.optionsData.push([
+      {name: 'NO APLICAR', selected: false},
+      {name: 'STREAMING', selected: false},
+      {name: 'TELEFONIA', selected: false},
+      {name: 'TELEVISION', selected: false},
+      {name: 'ROUTER', selected: false}
+
+    ]);
   }
 
   getDataPLAN(servicio: string, index: number): void {
@@ -291,15 +293,17 @@ export class TableInsertComponent implements OnInit  {
     }
   }
 
-  updateSelection(index: number): void {
-    if (this.options[index].name === 'NO APLICAR' && this.options[index].selected) {
-      // Desmarcar todos excepto "NO APLICAR"
-      this.options.forEach((option, idx) => {
-        if (idx !== index) option.selected = false;
+  updateSelection(rowId: number, index: number): void {
+    const options = this.optionsData[rowId];
+  
+    if (index === 0 && options[0].selected) {
+      // "NO APLICAR" ha sido seleccionado
+      options.forEach((option, idx) => {
+        if (idx !== 0) option.selected = false;
       });
-    } else if (this.options.some(option => option.selected)) {
-      // Desmarcar "NO APLICAR" si cualquier otra opción es seleccionada
-      this.options[0].selected = false;
+    } else if (index !== 0 && options[index].selected) {
+      // Otra opción que no es "NO APLICAR" ha sido seleccionada
+      options[0].selected = false;
     }
   }
 }

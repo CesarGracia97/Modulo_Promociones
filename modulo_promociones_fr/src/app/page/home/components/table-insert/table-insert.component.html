@@ -10,7 +10,6 @@
                 <th>TariffPlan</th>
                 <th>Variant</th>
                 <th>Producto</th>
-                <!-- <th>UPGRADE</th> -->
                 <th>Forma de Pago</th>
                 <th>Buro</th>
                 <th>Ciudad y Sectores</th>
@@ -53,12 +52,6 @@
                         <option *ngFor=" let prod of productosData[i]" [value]="prod.PRODUCTID" >{{prod.PRODUCTO}}</option>    
                     </select>
                 </td>
-                <!-- <td>
-                    <select name="_V5" [(ngModel)]="row._V5">
-                        <option value="">Selecciona un UPGRADE</option>
-                        <option *ngFor=" let upgrade of upgradeData[i]" [value]="upgrade.ID" >{{upgrade.PLAN_UPGRADE}}</option>   
-                    </select>
-                </td> -->
                 <td>
                     <button id="button" (click)="toggDD(i, 'MP')">Forma de Pago</button>
                     <div [ngClass]="{'show': showMDPDD[i], 'closing': closing}" class="dropdown">
@@ -81,15 +74,16 @@
                     </div>
                 </td>
                 <td>
-                    <button id="button" [disabled]="!button_V1_V6(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
+                    <button id="button" name="_V7_V8" [disabled]="!button_V1_V6(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
-                    <button id="button" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
+                    <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
+
                 </td>
             </tr>
             <tr class="mas" (click)="addRow()">
                 <td>+</td>
-                <td colspan="11"></td> <!-- Extiende la celda sobre las siguientes 9 columnas -->
+                <td colspan="9"></td> <!-- Extiende la celda sobre las siguientes 9 columnas -->
             </tr>
         </tbody>
     </table>
@@ -135,21 +129,21 @@
                         <span>
                             PRECIO REGULAR: ${{ precioRegular.PRECIO }}
                         </span>
-                        <input id="precioRegular" type="number" [min]="1" [max]="precioRegular.PRECIO" />
+                        <input id="precioRegular" name="_V9" [(ngModel)]="rows[rowId]._V9" type="number" [min]="1" [max]="precioRegular.PRECIO" />
                     </div>
                     <div id="dias">
                         <span>DIAS GOZADOS</span>
                         <div id="checklist">
                             <ul>
                                 <li *ngFor="let dias of diasGozadosData[rowId]">
-                                    <input type="radio" [(ngModel)]="dias.selected" [value]="dias.ID" /> {{dias.NAME}}
+                                    <input type="radio" name="_V10" [(ngModel)]="dias.selected" [value]="dias.ID" /> {{dias.NAME}}
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div id="upgrade">
                         <span>UPGRADE</span>
-                        <select name="_V5">
+                        <select name="_V11" [(ngModel)]="rows[rowId]._V11" >
                             <option value="">Selecciona un UPGRADE</option>
                             <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID" >{{upgrade.PLAN_UPGRADE}}</option>   
                         </select>
@@ -160,8 +154,8 @@
                         <button id="btn_dtpro_promo" (click)="toggDD(rowId, 'PA')">Promoción Adicional</button>
                         <div [ngClass]="{'show': showPROAD[rowId], 'closing': closing}" class="dropdown">
                             <ul>
-                                <li *ngFor="let op of options; let i = index">
-                                    <input type="checkbox" name="_V5" [(ngModel)]="op.selected" [value]="op.name"  (change)="updateSelection(i)"/>{{ op.name }} 
+                                <li *ngFor="let op of optionsData[rowId]; let i = index">
+                                    <input type="checkbox" [(ngModel)]="op.selected"  (change)="updateSelection(rowId, i)" [value]="op.name"/>{{ op.name }} 
                                 </li>
                             </ul>
                         </div>
@@ -170,16 +164,16 @@
                 </div>
             </div>
             <div id="pro_adici">
-                <div id="streaming" *ngIf="options[1].selected">
+                <div id="streaming" *ngIf="optionsData[rowId][1].selected">
                     <label>STREAMING</label>
                 </div>
-                <div id="telefonia" *ngIf="options[2].selected">
+                <div id="telefonia" *ngIf="optionsData[rowId][2].selected">
                     <label>TELEFONIA</label>
                 </div>
-                <div id="television" *ngIf="options[3].selected">
+                <div id="television" *ngIf="optionsData[rowId][3].selected">
                     <label>TELEVISION</label>
                 </div>
-                <div id="router" *ngIf="options[4].selected">
+                <div id="router" *ngIf="optionsData[rowId][4].selected">
                     <label>ROUTER</label>
                 </div>
             </div>
