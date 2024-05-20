@@ -55,21 +55,20 @@ class ReaderJSON:
 
                                 elif _topcion == "PLAN":
                                     _nameQuery = _diccionario["name_Query"]
-                                    if _nameQuery == 'AD_TARIFFPLANVARIANT':
+                                    if '_V1' in _diccionario:
                                         _V1 = _diccionario["_V1"]
                                         _V2 = _diccionario["_V2"]
                                         _V3 = _diccionario["_V3"]
-                                        if _V1 and _V2 and _V3 is not None:
-                                            return (data["Type_Queries"][_popcion][_sopcion][_topcion]
-                                                    .get(_nameQuery,
-                                                         f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
-                                                    .replace("_V1", str(_V1))
-                                                    .replace("_V2", str(_V2))
-                                                    .replace("_V3", str(_V3)))
-                                        else:
-                                            return (data["Type_Queries"][_popcion][_sopcion][_topcion]
-                                                    .get(_nameQuery,
-                                                         f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
+                                        return (data["Type_Queries"][_popcion][_sopcion][_topcion]
+                                                .get(_nameQuery,
+                                                     f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
+                                                .replace("_V1", str(_V1))
+                                                .replace("_V2", str(_V2))
+                                                .replace("_V3", str(_V3)))
+
+                                    return (data["Type_Queries"][_popcion][_sopcion][_topcion]
+                                            .get(_nameQuery,
+                                                 f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
                                 else:
                                     raise ValueError(f"Valor de _topcion '{_topcion}' no es válido.")
 

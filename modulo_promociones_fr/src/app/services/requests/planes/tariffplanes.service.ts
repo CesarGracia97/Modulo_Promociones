@@ -29,4 +29,10 @@ export class TariffplanesService {
     .set('stype', 'PLAN').set('ttype', 3);
     return this.http.get<TariffPlan_X_TariffPlanVariant[]>(this.baseUrl, { params: params });
   }
+
+  getTariffPlanesVariantXStreaming(): Observable <TariffPlanesVariant[]> {
+    let params = new HttpParams().set('type', 'ALL_DATA')
+    .set('stype', 'PLAN').set('ttype', 4);
+    return this.http.get<TariffPlanesVariant[]>(this.baseUrl, { params: params });
+  }
 }

@@ -84,7 +84,7 @@ class FormattedPlans:
                         'TARIFFPLAN': plan.TARIFFPLAN
                     })
                 return json_data
-            elif opcion == 2:
+            elif opcion == 2 or opcion == 4:
                 for plan in data['PLANES']:
                     json_data['PLANES'].append({
                         'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,

@@ -98,7 +98,6 @@ class FrontEndpointController:
     @oferp_bp.route('/api/ra/plnofer_endpoint', methods=['GET'])
     def oferp_enpoint():
         try:
-
             print("\nOFERTAS - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("OFERTAS ENDPOINT ACTIVO\n")
@@ -252,44 +251,27 @@ class FrontEndpointController:
             print("PLANES ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
             if _type.upper() == 'ALL_DATA':
-                _stype = request.args.get('stype')
-                if _stype.upper() == 'PLAN':
-                    _ttype = request.args.get('ttype')
-                    if _ttype == 1 or _ttype == '1':
-                        params = {
-                            'type': _type,
-                            'stype': _stype,
-                            'ttype': _ttype
-                        }
-                        response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
-                        return response.text, response.status_code
+                stype = request.args.get('stype')
+                valid_stypes = {'OFER', 'TECN', 'SERV', 'TISE'}
+                valid_ttype = {'1', '3', '4'}
+                if stype == 'PLAN':
 
-                    if _ttype == 2 or _ttype == '2':
-                        _V1 = request.args.get('_V1')
-                        _V2 = request.args.get('_V2')
-                        _V3 = request.args.get('_V3')
-                        params = {
-                            'type': _type,
-                            'stype': _stype,
-                            'ttype': _ttype,
-                            '_V1': _V1,
-                            '_V2': _V2,
-                            '_V3': _V3
-                        }
-                        response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
-                        return response.text, response.status_code
+                    params = {'type': request.args.get('type'), 'stype': request.args.get('stype')}
 
-                    if _ttype == 3 or _ttype == '1':
-                        params = {
-                            'type': _type,
-                            'stype': _stype,
-                            'ttype': _ttype
-                        }
-                        response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
-                        return response.text, response.status_code
-                elif _stype.upper() != 'PLAN' and (
-                        _stype.upper() == 'OFER' or _stype.upper() == 'TECN' or _stype.upper() == 'SERV' or _stype.upper() == 'TISE'):
-                    mensaje = f"La peticion esta siendo enviada por un canal incorrecto {_stype}"
+                    if request.args.get('ttype') in valid_ttype:
+                        params['ttype'] = request.args.get('ttype')
+
+                    if request.args.get('ttype') == '2':
+                        params['ttype'] = request.args.get('ttype')
+                        params['_V1'] = request.args.get('_V1')
+                        params['_V2'] = request.args.get('_V2')
+                        params['_V3'] = request.args.get('_V3')
+
+                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    return response.text, response.status_code
+
+                elif stype != 'PLAN' and stype in valid_stypes:
+                    mensaje = f"La peticion esta siendo enviada por un canal incorrecto {request.args.get('stype')}"
                     return jsonify({'error': mensaje}), 400
 
             elif _type.upper() != 'ALL_DATA' and _type.upper() == 'COMBO':

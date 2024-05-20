@@ -50,6 +50,7 @@ export class TableInsertComponent implements OnInit {
   showMDPDD: boolean[] = []; 
   showBDD: boolean[] = [];
   showPROAD: boolean[] = [];
+  visibleBtnPromocionAdicional: boolean[] = [];
   closing: boolean = false;
 
   modal_cs: boolean = false;
@@ -218,6 +219,27 @@ export class TableInsertComponent implements OnInit {
     const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
     const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     return trueSelect && trueMP && trueB;
+  }
+
+  getDataPAPrecioRegularTTR(type: string, TFPV: number, index: number): void {
+    if(TFPV){
+      switch(type){
+        case 'TELEFONIA':
+        break;
+        case 'TELEVISION':
+        break;
+        case 'ROUTER':
+        break;
+      }
+    }
+  }
+
+  visibleBotonPromocionAdicional(servicio: string, index: number): void {
+    if (servicio && servicio == 'STREAMING') {
+      this.visibleBtnPromocionAdicional[index] = true;
+    } else {
+      this.visibleBtnPromocionAdicional[index] = false;
+    }
   }
 
   button_search_sect(index: number): boolean {

@@ -18,11 +18,10 @@ class PlansRepository:
                 if _popcion == "ALL_DATA":
                     if "sopcion" in _diccionario:
                         _sopcion = _diccionario["sopcion"]
+                        _Qdiccionario = {"popcion": "Planes", "sopcion": _popcion}
                         if _sopcion == "OFER":
-                            _Qdiccionario = {"popcion": "Planes",
-                                             "sopcion": "ALL_DATA",
-                                             "topcion": "OFER",
-                                             "name_Query": "AD_OFERTAS"}
+                            _Qdiccionario['topcion'] = _sopcion
+                            _Qdiccionario['name_Query'] = "AD_OFERTAS"
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
@@ -38,10 +37,8 @@ class PlansRepository:
                             return data
 
                         if _sopcion == "SERV":
-                            _Qdiccionario = {"popcion": "Planes",
-                                             "sopcion": "ALL_DATA",
-                                             "topcion": "SERV",
-                                             "name_Query": "AD_SERVICIOS"}
+                            _Qdiccionario['topcion'] = _sopcion
+                            _Qdiccionario['name_Query'] = "AD_SERVICIOS"
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
@@ -55,11 +52,10 @@ class PlansRepository:
                             print("\n**** SERVICIOS - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
+
                         if _sopcion == "TECN":
-                            _Qdiccionario = {"popcion": "Planes",
-                                             "sopcion": "ALL_DATA",
-                                             "topcion": "TECN",
-                                             "name_Query": "AD_TECNOLOGIAS"}
+                            _Qdiccionario['topcion'] = _sopcion
+                            _Qdiccionario['name_Query'] = "AD_TECNOLOGIAS"
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
@@ -75,10 +71,8 @@ class PlansRepository:
                             return data
 
                         if _sopcion == "TISE":
-                            _Qdiccionario = {"popcion": "Planes",
-                                             "sopcion": "ALL_DATA",
-                                             "topcion": "TISE",
-                                             "name_Query": "AD_TIPO_SERVICIO"}
+                            _Qdiccionario['topcion'] = _sopcion
+                            _Qdiccionario['name_Query'] = "AD_TIPO_SERVICIO"
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:
@@ -94,12 +88,11 @@ class PlansRepository:
                             return data
 
                         if _sopcion == "PLAN":
+                            _Qdiccionario['topcion'] = _sopcion
                             _topcion = _diccionario["topcion"]
                             if _topcion == 1:
-                                _Qdiccionario = {"popcion": "Planes",
-                                                 "sopcion": "ALL_DATA",
-                                                 "topcion": "PLAN",
-                                                 "name_Query": "AD_TARIFFPLAN"}
+
+                                _Qdiccionario['name_Query'] = "AD_TARIFFPLAN"
                                 query = self.reader_json.getQuery(_Qdiccionario)
                                 results = self.db.execute_query(query)
                                 if results is None:
@@ -115,16 +108,10 @@ class PlansRepository:
                                 return data
 
                             if _topcion == 2:
-                                _V1 = _diccionario["_V1"]
-                                _V2 = _diccionario["_V2"]
-                                _V3 = _diccionario["_V3"]
-                                _Qdiccionario = {"popcion": "Planes",
-                                                 "sopcion": "ALL_DATA",
-                                                 "topcion": "PLAN",
-                                                 "name_Query": "AD_TARIFFPLANVARIANT",
-                                                 "_V1": _V1,
-                                                 "_V2": _V2,
-                                                 "_V3": _V3}
+                                _Qdiccionario['name_Query'] = "AD_TARIFFPLANVARIANT"
+                                _Qdiccionario['_V1'] = _diccionario["_V1"]
+                                _Qdiccionario['_V2'] = _diccionario["_V2"]
+                                _Qdiccionario['_V3'] = _diccionario["_V3"]
                                 query = self.reader_json.getQuery(_Qdiccionario)
                                 results = self.db.execute_query(query)
                                 if results is None:
@@ -141,10 +128,7 @@ class PlansRepository:
 
                             if _topcion == 3:
 
-                                _Qdiccionario = {"popcion": "Planes",
-                                                 "sopcion": "ALL_DATA",
-                                                 "topcion": "PLAN",
-                                                 "name_Query": "AD_TARIFFPLAN_TARIFFPLANVARIANT"}
+                                _Qdiccionario['name_Query'] = "AD_TARIFFPLAN_TARIFFPLANVARIANT"
                                 query = self.reader_json.getQuery(_Qdiccionario)
                                 results = self.db.execute_query(query)
                                 if results is None:
@@ -154,6 +138,23 @@ class PlansRepository:
                                 }
                                 for result in results:
                                     planes = TariffPlan_X_TariffPlanVariant(result[0], result[1], result[2], result[3])
+                                    data['PLANES'].append(planes)
+                                print("\n**** PLANES - DATOS OBTENIDOS ****\n")
+                                self.db.close()
+                                return data
+
+                            if _topcion == 4:
+
+                                _Qdiccionario['name_Query'] = "AD_TARIFFPLANVARIANT_STREAMING"
+                                query = self.reader_json.getQuery(_Qdiccionario)
+                                results = self.db.execute_query(query)
+                                if results is None:
+                                    return {}
+                                data = {
+                                    'PLANES': []
+                                }
+                                for result in results:
+                                    planes = TariffPlanVariant(result[0], result[1])
                                     data['PLANES'].append(planes)
                                 print("\n**** PLANES - DATOS OBTENIDOS ****\n")
                                 self.db.close()

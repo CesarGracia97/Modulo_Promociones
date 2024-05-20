@@ -61,14 +61,11 @@ class PeticionPlanesController:
                         return jsonify(dt_dttis), 200
                 if _stype.upper() == 'PLAN':
                     _ttype = request.args.get('ttype')
-                    if _ttype == '1':
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "PLAN",
-                            "topcion": 1
-                        }
+                    _diccionario = {'popcion': _type, 'sopcion': _stype}
+                    if _ttype == '1' or _ttype == '3' or _ttype == '4':
+                        _diccionario['topcion'] = _ttype
                         data_dtpl1 = repository.getData_Planes(_diccionario)
-                        dt_dtpl1 = frt.formated_ADPlan(data_dtpl1, 1)
+                        dt_dtpl1 = frt.formated_ADPlan(data_dtpl1, _ttype)
                         return jsonify(dt_dtpl1), 200
                     if _ttype == '2':
                         _V1 = request.args.get('_V1')

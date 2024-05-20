@@ -29,7 +29,7 @@ class BackEndpointController:
                     _ttype = request.args.get('ttype')
                     _ttype = _ttype.upper()
                     if (_stype in ['OFER', 'SERV', 'TECN', 'TISE'] or
-                            (_stype == 'PLAN' and (_ttype == '1' or _ttype == '3'))):
+                            (_stype == 'PLAN' and (_ttype == '1' or _ttype == '3' or _ttype == '4'))):
                         params = {'type': _type, 'stype': _stype, 'ttype': _ttype}
                         return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes',
                                                                    params)

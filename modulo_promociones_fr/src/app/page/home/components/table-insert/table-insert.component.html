@@ -17,10 +17,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
+            <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)" >
                 <td>{{ row.id+1 }}</td>
                 <td>
-                    <select name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getDataPLAN(row._V1, i); getDiasGozados(i)">
+                    <select name="_V1" [(ngModel)]="row._V1" 
+                    (ngModelChange)="getDataPLAN(row._V1, i); visibleBotonPromocionAdicional(row._V1, i); getDiasGozados(i)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
@@ -77,7 +78,8 @@
                     <button id="button" name="_V7_V8" [disabled]="!button_V1_V6(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
-                    <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
+                    <!-- <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button> -->
+                    <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button>
 
                 </td>
             </tr>
@@ -151,7 +153,7 @@
                 </div>
                 <div id="dat_promo_butt">
                     <div id="content_btn_dtpro_dropdown">
-                        <button id="btn_dtpro_promo" (click)="toggDD(rowId, 'PA')">Promoción Adicional</button>
+                        <button id="btn_dtpro_promo" (click)="toggDD(rowId, 'PA')" *ngIf="!visibleBtnPromocionAdicional[rowId]">Promoción Adicional</button>
                         <div [ngClass]="{'show': showPROAD[rowId], 'closing': closing}" class="dropdown">
                             <ul>
                                 <li *ngFor="let op of optionsData[rowId]; let i = index">
@@ -165,16 +167,140 @@
             </div>
             <div id="pro_adici">
                 <div id="streaming" *ngIf="optionsData[rowId][1].selected">
-                    <label>STREAMING</label>
+                    <label><strong>STREAMING</strong></label>
+                    <div id="content_streaming">
+                        <table>
+                            <tr>
+                                <td><span>PAQUETE</span></td>
+                                <td>
+                                    <select name="PRAD_V1">
+                                        <option>PAQ. STREAMING</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>PRE. REGULAR $</span>
+                                    <span>900.00</span>
+                                </td>
+                                <td>
+                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" min="1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>MES FINAL</span></td>
+                                <td>
+                                    <input name="PRAD_V4" type="number" min="2"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div id="telefonia" *ngIf="optionsData[rowId][2].selected">
-                    <label>TELEFONIA</label>
+                    <label><strong>TELEFONIA</strong></label>
+                    <div id="content_telefonia">
+                        <table>
+                            <tr>
+                                <td><span>PLANES</span></td>
+                                <td>
+                                    <select name="PRAD_V1">
+                                        <option>PLAN. TELEFONICO</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>PRE. REGULAR $</span>
+                                    <span>900.00</span>
+                                </td>
+                                <td>
+                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" min="1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>CANTIDAD</span></td>
+                                <td>
+                                    <input name="PRAD_V3" min="1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>MESES</span></td>
+                                <td>
+                                    <input name="PRAD_V4" type="number" min="2"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div id="television" *ngIf="optionsData[rowId][3].selected">
-                    <label>TELEVISION</label>
+                    <label><strong>TELEVISION</strong></label>
+                    <div id="content_television">
+                        <table>
+                            <tr>
+                                <td><span>PLANES</span></td>
+                                <td>
+                                    <select name="PRAD_V1">
+                                        <option>PLAN. TELEVISION</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>PRE. REGULAR $</span>
+                                    <span>900.00</span>
+                                </td>
+                                <td>
+                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" min="1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>CANTIDAD</span></td>
+                                <td><input name="PRAD_V3"  min="1"/></td>
+                            </tr>
+                            <tr>
+                                <td><span>MESES</span></td>
+                                <td>
+                                    <input name="PRAD_V4" type="number" min="2"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div id="router" *ngIf="optionsData[rowId][4].selected">
-                    <label>ROUTER</label>
+                    <label><strong>ROUTER</strong></label>
+                    <div id="content_television">
+                        <table>
+                            <tr>
+                                <td><span>ROUTER</span></td>
+                                <td>
+                                    <select name="PRAD_V1">
+                                        <option>MODELO ROUTER</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>PRE. REGULAR $</span>
+                                    <span>900.00</span>
+                                </td>
+                                <td>
+                                    <input name="PRAD_V2"placeholder="Ing. Pr. Promocional" min="1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>CANTIDAD</span></td>
+                                <td>
+                                    <input name="PRAD_V3"  min="1"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>MESES</span></td>
+                                <td>
+                                    <input name="PRAD_V4" type="number" min="2"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal_dp_button">
