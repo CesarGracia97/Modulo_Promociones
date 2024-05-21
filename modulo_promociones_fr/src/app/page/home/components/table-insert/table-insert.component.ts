@@ -21,6 +21,7 @@ import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
 
+
 @Component({
   selector: 'app-table-insert',
   standalone: true,
@@ -30,8 +31,12 @@ import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.in
 })
 export class TableInsertComponent implements OnInit {  
   @Input() rows: any[] = [];
+
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
   _V4: string = ''; _V9: string = ''; _V11: string = '';
+
+  @Input() tablesRow: any[] = [];
+  PRAD_V1: string =''; PRAD_V2: string ='';  PRAD_V3: string ='';
 
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
@@ -56,6 +61,8 @@ export class TableInsertComponent implements OnInit {
   modal_cs: boolean = false;
   modal_dp: boolean = false;
   rowId: number = 0;
+
+
  
   constructor(
     private comData: CommunicationDataService,
@@ -80,7 +87,12 @@ export class TableInsertComponent implements OnInit {
       planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
       diasGozadosData: [], upgradeData: []
     };
+    const newTableRow = {
+      id: this.tablesRow.length
+
+    }
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
+    this.tablesRow.push(newTableRow)
     this.planData.push([]);
     this.planVData.push([]);
     this.productosData.push([]); 

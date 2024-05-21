@@ -168,12 +168,13 @@
             <div id="pro_adici">
                 <div id="streaming" *ngIf="optionsData[rowId][1].selected">
                     <label><strong>STREAMING</strong></label>
-                    <div id="content_streaming">
+                    <div class="content_streaming" *ngFor="let table of tablesRow; let i = index" [attr.id]="'table-' + (i + 1)">
+                        <label>#{{ table.id+1 }}</label>
                         <table>
                             <tr>
                                 <td><span>PAQUETE</span></td>
                                 <td>
-                                    <select name="PRAD_V1">
+                                    <select name="PRAD_V1" [(ngModel)]="rows[rowId].table.PRAD_V1">
                                         <option>PAQ. STREAMING</option>
                                     </select>
                                 </td>
@@ -184,16 +185,23 @@
                                     <span>900.00</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_V2" [(ngModel)]="rows[rowId].table.PRAD_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MES FINAL</span></td>
                                 <td>
-                                    <input name="PRAD_V4" type="number" min="2"/>
+                                    <input name="PRAD_V3" [(ngModel)]="rows[rowId].table.PRAD_V3"type="number" min="2"/>
                                 </td>
                             </tr>
                         </table>
+                        <div id="streaming_items">
+                            <button id="btn_new_table">Nueva Tabla</button>
+                            <select class="change_table">
+                                <option>Cambia de Tabla</option>
+
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div id="telefonia" *ngIf="optionsData[rowId][2].selected">
