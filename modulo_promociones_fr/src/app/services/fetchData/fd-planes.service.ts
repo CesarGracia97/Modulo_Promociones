@@ -81,8 +81,8 @@ export class FdPlanesService {
     });
   }
   
-  fetchDataTariffPlanVariant(servicio: string, tipoServicio: string, tecnologia: string){
-    this.plan.getTariffPlanesVariantALL(servicio, tipoServicio, tecnologia).subscribe((response: any) =>{
+  fetchDataTariffPlanVariant(servicio: string, tipoServicio: string){
+    this.plan.getTariffPlanesVariantALL(servicio, tipoServicio).subscribe((response: any) =>{
       if (response && response.PLANES){
         this.planData = response.PLANES.map((plan: any) => {
           return {

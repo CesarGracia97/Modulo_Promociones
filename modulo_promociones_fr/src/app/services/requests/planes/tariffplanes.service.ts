@@ -14,25 +14,28 @@ export class TariffplanesService {
 
   getTariffPlanesALL():Observable<TariffPlanes[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'PLAN').set('ttype', 1);
+    .set('stype', 'AD_TARIFFPLAN');
     return this.http.get<TariffPlanes[]>(this.baseUrl, { params: params });
   }
 
-  getTariffPlanesVariantALL(servicio: string, tipo_servicio: string, tecnologia: string):Observable<TariffPlanesVariant[]>{
+  getTariffPlanesVariantALL(servicio: string, tipo_servicio: string):Observable<TariffPlanesVariant[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'PLAN').set('ttype', 2).set('_V1', servicio).set('_V2', tipo_servicio).set('_V3', tecnologia);
+    .set('stype', 'AD_TARIFFPLANVARIANT')
+    .set('SERVICIO', servicio)
+    .set('TIPO_SERVICIO', tipo_servicio);
     return this.http.get<TariffPlanesVariant[]>(this.baseUrl, { params: params });
   }
 
   getTariffPlan_X_TariffPlanVariantALL():Observable<TariffPlan_X_TariffPlanVariant[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'PLAN').set('ttype', 3);
+    .set('stype', 'AD_TARIFFPLAN_TARIFFPLANVARIANT');
     return this.http.get<TariffPlan_X_TariffPlanVariant[]>(this.baseUrl, { params: params });
   }
 
-  getTariffPlanesVariantXStreaming(): Observable <TariffPlanesVariant[]> {
+  getTariffPlanesVariantXProducto_Adicional(SERVICIO: string): Observable <TariffPlanesVariant[]> {
     let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'PLAN').set('ttype', 4);
+    .set('stype', 'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL')
+    .set('SERVICIO', SERVICIO);
     return this.http.get<TariffPlanesVariant[]>(this.baseUrl, { params: params });
   }
 }

@@ -46,29 +46,33 @@ class ReaderJSON:
                         if _sopcion == "ALL_DATA":
                             if "topcion" in _diccionario:
                                 _topcion = _diccionario["topcion"]
-                                valid_topcions = {"OFER", "SERV", "TECN", "TISE"}
-                                if _topcion in valid_topcions:
-                                    _nameQuery = _diccionario["name_Query"]
-                                    return (data["Type_Queries"][_popcion][_sopcion][_topcion]
-                                            .get(_nameQuery,
-                                                 f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
-
-                                elif _topcion == "PLAN":
-                                    _nameQuery = _diccionario["name_Query"]
-                                    if '_V1' in _diccionario:
-                                        _V1 = _diccionario["_V1"]
-                                        _V2 = _diccionario["_V2"]
-                                        _V3 = _diccionario["_V3"]
+                                valid_topcions = {'OFER', 'SERV', 'TECN', 'TISE', 'AD_TARIFFPLAN',
+                                                  'AD_TARIFFPLANVARIANT', 'AD_TARIFFPLANVARIANT',
+                                                  'AD_TARIFFPLAN_TARIFFPLANVARIANT',
+                                                  'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL'}
+                                if _diccionario["topcion"] in valid_topcions:
+                                    if 'name_Query' in _diccionario:
+                                        _nameQuery = _diccionario["name_Query"]
                                         return (data["Type_Queries"][_popcion][_sopcion][_topcion]
                                                 .get(_nameQuery,
-                                                     f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
-                                                .replace("_V1", str(_V1))
-                                                .replace("_V2", str(_V2))
-                                                .replace("_V3", str(_V3)))
-
-                                    return (data["Type_Queries"][_popcion][_sopcion][_topcion]
-                                            .get(_nameQuery,
-                                                 f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
+                                                f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
+                                    if 'name_Query' not in _diccionario:
+                                        _nameQuery = _diccionario["topcion"]
+                                        if '_V1' in _diccionario:
+                                            _V1 = _diccionario["_V1"]
+                                            if '_V2' in _diccionario:
+                                                _V2 = _diccionario["_V2"]
+                                                return (data["Type_Queries"][_popcion][_sopcion][_topcion]
+                                                        .get(_nameQuery,
+                                                             f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
+                                                        .replace("_V1", str(_V1))
+                                                        .replace("_V2", str(_V2)))
+                                            return (data["Type_Queries"][_popcion][_sopcion][_topcion]
+                                                    .get(_nameQuery,
+                                                         f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
+                                                    .replace("_V1", str(_V1)))
+                                        return (data["Type_Queries"][_popcion][_sopcion][_topcion]
+                                                .get(_nameQuery, f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
                                 else:
                                     raise ValueError(f"Valor de _topcion '{_topcion}' no es válido.")
 

@@ -12,86 +12,32 @@ class PeticionPlanesController:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
             frt = FormattedPlans()
             repository = PlansRepository()
-            _type = request.args.get('type')
-            print(_type)
-            if _type is None:
-                return jsonify({'error': 'El campo "type" es requerido'}), 400
-            if _type.upper() == 'ALL_DATA':
-                _stype = request.args.get('stype')
-                print(_stype)
-                if _stype.upper() == 'OFER':
-                    _ttype = request.args.get('ttype')
-                    if _ttype == '1':
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "OFER"
-                        }
-                        data_dtofe = repository.getData_Planes(_diccionario)
-                        dt_dtofe = frt.formated_ADOferta(data_dtofe)
-                        return jsonify(dt_dtofe), 200
-                if _stype.upper() == 'SERV':
-                    _ttype = request.args.get('ttype')
-                    if _ttype == '1':
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "SERV"
-                        }
-                        data_dtof = repository.getData_Planes(_diccionario)
-                        dt_dtof = frt.formated_ADServicio(data_dtof)
-                        return jsonify(dt_dtof), 200
-                if _stype.upper() == 'TECN':
-                    _ttype = request.args.get('ttype')
-                    if _ttype == '1':
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "TECN"
-                        }
-                        data_dttec = repository.getData_Planes(_diccionario)
-                        dt_dttec = frt.formated_ADTecnologia(data_dttec)
-                        return jsonify(dt_dttec), 200
-                if _stype.upper() == 'TISE':
-                    _ttype = request.args.get('ttype')
-                    if _ttype == '1':
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "TISE"
-                        }
-                        data_dttis = repository.getData_Planes(_diccionario)
-                        dt_dttis = frt.formated_ADTipoServicio(data_dttis)
-                        return jsonify(dt_dttis), 200
-                if _stype.upper() == 'PLAN':
-                    _ttype = request.args.get('ttype')
-                    _diccionario = {'popcion': _type, 'sopcion': _stype}
-                    if _ttype == '1' or _ttype == '3' or _ttype == '4':
-                        _diccionario['topcion'] = _ttype
-                        data_dtpl1 = repository.getData_Planes(_diccionario)
-                        dt_dtpl1 = frt.formated_ADPlan(data_dtpl1, _ttype)
-                        return jsonify(dt_dtpl1), 200
-                    if _ttype == '2':
-                        _V1 = request.args.get('_V1')
-                        _V2 = request.args.get('_V2')
-                        _V3 = request.args.get('_V3')
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "PLAN",
-                            "topcion": 2,
-                            "_V1": _V1,
-                            "_V2": _V2,
-                            "_V3": _V3
-                        }
-                        data_dtpl2 = repository.getData_Planes(_diccionario)
-                        dt_dtpl2 = frt.formated_ADPlan(data_dtpl2, 2)
-                        return jsonify(dt_dtpl2), 200
-                    if _ttype == '3':
-                        _diccionario = {
-                            "popcion": "ALL_DATA",
-                            "sopcion": "PLAN",
-                            "topcion": 3
-                        }
-                        data_dtpl3 = repository.getData_Planes(_diccionario)
-                        dt_dtpl3 = frt.formated_ADPlan(data_dtpl3, 3)
-                        return jsonify(dt_dtpl3), 200
-            elif _type.upper() == 'COMBO':
+            print(request.args.get('type'))
+            _diccionario = {}
+            if request.args.get('type') == 'ALL_DATA':
+                print(request.args.get('stype'))
+                stype_valid = {'SERV', 'TECN', 'TISE', 'OFER'}
+                valid_stype = {'AD_TARIFFPLAN', 'AD_TARIFFPLANVARIANT', 'AD_TARIFFPLAN_TARIFFPLANVARIANT',
+                               'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL'}
+                _diccionario['popcion'] = request.args.get('type')
+
+                if request.args.get('stype') in stype_valid:
+                    _diccionario['sopcion'] = request.args.get('stype')
+                    data = repository.getData_Planes(_diccionario)
+                    dt_ = frt.formated_TypeALL(request.args.get('stype'), data)
+                    return jsonify(dt_), 200
+
+                if request.args.get('stype') in valid_stype:
+                    _diccionario['sopcion'] = request.args.get('stype')
+                    if '_V1' in request.args:
+                        _diccionario['_V1'] = request.args.get('_V1')
+                        if '_V2' in request.args:
+                            _diccionario['_V2'] = request.args.get('_V2')
+
+                    data = repository.getData_Planes(_diccionario)
+                    dt_ = frt.formated_ADPlan(data, request.args.get('stype'))
+                    return jsonify(dt_), 200
+            elif request.args.get('type') == 'COMBO':
                 _stype = request.args.get('stype')
                 if _stype.upper() == 'PLAN':
                     _V1 = request.args.get('_V1')

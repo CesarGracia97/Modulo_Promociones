@@ -14,7 +14,7 @@ class FrontEndpointController:
     @combp_bp.route('/api/ra/plncomb_endpoint', methods=['GET'])
     def combp_endpoint():
         try:
-            print("\nPLANS - PLANES")
+            print("\nPLANES COMBOS - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("COMBO ENDPOINT ACTIVO\n")
             _type = request.args.get('type')
@@ -107,8 +107,7 @@ class FrontEndpointController:
                 if _stype.upper() == 'OFER':
                     params = {
                         'type': _type,
-                        'stype': _stype,
-                        'ttype': 1
+                        'stype': _stype
                     }
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
@@ -144,8 +143,7 @@ class FrontEndpointController:
                 if _stype.upper() == 'SERV':
                     params = {
                         'type': _type,
-                        'stype': _stype,
-                        'ttype': 1
+                        'stype': _stype
                     }
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
@@ -181,8 +179,7 @@ class FrontEndpointController:
                 if _stype.upper() == 'TECN':
                     params = {
                         'type': _type,
-                        'stype': _stype,
-                        'ttype': 1
+                        'stype': _stype
                     }
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
@@ -218,8 +215,7 @@ class FrontEndpointController:
                 if _stype.upper() == 'TISE':
                     params = {
                         'type': _type,
-                        'stype': _stype,
-                        'ttype': 1
+                        'stype': _stype
                     }
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
@@ -249,38 +245,26 @@ class FrontEndpointController:
             print("\nPLANES - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
             print("PLANES ENDPOINT ACTIVO\n")
-            _type = request.args.get('type')
-            if _type.upper() == 'ALL_DATA':
-                stype = request.args.get('stype')
-                valid_stypes = {'OFER', 'TECN', 'SERV', 'TISE'}
-                valid_ttype = {'1', '3', '4'}
-                if stype == 'PLAN':
-
-                    params = {'type': request.args.get('type'), 'stype': request.args.get('stype')}
-
-                    if request.args.get('ttype') in valid_ttype:
-                        params['ttype'] = request.args.get('ttype')
-
-                    if request.args.get('ttype') == '2':
-                        params['ttype'] = request.args.get('ttype')
+            if request.args.get('type') == 'ALL_DATA':
+                stype_valided = {'AD_TARIFFPLAN', 'AD_TARIFFPLANVARIANT', 'AD_TARIFFPLAN_TARIFFPLANVARIANT',
+                                 'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL'}
+                params = {'type': request.args.get('type')}
+                if request.args.get('stype') in stype_valided:
+                    params['stype'] = request.args.get('stype')
+                    if 'SERVICIO' in request.args:
                         params['_V1'] = request.args.get('_V1')
-                        params['_V2'] = request.args.get('_V2')
-                        params['_V3'] = request.args.get('_V3')
-
+                        if 'TIPO_SERVICIO' in request.args:
+                            params['_V2'] = request.args.get('_V2')
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
-
-                elif stype != 'PLAN' and stype in valid_stypes:
-                    mensaje = f"La peticion esta siendo enviada por un canal incorrecto {request.args.get('stype')}"
+                else:
+                    mensaje = ("planp_enpoint - FrontEndpointController |"
+                               " Segundo Tipo de Pecicion incorrecto")+request.args.get('stype')
+                    print(mensaje)
                     return jsonify({'error': mensaje}), 400
-
-            elif _type.upper() != 'ALL_DATA' and _type.upper() == 'COMBO':
-                mensaje = f"La peticion esta siendo enviada por un canal incorrecto {_type}"
-                return jsonify({'error': mensaje}), 400
-
             else:
                 print("planp_enpoint - FrontEndpointController | Tipo de Peticion no valido")
-                return jsonify({'error': 'Tipo de petición no válido'}), 400
+                return jsonify({'error': 'Tipo de petición no válido: '+request.args.get('type')}), 400
 
         except Exception as e:
             print("--------------------------------------------------------------------")

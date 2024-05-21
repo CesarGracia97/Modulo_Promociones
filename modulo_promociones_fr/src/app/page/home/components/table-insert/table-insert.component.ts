@@ -224,6 +224,8 @@ export class TableInsertComponent implements OnInit {
   getDataPAPrecioRegularTTR(type: string, TFPV: number, index: number): void {
     if(TFPV){
       switch(type){
+        case 'STREAMING':
+        break;
         case 'TELEFONIA':
         break;
         case 'TELEVISION':

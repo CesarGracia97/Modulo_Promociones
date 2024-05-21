@@ -3,103 +3,73 @@ from flask import jsonify
 
 class FormattedPlans:
     @staticmethod
-    def formated_ADOferta(data):
+    def formated_TypeALL(_type: str, data):
         try:
-            json_data = {
-                'OFERTAS': []
-            }
-            for oferta in data['OFERTAS']:
-                json_data['OFERTAS'].append({
-                    'OFERTA_ID': oferta.OFERTA_ID,
-                    'OFERTA': oferta.OFERTA
-                })
+            json_data = {}
+            if _type == "OFER":
+                json_data['OFERTAS'] = []
+                for oferta in data['OFERTAS']:
+                    json_data['OFERTAS'].append({
+                        'OFERTA_ID': oferta.OFERTA_ID,
+                        'OFERTA': oferta.OFERTA
+                    })
+            elif _type == "TISE":
+                json_data['TIPO_SERVICIO'] = []
+                for tipotecnologia in data['TIPO_SERVICIO']:
+                    json_data['TIPO_SERVICIO'].append({
+                        'TIPO_SERVICIO': tipotecnologia.TIPO_SERVICIO
+                    })
+            elif _type == "TECN":
+                json_data['TECNOLOGIAS'] = []
+                for tecnologia in data['TECNOLOGIAS']:
+                    json_data['TECNOLOGIAS'].append({
+                        'TECNOLOGIA': tecnologia.TECNOLOGIA
+                    })
+            elif _type == "SERV":
+                json_data['SERVICIOS'] = []
+                for servicio in data['SERVICIOS']:
+                    json_data['SERVICIOS'].append({
+                        'SERVICIO': servicio.SERVICIO
+                    })
             return json_data
         except Exception as e:
             print("--------------------------------------------------------------------")
-            print("FormattedPlans - formated_ADOferta | Error: ", e)
+            print("FormattedPlans - formated_TypeALL | Error: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': str(e)})
 
     @staticmethod
-    def formated_ADServicio(data):
-        try:
-            json_data = {
-                'SERVICIOS': []
-            }
-            for servicio in data['SERVICIOS']:
-                json_data['SERVICIOS'].append({
-                    'SERVICIO': servicio.SERVICIO
-                })
-            return json_data
-        except Exception as e:
-            print("--------------------------------------------------------------------")
-            print("FormattedPlans - formated_ADServicio | Error: ", e)
-            print("--------------------------------------------------------------------")
-            return jsonify({'Error': str(e)})
-
-    @staticmethod
-    def formated_ADTecnologia(data):
-        try:
-            json_data = {
-                'TECNOLOGIAS': []
-            }
-            for tecnologia in data['TECNOLOGIAS']:
-                json_data['TECNOLOGIAS'].append({
-                    'TECNOLOGIA': tecnologia.TECNOLOGIA
-                })
-            return json_data
-        except Exception as e:
-            print("--------------------------------------------------------------------")
-            print("FormattedPlans - formated_ADTecnologia | Error: ", e)
-            print("--------------------------------------------------------------------")
-            return jsonify({'Error': str(e)})
-
-    @staticmethod
-    def formated_ADTipoServicio(data):
-        try:
-            json_data = {
-                'TIPO_SERVICIO': []
-            }
-            for tipotecnologia in data['TIPO_SERVICIO']:
-                json_data['TIPO_SERVICIO'].append({
-                    'TIPO_SERVICIO': tipotecnologia.TIPO_SERVICIO
-                })
-            return json_data
-        except Exception as e:
-            print("--------------------------------------------------------------------")
-            print("FormattedPlans - formated_ADTipoServicio | Error: ", e)
-            print("--------------------------------------------------------------------")
-            return jsonify({'Error': str(e)})
-
-    @staticmethod
-    def formated_ADPlan(data, opcion):
+    def formated_ADPlan(data, opcion: str):
         try:
             json_data = {
                 'PLANES': []
             }
-            if opcion == 1:
-                for plan in data['PLANES']:
-                    json_data['PLANES'].append({
-                        'TARIFFPLANID': plan.TARIFFPLANID,
-                        'TARIFFPLAN': plan.TARIFFPLAN
-                    })
+            valid_opcion = {'AD_TARIFFPLAN', 'AD_TARIFFPLANVARIANT', 'AD_TARIFFPLAN_TARIFFPLANVARIANT',
+                            'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL'}
+            if opcion in valid_opcion:
+                if opcion == "AD_TARIFFPLAN":
+                    for plan in data['PLANES']:
+                        json_data['PLANES'].append({
+                            'TARIFFPLANID': plan.TARIFFPLANID,
+                            'TARIFFPLAN': plan.TARIFFPLAN
+                        })
+                elif opcion == "AD_TARIFFPLANVARIANT" or opcion == "AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL":
+                    for plan in data['PLANES']:
+                        json_data['PLANES'].append({
+                            'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,
+                            'TARIFFPLANVARIANT': plan.TARIFFPLANVARIANT
+                        })
+                elif opcion == "AD_TARIFFPLAN_TARIFFPLANVARIANT":
+                    for plan in data['PLANES']:
+                        json_data['PLANES'].append({
+                            'TARIFFPLANID': plan.TARIFFPLANID,
+                            'TARIFFPLAN': plan.TARIFFPLAN,
+                            'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,
+                            'TARIFFPLANVARIANT': plan.TARIFFPLANVARIANT
+                        })
                 return json_data
-            elif opcion == 2 or opcion == 4:
-                for plan in data['PLANES']:
-                    json_data['PLANES'].append({
-                        'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,
-                        'TARIFFPLANVARIANT': plan.TARIFFPLANVARIANT
-                    })
-                return json_data
-            elif opcion == 3:
-                for plan in data['PLANES']:
-                    json_data['PLANES'].append({
-                        'TARIFFPLANID': plan.TARIFFPLANID,
-                        'TARIFFPLAN': plan.TARIFFPLAN,
-                        'TARIFFPLANVARIANTID': plan.TARIFFPLANVARIANTID,
-                        'TARIFFPLANVARIANT': plan.TARIFFPLANVARIANT
-                    })
-                return json_data
+            else:
+                print("No existe el parametro para Formato de Planes: "+opcion)
         except Exception as e:
             print("--------------------------------------------------------------------")
             print("FormattedPlans - formated_ADPlan | Error: ", e)
