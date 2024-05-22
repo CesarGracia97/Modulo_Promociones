@@ -51,6 +51,9 @@ tr.mas td {
     cursor: pointer; /* Indica que es un elemento interactivo */
     text-align: center; /* Centra el contenido de '+', en caso de agregar funcionalidad */
     background-color: #f0f0f0; /* Fondo distinto para resaltar la acción */
+    &:hover {
+        background-color: #e4e4e4;
+    }
 }
 
 /* Efectos de hover para mejorar la interacción */
@@ -389,34 +392,8 @@ tr.mas td {
                 height: 200px;
                 .content_streaming, #content_telefonia, #content_television,#content_television{
                     font-size: 7pt;
-
-                    #streaming_items{
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        
-                        #btn_new_table{
-                            display: block;
-                            text-align: center;
-                            cursor: pointer;
-                            padding: 4px;
-                            border: 1px solid #ccc;
-                            height: 30px;
-                            border-radius: 4px;
-                            font-size: 7pt;
-                            box-sizing: border-box;
-                            background-color: #ffffff;
-                            width: 95%;
-                            margin: 5px 10px;
-                            &:hover {
-                                background-color: #eee;
-                            }
-                        }
-
-                        select{
-                            margin: 5px 10px;
-                            width: 95%;
-                        }
+                    strong{
+                        font-size: 9pt;
                     }
 
                     select{
@@ -431,6 +408,35 @@ tr.mas td {
                         border: 0.5px solid #615a5a;
                         border-radius: 4px;
                         font-size: 7pt;
+                    }
+                }
+                
+                #streaming_items{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    
+                    #btn_new_table{
+                        display: block;
+                        text-align: center;
+                        cursor: pointer;
+                        padding: 4px;
+                        border: 1px solid #ccc;
+                        height: 30px;
+                        border-radius: 4px;
+                        font-size: 7pt;
+                        box-sizing: border-box;
+                        background-color: #ffffff;
+                        width: 95%;
+                        margin: 5px 10px;
+                        &:hover {
+                            background-color: #eee;
+                        }
+                    }
+
+                    select{
+                        margin: 5px 10px;
+                        width: 95%;
                     }
                 }
             }

@@ -35,8 +35,9 @@ export class TableInsertComponent implements OnInit {
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
   _V4: string = ''; _V9: string = ''; _V11: string = '';
 
-  @Input() tablesRow: any[] = [];
+  tablesRow: any[][] = [];
   PRAD_V1: string =''; PRAD_V2: string ='';  PRAD_V3: string ='';
+  selectedTable: number = 0; 
 
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
@@ -62,8 +63,6 @@ export class TableInsertComponent implements OnInit {
   modal_dp: boolean = false;
   rowId: number = 0;
 
-
- 
   constructor(
     private comData: CommunicationDataService,
     private fdpl: FdPlacesService,
@@ -87,12 +86,7 @@ export class TableInsertComponent implements OnInit {
       planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
       diasGozadosData: [], upgradeData: []
     };
-    const newTableRow = {
-      id: this.tablesRow.length
-
-    }
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
-    this.tablesRow.push(newTableRow)
     this.planData.push([]);
     this.planVData.push([]);
     this.productosData.push([]); 
@@ -111,8 +105,13 @@ export class TableInsertComponent implements OnInit {
       {name: 'TELEFONIA', selected: false},
       {name: 'TELEVISION', selected: false},
       {name: 'ROUTER', selected: false}
-
     ]);
+    this.tablesRow.push([{
+      id: 0,
+      PRAD_V1: '',
+      PRAD_V2: '',
+      PRAD_V3: ''
+    }]);
   }
 
   getDataPLAN(servicio: string, index: number): void {
@@ -341,5 +340,20 @@ export class TableInsertComponent implements OnInit {
       // Otra opción que no es "NO APLICAR" ha sido seleccionada
       options[0].selected = false;
     }
+  }
+
+  addNewTable(rowId: number): void {
+    const newTable = {
+        id: this.tablesRow[rowId].length,
+        PRAD_V1: '',
+        PRAD_V2: '',
+        PRAD_V3: ''
+    };
+    this.tablesRow[rowId].push(newTable);
+    this.selectedTable = this.tablesRow[rowId].length - 1;
+  }
+
+  changeTable(index: number): void {
+    this.selectedTable = index;
   }
 }
