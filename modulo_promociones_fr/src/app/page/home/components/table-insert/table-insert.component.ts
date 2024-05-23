@@ -20,6 +20,7 @@ import { PrecioRegular } from '../../../../interfaces/DataPromocional/precio-reg
 import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional/fd-upgrade.service';
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
+import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class TableInsertComponent implements OnInit {
 
   tablesRow: any[][] = [];
   PRAD_V1: string =''; PRAD_V2: string ='';  PRAD_V3: string ='';
-  selectedTable: number = 0; 
+  selectedTable: number[] = [];
 
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
@@ -52,11 +53,13 @@ export class TableInsertComponent implements OnInit {
   precioRegularData: PrecioRegular[][] = [];
   upgradeData: Upgrade [][] = [];
   optionsData: Options_PA[][] = [];
+  planVDataPROAD: TariffPlanesVariant[][][] = [];
 
   showMDPDD: boolean[] = []; 
   showBDD: boolean[] = [];
   showPROAD: boolean[] = [];
   visibleBtnPromocionAdicional: boolean[] = [];
+  visibleUpgrade: boolean[] = [];
   closing: boolean = false;
 
   modal_cs: boolean = false;
@@ -66,6 +69,7 @@ export class TableInsertComponent implements OnInit {
   constructor(
     private comData: CommunicationDataService,
     private fdpl: FdPlacesService,
+    private fdpln: FdPlanesService,
     private fdcb: FdCombosService,
     private fdmp: FdModospagosService,
     private fdb: FdBuroService,
@@ -112,6 +116,8 @@ export class TableInsertComponent implements OnInit {
       PRAD_V2: '',
       PRAD_V3: ''
     }]);
+    this.planVDataPROAD.push([])
+    this.selectedTable.push(0); 
   }
 
   getDataPLAN(servicio: string, index: number): void {
@@ -162,7 +168,7 @@ export class TableInsertComponent implements OnInit {
 
   getModoPagosData(index: number): void {
     try {
-      this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago) => {
+      this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago: ModosPago[]) => {
         this.modoPagosData[index] = modosPago;
       });
     } catch (error) {
@@ -172,7 +178,7 @@ export class TableInsertComponent implements OnInit {
   
   getBuroData(index: number): void{
     try {
-      this.fdb.fetchDataBuro_RETURN().subscribe((buro) => {
+      this.fdb.fetchDataBuro_RETURN().subscribe((buro: Buro[]) => {
         this.buroData[index] = buro;
       });
     } catch (error) {
@@ -182,7 +188,7 @@ export class TableInsertComponent implements OnInit {
 
   getDiasGozados(index: number): void {
     try {
-      this.fddg.getDiasGozados_RETURN().subscribe((digd) => {
+      this.fddg.getDiasGozados_RETURN().subscribe((digd: DiasGozados[]) => {
         this.diasGozadosData[index] = digd;
       })
     } catch (error) {
@@ -193,7 +199,7 @@ export class TableInsertComponent implements OnInit {
   getPrecioRegular(id_Producto: number, TPV: number, index: number): void {
     try{
       if (id_Producto && TPV){
-        this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV).subscribe((prec) => {
+        this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV).subscribe((prec: PrecioRegular[]) => {
           this.precioRegularData[index] = prec;
         })
       }
@@ -202,12 +208,14 @@ export class TableInsertComponent implements OnInit {
     }
   }
 
-  getDataUpgrade(tariffplanes: number, TFPV: number, index: number): void {
+  getDataUpgrade(servicio: string, tariffplanes: number, TFPV: number, index: number): void {
     try{
-      if (tariffplanes && TFPV){
-        this.fdup.getUpgrade_RETURN(tariffplanes, TFPV).subscribe((upgr) => {
-          this.upgradeData[index] = upgr
-        })
+      if (servicio && tariffplanes && TFPV) {
+        if (servicio == 'INTERNET'){
+          this.fdup.getUpgrade_RETURN(tariffplanes, TFPV).subscribe((upgr: Upgrade[]) => {
+            this.upgradeData[index] = upgr
+          });
+        }
       }
     } catch (error) {
       console.log("Error detectado: ",error)
@@ -232,7 +240,7 @@ export class TableInsertComponent implements OnInit {
     return trueSelect && trueMP && trueB;
   }
 
-  getDataPAPrecioRegularTTR(type: string, TFPV: number, index: number): void {
+  getDataPAPrecioRegular(type: string, TFPV: number, index: number): void {
     if(TFPV){
       switch(type){
         case 'STREAMING':
@@ -247,11 +255,16 @@ export class TableInsertComponent implements OnInit {
     }
   }
 
-  visibleBotonPromocionAdicional(servicio: string, index: number): void {
+  visibleElements(servicio: string, index: number): void {
     if (servicio && servicio == 'STREAMING') {
       this.visibleBtnPromocionAdicional[index] = true;
     } else {
       this.visibleBtnPromocionAdicional[index] = false;
+    }
+    if (servicio && (servicio == 'TELEVISION' || servicio == 'TELEFONIA' || servicio == 'STREAMING')) {
+      this.visibleUpgrade[index] = true;
+    } else {
+      this.visibleUpgrade[index] = false;
     }
   }
 
@@ -330,7 +343,6 @@ export class TableInsertComponent implements OnInit {
 
   updateSelection(rowId: number, index: number): void {
     const options = this.optionsData[rowId];
-  
     if (index === 0 && options[0].selected) {
       // "NO APLICAR" ha sido seleccionado
       options.forEach((option, idx) => {
@@ -339,6 +351,20 @@ export class TableInsertComponent implements OnInit {
     } else if (index !== 0 && options[index].selected) {
       // Otra opción que no es "NO APLICAR" ha sido seleccionada
       options[0].selected = false;
+    }
+    if (index === 1 && options[1].selected){
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('STREAMING').subscribe((PROAD: TariffPlanesVariant[]) => {
+        this.planVDataPROAD[rowId].forEach((tableData, tableIndex) => {
+          this.planVDataPROAD[rowId][tableIndex] = PROAD;
+        });
+      });
+    } else if (index === 2 && options[2].selected) {
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA').subscribe((PROAD: TariffPlanesVariant[]) => {
+
+      });
+    } else if (index == 3 && options[3].selected) {
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION').subscribe((PROAD: TariffPlanesVariant[]) => {
+      });
     }
   }
 
@@ -350,10 +376,17 @@ export class TableInsertComponent implements OnInit {
         PRAD_V3: ''
     };
     this.tablesRow[rowId].push(newTable);
-    this.selectedTable = this.tablesRow[rowId].length - 1;
+    if (!this.selectedTable[rowId]) {
+      this.selectedTable[rowId] = 0;
+    }
+    this.selectedTable[rowId] = this.tablesRow[rowId].length - 1;
   }
 
-  changeTable(index: number): void {
-    this.selectedTable = index;
+  changeTable(event: Event, rowId: number): void {
+    const target = event.target as HTMLSelectElement;
+    const index = parseInt(target.value, 10);
+    if (!isNaN(index)) {
+      this.selectedTable[rowId] = index; // Actualiza la tabla seleccionada para la fila específica
+    }
   }
 }

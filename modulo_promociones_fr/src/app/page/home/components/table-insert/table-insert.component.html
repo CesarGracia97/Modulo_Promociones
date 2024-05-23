@@ -21,14 +21,15 @@
                 <td>{{ row.id+1 }}</td>
                 <td>
                     <select name="_V1" [(ngModel)]="row._V1" 
-                    (ngModelChange)="getDataPLAN(row._V1, i); visibleBotonPromocionAdicional(row._V1, i); getDiasGozados(i)">
+                    (ngModelChange)="getDataPLAN(row._V1, i); visibleElements(row._V1, i); getDiasGozados(i);
+                    getDataUpgrade(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija el Servicio</option>
                         <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
                     </select>
                 </td>
                 <td>
                     <select name="_V2" [(ngModel)]="row._V2" (ngModelChange)="getDataPLANVARIANT(row._V2, i);
-                     getDataUpgrade(row._V2, row._V3, i)">
+                     getDataUpgrade(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija un Plan</option>
                         <option value="" *ngIf="planData[i].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="planData[i].length === 0 && row._V1">Cargando Datos..</option>
@@ -38,7 +39,7 @@
                 <td>
                     <select name="_V3" [(ngModel)]="row._V3" 
                     (ngModelChange)="getDataPROD(row._V3, i); getCiudadesTariffplanVariant(row._V3, i); 
-                    getPrecioRegular(row._V3, row._V4, i); getDataUpgrade(row._V2, row._V3, i)">
+                    getPrecioRegular(row._V3, row._V4, i); getDataUpgrade(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija un Plan Variant</option>
                         <option value="" *ngIf="planVData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="planVData[i].length === 0 && row._V2">Cargando Datos..</option>
@@ -168,13 +169,14 @@
             <div id="pro_adici">
                 <div id="streaming" *ngIf="optionsData[rowId][1].selected">
                     <div class="content_streaming"  *ngIf="tablesRow[rowId]?.length">
-                        <label><strong>STREAMING #{{  selectedTable + 1  }}</strong></label>
+                        <label><strong>STREAMING #{{ selectedTable[rowId] + 1  }}</strong></label>
                         <table>
                             <tr>
                                 <td><span>PAQUETE</span></td>
                                 <td>
-                                    <select name="PRAD_V1">
+                                    <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_V1">
                                         <option>PAQ. STREAMING</option>
+                                        <option *ngFor="let plan of planVDataPROAD[rowId][selectedTable[rowId]]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
                                 </td>
                             </tr>
@@ -184,21 +186,23 @@
                                     <span>900.00</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_V2"
+                                     placeholder="Ing. Pr. Promocional" type="number" min="1"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MES FINAL</span></td>
                                 <td>
-                                    <input name="PRAD_V3" type="number" min="2"/>
+                                    <input name="PRAD_V3" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_V3"
+                                    type="number" min="2"/>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div id="streaming_items">
                         <button id="btn_new_table" (click)="addNewTable(rowId)">Nueva Tabla</button>
-                        <select class="change_table" (change)="changeTable($event.target.value)">
-                            <option>Cambia de Tabla</option>
+                        <select class="change_table" (change)="changeTable($event, rowId)">
+                            <option>Cambiar de Tabla</option>
                             <option *ngFor="let table of tablesRow[rowId]; let i = index" [value]="i">Tabla {{ i + 1 }}</option>
                         </select>
                     </div>

@@ -8,7 +8,7 @@ import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
 import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../communication/communicationData.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +94,23 @@ export class FdPlanesService {
       }
     });
   }
+    
+  //Retornar directamente
 
+  fetchDataTariffPlanVariantXProductoAdicional(SERVICIO: string): Observable<TariffPlanesVariant[]> {
+    return this.plan.getTariffPlanesVariantXProducto_Adicional(SERVICIO).pipe(
+      map((response: any) => {
+        if (response && response.PLANES){
+          return response.PLANES.map((plan: any ) => {
+            return {
+              TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
+              TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
+            };
+          });
+        } else {
+          return [];
+        }
+      })
+    );
+  }
 }
