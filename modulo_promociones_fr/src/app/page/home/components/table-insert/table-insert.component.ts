@@ -35,9 +35,12 @@ export class TableInsertComponent implements OnInit {
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
   _V4: string = ''; _V9: string = ''; _V11: string = '';
+  PRAD_TF_V1: string = ''; PRAD_TF_V2: string = ''; PRAD_TF_V3: string = ''; PRAD_TF_V4: string = '';
+  PRAD_TV_V1: string = ''; PRAD_TV_V2: string = ''; PRAD_TV_V3: string = ''; PRAD_TV_V4: string = '';
+  PRAD_RT_V1: string = ''; PRAD_RT_V2: string = ''; PRAD_RT_V3: string = ''; PRAD_RT_V4: string = '';
 
   tablesRow: any[][] = [];
-  PRAD_V1: string =''; PRAD_V2: string ='';  PRAD_V3: string ='';
+  PRAD_ST_V1: string =''; PRAD_ST_V2: string ='';  PRAD_ST_V3: string ='';
   selectedTable: number[] = [];
 
   //v. Estructura de datos
@@ -53,7 +56,9 @@ export class TableInsertComponent implements OnInit {
   precioRegularData: PrecioRegular[][] = [];
   upgradeData: Upgrade [][] = [];
   optionsData: Options_PA[][] = [];
-  planVDataPROAD: TariffPlanesVariant[][][] = [];
+  planVDataPROAD_ST: TariffPlanesVariant[][] = [];
+  planVDataPROAD_TF: TariffPlanesVariant[][] = [];
+  planVDataPROAD_TV: TariffPlanesVariant[][] = [];
 
   showMDPDD: boolean[] = []; 
   showBDD: boolean[] = [];
@@ -86,9 +91,16 @@ export class TableInsertComponent implements OnInit {
   addRow(): void {
     const newRow = {
       id: this.rows.length,
-      _V1: '', _V2: '', _V3: '', _V4: '', _V9: '', _V11: '',
+      _V1: '', _V2: '', _V3: '', _V4: '', _V9: '', _V11: '', 
       planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
-      diasGozadosData: [], upgradeData: []
+      diasGozadosData: [], upgradeData: [], selectedTable: [], // Cambiado de array a un solo número
+      tablesRow: [{
+        id: 0,
+        PRAD_V1: '',
+        PRAD_V2: '',
+        PRAD_V3: '',
+        planVDataPROAD_ST: []
+      }]
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.planData.push([]);
@@ -116,7 +128,7 @@ export class TableInsertComponent implements OnInit {
       PRAD_V2: '',
       PRAD_V3: ''
     }]);
-    this.planVDataPROAD.push([])
+    this.planVDataPROAD_ST.push([])
     this.selectedTable.push(0); 
   }
 
@@ -354,9 +366,7 @@ export class TableInsertComponent implements OnInit {
     }
     if (index === 1 && options[1].selected){
       this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('STREAMING').subscribe((PROAD: TariffPlanesVariant[]) => {
-        this.planVDataPROAD[rowId].forEach((tableData, tableIndex) => {
-          this.planVDataPROAD[rowId][tableIndex] = PROAD;
-        });
+        this.planVDataPROAD_ST[rowId] = PROAD;
       });
     } else if (index === 2 && options[2].selected) {
       this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA').subscribe((PROAD: TariffPlanesVariant[]) => {
@@ -371,7 +381,7 @@ export class TableInsertComponent implements OnInit {
   addNewTable(rowId: number): void {
     const newTable = {
         id: this.tablesRow[rowId].length,
-        PRAD_V1: '',
+        PRAD_V1: 0,
         PRAD_V2: '',
         PRAD_V3: ''
     };

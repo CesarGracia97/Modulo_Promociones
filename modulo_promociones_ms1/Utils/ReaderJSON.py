@@ -67,7 +67,7 @@ class ReaderJSON:
                                                              f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
                                                         .replace("_V1", str(_V1))
                                                         .replace("_V2", str(_V2)))
-                                            return (data["Type_Queries"][_popcion][_sopcion][_topcion]
+                                            return (data["Type_Queries"][_popcion][_sopcion]['PLAN']
                                                     .get(_nameQuery,
                                                          f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
                                                     .replace("_V1", str(_V1)))

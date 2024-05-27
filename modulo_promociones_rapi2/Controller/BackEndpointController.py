@@ -29,6 +29,8 @@ class BackEndpointController:
                     params = {'type': request.args.get('type'), 'stype': request.args.get('stype')}
 
                 elif request.args.get('stype') in stype_valid:
+                    params['type'] = request.args.get('type')
+                    params['stype'] = request.args.get('stype')
                     if '_V1' in request.args:
                         params['_V1'] = request.args.get('_V1')
                         if '_V2' in request.args:

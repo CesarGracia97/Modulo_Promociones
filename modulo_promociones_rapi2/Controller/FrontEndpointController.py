@@ -252,7 +252,7 @@ class FrontEndpointController:
                 if request.args.get('stype') in stype_valided:
                     params['stype'] = request.args.get('stype')
                     if 'SERVICIO' in request.args:
-                        params['_V1'] = request.args.get('_V1')
+                        params['_V1'] = request.args.get('SERVICIO')
                         if 'TIPO_SERVICIO' in request.args:
                             params['_V2'] = request.args.get('_V2')
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)

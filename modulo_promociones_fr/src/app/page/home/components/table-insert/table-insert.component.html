@@ -146,7 +146,7 @@
                     </div>
                     <div id="upgrade">
                         <span>UPGRADE</span>
-                        <select name="_V11" [(ngModel)]="rows[rowId]._V11" >
+                        <select name="_V11" [(ngModel)]="rows[rowId]._V11">
                             <option value="">Selecciona un UPGRADE</option>
                             <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID" >{{upgrade.PLAN_UPGRADE}}</option>   
                         </select>
@@ -174,9 +174,9 @@
                             <tr>
                                 <td><span>PAQUETE</span></td>
                                 <td>
-                                    <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_V1">
-                                        <option>PAQ. STREAMING</option>
-                                        <option *ngFor="let plan of planVDataPROAD[rowId][selectedTable[rowId]]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
+                                    <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1">
+                                        <option value="">PAQ. STREAMING</option>
+                                        <option *ngFor="let plan of planVDataPROAD_ST[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
                                 </td>
                             </tr>
@@ -186,15 +186,15 @@
                                     <span>900.00</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_V2"
-                                     placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_ST_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2" 
+                                    placeholder="Ing. Pr. Promocional" type="number" min="1"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MES FINAL</span></td>
                                 <td>
-                                    <input name="PRAD_V3" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_V3"
-                                    type="number" min="2"/>
+                                    <input name="PRAD_ST_V3" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V3"
+                                    type="number" [min]="2" [max]="24"/>
                                 </td>
                             </tr>
                         </table>
@@ -214,8 +214,8 @@
                             <tr>
                                 <td><span>PLANES</span></td>
                                 <td>
-                                    <select name="PRAD_V1">
-                                        <option>PLAN. TELEFONICO</option>
+                                    <select name="PRAD_TF_V1" [(ngModel)]="rows[rowId].PRAD_TF_V1">
+                                        <option value="">PLAN. TELEFONICO</option>
                                     </select>
                                 </td>
                             </tr>
@@ -225,19 +225,21 @@
                                     <span>900.00</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"
+                                    [(ngModel)]="rows[rowId].PRAD_TF_V2"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>CANTIDAD</span></td>
                                 <td>
-                                    <input name="PRAD_V3" type="number" min="1"/>
+                                    <input name="PRAD_TF_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_TF_V3"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MESES</span></td>
                                 <td>
-                                    <input name="PRAD_V4" type="number" min="2"/>
+                                    <input name="PRAD_TF_V4" type="number"  [min]="2" [max]="24" 
+                                    [(ngModel)]="rows[rowId].PRAD_TF_V4"/>
                                 </td>
                             </tr>
                         </table>
@@ -250,8 +252,8 @@
                             <tr>
                                 <td><span>PLANES</span></td>
                                 <td>
-                                    <select name="PRAD_V1">
-                                        <option>PLAN. TELEVISION</option>
+                                    <select name="PRAD_TV_V1" [(ngModel)]="rows[rowId].PRAD_TV_V1">
+                                        <option value="">PLAN. TELEVISION</option>
                                     </select>
                                 </td>
                             </tr>
@@ -261,17 +263,21 @@
                                     <span>900.00</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional"
+                                    [(ngModel)]="rows[rowId].PRAD_TV_V2" type="number" [min]="1"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>CANTIDAD</span></td>
-                                <td><input name="PRAD_V3" type="number" min="1"/></td>
+                                <td>
+                                    <input name="PRAD_TV_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_TV_V3"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td><span>MESES</span></td>
                                 <td>
-                                    <input name="PRAD_V4" type="number" min="2"/>
+                                    <input name="PRAD_TV_V4" type="number" [min]="2" [max]="24" 
+                                    [(ngModel)]="rows[rowId].PRAD_TV_V4"/>
                                 </td>
                             </tr>
                         </table>
@@ -284,8 +290,8 @@
                             <tr>
                                 <td><span>ROUTER</span></td>
                                 <td>
-                                    <select name="PRAD_V1">
-                                        <option>MODELO ROUTER</option>
+                                    <select name="PRAD_RT_V1" [(ngModel)]="rows[rowId].PRAD_RT_V1">
+                                        <option value="">MODELO ROUTER</option>
                                     </select>
                                 </td>
                             </tr>
@@ -295,19 +301,21 @@
                                     <span>900.00</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_V2"placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"
+                                    [(ngModel)]="rows[rowId].PRAD_RT_V2"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>CANTIDAD</span></td>
                                 <td>
-                                    <input name="PRAD_V3" type="number" min="1"/>
+                                    <input name="PRAD_RT_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_RT_V3"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MESES</span></td>
                                 <td>
-                                    <input name="PRAD_V4" type="number" min="2"/>
+                                    <input name="PRAD_RT_V4" type="number" [min]="2" [max]="24" 
+                                    [(ngModel)]="rows[rowId].PRAD_RT_V4"/>
                                 </td>
                             </tr>
                         </table>
