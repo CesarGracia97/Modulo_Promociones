@@ -15,6 +15,7 @@ export class FdUpgradeService {
   getUpgrade_RETURN(Tariffplan: number, TFPV: number): Observable<Upgrade[]> {
     return this.upgr.getUpgrade(Tariffplan, TFPV).pipe(
       map((response: any) => {
+        console.log(response);
         if(response && response.UPGRADE){
           return response.UPGRADE.map((upgrade: any) => {
             return {

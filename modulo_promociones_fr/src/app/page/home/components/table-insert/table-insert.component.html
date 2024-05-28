@@ -144,7 +144,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div id="upgrade">
+                    <div id="upgrade" *ngIf="upgradeData[rowId].length > 0">
                         <span>UPGRADE</span>
                         <select name="_V11" [(ngModel)]="rows[rowId]._V11">
                             <option value="">Selecciona un UPGRADE</option>

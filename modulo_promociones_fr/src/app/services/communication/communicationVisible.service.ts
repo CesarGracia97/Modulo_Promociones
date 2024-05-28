@@ -12,6 +12,7 @@ export class CommunicationVisibleService {
   visbleItemS$ = this.visibleItemSecundario_Subject.asObservable(); //de Botones a Elementos de Contenedor Prima
   private visibleItemTercero_Subject = new Subject<string>();
   visibleItemT$ = this.visibleItemTercero_Subject.asObservable(); // entre Componentes de un mismo Contenedor
+
   
   constructor() { }
   

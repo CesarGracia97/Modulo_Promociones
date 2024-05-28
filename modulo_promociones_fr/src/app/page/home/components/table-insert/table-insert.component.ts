@@ -86,6 +86,7 @@ export class TableInsertComponent implements OnInit {
   ngOnInit(): void {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
+    this.comData.dPlan$.subscribe(data => {this.planData = data})
   }
 
   addRow(): void {
@@ -135,9 +136,10 @@ export class TableInsertComponent implements OnInit {
   getDataPLAN(servicio: string, index: number): void {
     try {
       if(servicio){
-        this.fdcb.getComboPLAN_RETURN(servicio).subscribe((plan: TariffPlanes[]) => {
+        this.fdcb.getComboPLAN(servicio, index);
+        /*this.fdcb.getComboPLAN_RETURN(servicio).subscribe((plan: TariffPlanes[]) => {
           this.planData[index] = plan;
-        })
+        })*/
       }
     } catch (error) {
       console.log("Error detectado: ",error)

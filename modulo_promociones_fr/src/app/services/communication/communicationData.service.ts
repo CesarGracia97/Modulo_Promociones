@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
 import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
-import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
+import { TariffPlanes, TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { Provincias } from '../../interfaces/places/provincias.interface';
 import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
@@ -16,15 +16,16 @@ import { DiasGozados } from '../../interfaces/DataPromocional/dias-gozados.inter
   providedIn: 'root'
 })
 export class CommunicationDataService {
+  private dPLANData: TariffPlanes[][] = [];
 
-  //Variables de Comunicacion de datos entre componentes de Table Query
-  //Variables de Comunicacion de datos Tipo Combo
-  private dTISE_Subject = new Subject<TipoServicios[]>();
-  dTISE$ = this.dTISE_Subject.asObservable();
   private dRED_Subject = new Subject<Tecnologias[]>();
   dRed$ = this.dRED_Subject.asObservable();
-  private dPLAN_Subject = new Subject<TariffPlanesVariant[]>();
+  private dPLANVARIANT_Subject = new Subject<TariffPlanesVariant[]>();
+  dPlanV$ = this.dPLANVARIANT_Subject.asObservable();
+
+  private dPLAN_Subject = new Subject<TariffPlanes[][]>();
   dPlan$ = this.dPLAN_Subject.asObservable();
+
   private dPROV_Subject = new Subject<Provincias[]>();
   dProv$ = this.dPROV_Subject.asObservable();
   private dCITY_Subject = new Subject<C_Ciudades[]>();
@@ -60,16 +61,18 @@ export class CommunicationDataService {
   
   constructor() { }
   
-  sendDataTISE(data: TipoServicios[]){
-    this.dTISE_Subject.next(data);
-  }
 
   sendDataRED(data: Tecnologias[]){
     this.dRED_Subject.next(data);
   }
 
-  sendDataPLAN(data: TariffPlanesVariant[]){
-    this.dPLAN_Subject.next(data);
+  sendDataPLANVARIANT(data: TariffPlanesVariant[]){
+    this.dPLANVARIANT_Subject.next(data);
+  }
+
+  sendDataPLAN(data: TariffPlanes[], index: number){
+    this.dPLANData[index] = data;
+    this.dPLAN_Subject.next(this.dPLANData);;
   }
 
   sendDataPROV(data: Provincias[]){

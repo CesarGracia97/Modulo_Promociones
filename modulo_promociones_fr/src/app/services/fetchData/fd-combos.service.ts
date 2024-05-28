@@ -9,6 +9,7 @@ import { CommunicationDataService } from '../communication/communicationData.ser
 import { CommunicationVisibleService } from '../communication/communicationVisible.service';
 import { map, Observable } from 'rxjs';
 import { Productos } from '../../interfaces/planes/productos.interface';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,32 @@ export class FdCombosService {
 
   c_tise: TipoServicios[] = [];
   c_redt: Tecnologias [] = [];
-  c_plan: TariffPlanesVariant [] = [];
-  c_planv: TariffPlanes[] = [];
+  c_planv: TariffPlanesVariant [] = [];
+  c_plan: TariffPlanes[] = [];
   c_prov: Provincias [] = [];
   c_city: C_Ciudades [] = [];
   c_sect: C_Sectores [] = [];
+  planData: TariffPlanes[] = [];
 
   
   constructor(
-    private combo: CombosService
+    private combo: CombosService,
+    private dataCommunication: CommunicationDataService
   ) { }
+  
+  getComboPLAN(SERVICIO: string, index: number) {
+    this.combo.getCombosPlan(SERVICIO).subscribe((response: any) => {
+      if (response && response.COMBO_PLAN){
+        this.planData = response.COMBO_PLAN.map((plan: any) => {
+          return {
+            TARIFFPLANID: plan.TARIFFPLANID,
+            TARIFFPLAN: plan.TARIFFPLAN
+          };
+        })
+        this.dataCommunication.sendDataPLAN(this.planData, index);
+      }
+    });
+  }
 
   // Retornar informacion Directamente
 
