@@ -15,16 +15,17 @@ export class FdModospagosService {
     private comData: CommunicationDataService
   ) { }
 
-  fetchDataModosPago(){
+  fetchDataModosPago(index: number){
     this.modp.getModosPago().subscribe((response: any) => {
       if(response && response.MPAGOS){
         this.modoPagoData = response.MPAGOS.map((mdpg: any) => {
           return {
             ID: mdpg.ID,
-            NAME: mdpg.NAME
+            NAME: mdpg.NAME,
+            selected: false
           }
         });
-        this.comData.sendDataModosPago(this.modoPagoData);
+        this.comData.sendDataModosPago(this.modoPagoData, index);
       }
     });
   }

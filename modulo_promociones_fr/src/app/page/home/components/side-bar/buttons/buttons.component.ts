@@ -50,9 +50,6 @@ export class ButtonsComponent implements OnInit {
       if(valoresPermitidos.includes(value)){
         this.comVisual.visiblePrincipalComponent('TQ');
         this.comVisual.visibleSecundarioComponent(value)
-        this.fdplan.switchFD(value);
-        if(value == 'CITY' || value == 'SECT')
-          this.fdplace.fetchDataProvincias();
       } else if(value = 'TI'){
         this.fdplan.fetchDataServicio();
         this.comVisual.visiblePrincipalComponent(value);

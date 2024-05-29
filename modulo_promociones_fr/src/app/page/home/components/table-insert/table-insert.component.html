@@ -176,7 +176,7 @@
                                 <td>
                                     <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1">
                                         <option value="">PAQ. STREAMING</option>
-                                        <option *ngFor="let plan of planVDataPROAD_ST[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
+                                        <option *ngFor="let plan of paquetesStreaming[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
                                 </td>
                             </tr>

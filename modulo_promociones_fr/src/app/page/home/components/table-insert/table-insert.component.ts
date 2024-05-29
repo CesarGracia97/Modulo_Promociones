@@ -56,9 +56,9 @@ export class TableInsertComponent implements OnInit {
   precioRegularData: PrecioRegular[][] = [];
   upgradeData: Upgrade [][] = [];
   optionsData: Options_PA[][] = [];
-  planVDataPROAD_ST: TariffPlanesVariant[][] = [];
-  planVDataPROAD_TF: TariffPlanesVariant[][] = [];
-  planVDataPROAD_TV: TariffPlanesVariant[][] = [];
+  paquetesStreaming: TariffPlanesVariant[][] = [];
+  planesTelevisivos: TariffPlanesVariant[][] = [];
+  planesTelefonicos: TariffPlanesVariant[][] = [];
 
   showMDPDD: boolean[] = []; 
   showBDD: boolean[] = [];
@@ -86,7 +86,19 @@ export class TableInsertComponent implements OnInit {
   ngOnInit(): void {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
-    this.comData.dPlan$.subscribe(data => {this.planData = data})
+    this.comData.dPlan$.subscribe(data => {this.planData = data});
+    this.comData.dPlanV$.subscribe(data => {this.planVData = data});
+    this.comData.dProductos$.subscribe(data => {this.productosData = data});
+    this.comData.dModoPago$.subscribe(data => {this.modoPagosData = data});
+    this.comData.dBuro$.subscribe(data => {this.buroData = data});
+    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data});
+    this.comData.dSectores$.subscribe(data => {this.sectoresData = data});
+    this.comData.dPrecioRegular$.subscribe(data => {this.precioRegularData = data});
+    this.comData.dDiasGozados$.subscribe(data => {this.diasGozadosData = data});
+    this.comData.dUpgrade$.subscribe(data => {this.upgradeData = data});
+    this.comData.dPaquetesStreaming$.subscribe(data => {this.paquetesStreaming = data});
+    this.comData.dPlanesTelevisivos$.subscribe(data => {this.planesTelevisivos = data});
+    this.comData.dPlanesTelefonicos$.subscribe(data => {this.planesTelefonicos = data});
   }
 
   addRow(): void {
@@ -129,18 +141,14 @@ export class TableInsertComponent implements OnInit {
       PRAD_V2: '',
       PRAD_V3: ''
     }]);
-    this.planVDataPROAD_ST.push([])
+    this.paquetesStreaming.push([])
     this.selectedTable.push(0); 
   }
 
   getDataPLAN(servicio: string, index: number): void {
     try {
-      if(servicio){
+      if(servicio) 
         this.fdcb.getComboPLAN(servicio, index);
-        /*this.fdcb.getComboPLAN_RETURN(servicio).subscribe((plan: TariffPlanes[]) => {
-          this.planData[index] = plan;
-        })*/
-      }
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -148,11 +156,8 @@ export class TableInsertComponent implements OnInit {
 
   getDataPLANVARIANT(id_Plan: number, index: number): void {
     try {
-      if(id_Plan){
-        this.fdcb.getComboPLANVARIANT_RETURN(id_Plan).subscribe((planv: TariffPlanesVariant[]) => {
-          this.planVData[index] = planv;
-        });
-      }
+      if(id_Plan) 
+        this.fdcb.getComboPLANVARIANT(id_Plan, index);
     } catch (error) {
       console.log("Error Detectado: ",error)
     }
@@ -160,11 +165,8 @@ export class TableInsertComponent implements OnInit {
 
   getDataPROD(TPV: number, index: number): void {
     try {
-      if(TPV){
-        this.fdcb.getComboPROD_RETURN(TPV).subscribe((prod: Productos[]) => {
-          this.productosData[index] = prod;
-        });
-      }
+      if(TPV) 
+        this.fdcb.getComboPROD(TPV, index);
     } catch(error){
       console.log("Error Detectado: ",error)
     }
@@ -172,9 +174,8 @@ export class TableInsertComponent implements OnInit {
 
   getCiudadesTariffplanVariant(TPV: number, index: number): void {
     try {
-      this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV).subscribe((city: Ciudades[]) => {
-        this.ciudadData[index] = city;
-      });
+      if(TPV)
+      this.fdpl.fetchDataCiudadesALLXTariffplanVariant(TPV, index)
     } catch(error){
       console.log("Error Detectado: ",error)
     }
@@ -182,9 +183,7 @@ export class TableInsertComponent implements OnInit {
 
   getModoPagosData(index: number): void {
     try {
-      this.fdmp.fetchDataModosPago_RETURN().subscribe((modosPago: ModosPago[]) => {
-        this.modoPagosData[index] = modosPago;
-      });
+      this.fdmp.fetchDataModosPago(index)
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -192,9 +191,7 @@ export class TableInsertComponent implements OnInit {
   
   getBuroData(index: number): void{
     try {
-      this.fdb.fetchDataBuro_RETURN().subscribe((buro: Buro[]) => {
-        this.buroData[index] = buro;
-      });
+      this.fdb.fetchDataBuro(index)
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -202,9 +199,7 @@ export class TableInsertComponent implements OnInit {
 
   getDiasGozados(index: number): void {
     try {
-      this.fddg.getDiasGozados_RETURN().subscribe((digd: DiasGozados[]) => {
-        this.diasGozadosData[index] = digd;
-      })
+      this.fddg.getDiasGozados(index)
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -212,11 +207,8 @@ export class TableInsertComponent implements OnInit {
 
   getPrecioRegular(id_Producto: number, TPV: number, index: number): void {
     try{
-      if (id_Producto && TPV){
-        this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV).subscribe((prec: PrecioRegular[]) => {
-          this.precioRegularData[index] = prec;
-        })
-      }
+      if (id_Producto && TPV)
+        this.fdpr.getPrecioRegular(id_Producto, TPV, index)
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -224,13 +216,9 @@ export class TableInsertComponent implements OnInit {
 
   getDataUpgrade(servicio: string, tariffplanes: number, TFPV: number, index: number): void {
     try{
-      if (servicio && tariffplanes && TFPV) {
-        if (servicio == 'INTERNET'){
-          this.fdup.getUpgrade_RETURN(tariffplanes, TFPV).subscribe((upgr: Upgrade[]) => {
-            this.upgradeData[index] = upgr
-          });
-        }
-      }
+      if (servicio && tariffplanes && TFPV)
+        if (servicio == 'INTERNET')
+          this.fdup.getUpgrade(tariffplanes, TFPV, index)
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -241,10 +229,7 @@ export class TableInsertComponent implements OnInit {
     const indexRow = this.rows[index];
     const _V3 = indexRow._V3;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
-    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant_RETURN(ciudades, _V3)
-    .subscribe((sectores) => {
-      this.sectoresData[index] = sectores;
-    });
+    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant(ciudades, _V3, index)
   }
 
   button_V1_V6(row: any, index: number): boolean {
@@ -367,16 +352,11 @@ export class TableInsertComponent implements OnInit {
       options[0].selected = false;
     }
     if (index === 1 && options[1].selected){
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('STREAMING').subscribe((PROAD: TariffPlanesVariant[]) => {
-        this.planVDataPROAD_ST[rowId] = PROAD;
-      });
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', rowId);
     } else if (index === 2 && options[2].selected) {
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA').subscribe((PROAD: TariffPlanesVariant[]) => {
-
-      });
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA', rowId);
     } else if (index == 3 && options[3].selected) {
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION').subscribe((PROAD: TariffPlanesVariant[]) => {
-      });
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION', rowId)
     }
   }
 

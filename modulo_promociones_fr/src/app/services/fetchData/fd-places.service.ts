@@ -7,6 +7,7 @@ import { CommunicationDataService } from '../communication/communicationData.ser
 import { SectorService } from '../requests/places/sector.service';
 import { Sectores } from '../../interfaces/places/sector.interface';
 import { map, Observable } from 'rxjs';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,9 @@ import { map, Observable } from 'rxjs';
 
 export class FdPlacesService {
 
-  provinciaData: Provincias[] = [];
-  ciudadData: Ciudades[] = [];
-  sectorData: Sectores[] = [];
+  private provinciaData: Provincias[] = [];
+  private ciudadData: Ciudades[] = [];
+  private sectorData: Sectores[] = [];
 
   constructor(
     private prov: ProvinciasService,
@@ -27,7 +28,7 @@ export class FdPlacesService {
 
   //Retorno por Subscripciones
 
-  fetchDataProvincias(){
+  fetchDataProvincias(index: number){
     this.prov.getProvincias().subscribe((response: any) =>{
       if (response && response.PROVINCIES){
         this.provinciaData = response.PROVINCIES.map((provincia: any) => {
@@ -36,27 +37,12 @@ export class FdPlacesService {
             PROVINCIA: provincia.PROVINCIA
           };
         });
-        this.comData.sendDataProvincias(this.provinciaData);
+        this.comData.sendDataProvincias(this.provinciaData, index);
       }
     });
   }
 
-  fetchDataProvinciasXTecnologiaXTariffplanVariant(tariffplanvariant: number){
-    this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).subscribe((response: any) =>{
-      if (response && response.PROVINCIES){
-        this.provinciaData = response.PROVINCIES.map((provincia: any) => {
-          return {
-            PROVINCIA_ID: provincia.PROVINCIA_ID,
-            PROVINCIA: provincia.PROVINCIA,
-            selected: false
-          };
-        });
-        this.comData.sendDataProvincias(this.provinciaData);
-      }
-    });
-  }
-
-  fetchDataCiudad(id_Prov: number){
+  fetchDataCiudad(id_Prov: number, index: number){
     this.city.getCiudadesESP(id_Prov).subscribe((response: any) => {
       if(response && response.CITIESxPROV){
         this.ciudadData = response.CITIESxPROV.map((city: any) =>{
@@ -66,91 +52,87 @@ export class FdPlacesService {
             PROVINCIA: city.PROVINCIA
           };
         });
-        this.comData.sendDataCiudades(this.ciudadData);
+        this.comData.sendDataCiudades(this.ciudadData, index);
       }
     });
   }
-  
-  //Retornar directamente
 
-  fetchDataProvinciasXTariffplanVariant_RETURN(tariffplanvariant: number): Observable<Provincias[]> {
-    return this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).pipe(
-      map((response: any) => {
-        if (response && response.PROVINCIES){
-          return response.PROVINCIES.map((provincia: any) => {
-            return {
-              PROVINCIA_ID: provincia.PROVINCIA_ID,
-              PROVINCIA: provincia.PROVINCIA
-            };
-          });
-        } else {
-          return [];
-        }
-      })
-    );
-  }
-
-  fetchDataCiudadesALLXTariffplanVariant_RETURN(tariffplanvariant: number):  Observable<Ciudades[]> {
-    return this.city.getCiudadesALLXTariffplanVariant(tariffplanvariant)
-    .pipe(map((response: any) => {
-      if (response && response.CITIESxPROV){
-        return response.CITIESxPROV.map((city: any) => {
+  fetchDataProvinciasXTariffplanVariant(tariffplanvariant: number, index: number){
+    this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).subscribe((response: any) =>{
+      if (response && response.PROVINCIES){
+        this.provinciaData = response.PROVINCIES.map((provincia: any) => {
           return {
-            CIUDAD_ID: city.CIUDAD_ID,
-            CIUDAD: city.CIUDAD,
-            PROVINCIA: city.PROVINCIA,
-            selected: false
-          }
-        })
-      }
-    }));
-  }
-
-  fetchDataCiudadXTariffplanVariant_RETURN(id_Prov: number, tariffplanvariant: number): Observable<Ciudades[]> {
-    return this.city.getCiudadesXTariffplanVariant(id_Prov, tariffplanvariant)
-    .pipe(map((response: any) => {
-      if (response && response.CITIESxPROV){
-        return response.CITIESxPROV.map((city: any) => {
-          return {
-            CIUDAD_ID: city.CIUDAD_ID,
-            CIUDAD: city.CIUDAD,
-            PROVINCIA: city.PROVINCIA,
-            selected: false
-          }
-        })
-      }
-    }));
-  }
-
-  fetchDataCiudadesMasivasXTariffplanVariant(id_Provs: number[], tariffplanvariant: number): Observable <Provincias[]> {
-    return this.city.getCiudadesMasivasXTariffplanVariant(id_Provs, tariffplanvariant)
-    .pipe(map((response: any) => {
-      if(response && response.CITIESxPROV) {
-        return response.CITIESxPROV.map((city: any) => {
-          return {
-            CIUDAD_ID: city.CIUDAD_ID,
-            CIUDAD: city.CIUDAD,
-            PROVINCIA: city.PROVINCIA,
+            PROVINCIA_ID: provincia.PROVINCIA_ID,
+            PROVINCIA: provincia.PROVINCIA,
             selected: false
           };
-        })
+        });
+        this.comData.sendDataProvincias(this.provinciaData, index);
       }
-    }));
+    });
   }
 
-  fetchDataSectoresMasivosXTariffplanVariant_RETURN(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]> {
-    return this.sect.getSectoresMasivosXTariffplanVariant(id_Cities, tariffplanvariant)
-    .pipe(map((response: any) => {
+  fetchDataCiudadesALLXTariffplanVariant(tariffplanvariant: number, index: number){
+    this.city.getCiudadesALLXTariffplanVariant(tariffplanvariant).subscribe((response: any) => {
+      if (response && response.CITIESxPROV) {
+        this.ciudadData = response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          }
+        });
+        this.comData.sendDataCiudades(this.ciudadData, index);
+      }
+    });
+  }
+
+  fetchDataCiudadXTariffplanVariant(id_Prov: number, tariffplanvariant: number, index: number){
+    this.city.getCiudadesXTariffplanVariant(id_Prov, tariffplanvariant).subscribe((response: any) => {
+      if (response && response.CITIESxPROV) {
+        this.ciudadData = response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          }
+        });
+        this.comData.sendDataCiudades(this.ciudadData, index);
+      }
+    });
+  }
+
+  fetchDataCiudadesMasivasXTariffplanVariant(id_Provs: number[], tariffplanvariant: number, index: number){
+    this.city.getCiudadesMasivasXTariffplanVariant(id_Provs, tariffplanvariant).subscribe((response: any) => {
+      if (response && response.CITIESxPROV) {
+        this.ciudadData = response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          }
+        });
+        this.comData.sendDataCiudades(this.ciudadData, index);
+      }
+    })
+  }
+
+  fetchDataSectoresMasivosXTariffplanVariant(id_Cities: number[], tariffplanvariant: number, index: number){
+    this.sect.getSectoresMasivosXTariffplanVariant(id_Cities, tariffplanvariant).subscribe((response: any) => {
       if(response && response.SECTORSxCITY){
-        return response.SECTORSxCITY.map((sect: any) => {
+        this.sectorData = response.SECTORSxCITY.map((sect: any) => {
           return {
             SECTOR_ID: sect.SECTOR_ID,
             SECTOR: sect.SECTOR,
             CIUDAD: sect.CIUDAD,
             selected: false
           };
-        })
+        });
+        this.comData.sendDataSectores(this.sectorData, index);
       }
-    }));
+    })
   }
 }
