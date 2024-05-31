@@ -3,6 +3,7 @@ import { TariffPlanes, TariffPlanesVariant } from '../../interfaces/planes/tarif
 import { CombosService } from '../requests/planes/combos.service';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { Productos } from '../../interfaces/planes/productos.interface';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +60,54 @@ export class FdCombosService {
         this.dataCommunication.sendDataPRODUCTO(this.c_prod, index)
       }
     })
+  }
+
+  //RETORNO DIRECTO
+  
+  getComboPLAN_RETURN(SERVICIO: string): Observable<TariffPlanes[]>{
+    return this.combo.getCombosPlan(SERVICIO).pipe(
+      map((response: any) => {
+        if (response && response.COMBO_PLAN){
+          return response.COMBO_PLAN.map((plan: any) => {
+            return {
+              TARIFFPLANID: plan.TARIFFPLANID,
+              TARIFFPLAN: plan.TARIFFPLAN
+            };
+          });
+        }
+      })
+    );
+  }
+
+  getComboPLANVARIANT_RETURN(Id_Plan: number): Observable<TariffPlanesVariant []>{
+    return this.combo.getCombosPlanVariant(Id_Plan).pipe(
+      map((response: any) => {
+        if (response && response.COMBO_PLANVARIANT){
+          return response.COMBO_PLANVARIANT.map((plan: any) => {
+            return {
+              TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
+              TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
+            };
+          });
+        }
+      })
+    );
+  }
+
+  getComboPROD_RETURN(Id_TPV: number): Observable<Productos[]>{
+    return this.combo.getCombosProductos(Id_TPV).pipe(
+      map((response: any) => {
+        if(response && response.COMBO_PRODUCTO){
+          return response.COMBO_PRODUCTO.map((pro: any) => {
+            return {
+              PRODUCTID: pro.PRODUCTID,
+              PRODUCTO: pro.PRODUCTO
+            }
+          }); 
+        } else {
+          return [];
+        }
+      })
+    );
   }
 }

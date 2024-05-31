@@ -30,6 +30,8 @@ export class FdModospagosService {
     });
   }
 
+  //RETORNO DIRECTO
+
   fetchDataModosPago_RETURN(): Observable<ModosPago[]> {
     return this.modp.getModosPago().pipe(
       map((response: any) =>{
@@ -44,5 +46,5 @@ export class FdModospagosService {
         }
       })
     );
-  }
+  }  
 }

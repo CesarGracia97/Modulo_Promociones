@@ -4,6 +4,7 @@ import { TariffplanesService } from '../requests/planes/tariffplanes.service';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../communication/communicationData.service';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,24 @@ export class FdPlanesService {
         }
       }
     })
+  }
+
+  //RETORNO DIRECTO
+
+  fetchDataTariffPlanVariantXProductoAdicional_RETURN(SERVICIO: string): Observable<TariffPlanesVariant[]> {
+    return this.plan.getTariffPlanesVariantXProducto_Adicional(SERVICIO).pipe(
+      map((response: any) => {
+        if (response && response.PLANES){
+          return response.PLANES.map((plan: any ) => {
+            return {
+              TARIFFPLANVARIANTID: plan.TARIFFPLANVARIANTID,
+              TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
+            };
+          });
+        } else {
+          return [];
+        }
+      })
+    );
   }
 }

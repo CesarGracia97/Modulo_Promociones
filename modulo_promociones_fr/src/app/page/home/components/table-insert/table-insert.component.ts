@@ -31,7 +31,7 @@ import { FdPlanesService } from '../../../../services/fetchData/fd-planes.servic
   styleUrl: './table-insert.component.scss'
 })
 export class TableInsertComponent implements OnInit {  
-  @Input() rows: any[] = [];
+  @Input() rows: any[] = []; rowId: number = 0;
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
   _V4: string = ''; _V9: string = ''; _V11: string = '';
@@ -41,35 +41,26 @@ export class TableInsertComponent implements OnInit {
 
   tablesRow: any[][] = [];
   PRAD_ST_V1: string =''; PRAD_ST_V2: string ='';  PRAD_ST_V3: string ='';
-  selectedTable: number[] = [];
+  selectedTable: number[] = []; tableId = 0;
 
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
   productosData: Productos[][] = [];
-  planData: TariffPlanes[][] = [];
-  planVData: TariffPlanesVariant[][] = [];
-  ciudadData: Ciudades[][] = [];
-  sectoresData: Sectores[][] = [];
-  buroData: Buro[][] = [];
-  modoPagosData: ModosPago[][] = [];
-  diasGozadosData: DiasGozados[][] = [];
+  planData: TariffPlanes[][] = []; planVData: TariffPlanesVariant[][] = [];
+  ciudadData: Ciudades[][] = []; sectoresData: Sectores[][] = [];
+  buroData: Buro[][] = []; modoPagosData: ModosPago[][] = []; diasGozadosData: DiasGozados[][] = [];
   precioRegularData: PrecioRegular[][] = [];
   upgradeData: Upgrade [][] = [];
   optionsData: Options_PA[][] = [];
-  paquetesStreaming: TariffPlanesVariant[][] = [];
-  planesTelevisivos: TariffPlanesVariant[][] = [];
+  paquetesStreaming: TariffPlanesVariant[][] = []; planesTelevisivos: TariffPlanesVariant[][] = []; 
   planesTelefonicos: TariffPlanesVariant[][] = [];
+  precioRegularStreamingData: PrecioRegular[][][] = []; precioRegularTelefoniaData: PrecioRegular[][] = [];
+  precioRegularTelevisioData: PrecioRegular[][] = [];
 
-  showMDPDD: boolean[] = []; 
-  showBDD: boolean[] = [];
-  showPROAD: boolean[] = [];
-  visibleBtnPromocionAdicional: boolean[] = [];
-  visibleUpgrade: boolean[] = [];
-  closing: boolean = false;
+  showMDPDD: boolean[] = []; showBDD: boolean[] = []; showPROAD: boolean[] = [];
+  visibleUpgrade: boolean[] = []; visibleBtnPromocionAdicional: boolean[] = []; 
 
-  modal_cs: boolean = false;
-  modal_dp: boolean = false;
-  rowId: number = 0;
+  closing: boolean = false; modal_cs: boolean = false; modal_dp: boolean = false;
 
   constructor(
     private comData: CommunicationDataService,
@@ -86,19 +77,6 @@ export class TableInsertComponent implements OnInit {
   ngOnInit(): void {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
-    this.comData.dPlan$.subscribe(data => {this.planData = data});
-    this.comData.dPlanV$.subscribe(data => {this.planVData = data});
-    this.comData.dProductos$.subscribe(data => {this.productosData = data});
-    this.comData.dModoPago$.subscribe(data => {this.modoPagosData = data});
-    this.comData.dBuro$.subscribe(data => {this.buroData = data});
-    this.comData.dCiudades$.subscribe(data => {this.ciudadData = data});
-    this.comData.dSectores$.subscribe(data => {this.sectoresData = data});
-    this.comData.dPrecioRegular$.subscribe(data => {this.precioRegularData = data});
-    this.comData.dDiasGozados$.subscribe(data => {this.diasGozadosData = data});
-    this.comData.dUpgrade$.subscribe(data => {this.upgradeData = data});
-    this.comData.dPaquetesStreaming$.subscribe(data => {this.paquetesStreaming = data});
-    this.comData.dPlanesTelevisivos$.subscribe(data => {this.planesTelevisivos = data});
-    this.comData.dPlanesTelefonicos$.subscribe(data => {this.planesTelefonicos = data});
   }
 
   addRow(): void {
@@ -120,8 +98,7 @@ export class TableInsertComponent implements OnInit {
     this.planVData.push([]);
     this.productosData.push([]); 
     this.upgradeData.push([]);
-    this.getModoPagosData(this.rows.length - 1);
-    this.getBuroData(this.rows.length - 1)
+    this.getModoPagosData_BuroData_DiasGozadosData(this.rows.length - 1);
     this.ciudadData.push([]);
     this.sectoresData.push([]);
     this.upgradeData.push([]);
@@ -141,14 +118,26 @@ export class TableInsertComponent implements OnInit {
       PRAD_V2: '',
       PRAD_V3: ''
     }]);
-    this.paquetesStreaming.push([])
+    this.paquetesStreaming.push([]);
+    this.planesTelefonicos.push([]);
+    this.planesTelevisivos.push([]);
     this.selectedTable.push(0); 
   }
 
-  getDataPLAN(servicio: string, index: number): void {
+  getDataPLAN(SERVICIO: string, index: number): void {
     try {
-      if(servicio) 
-        this.fdcb.getComboPLAN(servicio, index);
+      if(SERVICIO){
+        this.fdcb.getComboPLAN_RETURN(SERVICIO)
+        .subscribe((plan: TariffPlanes[]) => { this.planData[index] = plan; })
+        if (SERVICIO == 'STREAMING')
+          this.visibleBtnPromocionAdicional[index] = true;
+        else
+          this.visibleBtnPromocionAdicional[index] = false;
+        if (SERVICIO == 'TELEVISION' || SERVICIO == 'TELEFONIA' || SERVICIO == 'STREAMING')
+          this.visibleUpgrade[index] = true;
+        else
+          this.visibleUpgrade[index] = false;
+      }
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -156,69 +145,88 @@ export class TableInsertComponent implements OnInit {
 
   getDataPLANVARIANT(id_Plan: number, index: number): void {
     try {
-      if(id_Plan) 
-        this.fdcb.getComboPLANVARIANT(id_Plan, index);
+      if(id_Plan){
+        this.fdcb.getComboPLANVARIANT_RETURN(id_Plan)
+        .subscribe((planv: TariffPlanesVariant[]) => { this.planVData[index] = planv; });
+      }
     } catch (error) {
       console.log("Error Detectado: ",error)
     }
   }
 
-  getDataPROD(TPV: number, index: number): void {
+  getDataPROD_CiudadesTariffplanVariant(TPV: number, index: number): void {
     try {
-      if(TPV) 
-        this.fdcb.getComboPROD(TPV, index);
+      if(TPV){
+        this.fdcb.getComboPROD_RETURN(TPV)
+        .subscribe((prod: Productos[]) => { this.productosData[index] = prod; });
+        this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV)
+        .subscribe((city: Ciudades[]) => { this.ciudadData[index] = city; });
+      }
     } catch(error){
       console.log("Error Detectado: ",error)
     }
   }
 
-  getCiudadesTariffplanVariant(TPV: number, index: number): void {
+  getModoPagosData_BuroData_DiasGozadosData(index: number): void {
     try {
-      if(TPV)
-      this.fdpl.fetchDataCiudadesALLXTariffplanVariant(TPV, index)
-    } catch(error){
-      console.log("Error Detectado: ",error)
-    }
-  }
-
-  getModoPagosData(index: number): void {
-    try {
-      this.fdmp.fetchDataModosPago(index)
-    } catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
-  
-  getBuroData(index: number): void{
-    try {
-      this.fdb.fetchDataBuro(index)
+      this.fdmp.fetchDataModosPago_RETURN()
+      .subscribe((modosPago: ModosPago[]) => { this.modoPagosData[index] = modosPago; });
+      this.fdb.fetchDataBuro_RETURN()
+      .subscribe((buro: Buro[]) => { this.buroData[index] = buro; });
+      this.fddg.fetchDiasGozados_RETURN()
+      .subscribe((digd: DiasGozados[]) => { this.diasGozadosData[index] = digd; });
     } catch (error) {
       console.log("Error detectado: ",error)
     }
   }
 
-  getDiasGozados(index: number): void {
-    try {
-      this.fddg.getDiasGozados(index)
-    } catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
-
-  getPrecioRegular(id_Producto: number, TPV: number, index: number): void {
+  getPrecioRegular(id_Producto: number, TPV: number, table: number, index: number, type: string): void {
     try{
-      if (id_Producto && TPV)
-        this.fdpr.getPrecioRegular(id_Producto, TPV, index)
+      if (id_Producto && TPV){
+        if(type == 'NORMAL'){
+          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          .subscribe((prec: any) => { this.precioRegularData[index] = prec; });
+        }
+        if(type == 'PA_STREAMING'){
+          console.log("Valor de TPV: "+TPV);
+          console.log("# de la Tabla: "+table)
+          if (!this.precioRegularStreamingData[index]) {
+            this.precioRegularStreamingData[index] = [];
+          }
+          if (!this.precioRegularStreamingData[index][table]) {
+            this.precioRegularStreamingData[index][table] = [];
+          }
+          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+            .subscribe((prec: PrecioRegular[]) => { this.precioRegularStreamingData[index][table] = prec; 
+              console.log('Contenido de precioRegularStreamingData:', this.precioRegularStreamingData);
+            });
+          this.tableId = table;
+        }
+        if(type == 'PA_TELEFONIA'){
+          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          .subscribe((prec: any) => { this.precioRegularTelefoniaData[index] = prec; });
+        }
+        if(type == 'PA_TELEVISION'){
+          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          .subscribe((prec: any) => { this.precioRegularTelevisioData[index] = prec; });
+        }
+        if(type == 'PA_ROUTER'){
+
+        }
+      }
     } catch (error) {
       console.log("Error detectado: ",error)
     }
   }
 
-  getDataUpgrade(servicio: string, tariffplanes: number, TFPV: number, index: number): void {
+  getDataUpgrade(SERVICIO: string, id_Plan: number, TPV: number, index: number): void {
     try{
-      if (servicio && tariffplanes && TFPV)
-        if (servicio == 'INTERNET')
-          this.fdup.getUpgrade(tariffplanes, TFPV, index)
+      if (SERVICIO && id_Plan && TPV) {
+        if (SERVICIO == 'INTERNET'){
+          this.fdup.getUpgrade_RETURN(id_Plan, TPV)
+          .subscribe((upgr: Upgrade[]) => { this.upgradeData[index] = upgr });
+        }
+      }
     } catch (error) {
       console.log("Error detectado: ",error)
     }
@@ -229,7 +237,8 @@ export class TableInsertComponent implements OnInit {
     const indexRow = this.rows[index];
     const _V3 = indexRow._V3;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
-    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant(ciudades, _V3, index)
+    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant_RETURN(ciudades, _V3)
+    .subscribe((sectores) => { this.sectoresData[index] = sectores; });
   }
 
   button_V1_V6(row: any, index: number): boolean {
@@ -239,46 +248,14 @@ export class TableInsertComponent implements OnInit {
     return trueSelect && trueMP && trueB;
   }
 
-  getDataPAPrecioRegular(type: string, TFPV: number, index: number): void {
-    if(TFPV){
-      switch(type){
-        case 'STREAMING':
-        break;
-        case 'TELEFONIA':
-        break;
-        case 'TELEVISION':
-        break;
-        case 'ROUTER':
-        break;
-      }
-    }
-  }
-
-  visibleElements(servicio: string, index: number): void {
-    if (servicio && servicio == 'STREAMING') {
-      this.visibleBtnPromocionAdicional[index] = true;
-    } else {
-      this.visibleBtnPromocionAdicional[index] = false;
-    }
-    if (servicio && (servicio == 'TELEVISION' || servicio == 'TELEFONIA' || servicio == 'STREAMING')) {
-      this.visibleUpgrade[index] = true;
-    } else {
-      this.visibleUpgrade[index] = false;
-    }
-  }
-
   button_search_sect(index: number): boolean {
-    const trueCiudadList = this.ciudadData[index].some(ciudad => ciudad.selected);
-    return trueCiudadList;
+    return this.ciudadData[index].some(ciudad => ciudad.selected);
   }
 
   button_V1_V8(row: any, index: number): boolean {
-    const trueSelect = row._V1 && row._V2 && row._V3 && row._V4;
-    const trueMP = this.modoPagosData[index] && this.modoPagosData[index].some(mdpg => mdpg.selected);
-    const trueB = this.buroData[index] && this.buroData[index].some(buro => buro.selected);
     const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);
     const trueS = this.sectoresData[index] && this.sectoresData[index].some(sectores => sectores.selected);
-    return trueSelect && trueMP && trueB && trueC && trueS;
+    return this.button_V1_V6(row, index) && trueC && trueS;
   }
 
   toggDD(index: number, type: string) {
@@ -342,21 +319,22 @@ export class TableInsertComponent implements OnInit {
 
   updateSelection(rowId: number, index: number): void {
     const options = this.optionsData[rowId];
-    if (index === 0 && options[0].selected) {
-      // "NO APLICAR" ha sido seleccionado
+    if (index === 0 && options[0].selected) { // "NO APLICAR" ha sido seleccionado
       options.forEach((option, idx) => {
         if (idx !== 0) option.selected = false;
       });
-    } else if (index !== 0 && options[index].selected) {
-      // Otra opción que no es "NO APLICAR" ha sido seleccionada
+    } else if (index !== 0 && options[index].selected) { // Otra opción que no es "NO APLICAR" ha sido seleccionada
       options[0].selected = false;
     }
     if (index === 1 && options[1].selected){
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', rowId);
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('STREAMING')
+      .subscribe((PROAD: TariffPlanesVariant[]) => { this.paquetesStreaming[rowId] = PROAD; });
     } else if (index === 2 && options[2].selected) {
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA', rowId);
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEFONIA')
+      .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelefonicos[rowId] = PROAD; });
     } else if (index == 3 && options[3].selected) {
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION', rowId)
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEVISION')
+      .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelevisivos[rowId] = PROAD; });
     }
   }
 
@@ -368,17 +346,15 @@ export class TableInsertComponent implements OnInit {
         PRAD_V3: ''
     };
     this.tablesRow[rowId].push(newTable);
-    if (!this.selectedTable[rowId]) {
+    if (!this.selectedTable[rowId])
       this.selectedTable[rowId] = 0;
-    }
     this.selectedTable[rowId] = this.tablesRow[rowId].length - 1;
   }
 
   changeTable(event: Event, rowId: number): void {
     const target = event.target as HTMLSelectElement;
     const index = parseInt(target.value, 10);
-    if (!isNaN(index)) {
+    if (!isNaN(index))
       this.selectedTable[rowId] = index; // Actualiza la tabla seleccionada para la fila específica
-    }
   }
 }

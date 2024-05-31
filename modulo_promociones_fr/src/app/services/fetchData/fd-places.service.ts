@@ -135,4 +135,87 @@ export class FdPlacesService {
       }
     })
   }
+
+  // RETORNO DIRECTO
+
+  fetchDataProvinciasXTariffplanVariant_RETURN(tariffplanvariant: number): Observable<Provincias[]> {
+    return this.prov.getProvinciasXTariffplanVariant(tariffplanvariant).pipe(
+      map((response: any) => {
+        if (response && response.PROVINCIES){
+          return response.PROVINCIES.map((provincia: any) => {
+            return {
+              PROVINCIA_ID: provincia.PROVINCIA_ID,
+              PROVINCIA: provincia.PROVINCIA
+            };
+          });
+        } else {
+          return [];
+        }
+      })
+    );
+  }
+
+  fetchDataCiudadesALLXTariffplanVariant_RETURN(tariffplanvariant: number):  Observable<Ciudades[]> {
+    return this.city.getCiudadesALLXTariffplanVariant(tariffplanvariant)
+    .pipe(map((response: any) => {
+      if (response && response.CITIESxPROV){
+        return response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          }
+        })
+      }
+    }));
+  }
+
+  fetchDataCiudadXTariffplanVariant_RETURN(id_Prov: number, tariffplanvariant: number): Observable<Ciudades[]> {
+    return this.city.getCiudadesXTariffplanVariant(id_Prov, tariffplanvariant)
+    .pipe(map((response: any) => {
+      if (response && response.CITIESxPROV){
+        return response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          }
+        })
+      }
+    }));
+  }
+
+  fetchDataCiudadesMasivasXTariffplanVariant_RETURN(id_Provs: number[], tariffplanvariant: number): Observable <Provincias[]> {
+    return this.city.getCiudadesMasivasXTariffplanVariant(id_Provs, tariffplanvariant)
+    .pipe(map((response: any) => {
+      if(response && response.CITIESxPROV) {
+        return response.CITIESxPROV.map((city: any) => {
+          return {
+            CIUDAD_ID: city.CIUDAD_ID,
+            CIUDAD: city.CIUDAD,
+            PROVINCIA: city.PROVINCIA,
+            selected: false
+          };
+        })
+      }
+    }));
+  }
+
+  fetchDataSectoresMasivosXTariffplanVariant_RETURN(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]> {
+    return this.sect.getSectoresMasivosXTariffplanVariant(id_Cities, tariffplanvariant)
+    .pipe(map((response: any) => {
+      if(response && response.SECTORSxCITY){
+        return response.SECTORSxCITY.map((sect: any) => {
+          return {
+            SECTOR_ID: sect.SECTOR_ID,
+            SECTOR: sect.SECTOR,
+            CIUDAD: sect.CIUDAD,
+            selected: false
+          };
+        })
+      }
+    }));
+  }
 }
