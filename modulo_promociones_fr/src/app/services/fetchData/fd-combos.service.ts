@@ -62,6 +62,8 @@ export class FdCombosService {
     })
   }
 
+  
+
   //RETORNO DIRECTO
   
   getComboPLAN_RETURN(SERVICIO: string): Observable<TariffPlanes[]>{
@@ -96,6 +98,23 @@ export class FdCombosService {
 
   getComboPROD_RETURN(Id_TPV: number): Observable<Productos[]>{
     return this.combo.getCombosProductos(Id_TPV).pipe(
+      map((response: any) => {
+        if(response && response.COMBO_PRODUCTO){
+          return response.COMBO_PRODUCTO.map((pro: any) => {
+            return {
+              PRODUCTID: pro.PRODUCTID,
+              PRODUCTO: pro.PRODUCTO
+            }
+          }); 
+        } else {
+          return [];
+        }
+      })
+    );
+  }
+
+  getComboPROD_ROUTER_RETURN(): Observable<Productos[]>{
+    return this.combo.getCombosProductos_Router().pipe(
       map((response: any) => {
         if(response && response.COMBO_PRODUCTO){
           return response.COMBO_PRODUCTO.map((pro: any) => {

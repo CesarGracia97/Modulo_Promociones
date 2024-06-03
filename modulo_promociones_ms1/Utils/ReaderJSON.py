@@ -64,7 +64,8 @@ class ReaderJSON:
                                                 _V2 = _diccionario["_V2"]
                                                 return (data["Type_Queries"][_popcion][_sopcion][_topcion]
                                                         .get(_nameQuery,
-                                                             f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
+                                                             f"Consulta no encontrada en "
+                                                             f"{_popcion},{_sopcion},{_topcion}")
                                                         .replace("_V1", str(_V1))
                                                         .replace("_V2", str(_V2)))
                                             return (data["Type_Queries"][_popcion][_sopcion]['PLAN']
@@ -72,7 +73,8 @@ class ReaderJSON:
                                                          f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}")
                                                     .replace("_V1", str(_V1)))
                                         return (data["Type_Queries"][_popcion][_sopcion][_topcion]
-                                                .get(_nameQuery, f"Consulta no encontrada en {_popcion},{_sopcion},{_topcion}"))
+                                                .get(_nameQuery, f"Consulta no encontrada en "
+                                                                 f"{_popcion},{_sopcion},{_topcion}"))
                                 else:
                                     raise ValueError(f"Valor de _topcion '{_topcion}' no es válido.")
 

@@ -30,7 +30,7 @@ import { FdPlanesService } from '../../../../services/fetchData/fd-planes.servic
   templateUrl: './table-insert.component.html',
   styleUrl: './table-insert.component.scss'
 })
-export class TableInsertComponent implements OnInit {  
+export class TableInsertComponent implements OnInit {
   @Input() rows: any[] = []; rowId: number = 0;
 
   _V1: string = ''; _V2: string = ''; _V3: string = ''; 
@@ -53,9 +53,9 @@ export class TableInsertComponent implements OnInit {
   upgradeData: Upgrade [][] = [];
   optionsData: Options_PA[][] = [];
   paquetesStreaming: TariffPlanesVariant[][] = []; planesTelevisivos: TariffPlanesVariant[][] = []; 
-  planesTelefonicos: TariffPlanesVariant[][] = [];
+  planesTelefonicos: TariffPlanesVariant[][] = [];   modelosRouter: Productos[][]= [];
   precioRegularStreamingData: PrecioRegular[][][] = []; precioRegularTelefoniaData: PrecioRegular[][] = [];
-  precioRegularTelevisioData: PrecioRegular[][] = [];
+  precioRegularTelevisioData: PrecioRegular[][] = []; precioRegularRouter: PrecioRegular[][] = [];
 
   showMDPDD: boolean[] = []; showBDD: boolean[] = []; showPROAD: boolean[] = [];
   visibleUpgrade: boolean[] = []; visibleBtnPromocionAdicional: boolean[] = []; 
@@ -90,7 +90,7 @@ export class TableInsertComponent implements OnInit {
         PRAD_V1: '',
         PRAD_V2: '',
         PRAD_V3: '',
-        planVDataPROAD_ST: []
+        planVDataPROAD_ST: [],
       }]
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
@@ -122,6 +122,11 @@ export class TableInsertComponent implements OnInit {
     this.planesTelefonicos.push([]);
     this.planesTelevisivos.push([]);
     this.selectedTable.push(0); 
+    this.precioRegularStreamingData.push([[]]);
+    this.precioRegularTelefoniaData.push([]);
+    this.precioRegularTelevisioData.push([]);
+    this.precioRegularRouter.push([]);
+    this.modelosRouter.push([])
   }
 
   getDataPLAN(SERVICIO: string, index: number): void {
@@ -188,8 +193,6 @@ export class TableInsertComponent implements OnInit {
           .subscribe((prec: any) => { this.precioRegularData[index] = prec; });
         }
         if(type == 'PA_STREAMING'){
-          console.log("Valor de TPV: "+TPV);
-          console.log("# de la Tabla: "+table)
           if (!this.precioRegularStreamingData[index]) {
             this.precioRegularStreamingData[index] = [];
           }
@@ -197,10 +200,7 @@ export class TableInsertComponent implements OnInit {
             this.precioRegularStreamingData[index][table] = [];
           }
           this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
-            .subscribe((prec: PrecioRegular[]) => { this.precioRegularStreamingData[index][table] = prec; 
-              console.log('Contenido de precioRegularStreamingData:', this.precioRegularStreamingData);
-            });
-          this.tableId = table;
+            .subscribe((prec: PrecioRegular[]) => { this.precioRegularStreamingData[index][table] = prec;});
         }
         if(type == 'PA_TELEFONIA'){
           this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
@@ -229,6 +229,18 @@ export class TableInsertComponent implements OnInit {
       }
     } catch (error) {
       console.log("Error detectado: ",error)
+    }
+  }
+
+  darIdProducto(index: number): number {
+    const idsEspeciales = [95999, 96010, 96007];
+    const ciudadesSeleccionadas = this.ciudadData[index].filter(ciudad => ciudad.selected);
+    const idsSeleccionados = ciudadesSeleccionadas.map(ciudad => ciudad.CIUDAD_ID);
+    const todosIdsEspecialesSeleccionados = idsEspeciales.every(id => idsSeleccionados.includes(id));
+    if (todosIdsEspecialesSeleccionados) {
+        return 170;
+    } else {
+        return 5;
     }
   }
 
@@ -335,6 +347,9 @@ export class TableInsertComponent implements OnInit {
     } else if (index == 3 && options[3].selected) {
       this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEVISION')
       .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelevisivos[rowId] = PROAD; });
+    } else if (index == 4 && options[4].selected){
+      this.fdcb.getComboPROD_ROUTER_RETURN()
+      .subscribe((modelos: Productos[]) => { this.modelosRouter[index] = modelos });
     }
   }
 
@@ -349,6 +364,10 @@ export class TableInsertComponent implements OnInit {
     if (!this.selectedTable[rowId])
       this.selectedTable[rowId] = 0;
     this.selectedTable[rowId] = this.tablesRow[rowId].length - 1;
+    if (!this.precioRegularStreamingData[rowId]) {
+      this.precioRegularStreamingData[rowId] = [];
+    }
+    this.precioRegularStreamingData[rowId].push([]);
   }
 
   changeTable(event: Event, rowId: number): void {

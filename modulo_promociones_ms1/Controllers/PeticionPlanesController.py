@@ -138,7 +138,15 @@ class PeticionPlanesController:
                     data_cst = repository.getData_Planes(_diccionario)
                     dt_cst = frt.formated_COSector(data_cst)
                     return jsonify(dt_cst), 200
-
+                if _stype.upper() == 'PRODUCTO_ROUTER':
+                    _V1 = request.args.get('_V1')
+                    _diccionario = {
+                        "popcion": "COMBO",
+                        "sopcion": 8
+                    }
+                    data_prd = repository.getData_Planes(_diccionario)
+                    dt_prd = frt.formated_COProducto(data_prd)
+                    return jsonify(dt_prd), 200
             else:
                 return jsonify({'error': 'El valor del campo "tipo" no es válido'}), 400
 

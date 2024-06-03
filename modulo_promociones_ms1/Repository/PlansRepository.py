@@ -287,6 +287,24 @@ class PlansRepository:
                             print("\n**** C_CIUDAD - DATOS OBTENIDOS ****\n")
                             self.db.close()
                             return data
+
+                        if _sopcion == 8:
+                            _Qdiccionario = {"popcion": "Planes",
+                                             "sopcion": "COMBO",
+                                             "name_Query": "PRODUCTO_ROUTER"}
+                            query = self.reader_json.getQuery(_Qdiccionario)
+                            results = self.db.execute_query(query)
+                            if results is None:
+                                return {}
+                            data = {
+                                'COMBO_PRODUCTO': []
+                            }
+                            for result in results:
+                                _COMBO_PRODUCTO = Producto(result[0], result[1])
+                                data['COMBO_PRODUCTO'].append(_COMBO_PRODUCTO)
+                            print("\n**** COMBO_PRODUCTO - DATOS OBTENIDOS ****\n")
+                            self.db.close()
+                            return data
         except Exception as e:
             self.db.close()
             print("--------------------------------------------------------------------")

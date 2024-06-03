@@ -21,12 +21,12 @@ class FrontEndpointController:
             if _type.upper() == 'COMBO':
                 _stype = request.args.get('stype')
                 valid_stype = {"PLAN", "PLANVARIANT", "PRODUCTO",
-                               "TIPO_SERVICIO"}
+                               "TIPO_SERVICIO", "PRODUCTO_ROUTER"}
                 if _stype.upper() in valid_stype:
-                    _V1 = request.args.get('_V1')
                     params = {'type': _type,
-                              'stype': _stype,
-                              '_V1': _V1}
+                              'stype': _stype}
+                    if '_V1' in request.args:
+                        params['_V1'] = request.args.get('_V1')
                     response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
                     return response.text, response.status_code
 
