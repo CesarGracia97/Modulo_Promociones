@@ -81,17 +81,17 @@ class ReaderJSON:
                         if _sopcion == "COMBO":
                             if "name_Query" in _diccionario:
                                 valid_topcions = {"COMBO_PLAN", "COMBO_PLANVARIANT", "COMBO_PRODUCTO",
-                                                  "COMBO_TIPO_SERVICIO"}
+                                                  "COMBO_TIPO_SERVICIO", "COMBO_PRODUCTO_ROUTER"}
                                 _type = _nameQuery = _diccionario["name_Query"]
                                 if _nameQuery in valid_topcions:
                                     _nameQuery = _diccionario["name_Query"]
-                                    _V1 = _diccionario["_V1"]
-                                    if _V1 is not None:
+                                    if '_V1' in _diccionario:
+                                        _V1 = _diccionario["_V1"]
                                         return (data["Type_Queries"][_popcion][_sopcion]
                                                 .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
                                                 .replace("_V1", str(_V1)))
-                                    else:
-                                        raise ValueError("Se requiere un parámetro para esta consulta específica.")
+                                    return (data["Type_Queries"][_popcion][_sopcion].
+                                            get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}"))
                 if _popcion == "Finance":
                     if 'name_Query' in _diccionario:
                         _type = _nameQuery = _diccionario["name_Query"]

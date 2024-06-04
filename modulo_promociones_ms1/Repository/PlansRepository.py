@@ -291,7 +291,7 @@ class PlansRepository:
                         if _sopcion == 8:
                             _Qdiccionario = {"popcion": "Planes",
                                              "sopcion": "COMBO",
-                                             "name_Query": "PRODUCTO_ROUTER"}
+                                             "name_Query": "COMBO_PRODUCTO_ROUTER"}
                             query = self.reader_json.getQuery(_Qdiccionario)
                             results = self.db.execute_query(query)
                             if results is None:

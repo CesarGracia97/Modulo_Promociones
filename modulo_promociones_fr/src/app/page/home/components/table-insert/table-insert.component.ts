@@ -134,6 +134,14 @@ export class TableInsertComponent implements OnInit {
       if(SERVICIO){
         this.fdcb.getComboPLAN_RETURN(SERVICIO)
         .subscribe((plan: TariffPlanes[]) => { this.planData[index] = plan; })
+        if (SERVICIO === 'INTERNET') {
+          // Desactivar el elemento ROUTER en optionsData[index]
+          const options = this.optionsData[index];
+          const routerIndex = options.findIndex(option => option.name === 'ROUTER');
+          if (routerIndex !== -1) {
+            options[routerIndex].selected = true;
+          }
+        }
         if (SERVICIO == 'STREAMING')
           this.visibleBtnPromocionAdicional[index] = true;
         else
@@ -203,14 +211,15 @@ export class TableInsertComponent implements OnInit {
             .subscribe((prec: PrecioRegular[]) => { this.precioRegularStreamingData[index][table] = prec;});
         }
         if(type == 'PA_TELEFONIA'){
-          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
-          .subscribe((prec: any) => { this.precioRegularTelefoniaData[index] = prec; });
+          /*this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          .subscribe((prec: any) => { this.precioRegularTelefoniaData[index] = prec; });*/
         }
         if(type == 'PA_TELEVISION'){
           this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
           .subscribe((prec: any) => { this.precioRegularTelevisioData[index] = prec; });
         }
         if(type == 'PA_ROUTER'){
+          console.log("Variant: "+TPV)
 
         }
       }
@@ -349,7 +358,7 @@ export class TableInsertComponent implements OnInit {
       .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelevisivos[rowId] = PROAD; });
     } else if (index == 4 && options[4].selected){
       this.fdcb.getComboPROD_ROUTER_RETURN()
-      .subscribe((modelos: Productos[]) => { this.modelosRouter[index] = modelos });
+      .subscribe((modelos: Productos[]) => { this.modelosRouter[rowId] = modelos; });
     }
   }
 

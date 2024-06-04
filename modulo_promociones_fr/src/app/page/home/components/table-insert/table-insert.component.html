@@ -79,8 +79,8 @@
                     <button id="button" name="_V7_V8" [disabled]="!button_V1_V6(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
-                    <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
-                    <!-- <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button> -->
+                    <!-- <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button> -->
+                    <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button>
                 </td>
             </tr>
             <tr class="mas" (click)="addRow()">
@@ -157,7 +157,7 @@
                         <div [ngClass]="{'show': showPROAD[rowId], 'closing': closing}" class="dropdown">
                             <ul>
                                 <li *ngFor="let op of optionsData[rowId]; let i = index">
-                                    <input type="checkbox" [(ngModel)]="op.selected"  (change)="updateSelection(rowId, i)" [value]="op.name"/>{{ op.name }} 
+                                    <input type="checkbox" [(ngModel)]="op.selected"  (change)="updateSelection(rowId, i)" [value]="op.name" />{{ op.name }} 
                                 </li>
                             </ul>
                         </div>
@@ -175,7 +175,7 @@
                                 <td>
                                     <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1"
                                     (ngModelChange)="getPrecioRegular(1000065, tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1, selectedTable[rowId], rowId, 'PA_STREAMING')">
-                                        <option value="">PAQ. STREAMING</option>
+                                        <option [value]="">PAQ. STREAMING</option>
                                         <option *ngFor="let plan of paquetesStreaming[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
                                 </td>
@@ -215,8 +215,8 @@
                                 <td><span>PLANES</span></td>
                                 <td>
                                     <select name="PRAD_TF_V1" [(ngModel)]="rows[rowId].PRAD_TF_V1"
-                                    (ngModelChange)="getPrecioRegular(0, rows[rowId].PRAD_TF_V1, selectedTable[rowId], rowId, 'PA_STREAMING')">
-                                        <option value="">PLAN. TELEFONICO</option>
+                                    (ngModelChange)="getPrecioRegular(0, rows[rowId].PRAD_TF_V1, selectedTable[rowId], rowId, 'PA_TELEFONIA')">
+                                        <option [value]="">PLAN. TELEFONICO</option>
                                         <option *ngFor="let plan of planesTelefonicos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
                                 </td>
@@ -255,8 +255,8 @@
                                 <td><span>PLANES</span></td>
                                 <td>
                                     <select name="PRAD_TV_V1" [(ngModel)]="rows[rowId].PRAD_TV_V1"
-                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1, selectedTable[rowId], rowId, 'PA_TELEVISION')">
-                                        <option value="">PLAN. TELEVISION</option>
+                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), rows[rowId].PRAD_ST_V1, 0, rowId, 'PA_TELEVISION')">
+                                        <option [value]="">PLAN. TELEVISION</option>
                                         <option *ngFor="let plan of planesTelevisivos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
                                 </td>
@@ -294,7 +294,8 @@
                             <tr>
                                 <td><span>ROUTER</span></td>
                                 <td>
-                                    <select name="PRAD_RT_V1" [(ngModel)]="rows[rowId].PRAD_RT_V1">
+                                    <select name="PRAD_RT_V1" [(ngModel)]="rows[rowId].PRAD_RT_V1"
+                                    (ngModelChange)="getPrecioRegular(rows[rowId].PRAD_RT_V1, rows[rowId]._V3, 0, rowId, 'PA_ROUTER')">
                                         <option [value]="">MODELO ROUTER</option>
                                         <option *ngFor="let modelo of modelosRouter[rowId]" [value]="modelo.PRODUCTID">{{modelo.PRODUCTO}}</option>
                                     </select>

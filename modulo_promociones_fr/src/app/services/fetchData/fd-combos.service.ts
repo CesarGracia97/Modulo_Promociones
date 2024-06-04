@@ -123,8 +123,6 @@ export class FdCombosService {
               PRODUCTO: pro.PRODUCTO
             }
           }); 
-        } else {
-          return [];
         }
       })
     );
