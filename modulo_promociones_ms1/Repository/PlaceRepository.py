@@ -93,7 +93,7 @@ class PlaceRepository:
                             key = f"_V1_{i + 1}"  # Nombre único para cada valor de id_Cities
                             _Qdiccionario[key] = city_id
                         _Qdiccionario["_V2"] = _diccionario["_V2"]
-                        if '_V3' in _Qdiccionario:
+                        if '_V3' in _diccionario:
                             _Qdiccionario["_V3"] = _diccionario["_V3"]
                         query = self.reader_json.getQuery(_Qdiccionario)
                         results = self.db.execute_query(query)
@@ -108,7 +108,8 @@ class PlaceRepository:
                                 sector = Ciudad(result[0], result[1], result[2])
                                 data['CITIESxPROV'].append(sector)
                             print("\n**** CIUDADES ESPECIFICAS POR PROVINCIA TT - DATOS OBTENIDOS ****\n")
-                        elif _diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFV":
+                        elif (_diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFV" or
+                              _diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFVxPROD"):
                             data['SECTORSxCITY'] = []
                             for result in results:
                                 sector = Sector(result[0], result[1], result[2])
