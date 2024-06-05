@@ -28,10 +28,11 @@ class BackEndpointController:
 
                 _provincias = {"ALL_PROVS", "PROVINCIAS_ESPECIFICASxTFV"}
                 _ciudades = {"ALL_CITIES", "CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV",
-                             "CIUDADES_ESPECIFICASxPROVxTFV"}
+                             "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD"}
                 _sectores = {"ALL_SECTORS", "SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV",
                              "SECTORES_ESPECIFICOSxCITYxTFV"}
-                _masive = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
+                _masive = {"CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD"
+                           "SECTORES_ESPECIFICOSxCITYxTFV", "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
                 payload = {"type": _type}
 
                 if _type in _provincias:
@@ -46,6 +47,8 @@ class BackEndpointController:
                             payload['_V2'] = request.args.get('TARIFFPLANVARIANT')
                     if 'TARIFFPLANVARIANT' in request.args and '_V1' not in payload:
                         payload['_V1'] = request.args.get('TARIFFPLANVARIANT')
+                        if 'PRODUCTOID' in request.args:
+                            payload['_V2'] = request.args.get('PRODUCTOID')
                     return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                payload)
 
@@ -58,13 +61,15 @@ class BackEndpointController:
                         payload['_V1'] = request.args.get('TARIFFPLANVARIANT')
                     return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                payload)
-
                 elif _type in _masive and request.args.get('MASIVE'):
                     if 'id_Provs' in request.args:
                         payload['id_Provs'] = request.args.getlist('id_Provs')
                     if 'id_Cities' in request.args:
                         payload['id_Cities'] = request.args.getlist('id_Cities')
-                    payload['_V2'] = request.args.get('TARIFFPLANVARIANT')
+                        if 'TARIFFPLANVARIANT' in request.args:
+                            payload['_V2'] = request.args.get('TARIFFPLANVARIANT')
+                        if 'PRODUCTOID' in request.args:
+                            payload['_V3'] = request.args.get('PRODUCTOID')
                     payload['MASIVE'] = request.args.get('MASIVE')
                     return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlaces',
                                                                payload)

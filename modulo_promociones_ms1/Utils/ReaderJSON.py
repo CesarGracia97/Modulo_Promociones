@@ -37,6 +37,11 @@ class ReaderJSON:
                             _V1_values = [_diccionario[key] for key in _diccionario if key.startswith('_V1_')]
                             _V1 = ', '.join(map(str, _V1_values))
                             _V2 = _diccionario["_V2"]
+                            if '_V3' in _diccionario:
+                                _V3 = _diccionario["_V3"]
+                                return (data["Type_Queries"][_popcion][_sopcion]
+                                        .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}").replace
+                                        ("_V1", _V1).replace("_V2", str(_V2)).replace("_V3", str(_V3)))
                             return (data["Type_Queries"][_popcion][_sopcion]
                                     .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}").replace
                                     ("_V1", _V1).replace("_V2", str(_V2)))

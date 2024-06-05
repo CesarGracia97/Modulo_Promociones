@@ -109,8 +109,7 @@ export class TableInsertComponent implements OnInit {
       {name: 'NO APLICAR', selected: false},
       {name: 'STREAMING', selected: false},
       {name: 'TELEFONIA', selected: false},
-      {name: 'TELEVISION', selected: false},
-      {name: 'ROUTER', selected: false}
+      {name: 'TELEVISION', selected: false}
     ]);
     this.tablesRow.push([{
       id: 0,
@@ -132,16 +131,10 @@ export class TableInsertComponent implements OnInit {
   getDataPLAN(SERVICIO: string, index: number): void {
     try {
       if(SERVICIO){
+        if (SERVICIO === 'INTERNET')
+          this.optionsData[index].push({ name: 'ROUTER', selected: false });
         this.fdcb.getComboPLAN_RETURN(SERVICIO)
         .subscribe((plan: TariffPlanes[]) => { this.planData[index] = plan; })
-        if (SERVICIO === 'INTERNET') {
-          // Desactivar el elemento ROUTER en optionsData[index]
-          const options = this.optionsData[index];
-          const routerIndex = options.findIndex(option => option.name === 'ROUTER');
-          if (routerIndex !== -1) {
-            options[routerIndex].selected = true;
-          }
-        }
         if (SERVICIO == 'STREAMING')
           this.visibleBtnPromocionAdicional[index] = true;
         else
@@ -167,13 +160,14 @@ export class TableInsertComponent implements OnInit {
     }
   }
 
-  getDataPROD_CiudadesTariffplanVariant(TPV: number, index: number): void {
+  getDataPROD_CiudadesTariffplanVariantProducto(TPV: number, ProductoId: number, index: number): void {
     try {
       if(TPV){
         this.fdcb.getComboPROD_RETURN(TPV)
         .subscribe((prod: Productos[]) => { this.productosData[index] = prod; });
-        this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV)
-        .subscribe((city: Ciudades[]) => { this.ciudadData[index] = city; });
+        if (TPV & ProductoId)
+          this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV, ProductoId)
+          .subscribe((city: Ciudades[]) => { this.ciudadData[index] = city; });
       }
     } catch(error){
       console.log("Error Detectado: ",error)
@@ -208,7 +202,7 @@ export class TableInsertComponent implements OnInit {
             this.precioRegularStreamingData[index][table] = [];
           }
           this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
-            .subscribe((prec: PrecioRegular[]) => { this.precioRegularStreamingData[index][table] = prec;});
+            .subscribe((prec: any) => { this.precioRegularStreamingData[index][table] = prec;});
         }
         if(type == 'PA_TELEFONIA'){
           /*this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
@@ -219,8 +213,8 @@ export class TableInsertComponent implements OnInit {
           .subscribe((prec: any) => { this.precioRegularTelevisioData[index] = prec; });
         }
         if(type == 'PA_ROUTER'){
-          console.log("Variant: "+TPV)
-
+          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          .subscribe((prec: any) => { this.precioRegularRouter[index] = prec; });
         }
       }
     } catch (error) {
@@ -257,8 +251,9 @@ export class TableInsertComponent implements OnInit {
     const index = this.rowId;
     const indexRow = this.rows[index];
     const _V3 = indexRow._V3;
+    const _V4 = indexRow._V4;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
-    this.fdpl.fetchDataSectoresMasivosXTariffplanVariant_RETURN(ciudades, _V3)
+    this.fdpl.fetchDataSectoresMasivosXTariffplanVariantXProducto_RETURN(ciudades, _V3, _V4)
     .subscribe((sectores) => { this.sectoresData[index] = sectores; });
   }
 

@@ -10,8 +10,9 @@ class PlaceRepository:
 
     def getData_Places(self, _diccionario: dict) -> dict:
         _ciudades = {"CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
-                     "CIUDADES_ESPECIFICASxPROVxTFV"}
-        _sectores = {"SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
+                     "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD"}
+        _sectores = {"SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV", "SECTORES_ESPECIFICOSxCITYxTFV",
+                     "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
         try:
             if "popcion" in _diccionario:
                 if _diccionario["popcion"] == "ALL_DATA":
@@ -92,6 +93,8 @@ class PlaceRepository:
                             key = f"_V1_{i + 1}"  # Nombre único para cada valor de id_Cities
                             _Qdiccionario[key] = city_id
                         _Qdiccionario["_V2"] = _diccionario["_V2"]
+                        if '_V3' in _Qdiccionario:
+                            _Qdiccionario["_V3"] = _diccionario["_V3"]
                         query = self.reader_json.getQuery(_Qdiccionario)
                         results = self.db.execute_query(query)
                         data = {}

@@ -155,8 +155,8 @@ export class FdPlacesService {
     );
   }
 
-  fetchDataCiudadesALLXTariffplanVariant_RETURN(tariffplanvariant: number):  Observable<Ciudades[]> {
-    return this.city.getCiudadesALLXTariffplanVariant(tariffplanvariant)
+  fetchDataCiudadesALLXTariffplanVariant_RETURN(tariffplanvariant: number, ProductoId: number):  Observable<Ciudades[]> {
+    return this.city.getCiudadesALLXTariffplanVariantXProductoId(tariffplanvariant, ProductoId)
     .pipe(map((response: any) => {
       if (response && response.CITIESxPROV){
         return response.CITIESxPROV.map((city: any) => {
@@ -203,8 +203,8 @@ export class FdPlacesService {
     }));
   }
 
-  fetchDataSectoresMasivosXTariffplanVariant_RETURN(id_Cities: number[], tariffplanvariant: number):Observable<Sectores[]> {
-    return this.sect.getSectoresMasivosXTariffplanVariant(id_Cities, tariffplanvariant)
+  fetchDataSectoresMasivosXTariffplanVariantXProducto_RETURN(id_Cities: number[], tariffplanvariant: number, productoId: number):Observable<Sectores[]> {
+    return this.sect.getSectoresMasivosXTariffplanVariantXProductoId(id_Cities, tariffplanvariant, productoId)
     .pipe(map((response: any) => {
       if(response && response.SECTORSxCITY){
         return response.SECTORSxCITY.map((sect: any) => {

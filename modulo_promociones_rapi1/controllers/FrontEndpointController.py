@@ -44,7 +44,7 @@ class FrontEndpointController:
 
             _type = request.args.get('type')
             _ciudades = {"ALL_CITIES", "CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV",
-                         "CIUDADES_ESPECIFICASxPROVxTFV"}
+                         "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD"}
 
             if _type in _ciudades:
                 params = {'type': _type}
@@ -52,6 +52,8 @@ class FrontEndpointController:
                     params['id_Prov'] = request.args.get('id_Prov')
                 if 'TARIFFPLANVARIANT' in request.args:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
+                if 'PRODUCTOID' in request.args:
+                    params['PRODUCTOID'] = request.args.get('PRODUCTOID')
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code
 
@@ -73,7 +75,7 @@ class FrontEndpointController:
 
             _type = request.args.get('type')
             _sectores = {"ALL_SECTORS", "SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV",
-                         "SECTORES_ESPECIFICOSxCITYxTFV"}
+                         "SECTORES_ESPECIFICOSxCITYxTFV", "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
 
             if _type.upper() in _sectores:
                 params = {'type': _type}
@@ -101,7 +103,8 @@ class FrontEndpointController:
             print("INFORMACION MASIVA ENDPOINT ACTIVO\n")
 
             _type = request.args.get('type')
-            _masivos = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
+            _masivos = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV",
+                        "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
 
             if _type in _masivos:
                 print("Tipo de Peticion: "+_type)
@@ -112,6 +115,8 @@ class FrontEndpointController:
                     params['id_Cities'] = request.args.getlist('id_Cities')
                 if 'TARIFFPLANVARIANT' in request.args:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
+                if 'PRODUCTOID' in request.args:
+                    params['PRODUCTOID'] = request.args.get('PRODUCTOID')
                 params['MASIVE'] = "YES"
                 response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
                 return response.text, response.status_code

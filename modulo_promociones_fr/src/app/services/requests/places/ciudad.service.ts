@@ -30,6 +30,13 @@ export class CiudadService {
     return this.http.get<Ciudades[]>(this.URLSimple, { params: params });
   }
 
+  getCiudadesALLXTariffplanVariantXProductoId(tariffplanvariant: number, ProductoId: number): Observable <Ciudades[]> {
+    let params = new HttpParams().set('type', 'CIUDADES_ESPECIFICASxTFVxPROD')
+    .set('TARIFFPLANVARIANT', tariffplanvariant.toString())
+    .set('PRODUCTOID', ProductoId.toString());
+    return this.http.get<Ciudades[]>(this.URLSimple, { params: params });
+  }
+
   getCiudadesXTariffplanVariant(id_Prov:number, tariffplanvariant: number):Observable<Ciudades[]>{
     let params = new HttpParams().set('type', 'CIUDADES_ESPECIFICASxPROVxTFV')
     .set('id_Prov', id_Prov.toString())

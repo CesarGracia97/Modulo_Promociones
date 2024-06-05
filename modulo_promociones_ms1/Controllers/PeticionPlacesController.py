@@ -11,8 +11,9 @@ class PeticionPlacesController:
         _valid_type_AD = {"ALL_PROVS", "ALL_CITIES", "ALL_SECTORS"}
         _valid_type_SD = {"CIUDADES_ESPECIFICASxPROV", "SECTORES_ESPECIFICOSxCITY", "PROVINCIAS_ESPECIFICASxTFV",
                           "CIUDADES_ESPECIFICASxTFV", "SECTORES_ESPECIFICOSxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
-                          "SECTORES_ESPECIFICOSxCITYxTFV"}
-        _valid_type_MD = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV"}
+                          "CIUDADES_ESPECIFICASxTFVxPROD", "SECTORES_ESPECIFICOSxCITYxTFV"}
+        _valid_type_MD = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV",
+                          "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
         try:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
             frt = FormattedPlace()
@@ -47,7 +48,10 @@ class PeticionPlacesController:
                     if _V1:
                         _V1 = _V1.split(',')
                     _diccionario['_V1'] = _V1
-                _diccionario['_V2'] = request.args.get('_V2')
+                    if '_V2' in request.args:
+                        _diccionario['_V2'] = request.args.get('_V2')
+                    if '_V3' in request.args:
+                        _diccionario['_V3'] = request.args.get('_V3')
                 data = repository.getData_Places(_diccionario)
                 dt = frt.formated_placeMIXDATA(data, _type)
                 return jsonify(dt), 200

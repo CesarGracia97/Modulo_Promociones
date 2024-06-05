@@ -38,7 +38,7 @@
                 </td>
                 <td>
                     <select name="_V3" [(ngModel)]="row._V3" 
-                    (ngModelChange)="getDataPROD_CiudadesTariffplanVariant (row._V3, i);
+                    (ngModelChange)="getDataPROD_CiudadesTariffplanVariantProducto(row._V3, row._V4, i);
                     getPrecioRegular(row._V3, row._V4, 0, i, 'NORMAL'); getDataUpgrade(row._V1, row._V2, row._V3, i)">
                         <option value="">Elija un Plan Variant</option>
                         <option value="" *ngIf="planVData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
@@ -47,7 +47,8 @@
                     </select>
                 </td>
                 <td>
-                    <select name="_V4" [(ngModel)]="row._V4" (ngModelChange)="getPrecioRegular(row._V3, row._V4, 0, i, 'NORMAL')">
+                    <select name="_V4" [(ngModel)]="row._V4" (ngModelChange)="getPrecioRegular(row._V3, row._V4, 0, i, 'NORMAL');
+                    getDataPROD_CiudadesTariffplanVariantProducto(row._V3, row._V4, i);">
                         <option value="">Elija un Producto</option>
                         <option value="" *ngIf="productosData[i].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
                         <option value="" *ngIf="productosData[i].length === 0 && row._V2">Cargando Datos..</option>
@@ -221,10 +222,10 @@
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr *ngFor="let precioRegular of precioRegularTelefoniaData[rowId]">
                                 <td>
-                                    <span>PRE. REGULAR $</span>
-                                    <span>900.00</span>
+                                    <span>PRE. REGULAR</span>
+                                    <span>$ {{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"
@@ -261,10 +262,10 @@
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr *ngFor="let precioRegular of precioRegularTelevisioData[rowId]">
                                 <td>
-                                    <span>PRE. REGULAR $</span>
-                                    <span>900.00</span>
+                                    <span>PRE. REGULAR</span>
+                                    <span>$ {{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional"
@@ -287,7 +288,7 @@
                         </table>
                     </div>
                 </div>
-                <div id="router" *ngIf="optionsData[rowId][4].selected">
+                <div id="router" *ngIf="optionsData[rowId].length > 4 && optionsData[rowId][4].selected">
                     <label><strong>ROUTER</strong></label>
                     <div id="content_television">
                         <table>
@@ -301,14 +302,14 @@
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr *ngFor="let precioRegular of precioRegularRouter[rowId]">
                                 <td>
-                                    <span>PRE. REGULAR $</span>
-                                    <span>900.00</span>
+                                    <span>PRE. REGULAR</span>
+                                    <span>${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"
-                                    [(ngModel)]="rows[rowId].PRAD_RT_V2"/>
+                                    [max]="precioRegular.PRECIO"  [(ngModel)]="rows[rowId].PRAD_RT_V2"/>
                                 </td>
                             </tr>
                             <tr>
