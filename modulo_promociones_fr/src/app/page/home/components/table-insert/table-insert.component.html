@@ -80,8 +80,8 @@
                     <button id="button" name="_V7_V8" [disabled]="!button_V1_V6(row, i)" (click)="openModal(i,'CS')">Seleccionar</button>
                 </td>
                 <td>
-                    <!-- <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button> -->
-                    <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button>
+                    <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
+                    <!-- <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button> -->
                 </td>
             </tr>
             <tr class="mas" (click)="addRow()">
@@ -163,7 +163,7 @@
                             </ul>
                         </div>
                     </div>
-                    <button id="btn_dtpro_send">Enviar</button>
+                    <button id="btn_dtpro_send"  (click)="sendInformation(rowId)">Enviar</button>
                 </div>
             </div>
             <div id="pro_adici">
@@ -183,8 +183,7 @@
                             </tr>
                             <tr *ngFor="let precioRegular of precioRegularStreamingData[rowId][selectedTable[rowId]]">
                                 <td>
-                                    <span>PRE. REGULAR </span>
-                                    <span>${{ precioRegular.PRECIO }}</span>
+                                    <span>PRE. REGULAR ${{ precioRegular.PRECIO }}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_ST_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2" 
@@ -224,8 +223,7 @@
                             </tr>
                             <tr *ngFor="let precioRegular of precioRegularTelefoniaData[rowId]">
                                 <td>
-                                    <span>PRE. REGULAR</span>
-                                    <span>$ {{precioRegular.PRECIO}}</span>
+                                    <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"
@@ -256,7 +254,7 @@
                                 <td><span>PLANES</span></td>
                                 <td>
                                     <select name="PRAD_TV_V1" [(ngModel)]="rows[rowId].PRAD_TV_V1"
-                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), rows[rowId].PRAD_ST_V1, 0, rowId, 'PA_TELEVISION')">
+                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), rows[rowId].PRAD_TV_V1, 0, rowId, 'PA_TELEVISION')">
                                         <option [value]="">PLAN. TELEVISION</option>
                                         <option *ngFor="let plan of planesTelevisivos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
@@ -264,8 +262,7 @@
                             </tr>
                             <tr *ngFor="let precioRegular of precioRegularTelevisioData[rowId]">
                                 <td>
-                                    <span>PRE. REGULAR</span>
-                                    <span>$ {{precioRegular.PRECIO}}</span>
+                                    <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional"
@@ -304,8 +301,7 @@
                             </tr>
                             <tr *ngFor="let precioRegular of precioRegularRouter[rowId]">
                                 <td>
-                                    <span>PRE. REGULAR</span>
-                                    <span>${{precioRegular.PRECIO}}</span>
+                                    <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
                                     <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"

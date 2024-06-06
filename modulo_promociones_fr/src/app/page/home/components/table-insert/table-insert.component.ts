@@ -21,6 +21,7 @@ import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
 import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
+import { filter } from 'rxjs';
 
 
 @Component({
@@ -86,12 +87,11 @@ export class TableInsertComponent implements OnInit {
       planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
       diasGozadosData: [], upgradeData: [], selectedTable: [], // Cambiado de array a un solo número
       tablesRow: [{
-        id: 0,
-        PRAD_V1: '',
-        PRAD_V2: '',
-        PRAD_V3: '',
-        planVDataPROAD_ST: [],
-      }]
+        id: 0, paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
+      }], planesTelevisivos: [], planesTelefonicos: [], modelosRouter: [],
+      PRAD_TF_V1: '', PRAD_TF_V2: '', PRAD_TF_V3: '', PRAD_TF_V4: '',
+      PRAD_TV_V1: '', PRAD_TV_V2: '', PRAD_TV_V3: '', PRAD_TV_V4: '',
+      PRAD_RT_V1: '', PRAD_RT_V2: '', PRAD_RT_V3: '', PRAD_RT_V4: ''
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.planData.push([]);
@@ -111,21 +111,16 @@ export class TableInsertComponent implements OnInit {
       {name: 'TELEFONIA', selected: false},
       {name: 'TELEVISION', selected: false}
     ]);
-    this.tablesRow.push([{
-      id: 0,
-      PRAD_V1: '',
-      PRAD_V2: '',
-      PRAD_V3: ''
-    }]);
+    this.tablesRow.push([{id: 0, paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '',  PRAD_ST_V3: ''}]);
     this.paquetesStreaming.push([]);
     this.planesTelefonicos.push([]);
     this.planesTelevisivos.push([]);
+    this.modelosRouter.push([])
     this.selectedTable.push(0); 
     this.precioRegularStreamingData.push([[]]);
     this.precioRegularTelefoniaData.push([]);
     this.precioRegularTelevisioData.push([]);
     this.precioRegularRouter.push([]);
-    this.modelosRouter.push([])
   }
 
   getDataPLAN(SERVICIO: string, index: number): void {
@@ -248,10 +243,7 @@ export class TableInsertComponent implements OnInit {
   }
 
   buscarSectores() {
-    const index = this.rowId;
-    const indexRow = this.rows[index];
-    const _V3 = indexRow._V3;
-    const _V4 = indexRow._V4;
+    const index = this.rowId; const indexRow = this.rows[index]; const _V3 = indexRow._V3; const _V4 = indexRow._V4;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
     this.fdpl.fetchDataSectoresMasivosXTariffplanVariantXProducto_RETURN(ciudades, _V3, _V4)
     .subscribe((sectores) => { this.sectoresData[index] = sectores; });
@@ -360,24 +352,36 @@ export class TableInsertComponent implements OnInit {
   addNewTable(rowId: number): void {
     const newTable = {
         id: this.tablesRow[rowId].length,
-        PRAD_V1: 0,
-        PRAD_V2: '',
-        PRAD_V3: ''
+        paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
     };
     this.tablesRow[rowId].push(newTable);
     if (!this.selectedTable[rowId])
       this.selectedTable[rowId] = 0;
     this.selectedTable[rowId] = this.tablesRow[rowId].length - 1;
-    if (!this.precioRegularStreamingData[rowId]) {
+    if (!this.precioRegularStreamingData[rowId])
       this.precioRegularStreamingData[rowId] = [];
-    }
     this.precioRegularStreamingData[rowId].push([]);
   }
 
   changeTable(event: Event, rowId: number): void {
     const target = event.target as HTMLSelectElement;
     const index = parseInt(target.value, 10);
-    if (!isNaN(index))
-      this.selectedTable[rowId] = index; // Actualiza la tabla seleccionada para la fila específica
+    if (!isNaN(index)) this.selectedTable[rowId] = index; // Actualiza la tabla seleccionada para la fila específica
+  }
+
+  sendInformation(row: number) {
+    const index = this.rows[row];
+    const _V5: number[] = this.modoPagosData[row].filter(mdpg => mdpg.selected).map(mdpg => mdpg.ID); //MODOS DE PAGO
+    const _V6: number[] = this.buroData[row].filter(buro => buro.selected).map(buro => buro.ID); //BURO
+    const _V7: number[] = this.ciudadData[row].filter(ciudad => ciudad.selected).map(ciudad => ciudad.CIUDAD_ID); //CIUDADES
+    const _V8: number[] = this.sectoresData[row].filter(sector => sector.selected).map(sector => sector.SECTOR_ID); //SECTORES
+    const selectedDia = this.diasGozadosData[row].find(dias => dias.selected);
+    const _V10 = selectedDia ? selectedDia.NAME : null; // DIAS GOZADOS
+    const options = this.optionsData[row];
+    if(options[0].selected){
+      const _diccionario = {'SERVICIO': index._V1, 'PLAN': index._V2, 'VARIANT': index._V3, 'PRODUCTO': index._V4, 'MODOS_PAGO': _V5, 
+      'BURO': _V6, 'CIUDADES': _V7, ' SECTORES': _V8, 'PRECIO_REGULAR': index._V9, 'DIAS': _V10, 'UPGRADE': index._V11}
+      console.log(_diccionario);
+    }
   }
 }
