@@ -21,7 +21,6 @@ import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
 import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
-import { filter } from 'rxjs';
 
 
 @Component({
@@ -243,7 +242,9 @@ export class TableInsertComponent implements OnInit {
   }
 
   buscarSectores() {
-    const index = this.rowId; const indexRow = this.rows[index]; const _V3 = indexRow._V3; const _V4 = indexRow._V4;
+    const index = this.rowId; 
+    const indexRow = this.rows[index]; 
+    const _V3 = indexRow._V3; const _V4 = indexRow._V4;
     const ciudades = this.ciudadData[index].filter(city => city.selected).map(city => city.CIUDAD_ID);
     this.fdpl.fetchDataSectoresMasivosXTariffplanVariantXProducto_RETURN(ciudades, _V3, _V4)
     .subscribe((sectores) => { this.sectoresData[index] = sectores; });
@@ -264,6 +265,40 @@ export class TableInsertComponent implements OnInit {
     const trueC = this.ciudadData[index] && this.ciudadData[index].some(ciudad => ciudad.selected);
     const trueS = this.sectoresData[index] && this.sectoresData[index].some(sectores => sectores.selected);
     return this.button_V1_V6(row, index) && trueC && trueS;
+  }
+
+  button_sendInformation(row: any, index: number): boolean {
+
+    const true1 = row._V9 && row._V11;  const true2 = this.diasGozadosData[index] && this.diasGozadosData[index].some(dias => dias.selected);
+    const options = this.optionsData[index];
+    let isValid = true;
+
+    if (options[0].selected) {
+      return this.button_V1_V8(row, index) && true1 && true2;
+    }
+    for (let i = 1; i < options.length; i++) {
+      console.log("entro al for "+i)
+      if (options[i].selected) {
+        // Verifica si los datos asociados a la opción están completos
+        switch (i) {
+          case 1: // STREAMING
+            //isValid = isValid && this.validateStreamingData(row, index);
+          break;
+          case 2: // TELEFONIA
+            isValid = isValid && this.validateTelefoniaData(row);
+          break;
+          case 3: // TELEVISION
+            isValid = isValid && this.validateTelevisionData(row);
+          break;
+          case 4: // ROUTER
+            isValid = isValid && this.validateRouterData(row);
+          break;
+          default:
+          break;
+        }
+      }
+    }
+    return this.button_V1_V8(row, index) && true1 && true2 && isValid; // Verifica si todos los datos de las opciones seleccionadas están completos
   }
 
   toggDD(index: number, type: string) {
@@ -375,13 +410,40 @@ export class TableInsertComponent implements OnInit {
     const _V6: number[] = this.buroData[row].filter(buro => buro.selected).map(buro => buro.ID); //BURO
     const _V7: number[] = this.ciudadData[row].filter(ciudad => ciudad.selected).map(ciudad => ciudad.CIUDAD_ID); //CIUDADES
     const _V8: number[] = this.sectoresData[row].filter(sector => sector.selected).map(sector => sector.SECTOR_ID); //SECTORES
-    const selectedDia = this.diasGozadosData[row].find(dias => dias.selected);
-    const _V10 = selectedDia ? selectedDia.NAME : null; // DIAS GOZADOS
+    const selectedDiasGozados = this.diasGozadosData[row].find(dias => dias.selected);
+    const _V10 = selectedDiasGozados ? selectedDiasGozados.NAME : null; //DIAS GOZADOS
     const options = this.optionsData[row];
-    if(options[0].selected){
-      const _diccionario = {'SERVICIO': index._V1, 'PLAN': index._V2, 'VARIANT': index._V3, 'PRODUCTO': index._V4, 'MODOS_PAGO': _V5, 
-      'BURO': _V6, 'CIUDADES': _V7, ' SECTORES': _V8, 'PRECIO_REGULAR': index._V9, 'DIAS': _V10, 'UPGRADE': index._V11}
-      console.log(_diccionario);
+    let _diccionario: { [key: string]: any } = {'SERVICIO': index._V1, 'PLAN': index._V2, 'VARIANT': index._V3, 'PRODUCTO': index._V4, 'MODOS_PAGO': _V5, 
+      'BURO': _V6, 'CIUDADES': _V7, ' SECTORES': _V8, 'PRECIO_PROMOCIONAL': index._V9, 'DIAS': _V10, 'UPGRADE': index._V11};
+    if (options[0].selected){
+
+    } 
+    if (options[1].selected){
+      const _dStreaming = {}
     }
+    if (options[2].selected){
+      const _dTelefonia = {'PLAN': index.PRAD_TF_V1, 'PRECIO_PROMOCIONAL': index.PRAD_TF_V2, 'CANTIDAD': index.PRAD_TF_V3, ' MESES': index.PRAD_TF_V4}
+      _diccionario['TELEFONIA'] = _dTelefonia;
+    }
+    if (options[3].selected){
+      const _dTelevision = {'PLAN': index.PRAD_TV_V1, 'PRECIO_PROMOCIONAL': index.PRAD_TV_V2, 'CANTIDAD': index.PRAD_TV_V3, ' MESES': index.PRAD_TV_V4}
+      _diccionario['TELEVISION'] = _dTelevision;
+    }
+    if (options.length > 4 && options[4].selected){
+      const _dRouter = {'MODELO': index.PRAD_RT_V1, 'PRECIO_PROMOCIONAL': index.PRAD_RT_V2, 'CANTIDAD': index.PRAD_RT_V3, ' MESES': index.PRAD_RT_V4}
+      _diccionario['ROUTER'] = _dRouter;
+    }
+  }
+
+  validateTelefoniaData(row: any): boolean {
+    return row.PRAD_TF_V1 && row.PRAD_TF_V2 && row.PRAD_TF_V3 && row.PRAD_TF_V4;
+  }
+
+  validateTelevisionData(row: any): boolean {
+    return row.PRAD_TV_V1 && row.PRAD_TV_V2 && row.PRAD_TV_V3 && row.PRAD_TV_V4;
+  }
+
+  validateRouterData(row: any): boolean {
+    return row.PRAD_RT_V1 && row.PRAD_RT_V2 && row.PRAD_RT_V3 && row.PRAD_RT_V4;
   }
 }

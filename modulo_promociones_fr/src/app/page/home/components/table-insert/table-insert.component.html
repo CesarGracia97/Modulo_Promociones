@@ -139,7 +139,7 @@
                         <div id="checklist">
                             <ul>
                                 <li *ngFor="let dias of diasGozadosData[rowId]">
-                                    <input type="radio" name="_V10" [(ngModel)]="dias.selected" [value]="dias.ID" /> {{dias.NAME}}
+                                    <input type="radio" name="_V10" [(ngModel)]="dias.selected" [value]="dias.NAME" /> {{dias.NAME}}
                                 </li>
                             </ul>
                         </div>
@@ -163,7 +163,7 @@
                             </ul>
                         </div>
                     </div>
-                    <button id="btn_dtpro_send"  (click)="sendInformation(rowId)">Enviar</button>
+                    <button id="btn_dtpro_send" [disabled]="!button_sendInformation(rows[rowId], rowId)" (click)="sendInformation(rowId)">Enviar</button>
                 </div>
             </div>
             <div id="pro_adici">
@@ -324,8 +324,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="modal_dp_button">
             </div>
         </div>
     </div>
