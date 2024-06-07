@@ -58,8 +58,8 @@ export class TableInsertComponent implements OnInit {
   precioRegularTelevisioData: PrecioRegular[][] = []; precioRegularRouter: PrecioRegular[][] = [];
 
   showMDPDD: boolean[] = []; showBDD: boolean[] = []; showPROAD: boolean[] = [];
-  visibleUpgrade: boolean[] = []; visibleBtnPromocionAdicional: boolean[] = []; 
-
+  visibleUpgrade: boolean[] = []; visibleBtnPromocionAdicional: boolean[] = [];permitido: boolean[] = []; 
+  vPA: { [index: number]: { [type: string]: boolean } } = [];
   closing: boolean = false; modal_cs: boolean = false; modal_dp: boolean = false;
 
   constructor(
@@ -120,6 +120,13 @@ export class TableInsertComponent implements OnInit {
     this.precioRegularTelefoniaData.push([]);
     this.precioRegularTelevisioData.push([]);
     this.precioRegularRouter.push([]);
+    this.permitido[this.rows.length - 1] = false;
+    this.vPA[this.rows.length - 1] = {
+      'STREAMING': false,
+      'TELEFONIA': false,
+      'TELEVISION': false,
+      'ROUTER': false
+    };
   }
 
   getDataPLAN(SERVICIO: string, index: number): void {
@@ -127,7 +134,7 @@ export class TableInsertComponent implements OnInit {
       if(SERVICIO){
         if (SERVICIO === 'INTERNET')
           this.optionsData[index].push({ name: 'ROUTER', selected: false });
-        this.fdcb.getComboPLAN_RETURN(SERVICIO)
+        this.fdcb.fetchDataComboPLAN_RETURN(SERVICIO)
         .subscribe((plan: TariffPlanes[]) => { this.planData[index] = plan; })
         if (SERVICIO == 'STREAMING')
           this.visibleBtnPromocionAdicional[index] = true;
@@ -146,7 +153,7 @@ export class TableInsertComponent implements OnInit {
   getDataPLANVARIANT(id_Plan: number, index: number): void {
     try {
       if(id_Plan){
-        this.fdcb.getComboPLANVARIANT_RETURN(id_Plan)
+        this.fdcb.fetchDataComboPLANVARIANT_RETURN(id_Plan)
         .subscribe((planv: TariffPlanesVariant[]) => { this.planVData[index] = planv; });
       }
     } catch (error) {
@@ -157,7 +164,7 @@ export class TableInsertComponent implements OnInit {
   getDataPROD_CiudadesTariffplanVariantProducto(TPV: number, ProductoId: number, index: number): void {
     try {
       if(TPV){
-        this.fdcb.getComboPROD_RETURN(TPV)
+        this.fdcb.fetchDataComboPROD_RETURN(TPV)
         .subscribe((prod: Productos[]) => { this.productosData[index] = prod; });
         if (TPV & ProductoId)
           this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV, ProductoId)
@@ -185,7 +192,7 @@ export class TableInsertComponent implements OnInit {
     try{
       if (id_Producto && TPV){
         if(type == 'NORMAL'){
-          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
           .subscribe((prec: any) => { this.precioRegularData[index] = prec; });
         }
         if(type == 'PA_STREAMING'){
@@ -195,7 +202,7 @@ export class TableInsertComponent implements OnInit {
           if (!this.precioRegularStreamingData[index][table]) {
             this.precioRegularStreamingData[index][table] = [];
           }
-          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
             .subscribe((prec: any) => { this.precioRegularStreamingData[index][table] = prec;});
         }
         if(type == 'PA_TELEFONIA'){
@@ -203,11 +210,11 @@ export class TableInsertComponent implements OnInit {
           .subscribe((prec: any) => { this.precioRegularTelefoniaData[index] = prec; });*/
         }
         if(type == 'PA_TELEVISION'){
-          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
           .subscribe((prec: any) => { this.precioRegularTelevisioData[index] = prec; });
         }
         if(type == 'PA_ROUTER'){
-          this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
+          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
           .subscribe((prec: any) => { this.precioRegularRouter[index] = prec; });
         }
       }
@@ -220,7 +227,7 @@ export class TableInsertComponent implements OnInit {
     try{
       if (SERVICIO && id_Plan && TPV) {
         if (SERVICIO == 'INTERNET'){
-          this.fdup.getUpgrade_RETURN(id_Plan, TPV)
+          this.fdup.fetchDataUpgrade_RETURN(id_Plan, TPV)
           .subscribe((upgr: Upgrade[]) => { this.upgradeData[index] = upgr });
         }
       }
@@ -267,38 +274,59 @@ export class TableInsertComponent implements OnInit {
     return this.button_V1_V6(row, index) && trueC && trueS;
   }
 
-  button_sendInformation(row: any, index: number): boolean {
+  updateSelection(rowId: number, index: number): void {
+    const options = this.optionsData[rowId];
+    if (index === 0 && options[0].selected) { // "NO APLICAR" ha sido seleccionado
+      options.forEach((option, idx) => {
+        if (idx !== 0) option.selected = false;
+      });
+    } else if (index !== 0 && options[index].selected) { // Otra opción que no es "NO APLICAR" ha sido seleccionada
+      options[0].selected = false;
+    }
+    if (index === 1 && options[1].selected){
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('STREAMING')
+      .subscribe((PROAD: TariffPlanesVariant[]) => { this.paquetesStreaming[rowId] = PROAD; });
+    } else if (index === 2 && options[2].selected) {
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEFONIA')
+      .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelefonicos[rowId] = PROAD; });
+    } else if (index == 3 && options[3].selected) {
+      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEVISION')
+      .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelevisivos[rowId] = PROAD; });
+    } else if (index == 4 && options[4].selected){
+      this.fdcb.fetchDataComboPROD_ROUTER_RETURN()
+      .subscribe((modelos: Productos[]) => { this.modelosRouter[rowId] = modelos; });
+    }
+  }
 
-    const true1 = row._V9 && row._V11;  const true2 = this.diasGozadosData[index] && this.diasGozadosData[index].some(dias => dias.selected);
+  button_sendInformation(index: number, posicion: number){
+    const row = this.rows[index]; const true1 = row._V9 && row._V11;  
+    const true2 = this.diasGozadosData[index] && this.diasGozadosData[index].some(dias => dias.selected);
     const options = this.optionsData[index];
     let isValid = true;
-
-    if (options[0].selected) {
-      return this.button_V1_V8(row, index) && true1 && true2;
-    }
-    for (let i = 1; i < options.length; i++) {
-      console.log("entro al for "+i)
-      if (options[i].selected) {
-        // Verifica si los datos asociados a la opción están completos
-        switch (i) {
+    if(options[posicion].selected){
+      if (posicion == 0 && options[0].selected){
+        this.permitido[index] = this.button_V1_V8(row, index) && true1 && true2 && isValid;
+      } else if (posicion != 0 && options[posicion].selected){
+        console.log("entro a diferente de 0")
+        switch(posicion){
           case 1: // STREAMING
             //isValid = isValid && this.validateStreamingData(row, index);
           break;
           case 2: // TELEFONIA
-            isValid = isValid && this.validateTelefoniaData(row);
+            isValid = isValid && this.vPA[index]['TELEFONIA'];
           break;
           case 3: // TELEVISION
-            isValid = isValid && this.validateTelevisionData(row);
+            isValid = isValid && this.vPA[index]['TELEVISION'];
           break;
           case 4: // ROUTER
-            isValid = isValid && this.validateRouterData(row);
-          break;
-          default:
+            isValid = isValid && this.vPA[index]['ROUTER'];
           break;
         }
       }
+    } else {
+      isValid = false;
     }
-    return this.button_V1_V8(row, index) && true1 && true2 && isValid; // Verifica si todos los datos de las opciones seleccionadas están completos
+    this.permitido[index] = this.button_V1_V8(row, index) && true1 && true2 && isValid;
   }
 
   toggDD(index: number, type: string) {
@@ -360,30 +388,6 @@ export class TableInsertComponent implements OnInit {
     }
   }
 
-  updateSelection(rowId: number, index: number): void {
-    const options = this.optionsData[rowId];
-    if (index === 0 && options[0].selected) { // "NO APLICAR" ha sido seleccionado
-      options.forEach((option, idx) => {
-        if (idx !== 0) option.selected = false;
-      });
-    } else if (index !== 0 && options[index].selected) { // Otra opción que no es "NO APLICAR" ha sido seleccionada
-      options[0].selected = false;
-    }
-    if (index === 1 && options[1].selected){
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('STREAMING')
-      .subscribe((PROAD: TariffPlanesVariant[]) => { this.paquetesStreaming[rowId] = PROAD; });
-    } else if (index === 2 && options[2].selected) {
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEFONIA')
-      .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelefonicos[rowId] = PROAD; });
-    } else if (index == 3 && options[3].selected) {
-      this.fdpln.fetchDataTariffPlanVariantXProductoAdicional_RETURN('TELEVISION')
-      .subscribe((PROAD: TariffPlanesVariant[]) => { this.planesTelevisivos[rowId] = PROAD; });
-    } else if (index == 4 && options[4].selected){
-      this.fdcb.getComboPROD_ROUTER_RETURN()
-      .subscribe((modelos: Productos[]) => { this.modelosRouter[rowId] = modelos; });
-    }
-  }
-
   addNewTable(rowId: number): void {
     const newTable = {
         id: this.tablesRow[rowId].length,
@@ -435,15 +439,9 @@ export class TableInsertComponent implements OnInit {
     }
   }
 
-  validateTelefoniaData(row: any): boolean {
-    return row.PRAD_TF_V1 && row.PRAD_TF_V2 && row.PRAD_TF_V3 && row.PRAD_TF_V4;
-  }
-
-  validateTelevisionData(row: any): boolean {
-    return row.PRAD_TV_V1 && row.PRAD_TV_V2 && row.PRAD_TV_V3 && row.PRAD_TV_V4;
-  }
-
-  validateRouterData(row: any): boolean {
-    return row.PRAD_RT_V1 && row.PRAD_RT_V2 && row.PRAD_RT_V3 && row.PRAD_RT_V4;
+  validate(plan: number, prec: number, cant: number, meses: number, index: number, type: string): void {
+    if(plan && prec && cant && meses && (type == 'TELEFONIA' || type == 'TELEVISION' || type == 'ROUTER')){
+      this.vPA[index][type] = true;
+    }
   }
 }

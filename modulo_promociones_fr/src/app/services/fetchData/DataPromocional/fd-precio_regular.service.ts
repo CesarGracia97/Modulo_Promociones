@@ -15,7 +15,7 @@ export class FdPrecioRegularService {
     private comData: CommunicationDataService
   ) { }
 
-  getPrecioRegular(id_Producto: number, TFPV: number, index: number){
+  fetchDataPrecioRegular(id_Producto: number, TFPV: number, index: number){
     this.prec.getPrecioRegular(id_Producto, TFPV).subscribe((response: any) => {
       if(response && response.PRECIO_REGULAR) {
         this.precioData = response.PRECIO_REGULAR.map((precio: any) => {
@@ -30,7 +30,7 @@ export class FdPrecioRegularService {
 
   //RETORNO DIRECTO
   
-  getPrecioRegular_RETURN(id_Producto: number, TFPV: number): Observable<PrecioRegular[]> {
+  fetchDataPrecioRegular_RETURN(id_Producto: number, TFPV: number): Observable<PrecioRegular[]> {
     return this.prec.getPrecioRegular(id_Producto, TFPV).pipe(
       map((response: any) => {
         if(response && response.PRECIO_REGULAR){

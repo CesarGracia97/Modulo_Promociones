@@ -15,7 +15,7 @@ export class FdUpgradeService {
     private comData: CommunicationDataService
   ) { }
 
-  getUpgrade(Tariffplan: number, TFPV: number, index: number){
+  fetchDataUpgrade(Tariffplan: number, TFPV: number, index: number){
     this.upgr.getUpgrade(Tariffplan, TFPV).subscribe((response: any) => {
       if(response && response.UPGRADE){
         this.upgradeData = response.UPGRADE.map((upgrade: any) => {
@@ -31,7 +31,7 @@ export class FdUpgradeService {
 
   //RETORNO DIRECTO
 
-  getUpgrade_RETURN(Tariffplan: number, TFPV: number): Observable<Upgrade[]> {
+  fetchDataUpgrade_RETURN(Tariffplan: number, TFPV: number): Observable<Upgrade[]> {
     return this.upgr.getUpgrade(Tariffplan, TFPV).pipe(
       map((response: any) => {
         if(response && response.UPGRADE){

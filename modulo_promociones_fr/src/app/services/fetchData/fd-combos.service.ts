@@ -20,7 +20,7 @@ export class FdCombosService {
     private dataCommunication: CommunicationDataService
   ) { }
   
-  getComboPLAN(SERVICIO: string, index: number) {
+  fetchDataComboPLAN(SERVICIO: string, index: number) {
     this.combo.getCombosPlan(SERVICIO).subscribe((response: any) => {
       if (response && response.COMBO_PLAN){
         this.c_plan = response.COMBO_PLAN.map((plan: any) => {
@@ -34,7 +34,7 @@ export class FdCombosService {
     });
   }
 
-  getComboPLANVARIANT(Id_Plan: number, index: number){
+  fetchDataComboPLANVARIANT(Id_Plan: number, index: number){
     this.combo.getCombosPlanVariant(Id_Plan).subscribe((response: any) => {
       if (response && response.COMBO_PLANVARIANT) {
         this.c_planv = response.COMBO_PLANVARIANT.map((plan: any) => {
@@ -48,7 +48,7 @@ export class FdCombosService {
     })
   }
 
-  getComboPROD(Id_TPV: number, index: number){
+  fetchDataComboPROD(Id_TPV: number, index: number){
     this.combo.getCombosProductos(Id_TPV).subscribe((response: any) => {
       if(response && response.COMBO_PRODUCTO) {
         this.c_prod = response.COMBO_PRODUCTO.map((prod: Productos) => {
@@ -62,11 +62,9 @@ export class FdCombosService {
     })
   }
 
-  
-
   //RETORNO DIRECTO
   
-  getComboPLAN_RETURN(SERVICIO: string): Observable<TariffPlanes[]>{
+  fetchDataComboPLAN_RETURN(SERVICIO: string): Observable<TariffPlanes[]>{
     return this.combo.getCombosPlan(SERVICIO).pipe(
       map((response: any) => {
         if (response && response.COMBO_PLAN){
@@ -81,7 +79,7 @@ export class FdCombosService {
     );
   }
 
-  getComboPLANVARIANT_RETURN(Id_Plan: number): Observable<TariffPlanesVariant []>{
+  fetchDataComboPLANVARIANT_RETURN(Id_Plan: number): Observable<TariffPlanesVariant []>{
     return this.combo.getCombosPlanVariant(Id_Plan).pipe(
       map((response: any) => {
         if (response && response.COMBO_PLANVARIANT){
@@ -96,7 +94,7 @@ export class FdCombosService {
     );
   }
 
-  getComboPROD_RETURN(Id_TPV: number): Observable<Productos[]>{
+  fetchDataComboPROD_RETURN(Id_TPV: number): Observable<Productos[]>{
     return this.combo.getCombosProductos(Id_TPV).pipe(
       map((response: any) => {
         if(response && response.COMBO_PRODUCTO){
@@ -113,7 +111,7 @@ export class FdCombosService {
     );
   }
 
-  getComboPROD_ROUTER_RETURN(): Observable<Productos[]>{
+  fetchDataComboPROD_ROUTER_RETURN(): Observable<Productos[]>{
     return this.combo.getCombosProductos_Router().pipe(
       map((response: any) => {
         if(response && response.COMBO_PRODUCTO){

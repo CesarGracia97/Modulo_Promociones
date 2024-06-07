@@ -90,6 +90,7 @@
             </tr>
         </tbody>
     </table>
+
     <div *ngIf="modal_cs" class="modal_cs" [ngClass]="{'door-open': modal_cs}" id="modal_cs-{{ rowId+1 }}">
         <div class="modal-header">
             <span class="modal-title">Seleccionar Ciudades y Sectores - F# {{rowId+1}}</span>
@@ -158,12 +159,13 @@
                         <div [ngClass]="{'show': showPROAD[rowId], 'closing': closing}" class="dropdown">
                             <ul>
                                 <li *ngFor="let op of optionsData[rowId]; let i = index">
-                                    <input type="checkbox" [(ngModel)]="op.selected"  (change)="updateSelection(rowId, i)" [value]="op.name" />{{ op.name }} 
+                                    <input type="checkbox" [(ngModel)]="op.selected" (change)="updateSelection(rowId, i)" 
+                                    (ngModelChange)="button_sendInformation(rowId, i)" [value]="op.name" />{{ op.name }} 
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <button id="btn_dtpro_send" [disabled]="!button_sendInformation(rows[rowId], rowId)" (click)="sendInformation(rowId)">Enviar</button>
+                    <button id="btn_dtpro_send" [disabled]="!permitido[rowId]" (click)="sendInformation(rowId)">Enviar</button>
                 </div>
             </div>
             <div id="pro_adici">
@@ -215,7 +217,8 @@
                                 <td><span>PLANES</span></td>
                                 <td>
                                     <select name="PRAD_TF_V1" [(ngModel)]="rows[rowId].PRAD_TF_V1"
-                                    (ngModelChange)="getPrecioRegular(0, rows[rowId].PRAD_TF_V1, selectedTable[rowId], rowId, 'PA_TELEFONIA')">
+                                    (ngModelChange)="getPrecioRegular(0, rows[rowId].PRAD_TF_V1, selectedTable[rowId], rowId, 'PA_TELEFONIA');
+                                    validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')">
                                         <option [value]="">PLAN. TELEFONICO</option>
                                         <option *ngFor="let plan of planesTelefonicos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
@@ -226,21 +229,22 @@
                                     <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"
-                                    [(ngModel)]="rows[rowId].PRAD_TF_V2"/>
+                                    <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"[(ngModel)]="rows[rowId].PRAD_TF_V2"
+                                    (ngModelChange)="validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>CANTIDAD</span></td>
                                 <td>
-                                    <input name="PRAD_TF_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_TF_V3"/>
+                                    <input name="PRAD_TF_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_TF_V3"
+                                    (ngModelChange)="validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MESES</span></td>
                                 <td>
-                                    <input name="PRAD_TF_V4" type="number"  [min]="2" [max]="24" 
-                                    [(ngModel)]="rows[rowId].PRAD_TF_V4"/>
+                                    <input name="PRAD_TF_V4" type="number"  [min]="2" [max]="24"[(ngModel)]="rows[rowId].PRAD_TF_V4"
+                                    (ngModelChange)="validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')"/>
                                 </td>
                             </tr>
                         </table>
@@ -254,7 +258,8 @@
                                 <td><span>PLANES</span></td>
                                 <td>
                                     <select name="PRAD_TV_V1" [(ngModel)]="rows[rowId].PRAD_TV_V1"
-                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), rows[rowId].PRAD_TV_V1, 0, rowId, 'PA_TELEVISION')">
+                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), rows[rowId].PRAD_TV_V1, 0, rowId, 'PA_TELEVISION');
+                                    validate(rows[rowId].PRAD_TV_V1, rows[rowId].PRAD_TV_V2, rows[rowId].PRAD_TV_V3, rows[rowId].PRAD_TV_V4, rowId, 'TELEVISION')">
                                         <option [value]="">PLAN. TELEVISION</option>
                                         <option *ngFor="let plan of planesTelevisivos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
@@ -265,14 +270,15 @@
                                     <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional"
-                                    [(ngModel)]="rows[rowId].PRAD_TV_V2" type="number" [min]="1"/>
+                                    <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional" [(ngModel)]="rows[rowId].PRAD_TV_V2"
+                                    type="number" [min]="1" (ngModelChange)="validate(rows[rowId].PRAD_TV_V1, rows[rowId].PRAD_TV_V2, rows[rowId].PRAD_TV_V3, rows[rowId].PRAD_TV_V4, rowId, 'TELEVISION')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>CANTIDAD</span></td>
                                 <td>
-                                    <input name="PRAD_TV_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_TV_V3"/>
+                                    <input name="PRAD_TV_V3" type="number" [(ngModel)]="rows[rowId].PRAD_TV_V3" [min]="1" 
+                                    (ngModelChange)="validate(rows[rowId].PRAD_TV_V1, rows[rowId].PRAD_TV_V2, rows[rowId].PRAD_TV_V3, rows[rowId].PRAD_TV_V4, rowId, 'TELEVISION')"/>
                                 </td>
                             </tr>
                             <tr>
@@ -293,7 +299,8 @@
                                 <td><span>ROUTER</span></td>
                                 <td>
                                     <select name="PRAD_RT_V1" [(ngModel)]="rows[rowId].PRAD_RT_V1"
-                                    (ngModelChange)="getPrecioRegular(rows[rowId].PRAD_RT_V1, rows[rowId]._V3, 0, rowId, 'PA_ROUTER')">
+                                    (ngModelChange)="getPrecioRegular(rows[rowId].PRAD_RT_V1, rows[rowId]._V3, 0, rowId, 'PA_ROUTER');
+                                    validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')">
                                         <option [value]="">MODELO ROUTER</option>
                                         <option *ngFor="let modelo of modelosRouter[rowId]" [value]="modelo.PRODUCTID">{{modelo.PRODUCTO}}</option>
                                     </select>
@@ -305,20 +312,23 @@
                                 </td>
                                 <td>
                                     <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"
-                                    [max]="precioRegular.PRECIO"  [(ngModel)]="rows[rowId].PRAD_RT_V2"/>
+                                    [max]="precioRegular.PRECIO" [(ngModel)]="rows[rowId].PRAD_RT_V2"
+                                    (ngModelChange)="validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>CANTIDAD</span></td>
                                 <td>
-                                    <input name="PRAD_RT_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_RT_V3"/>
+                                    <input name="PRAD_RT_V3" type="number" [min]="1" [(ngModel)]="rows[rowId].PRAD_RT_V3"
+                                    (ngModelChange)="validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>MESES</span></td>
                                 <td>
                                     <input name="PRAD_RT_V4" type="number" [min]="2" [max]="24" 
-                                    [(ngModel)]="rows[rowId].PRAD_RT_V4"/>
+                                    [(ngModel)]="rows[rowId].PRAD_RT_V4"
+                                    (ngModelChange)="validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')"/>
                                 </td>
                             </tr>
                         </table>
