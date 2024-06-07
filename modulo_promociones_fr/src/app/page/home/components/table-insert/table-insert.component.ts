@@ -307,7 +307,6 @@ export class TableInsertComponent implements OnInit {
       if (posicion == 0 && options[0].selected){
         this.permitido[index] = this.button_V1_V8(row, index) && true1 && true2 && isValid;
       } else if (posicion != 0 && options[posicion].selected){
-        console.log("entro a diferente de 0")
         switch(posicion){
           case 1: // STREAMING
             //isValid = isValid && this.validateStreamingData(row, index);
