@@ -130,11 +130,20 @@
             <div id="dat_promo">
                 <div id="dat_promo_ing">
                     <div id="precios" *ngFor="let precioRegular of precioRegularData[rowId]">
-                        <span>
-                            PRECIO REGULAR: ${{ precioRegular.PRECIO }}
-                        </span>
-                        <input id="precioRegular" name="_V9" [(ngModel)]="rows[rowId]._V9" type="number" [min]="1" [max]="precioRegular.PRECIO" />
+                        <div id="precio_content">
+                            <span>
+                                PRECIO REGULAR: ${{ precioRegular.PRECIO }}
+                            </span>
+                            <input id="precioRegular" name="_V9" [(ngModel)]="rows[rowId]._V9" 
+                            type="number" [min]="1" [max]="precioRegular.PRECIO" 
+                            (ngModelChange)="validatePrice($event, precioRegular.PRECIO, 'NORMAL')"
+                            [class.invalid]="!validatePrice(rows[rowId]._V9, precioRegular.PRECIO, 'NORMAL')"/>
+                        </div>
+                        <div *ngIf="!vPR[rowId]['NORMAL']" class="error-message">
+                            El precio promocional no puede superar el precio regular.
+                        </div>
                     </div>
+
                     <div id="dias">
                         <span>DIAS GOZADOS</span>
                         <div id="checklist">
@@ -188,8 +197,15 @@
                                     <span>PRE. REGULAR ${{ precioRegular.PRECIO }}</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_ST_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2" 
-                                    placeholder="Ing. Pr. Promocional" type="number" min="1" [max]="precioRegular.PRECIO"/>
+                                    <div id="precio_content">                                    
+                                        <input name="PRAD_ST_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2" 
+                                        placeholder="Ing. Pr. Promocional" type="number" min="1" [max]="precioRegular.PRECIO"
+                                        (ngModelChange)="validatePrice($event, precioRegular.PRECIO, 'STREAMING')"
+                                        [class.invalid]="!validatePrice(rows[rowId]._V9, precioRegular.PRECIO, 'STREAMING')"/>
+                                    </div>
+                                    <div *ngIf="!validatePrice(tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2, precioRegular.PRECIO, 'STREAMING')" class="error-message">
+                                        El precio promocional no puede superar el precio regular.
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -229,8 +245,15 @@
                                     <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"[(ngModel)]="rows[rowId].PRAD_TF_V2"
-                                    (ngModelChange)="validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')"/>
+                                    <div id="precio_content">
+                                        <input name="PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"[(ngModel)]="rows[rowId].PRAD_TF_V2"
+                                        (ngModelChange)="validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')"
+                                        (ngModelChange)="validatePrice($event, precioRegular.PRECIO, 'TELEFONIA')"
+                                        [class.invalid]="!vPR[rowId]['TELEFONIA']"/>    
+                                    </div>
+                                    <div *ngIf="!vPR[rowId]['TELEFONIA']" class="error-message">
+                                        El precio promocional no puede superar el precio regular.
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -270,8 +293,15 @@
                                     <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional" [(ngModel)]="rows[rowId].PRAD_TV_V2"
-                                    type="number" [min]="1" (ngModelChange)="validate(rows[rowId].PRAD_TV_V1, rows[rowId].PRAD_TV_V2, rows[rowId].PRAD_TV_V3, rows[rowId].PRAD_TV_V4, rowId, 'TELEVISION')"/>
+                                    <div id="precio_content">
+                                        <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional" [(ngModel)]="rows[rowId].PRAD_TV_V2"
+                                        type="number" [min]="1" (ngModelChange)="validate(rows[rowId].PRAD_TV_V1, rows[rowId].PRAD_TV_V2, rows[rowId].PRAD_TV_V3, rows[rowId].PRAD_TV_V4, rowId, 'TELEVISION')"   
+                                        (ngModelChange)="validatePrice($event, precioRegular.PRECIO, 'TELEVISION')"
+                                        [class.invalid]="!vPR[rowId]['TELEVISION']"/>    
+                                    </div>
+                                    <div *ngIf="!vPR[rowId]['TELEVISION']" class="error-message">
+                                        El precio promocional no puede superar el precio regular.
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -311,9 +341,16 @@
                                     <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                                 </td>
                                 <td>
-                                    <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"
-                                    [max]="precioRegular.PRECIO" [(ngModel)]="rows[rowId].PRAD_RT_V2"
-                                    (ngModelChange)="validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')"/>
+                                    <div id="precio_content">
+                                        <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"
+                                        [max]="precioRegular.PRECIO" [(ngModel)]="rows[rowId].PRAD_RT_V2"
+                                        (ngModelChange)="validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')"
+                                        (ngModelChange)="validatePrice($event, precioRegular.PRECIO, 'ROUTER')"
+                                        [class.invalid]="!vPR[rowId]['ROUTER']"/>    
+                                    </div>
+                                    <div *ngIf="!vPR[rowId]['ROUTER']" class="error-message">
+                                        El precio promocional no puede superar el precio regular.
+                                    </div>
                                 </td>
                             </tr>
                             <tr>

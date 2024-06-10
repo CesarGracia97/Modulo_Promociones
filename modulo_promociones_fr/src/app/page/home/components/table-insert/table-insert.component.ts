@@ -60,6 +60,9 @@ export class TableInsertComponent implements OnInit {
   showMDPDD: boolean[] = []; showBDD: boolean[] = []; showPROAD: boolean[] = [];
   visibleUpgrade: boolean[] = []; visibleBtnPromocionAdicional: boolean[] = [];permitido: boolean[] = []; 
   vPA: { [index: number]: { [type: string]: boolean } } = [];
+  vPR: { [index: number]: { [type: string]: boolean } } = [];
+  vPRS: { [index: number]: { [index: number]: {[type: string]: boolean} } } = [];
+
   closing: boolean = false; modal_cs: boolean = false; modal_dp: boolean = false;
 
   constructor(
@@ -121,12 +124,9 @@ export class TableInsertComponent implements OnInit {
     this.precioRegularTelevisioData.push([]);
     this.precioRegularRouter.push([]);
     this.permitido[this.rows.length - 1] = false;
-    this.vPA[this.rows.length - 1] = {
-      'STREAMING': false,
-      'TELEFONIA': false,
-      'TELEVISION': false,
-      'ROUTER': false
-    };
+    this.vPA[this.rows.length - 1] = { 'STREAMING': false, 'TELEFONIA': false, 'TELEVISION': false, 'ROUTER': false };
+    this.vPR[this.rows.length - 1] = { 'NORMAL': false, 'TELEFONIA': false, 'TELEVISION': false, 'ROUTER': false };
+
   }
 
   getDataPLAN(SERVICIO: string, index: number): void {
@@ -299,7 +299,13 @@ export class TableInsertComponent implements OnInit {
   }
 
   button_sendInformation(index: number, posicion: number){
-    const row = this.rows[index]; const true1 = row._V9 && row._V11;  
+    const row = this.rows[index]; 
+    let true1: boolean;
+    if(this.upgradeData[index].length > 0){
+      true1 = !!row._V9 && !!row._V11;
+    } else {
+      true1 = !!row._V9;
+    }
     const true2 = this.diasGozadosData[index] && this.diasGozadosData[index].some(dias => dias.selected);
     const options = this.optionsData[index];
     let isValid = true;
@@ -441,6 +447,26 @@ export class TableInsertComponent implements OnInit {
   validate(plan: number, prec: number, cant: number, meses: number, index: number, type: string): void {
     if(plan && prec && cant && meses && (type == 'TELEFONIA' || type == 'TELEVISION' || type == 'ROUTER')){
       this.vPA[index][type] = true;
+    }
+  }
+
+  validatePrice(inputValue: number, maxPrice: number, type: string): boolean {
+    if(type != 'STREAMING'){
+      if(inputValue <= maxPrice){
+        this.vPR[this.rowId][type] = true;
+        return true
+      } else {
+        this.vPR[this.rowId][type] = false;
+        return false
+      }
+    } else {
+      if(inputValue <= maxPrice){
+        //this.vPRS[this.rowId][this.tableId]['STREAMING'] = true;
+        return true
+      } else {
+        //this.vPRS[this.rowId][this.tableId]['STREAMING'] = false;
+        return false
+      }
     }
   }
 }
