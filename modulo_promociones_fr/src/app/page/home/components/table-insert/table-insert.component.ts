@@ -61,7 +61,6 @@ export class TableInsertComponent implements OnInit {
   visibleUpgrade: boolean[] = []; visibleBtnPromocionAdicional: boolean[] = [];permitido: boolean[] = []; 
   vPA: { [index: number]: { [type: string]: boolean } } = [];
   vPR: { [index: number]: { [type: string]: boolean } } = [];
-  vPRS: { [index: number]: { [index: number]: {[type: string]: boolean} } } = [];
 
   closing: boolean = false; modal_cs: boolean = false; modal_dp: boolean = false;
 
