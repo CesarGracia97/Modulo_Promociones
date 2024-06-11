@@ -29,4 +29,40 @@ export class SendDataPOSTService {
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
     return encrypted;
   }
+
+  /*
+
+  createHeader(token: string) {
+    let headers: HttpHeaders;
+    headers = new HttpHeaders()
+    .set('Content-Type', 'application/json; charset=utf-8')
+    .set('Accept', 'application/json; charset=utf-8')
+    .set('Access-Control-Allow-Origin', '*')
+    .set('Authorization', 'Bearer '+token);
+    return headers;
+  }
+
+  getToken(){
+    const headers = this.createHeader('token');
+    const body = {
+      channel: "string",
+      key: KEY_TOKEN,
+      realm: "realm-bankdebits",
+      type: "Basic"
+    }
+    return this.http.post<Itoken>(API_MAIN + API_TOKEN, body, { headers });
+  }
+
+  postLogin(user: string, pass: string, token: string) {
+    const headers = this.createHeader(token);
+    const body = {
+      channel: CHANNEL,
+      externalTransactionId: IdTrasaction,
+      username: user,
+      password: pass
+    }
+    return this.http.post<any>(API_MAIN+API_LOGIN, body, { headers });
+  }
+
+  */
 }
