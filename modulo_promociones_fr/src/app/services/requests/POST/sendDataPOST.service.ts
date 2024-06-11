@@ -21,7 +21,6 @@ export class SendDataPOSTService {
         'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // Si usas token de acceso, reemplaza YOUR_ACCESS_TOKEN
       })
     };
-    
     return this.http.post(API_MAIN, { data: encryptedData }, httpOptions);
   }
 
@@ -29,11 +28,5 @@ export class SendDataPOSTService {
     const secretKey = 'your-secret-key'; // Define tu clave secreta para encriptación
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
     return encrypted;
-  }
-
-  private getToken(): string {
-    // Suponiendo que el token está almacenado en localStorage
-    // Puedes ajustar esto según cómo obtengas el token en tu aplicación
-    return localStorage.getItem('access_token') || '';
   }
 }
