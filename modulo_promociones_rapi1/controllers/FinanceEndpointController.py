@@ -18,7 +18,9 @@ class FinanceEndpointController:
             _type = request.args.get('type')
             if _type == 'ALL_BURO':
                 params = {'type': _type}
-                response = requests.get('http://localhost:5014/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/buro'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                        headers=headers)
                 return response.text, response.status_code
             else:
                 print("burop_endpoint - FrontEndpointController | Tipo de Petición no válido")
@@ -38,7 +40,9 @@ class FinanceEndpointController:
             _type = request.args.get('type')
             if _type == 'ALL_MPAGOS':
                 params = {'type': _type}
-                response = requests.get('http://localhost:5014/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/modos-pago'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                        headers=headers)
                 return response.text, response.status_code
             else:
                 print("mpagp_endpoint - FrontEndpointController | Tipo de Petición no válido")
@@ -67,7 +71,9 @@ class FinanceEndpointController:
                     params['_V1'] = request.args.get('TARIFFPLANVARIANT')
                     if 'id_Prod' in request.args:
                         params['_V2'] = request.args.get('id_Prod')
-                response = requests.get('http://localhost:5014/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/datos-promocionales'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                        headers=headers)
                 return response.text, response.status_code
             else:
                 print("mpagp_endpoint - FrontEndpointController | Tipo de Petición no válido")

@@ -25,7 +25,9 @@ class PlanesEndpointController:
                         'type': _type,
                         'stype': _stype
                     }
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/ofertas'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
 
                 elif _stype.upper() != 'OFER' and (
@@ -61,7 +63,9 @@ class PlanesEndpointController:
                         'type': _type,
                         'stype': _stype
                     }
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/servicios'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
 
                 elif _stype.upper() != 'SERV' and (
@@ -99,7 +103,9 @@ class PlanesEndpointController:
                               'stype': _stype}
                     if '_V1' in request.args:
                         params['_V1'] = request.args.get('_V1')
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/combos'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'PROVINCIA':
@@ -113,7 +119,9 @@ class PlanesEndpointController:
                               '_V2': _V2,
                               '_V3': _V3,
                               '_V4': _V4}
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/combos'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'CIUDAD':
@@ -129,7 +137,9 @@ class PlanesEndpointController:
                               '_V3': _V3,
                               '_V4': _V4,
                               '_V5': _V5}
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/combos'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
 
                 elif _stype.upper() == 'SECTOR':
@@ -147,7 +157,9 @@ class PlanesEndpointController:
                               '_V4': _V4,
                               '_V5': _V5,
                               '_V6': _V6}
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/combos'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
 
                 else:
@@ -183,7 +195,9 @@ class PlanesEndpointController:
                         params['_V1'] = request.args.get('SERVICIO')
                         if 'TIPO_SERVICIO' in request.args:
                             params['_V2'] = request.args.get('_V2')
-                    response = requests.get('http://localhost:5013/api/ra/plnback_endpoint', params=params)
+                    headers = {'Referer': __URL__ + '/planes'}
+                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                                            headers=headers)
                     return response.text, response.status_code
                 else:
                     mensaje = ("planp_enpoint - FrontEndpointController |"

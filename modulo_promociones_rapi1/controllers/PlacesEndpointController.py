@@ -24,7 +24,8 @@ class PlacesEndopointController:
                 params = {'type': _type}
                 if 'TARIFFPLANVARIANT' in request.args:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/provincias'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
                 return response.text, response.status_code
             else:
                 print("prov_endpoint - FrontEndpointController | Tipo de Petición no válido")
@@ -54,7 +55,8 @@ class PlacesEndopointController:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
                 if 'PRODUCTOID' in request.args:
                     params['PRODUCTOID'] = request.args.get('PRODUCTOID')
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/ciudades'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
                 return response.text, response.status_code
 
             else:
@@ -83,7 +85,8 @@ class PlacesEndopointController:
                     params['id_City'] = request.args.get('id_City')
                 if 'TARIFFPLANVARIANT' in request.args:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/sectores'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
                 return response.text, response.status_code
 
             else:
@@ -118,7 +121,8 @@ class PlacesEndopointController:
                 if 'PRODUCTOID' in request.args:
                     params['PRODUCTOID'] = request.args.get('PRODUCTOID')
                 params['MASIVE'] = "YES"
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params)
+                headers = {'Referer': __URL__ + '/masivo'}
+                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
                 return response.text, response.status_code
 
             else:
