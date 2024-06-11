@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TariffPlan_X_TariffPlanVariant, TariffPlanes, TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
+import { TariffPlan_X_TariffPlanVariant, TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 

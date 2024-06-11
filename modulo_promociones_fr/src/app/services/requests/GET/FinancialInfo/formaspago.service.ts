@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ModosPago } from '../../../interfaces/financial/modos-pago.interface';
+import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ProvinciasService } from '../requests/places/provincias.service';
-import { CiudadService } from '../requests/places/ciudad.service';
+import { ProvinciasService } from '../requests/GET/places/provincias.service';
+import { CiudadService } from '../requests/GET/places/ciudad.service';
 import { Provincias } from '../../interfaces/places/provincias.interface';
 import { Ciudades } from '../../interfaces/places/ciudad.interface';
 import { CommunicationDataService } from '../communication/communicationData.service';
-import { SectorService } from '../requests/places/sector.service';
+import { SectorService } from '../requests/GET/places/sector.service';
 import { Sectores } from '../../interfaces/places/sector.interface';
 import { map, Observable } from 'rxjs';
 import { response } from 'express';

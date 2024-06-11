@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { DiasGozados } from '../../../interfaces/DataPromocional/dias-gozados.interface';
-import { DiasGozadosService } from '../../requests/DataPromocional/dias-gozados.service';
+import { DiasGozadosService } from '../../requests/GET/DataPromocional/dias-gozados.service';
 import { CommunicationDataService } from '../../communication/communicationData.service';
 
 @Injectable({

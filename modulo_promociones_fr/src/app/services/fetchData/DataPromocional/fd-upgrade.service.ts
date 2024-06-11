@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UpgradeService } from '../../requests/DataPromocional/upgrade.service';
+import { UpgradeService } from '../../requests/GET/DataPromocional/upgrade.service';
 import { Upgrade } from '../../../interfaces/DataPromocional/upgrade.interface';
 import { CommunicationDataService } from '../../communication/communicationData.service';
 import { map, Observable } from 'rxjs';

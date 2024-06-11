@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PrecioRegular } from '../../../interfaces/DataPromocional/precio-regular.interface';
-import { PrecioRegularService } from '../../requests/DataPromocional/precio-regular.service';
+import { PrecioRegularService } from '../../requests/GET/DataPromocional/precio-regular.service';
 import { CommunicationDataService } from '../../communication/communicationData.service';
 import { map, Observable } from 'rxjs';
 

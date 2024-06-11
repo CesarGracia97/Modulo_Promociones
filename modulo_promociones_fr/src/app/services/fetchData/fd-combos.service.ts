@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TariffPlanes, TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
-import { CombosService } from '../requests/planes/combos.service';
+import { CombosService } from '../requests/GET/planes/combos.service';
 import { CommunicationDataService } from '../communication/communicationData.service';
 import { Productos } from '../../interfaces/planes/productos.interface';
 import { map, Observable } from 'rxjs';

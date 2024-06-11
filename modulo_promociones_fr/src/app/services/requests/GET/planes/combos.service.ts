@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TipoServicios } from '../../../interfaces/planes/tiposervicios.interface';
-import { TariffPlanes, TariffPlanesVariant } from '../../../interfaces/planes/tariffplanes.interface';
-import { Productos } from '../../../interfaces/planes/productos.interface';
+import { TipoServicios } from '../../../../interfaces/planes/tiposervicios.interface';
+import { TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
+import { Productos } from '../../../../interfaces/planes/productos.interface';
 
 @Injectable({
   providedIn: 'root'

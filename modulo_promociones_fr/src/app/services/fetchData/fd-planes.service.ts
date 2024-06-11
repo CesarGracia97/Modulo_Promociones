@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ServiciosService } from '../requests/planes/servicios.service';
-import { TariffplanesService } from '../requests/planes/tariffplanes.service';
+import { ServiciosService } from '../requests/GET/planes/servicios.service';
+import { TariffplanesService } from '../requests/GET/planes/tariffplanes.service';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { CommunicationDataService } from '../communication/communicationData.service';

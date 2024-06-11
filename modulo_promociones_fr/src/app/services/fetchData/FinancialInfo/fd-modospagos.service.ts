@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModosPago } from '../../../interfaces/financial/modos-pago.interface';
-import { FormaspagoService } from '../../requests/FinancialInfo/formaspago.service';
+import { FormaspagoService } from '../../requests/GET/FinancialInfo/formaspago.service';
 import { CommunicationDataService } from '../../communication/communicationData.service';
 import { map, Observable } from 'rxjs';
 

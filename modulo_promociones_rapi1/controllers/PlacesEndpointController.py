@@ -1,16 +1,17 @@
-from flask import Blueprint, request, jsonify
 import requests
+from flask import Blueprint, jsonify, request
 
-provp_bp = Blueprint('rapi_provp_GET', __name__)
-cityp_bp = Blueprint('rapi_cityp_GET', __name__)
-sectp_bp = Blueprint('rapi_sectp_GET', __name__)
-infmv_bp = Blueprint('rapi_infmv_GET', __name__)
+provp_bp = Blueprint('provincias_GET', __name__)
+cityp_bp = Blueprint('ciudades_GET', __name__)
+sectp_bp = Blueprint('sectores_GET', __name__)
+infmv_bp = Blueprint('masivos_GET', __name__)
+
+__URL__ = 'rest/getdata-modulos-promocionales-api/v1.0/places'
 
 
-class FrontEndpointController:
-
-    @provp_bp.route('/api/ra/plcprov_endpoint', methods=['GET'])
-    def prov_endpoint():
+class PlacesEndopointController:
+    @provp_bp.route(__URL__ + '/provincias', methods=['GET'])
+    def provincias_endpoint():
         try:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
@@ -34,7 +35,7 @@ class FrontEndpointController:
             print("--------------------------------------------------------------------")
             return jsonify({'Error': e})
 
-    @cityp_bp.route('/api/ra/plccity_endpoint', methods=['GET'])
+    @cityp_bp.route(__URL__ + '/ciudades', methods=['GET'])
     def city_endpoint():
         try:
             print("PLACES - LUGARES")
@@ -65,7 +66,7 @@ class FrontEndpointController:
             print("--------------------------------------------------------------------")
             return jsonify({'Error': e})
 
-    @sectp_bp.route('/api/ra/plcsector_endpoint', methods=['GET'])
+    @sectp_bp.route(__URL__ + '/sectores', methods=['GET'])
     def sector_endpoint():
         try:
             print("PLACES - LUGARES")
@@ -94,7 +95,7 @@ class FrontEndpointController:
             print("--------------------------------------------------------------------")
             return jsonify({'Error': e})
 
-    @infmv_bp.route('/api/ra/plcinfomasiva_endpoint', methods=['GET'])
+    @infmv_bp.route(__URL__ + '/masivo', methods=['GET'])
     def infomasiva_endpoint():
         try:
             print("PLACES - LUGARES")
@@ -106,7 +107,7 @@ class FrontEndpointController:
                         "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
 
             if _type in _masivos:
-                print("Tipo de Peticion: "+_type)
+                print("Tipo de Peticion: " + _type)
                 params = {'type': _type}
                 if 'id_Provs' in request.args:
                     params['id_Provs'] = request.args.getlist('id_Provs')
@@ -128,4 +129,3 @@ class FrontEndpointController:
             print("infomasiva_endpoint - FrontEndpointController | Error Detectado: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': e})
-
