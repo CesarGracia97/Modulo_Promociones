@@ -5,15 +5,12 @@ import { environment } from '../../../environments/environment';
 import * as cryptoJS from 'crypto-js';
 
 const API_MAIN = environment.MAIN_URL;
-const API_POST_DATA = environment.API_POST_DATA;
 
 @Injectable({
   providedIn: 'root'
 })
 export class SendDataPOSTService {
-
-
-
+  
   constructor(private http: HttpClient) { }
 
   sendData(data: Record<string, any>): Observable<any> {
@@ -25,7 +22,7 @@ export class SendDataPOSTService {
       })
     };
     
-    return this.http.post(this.API_MAIN, { data: encryptedData }, httpOptions);
+    return this.http.post(API_MAIN, { data: encryptedData }, httpOptions);
   }
 
   private encryptData(data: Record<string, any>): string {
