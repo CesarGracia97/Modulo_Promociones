@@ -6,7 +6,7 @@ oferp_bp = Blueprint('rapi_oferp_GET', __name__)
 servp_bp = Blueprint('rapi_servp_GET', __name__)
 planp_bp = Blueprint('rapi_planp_GET', __name__)
 
-__URL__ = 'rest/getdata-modulos-promocionales-api/v1.0/planes'
+__URL__ = '/rest/getdata-modulos-promocionales-api/v1.0/planes'
 
 
 class PlanesEndpointController:

@@ -5,7 +5,7 @@ burop_bp = Blueprint('rapi_burop_GET', __name__)
 mpagp_bp = Blueprint('rapi_mpagp_GET', __name__)
 dtpro_bp = Blueprint('rapi_dtpro_GET', __name__)
 
-__URL__ = 'rest/getdata-modulos-promocionales-api/v1.0/finance'
+__URL__ = '/rest/getdata-modulos-promocionales-api/v1.0/finance'
 
 
 class FinanceEndpointController:

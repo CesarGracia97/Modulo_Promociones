@@ -12,6 +12,7 @@ export class InjectionDataService {
 
   constructor(private Encryptor: EncryptorService, private send: SendDataPOSTService, private gtoken: RequiredTokenService) { }
 
+  /*
   injectionData(_diccionario: Record<string, any>){
     const _diccionarioEncrpt = this.Encryptor.encryptData(_diccionario);
     this.gtoken.getToken().subscribe((response: any) => {
@@ -20,5 +21,20 @@ export class InjectionDataService {
       }
     });
     this.send.InjectionData_POST({ data: _diccionarioEncrpt }, this.token[0].code);
+  }
+  */
+
+  injectionData(){
+    //const _diccionarioEncrpt = this.Encryptor.encryptData(_diccionario);
+    this.gtoken.getToken().subscribe((response: any) => {
+      if(response){
+        console.log("Se recibio el Token")
+        console.log(response);
+        if(response && response.IT){
+          this.token = response.IT.map((tk: Itoken) => tk.code)
+        }
+      }
+    });
+    //this.send.InjectionData_POST({ data: _diccionarioEncrpt }, this.token[0].code);
   }
 }

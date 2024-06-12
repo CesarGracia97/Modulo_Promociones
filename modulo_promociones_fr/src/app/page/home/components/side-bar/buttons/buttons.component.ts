@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommunicationVisibleService } from '../../../../../services/communication/communicationVisible.service';
 import { CommonModule } from '@angular/common';
 import { FdPlanesService } from '../../../../../services/fetchData/fd-planes.service';
-import { FdPlacesService } from '../../../../../services/fetchData/fd-places.service';
+import { InjectionDataService } from '../../../../../services/injection/injection-data.service';
 
 @Component({
   selector: 'app-buttons',
@@ -20,7 +20,7 @@ export class ButtonsComponent implements OnInit {
   constructor(
     private comVisual: CommunicationVisibleService,
     private fdplan: FdPlanesService,
-    private fdplace: FdPlacesService
+    private getTo: InjectionDataService
   ){}
 
   ngOnInit(): void {
@@ -62,6 +62,10 @@ export class ButtonsComponent implements OnInit {
       console.log(error)
       console.log("---------------------------------------------------------------")
     }
+  }
+
+  getToken(): void {
+    this.getTo.injectionData()
   }
 
   changeValueVisible(){

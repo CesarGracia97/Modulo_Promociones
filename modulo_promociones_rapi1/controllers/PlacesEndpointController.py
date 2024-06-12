@@ -6,7 +6,7 @@ cityp_bp = Blueprint('ciudades_GET', __name__)
 sectp_bp = Blueprint('sectores_GET', __name__)
 infmv_bp = Blueprint('masivos_GET', __name__)
 
-__URL__ = 'rest/getdata-modulos-promocionales-api/v1.0/places'
+__URL__ = '/rest/getdata-modulos-promocionales-api/v1.0/places'
 
 
 class PlacesEndopointController:
