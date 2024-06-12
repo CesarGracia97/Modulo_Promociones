@@ -2,19 +2,22 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Servicios } from '../../../../interfaces/planes/servicios.interface';
+import { environment } from '../../../../environments/environment';
+
+const MAIN_URL = environment.MAIN_URL;
+const API_GET_PLANES = environment.API_GET_PLANES;
+const SERVIC = environment.API_GET_PLANES_SERV;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiciosService {
 
-  private baseUrl ='http://127.0.0.1:5013/api/ra/plnserv_endpoint';
-
   constructor(private http:HttpClient) { }
 
   getServiciosALL():Observable<Servicios[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
     .set('stype', 'SERV');
-    return this.http.get<Servicios[]>(this.baseUrl, { params: params });
+    return this.http.get<Servicios[]>(MAIN_URL+ API_GET_PLANES+SERVIC, { params: params });
   }
 }

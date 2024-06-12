@@ -1,3 +1,3 @@
 export interface Itoken {
-  code: number
+  code: string
 }
