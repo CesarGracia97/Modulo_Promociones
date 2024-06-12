@@ -21,5 +21,8 @@ export const environment = {
     API_GET_FINANCE_DTPR: '/datos-promocionales',
 
     //API POST
-    API_POST_DATA: 'rest/postdata-modulos-promocionales-api/v1.0/injection'
+    API_POST_DATA: 'rest/postdata-modulos-promocionales-api/v1.0/injection',
+
+    //KEY
+    KEY: '*Overwatch.2023!090349433ZeroXAxl2704617*'
 };
