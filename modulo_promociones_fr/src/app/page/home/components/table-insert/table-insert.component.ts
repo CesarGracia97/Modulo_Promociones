@@ -21,6 +21,7 @@ import { FdUpgradeService } from '../../../../services/fetchData/DataPromocional
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
 import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
+import { InjectionDataService } from '../../../../services/injection/injection-data.service';
 
 
 @Component({
@@ -73,7 +74,8 @@ export class TableInsertComponent implements OnInit {
     private fdb: FdBuroService,
     private fddg: FdDiasGozadosService,
     private fdpr: FdPrecioRegularService,
-    private fdup: FdUpgradeService
+    private fdup: FdUpgradeService,
+    private send: InjectionDataService
   ){}
 
   ngOnInit(): void {
@@ -424,7 +426,7 @@ export class TableInsertComponent implements OnInit {
     let _diccionario: { [key: string]: any } = {'SERVICIO': index._V1, 'PLAN': index._V2, 'VARIANT': index._V3, 'PRODUCTO': index._V4, 'MODOS_PAGO': _V5, 
       'BURO': _V6, 'CIUDADES': _V7, ' SECTORES': _V8, 'PRECIO_PROMOCIONAL': index._V9, 'DIAS': _V10, 'UPGRADE': index._V11};
     if (options[0].selected){
-
+      this.send.injectionData(_diccionario);
     } 
     if (options[1].selected){
       const _dStreaming = {}

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from config.config import config
 from resources.GeneratorToken import GeneratorToken
 

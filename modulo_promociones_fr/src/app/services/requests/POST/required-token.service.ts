@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Itoken } from '../../../interfaces/Login/LoginInterface';
 import { HeaderCreatorService } from '../../complements/header-creator.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -16,7 +14,7 @@ export class RequiredTokenService {
 
   constructor(private http: HttpClient, private headerCr: HeaderCreatorService) { }
 
-  getToken(): Observable<Itoken[]> {
+  getToken() {
     const headers = this.headerCr.createHeader('token');
     const body = {
       channel: "string",
@@ -24,6 +22,6 @@ export class RequiredTokenService {
       realm: "realm-modulos_promocionales",
       type: "Basic"
     }
-    return this.http.post<Itoken[]>(API_MAIN + API_TOKEN, body, { headers });
+    return this.http.post<string>(API_MAIN + API_TOKEN, body, { headers });
   }
 }

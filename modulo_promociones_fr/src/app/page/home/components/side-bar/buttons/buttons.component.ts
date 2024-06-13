@@ -64,10 +64,6 @@ export class ButtonsComponent implements OnInit {
     }
   }
 
-  getToken(): void {
-    this.getTo.injectionData()
-  }
-
   changeValueVisible(){
     if(this.visibleValueDiv !== ''){
       this.comVisual.visibleTerceriaComponent('');
