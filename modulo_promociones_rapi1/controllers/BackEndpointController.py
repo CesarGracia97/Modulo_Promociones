@@ -1,20 +1,22 @@
 import requests
 from flask import Blueprint, jsonify, request
 
+from config.config import config
+
 backp_bp = Blueprint('rapi_backp_GET', __name__)
-URL_BASE = 'http://127.0.0.1:5012/'
-
-URL_Lugares = '/rest/getdata-modulos-promocionales-api/v1.0/places'
-Lugares = ['/provincias', '/ciudades', '/sectores', '/masivo']
-
-URL_Planes = '/rest/getdata-modulos-promocionales-api/v1.0/planes'
-Planes = ['/ofertas', '/servicios', '/combos', '/planes']
-
-URL_Finanzas = '/rest/getdata-modulos-promocionales-api/v1.0/finance'
-Finanzas = ['/buro', '/modos-pago', '/datos-promocionales']
+__URL_BKP__ = config.get('URL', 'URL_BACKENDPOINT')
 
 
 class BackEndpointController:
+
+    def __init__(self):
+        self.__URL_Lugares = config.get('URL', 'URL_PLACE', 'URL_BASE')
+        self.__Lugares = config.get('LISTAS', 'Lugares')
+        self.__URL_Planes = config.get('URL', 'URL_PLANES', 'URL_BASE')
+        self.__Planes = config.get('LISTAS', 'Planes')
+        self.__URL_Finanzas = config.get('URL', 'URL_FINANCE', 'URL_BASE')
+        self.__Finanzas = config.get('LISTAS', 'Finanzas')
+
     @staticmethod
     def make_request(endpoint, payload):
         try:
@@ -25,13 +27,14 @@ class BackEndpointController:
             print("Error en la solicitud:", e)
             return {'error': e}, 500
 
-    @backp_bp.route('/api/ra/plcback_endpoint', methods=['GET'])
+    @backp_bp.route(__URL_BKP__, methods=['GET'])
     def back_endpoint():
+        controller = BackEndpointController()
         try:
             referer = request.headers.get('Referer')
 
             if referer:
-                if any((URL_Lugares + ruta) in referer for ruta in Lugares):
+                if any((controller.__URL_Lugares + ruta) in referer for ruta in controller.__Lugares):
                     print("\nFase de Escucha | ENDPOINT ACTIVADO")
                     print("PLACE - Lugares")
                     print("BACK ENDPOINT ACTIVO\n")
@@ -90,7 +93,7 @@ class BackEndpointController:
                     else:
                         return jsonify({'error': 'BACK ENDPOINT - Tipo no proporcionado'}), 400
 
-                elif any((URL_Planes + ruta) in referer for ruta in Planes):
+                elif any((controller.__URL_Planes + ruta) in referer for ruta in controller.__Planes):
                     print("\nFase de Escucha | BACK-ENDPOINT ACTIVADO")
                     print("PLANS - Planes")
                     print("BACK ENDPOINT ACTIVO\n")
@@ -116,7 +119,7 @@ class BackEndpointController:
                         return BackEndpointController.make_request('http://localhost:5011/api/ms/peticionPlanes',
                                                                    request.args)
 
-                elif any((URL_Finanzas + ruta) in referer for ruta in Finanzas):
+                elif any((controller.__URL_Finanzas + ruta) in referer for ruta in controller.__Finanzas):
                     print("\nFase de Escucha | BACK-ENDPOINT ACTIVADO")
                     print("FINANCE - Finance")
                     print("BACK ENDPOINT ACTIVO\n")

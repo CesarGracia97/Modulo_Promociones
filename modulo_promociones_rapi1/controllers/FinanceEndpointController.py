@@ -1,16 +1,22 @@
 import requests
 from flask import Blueprint, request, jsonify
+from config.config import config
 
 burop_bp = Blueprint('rapi_burop_GET', __name__)
 mpagp_bp = Blueprint('rapi_mpagp_GET', __name__)
 dtpro_bp = Blueprint('rapi_dtpro_GET', __name__)
 
-__URL__ = '/rest/getdata-modulos-promocionales-api/v1.0/finance'
+__URL__ = config.get('URL', 'URL_FINANCE', 'URL_BASE')
 
 
 class FinanceEndpointController:
+    def __init__(self):
+        self.__BASE = config.get('URL', 'URL_BASE')
+        self.__BACK = config.get('URL', 'URL_BACKENDPOINT')
+
     @burop_bp.route(__URL__+'/buro', methods=['GET'])
     def burop_endpoint():
+        controller = FinanceEndpointController()
         try:
             print("\nFinancial - Buro")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -19,7 +25,7 @@ class FinanceEndpointController:
             if _type == 'ALL_BURO':
                 params = {'type': _type}
                 headers = {'Referer': __URL__ + '/buro'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                         headers=headers)
                 return response.text, response.status_code
             else:
@@ -33,6 +39,7 @@ class FinanceEndpointController:
 
     @mpagp_bp.route(__URL__+'/modos-pago', methods=['GET'])
     def mpagp_endpoint():
+        controller = FinanceEndpointController()
         try:
             print("\nFinancial - Modos de Pago")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -41,7 +48,7 @@ class FinanceEndpointController:
             if _type == 'ALL_MPAGOS':
                 params = {'type': _type}
                 headers = {'Referer': __URL__ + '/modos-pago'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                         headers=headers)
                 return response.text, response.status_code
             else:
@@ -55,6 +62,7 @@ class FinanceEndpointController:
 
     @dtpro_bp.route(__URL__+'/datos-promocionales', methods=['GET'])
     def dtpro_endpoint():
+        controller = FinanceEndpointController()
         try:
             print("\nFinancial - Data Promocional")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -72,7 +80,7 @@ class FinanceEndpointController:
                     if 'id_Prod' in request.args:
                         params['_V2'] = request.args.get('id_Prod')
                 headers = {'Referer': __URL__ + '/datos-promocionales'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                         headers=headers)
                 return response.text, response.status_code
             else:

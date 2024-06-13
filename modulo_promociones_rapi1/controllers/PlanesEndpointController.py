@@ -1,18 +1,23 @@
 import requests
 from flask import Blueprint, request, jsonify
+from config.config import config
 
 combp_bp = Blueprint('rapi_combp_GET', __name__)
 oferp_bp = Blueprint('rapi_oferp_GET', __name__)
 servp_bp = Blueprint('rapi_servp_GET', __name__)
 planp_bp = Blueprint('rapi_planp_GET', __name__)
 
-__URL__ = '/rest/getdata-modulos-promocionales-api/v1.0/planes'
+__URL__ = config.get('URL', 'URL_PLANES', 'URL_BASE')
 
 
 class PlanesEndpointController:
+    def __init__(self):
+        self.__BASE = config.get('URL', 'URL_BASE')
+        self.__BACK = config.get('URL', 'URL_BACKENDPOINT')
 
     @oferp_bp.route(__URL__ + '/ofertas', methods=['GET'])
     def oferp_enpoint():
+        controller = PlanesEndpointController()
         try:
             print("\nOFERTAS - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -26,7 +31,7 @@ class PlanesEndpointController:
                         'stype': _stype
                     }
                     headers = {'Referer': __URL__ + '/ofertas'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
 
@@ -51,6 +56,7 @@ class PlanesEndpointController:
 
     @servp_bp.route(__URL__ + '/servicios', methods=['GET'])
     def servp_enpoint():
+        controller = PlanesEndpointController()
         try:
             print("\nSERVICIOS - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -64,7 +70,7 @@ class PlanesEndpointController:
                         'stype': _stype
                     }
                     headers = {'Referer': __URL__ + '/servicios'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
 
@@ -89,6 +95,7 @@ class PlanesEndpointController:
 
     @combp_bp.route(__URL__ + '/combos', methods=['GET'])
     def combp_endpoint():
+        controller = PlanesEndpointController()
         try:
             print("\nPLANES COMBOS - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -104,7 +111,7 @@ class PlanesEndpointController:
                     if '_V1' in request.args:
                         params['_V1'] = request.args.get('_V1')
                     headers = {'Referer': __URL__ + '/combos'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
 
@@ -120,7 +127,7 @@ class PlanesEndpointController:
                               '_V3': _V3,
                               '_V4': _V4}
                     headers = {'Referer': __URL__ + '/combos'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
 
@@ -138,7 +145,7 @@ class PlanesEndpointController:
                               '_V4': _V4,
                               '_V5': _V5}
                     headers = {'Referer': __URL__ + '/combos'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
 
@@ -158,7 +165,7 @@ class PlanesEndpointController:
                               '_V5': _V5,
                               '_V6': _V6}
                     headers = {'Referer': __URL__ + '/combos'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
 
@@ -181,6 +188,7 @@ class PlanesEndpointController:
 
     @planp_bp.route(__URL__ + '/planes', methods=['GET'])
     def planp_enpoint():
+        controller = PlanesEndpointController()
         try:
             print("\nPLANES - PLANES")
             print("Fase de Escucha | FRONT-ENDPOINT ACTIVADO")
@@ -196,7 +204,7 @@ class PlanesEndpointController:
                         if 'TIPO_SERVICIO' in request.args:
                             params['_V2'] = request.args.get('_V2')
                     headers = {'Referer': __URL__ + '/planes'}
-                    response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params,
+                    response = requests.get(controller.__BASE+controller.__BACK, params=params,
                                             headers=headers)
                     return response.text, response.status_code
                 else:

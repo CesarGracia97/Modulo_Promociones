@@ -1,17 +1,22 @@
 import requests
 from flask import Blueprint, jsonify, request
+from config.config import config
 
 provp_bp = Blueprint('provincias_GET', __name__)
 cityp_bp = Blueprint('ciudades_GET', __name__)
 sectp_bp = Blueprint('sectores_GET', __name__)
 infmv_bp = Blueprint('masivos_GET', __name__)
-
-__URL__ = '/rest/getdata-modulos-promocionales-api/v1.0/places'
+__URL__ = config.get('URL', 'URL_PLACE', 'URL_BASE')
 
 
 class PlacesEndopointController:
+    def __init__(self):
+        self.__BASE = config.get('URL', 'URL_BASE')
+        self.__BACK = config.get('URL', 'URL_BACKENDPOINT')
+
     @provp_bp.route(__URL__ + '/provincias', methods=['GET'])
     def provincias_endpoint():
+        controller = PlacesEndopointController()
         try:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
@@ -25,7 +30,7 @@ class PlacesEndopointController:
                 if 'TARIFFPLANVARIANT' in request.args:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
                 headers = {'Referer': __URL__ + '/provincias'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
+                response = requests.get(controller.__BASE+controller.__BACK, params=params, headers=headers)
                 return response.text, response.status_code
             else:
                 print("prov_endpoint - FrontEndpointController | Tipo de Petición no válido")
@@ -38,6 +43,7 @@ class PlacesEndopointController:
 
     @cityp_bp.route(__URL__ + '/ciudades', methods=['GET'])
     def city_endpoint():
+        controller = PlacesEndopointController()
         try:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
@@ -56,7 +62,7 @@ class PlacesEndopointController:
                 if 'PRODUCTOID' in request.args:
                     params['PRODUCTOID'] = request.args.get('PRODUCTOID')
                 headers = {'Referer': __URL__ + '/ciudades'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
+                response = requests.get(controller.__BASE+controller.__BACK, params=params, headers=headers)
                 return response.text, response.status_code
 
             else:
@@ -70,6 +76,7 @@ class PlacesEndopointController:
 
     @sectp_bp.route(__URL__ + '/sectores', methods=['GET'])
     def sector_endpoint():
+        controller = PlacesEndopointController()
         try:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
@@ -86,7 +93,7 @@ class PlacesEndopointController:
                 if 'TARIFFPLANVARIANT' in request.args:
                     params['TARIFFPLANVARIANT'] = request.args.get('TARIFFPLANVARIANT')
                 headers = {'Referer': __URL__ + '/sectores'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
+                response = requests.get(controller.__BASE+controller.__BACK, params=params, headers=headers)
                 return response.text, response.status_code
 
             else:
@@ -100,6 +107,7 @@ class PlacesEndopointController:
 
     @infmv_bp.route(__URL__ + '/masivo', methods=['GET'])
     def infomasiva_endpoint():
+        controller = PlacesEndopointController()
         try:
             print("PLACES - LUGARES")
             print("\nFase de Escucha | ENDPOINT - F ACTIVADO")
@@ -122,7 +130,7 @@ class PlacesEndopointController:
                     params['PRODUCTOID'] = request.args.get('PRODUCTOID')
                 params['MASIVE'] = "YES"
                 headers = {'Referer': __URL__ + '/masivo'}
-                response = requests.get('http://localhost:5012/api/ra/plcback_endpoint', params=params, headers=headers)
+                response = requests.get(controller.__BASE+controller.__BACK, params=params, headers=headers)
                 return response.text, response.status_code
 
             else:
