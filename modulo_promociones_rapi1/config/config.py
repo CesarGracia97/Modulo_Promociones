@@ -14,11 +14,13 @@ class Config:
             value = value[key]
         return value
 
-    def set(self, value, *keys):
-        config_section = self.config
-        for key in keys[:-1]:
-            config_section = config_section[key]
-        config_section[keys[-1]] = value
+    def set_token(self, token):
+        self.config['TOKER']['TOKEN_GEN'] = token
+        with open(self.config_file_path, 'w') as file:
+            json.dump(self.config, file, indent=4)
+
+    def delete_token(self):
+        self.config['TOKER']['TOKEN_GEN'] = ""
         with open(self.config_file_path, 'w') as file:
             json.dump(self.config, file, indent=4)
 

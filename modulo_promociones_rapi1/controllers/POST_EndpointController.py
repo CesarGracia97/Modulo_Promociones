@@ -11,6 +11,7 @@ __URLBD__ = config.get('URL', 'URL_POST_BD')
 class POST_EndpointController:
     def __init__(self):
         self.__KEY = config.get('TOKER', 'TOKEN_IDP')
+        self.__KEYC = config.get('TOKER', 'TOKEN_GEN')
 
     @postTo_bp.route(__URLToken__, methods=['POST'])
     def postToken_endpoint():
@@ -22,11 +23,13 @@ class POST_EndpointController:
 
                 request_data = request.get_json()
                 if request_data and 'key' in request_data and request_data['key'] == controller.__KEY:
-                    print("Get Token")
-                    new_token = GeneratorToken.generate_token()
+                    print("---------------------------------------------------")
+                    print("POST - TokenGEN")
+                    print("---------------------------------------------------")
 
+                    new_token = GeneratorToken.generate_token()
                     # Almacenar el nuevo token en la cache global
-                    config.set(new_token, 'TOKER', 'TOKEN_GEN')
+                    config.set_token(new_token)
 
                     print("Respuesta Enviada")
                     return jsonify({'token': new_token}), 200
@@ -42,7 +45,35 @@ class POST_EndpointController:
 
     @postBd_bp.route(__URLBD__, methods=['POST'])
     def postBd_endpoint():
+        controller = POST_EndpointController()
         try:
-            print()
+            print("---------------------------------------------------")
+            print("POST - POST INJECCION")
+            print("---------------------------------------------------")
+            authorization_header = request.headers.get('Authorization')
+            if authorization_header and authorization_header.startswith('Bearer '):
+                token = authorization_header.split('Bearer ')[1]
+
+                request_data = request.get_json()
+                if request_data and 'key' in request_data and request_data['key'] == controller.__KEYC:
+                    print("---------------------------------------------------")
+                    print("POST - POST INJECCION | INGRESO EXITOSO")
+                    print("---------------------------------------------------")
+                else:
+                    print("---------------------------------------------------")
+                    print("POST - POST INJECCION | INGRESO FALLIDO")
+                    print("---------------------------------------------------")
+                    return jsonify({'error': 'Clave incorrecta'}), 400
+            else:
+                print("---------------------------------------------------")
+                print("POST - POST INJECCION | REVISA EL TOKEN, ALGO ANDA MAL")
+                print("---------------------------------------------------")
+                return jsonify({'error': 'Token de autorización no válido'}), 401
         except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("postBd_endpoint - Error Encontrado")
             print(e)
+            print("--------------------------------------------------------------------")
+        finally:
+            # Borrar el token temporal del archivo de configuración
+            config.delete_token()
