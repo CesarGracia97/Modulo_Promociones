@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Observable } from 'rxjs/internal/Observable';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
 const API_GET_FINANCE = environment.API_GET_FINANCE;

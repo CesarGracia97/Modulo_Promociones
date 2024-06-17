@@ -3,7 +3,7 @@ import { ProvinciasService } from '../requests/GET/places/provincias.service';
 import { CiudadService } from '../requests/GET/places/ciudad.service';
 import { Provincias } from '../../interfaces/places/provincias.interface';
 import { Ciudades } from '../../interfaces/places/ciudad.interface';
-import { CommunicationDataService } from '../communication/communicationData.service';
+import { DataPromocionInformationService } from '../subscribeData/data-promocion-information.service';
 import { SectorService } from '../requests/GET/places/sector.service';
 import { Sectores } from '../../interfaces/places/sector.interface';
 import { map, Observable } from 'rxjs';
@@ -23,7 +23,7 @@ export class FdPlacesService {
     private prov: ProvinciasService,
     private city: CiudadService,
     private sect: SectorService,
-    private comData: CommunicationDataService
+    private comData: DataPromocionInformationService
   ) { }
 
   //Retorno por Subscripciones

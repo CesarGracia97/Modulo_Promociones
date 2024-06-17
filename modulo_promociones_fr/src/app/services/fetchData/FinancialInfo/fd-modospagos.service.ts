@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModosPago } from '../../../interfaces/financial/modos-pago.interface';
 import { FormaspagoService } from '../../requests/GET/FinancialInfo/formaspago.service';
-import { CommunicationDataService } from '../../communication/communicationData.service';
+import { DataPromocionInformationService } from '../../subscribeData/data-promocion-information.service';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class FdModospagosService {
 
   constructor(
     private modp : FormaspagoService,
-    private comData: CommunicationDataService
+    private comData: DataPromocionInformationService
   ) { }
 
   fetchDataModosPago(index: number){

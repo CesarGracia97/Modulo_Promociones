@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Servicios } from '../../../../interfaces/planes/servicios.interface';
 import { Ciudades } from '../../../../interfaces/places/ciudad.interface';
 import { TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
-import { CommunicationDataService } from '../../../../services/communication/communicationData.service';
+import { DataPromocionInformationService } from '../../../../services/subscribeData/data-promocion-information.service';
 import { Buro } from '../../../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
 import { Sectores } from '../../../../interfaces/places/sector.interface';
@@ -64,9 +64,11 @@ export class TableInsertComponent implements OnInit {
   vPR: { [index: number]: { [type: string]: boolean } } = [];
 
   closing: boolean = false; modal_cs: boolean = false; modal_dp: boolean = false;
+type: any;
+text: any;
 
   constructor(
-    private comData: CommunicationDataService,
+    private comData: DataPromocionInformationService,
     private fdpl: FdPlacesService,
     private fdpln: FdPlanesService,
     private fdcb: FdCombosService,

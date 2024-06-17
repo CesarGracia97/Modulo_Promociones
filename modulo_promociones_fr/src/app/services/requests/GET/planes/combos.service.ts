@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { TipoServicios } from '../../../../interfaces/planes/tiposervicios.interface';
 import { TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
 import { Productos } from '../../../../interfaces/planes/productos.interface';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
 const API_GET_PLANES = environment.API_GET_PLANES;

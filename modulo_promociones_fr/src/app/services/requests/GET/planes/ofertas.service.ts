@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ofertas } from '../../../../interfaces/planes/ofertas.interface';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
 const API_GET_PLANES = environment.API_GET_PLANES;

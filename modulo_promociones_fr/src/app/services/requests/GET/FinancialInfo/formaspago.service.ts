@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
 const API_GET_FINANCE = environment.API_GET_FINANCE;

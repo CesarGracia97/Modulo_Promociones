@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { DiasGozados } from '../../../interfaces/DataPromocional/dias-gozados.interface';
 import { DiasGozadosService } from '../../requests/GET/DataPromocional/dias-gozados.service';
-import { CommunicationDataService } from '../../communication/communicationData.service';
+import { DataPromocionInformationService } from '../../subscribeData/data-promocion-information.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class FdDiasGozadosService {
 
   constructor(
     private diasgo: DiasGozadosService,
-    private comData: CommunicationDataService
+    private comData: DataPromocionInformationService
   ) { }
 
   fetchDiasGozados(index: number) {

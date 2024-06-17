@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TariffPlanes, TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { CombosService } from '../requests/GET/planes/combos.service';
-import { CommunicationDataService } from '../communication/communicationData.service';
+import { DataPromocionInformationService } from '../subscribeData/data-promocion-information.service';
 import { Productos } from '../../interfaces/planes/productos.interface';
 import { map, Observable } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class FdCombosService {
 
   constructor(
     private combo: CombosService,
-    private dataCommunication: CommunicationDataService
+    private dataCommunication: DataPromocionInformationService
   ) { }
   
   fetchDataComboPLAN(SERVICIO: string, index: number) {

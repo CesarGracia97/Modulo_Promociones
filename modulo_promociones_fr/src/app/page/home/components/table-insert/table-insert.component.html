@@ -6,18 +6,37 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Servicio</th>
-                <th>TariffPlan</th>
-                <th>Variant</th>
-                <th>Producto</th>
-                <th>Forma de Pago</th>
-                <th>Buro</th>
-                <th>Ciudad y Sectores</th>
-                <th>Datos Promocion</th>
+                <th>Nombre de la Promocion</th>
+                <th>Inicio y Fin de Promocion</th>
+                <th>Datos Promocionales</th>
+                <th>Enviar</th>
             </tr>
         </thead>
         <tbody>
-            <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)" >
+            <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
+                <td>{{ row.id+1 }}</td>
+                <td>
+                    <input type="text" name="_V1" [(ngModel)]="row._V1" 
+                    placeholder="Ing. el Nombre para la promocion"/>
+                </td> 
+                <td>
+                    <div>
+                        <input type="date" name="_V2" [(ngModel)]="row._V2" />
+                        <input type="date" name="_V3" [(ngModel)]="row._V3" />
+                    </div>
+                </td>    
+                <td>
+                    <button id="button">Seleccionar</button>
+                </td>
+                <td>
+                    <button id="button">Enviar</button>
+                </td>
+            </tr>
+            <tr class="mas" (click)="addRow()">
+                <td>+</td>
+                <td colspan="9"></td> <!-- Extiende la celda sobre las siguientes 9 columnas -->
+            </tr>
+            <!-- <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)" >
                 <td>{{ row.id+1 }}</td>
                 <td>
                     <select name="_V1" [(ngModel)]="row._V1" 
@@ -81,16 +100,10 @@
                 </td>
                 <td>
                     <button id="button" name="_V9_V11" [disabled]="!button_V1_V8(row, i)" (click)="openModal(i, 'DP')">Elejir</button>
-                    <!-- <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button> -->
-                </td>
-            </tr>
-            <tr class="mas" (click)="addRow()">
-                <td>+</td>
-                <td colspan="9"></td> <!-- Extiende la celda sobre las siguientes 9 columnas -->
-            </tr>
+                    <button id="button" name="_V9_V11" (click)="openModal(i, 'DP')">Elejir</button>
+                </td> -->
         </tbody>
     </table>
-
     <div *ngIf="modal_cs" class="modal_cs" [ngClass]="{'door-open': modal_cs}" id="modal_cs-{{ rowId+1 }}">
         <div class="modal-header">
             <span class="modal-title">Seleccionar Ciudades y Sectores - F# {{rowId+1}}</span>

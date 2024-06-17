@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './page/home/components/header/header.component';
 import { SideBarComponent } from './page/home/components/side-bar/side-bar.component';
 import { TableInsertComponent } from './page/home/components/table-insert/table-insert.component';
-import { CommunicationVisibleService } from './services/communication/communicationVisible.service';
+import { CommunicationVisibleService } from './services/subscribeData/communicationVisible.service';
 
 @Component({
   selector: 'app-root',

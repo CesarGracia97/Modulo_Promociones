@@ -3,7 +3,7 @@ import { ServiciosService } from '../requests/GET/planes/servicios.service';
 import { TariffplanesService } from '../requests/GET/planes/tariffplanes.service';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
-import { CommunicationDataService } from '../communication/communicationData.service';
+import { DataPromocionInformationService } from '../subscribeData/data-promocion-information.service';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class FdPlanesService {
   constructor(
     private serv: ServiciosService,
     private plan: TariffplanesService,
-    private comData: CommunicationDataService
+    private comData: DataPromocionInformationService
   ) { }
 
   fetchDataServicio(){

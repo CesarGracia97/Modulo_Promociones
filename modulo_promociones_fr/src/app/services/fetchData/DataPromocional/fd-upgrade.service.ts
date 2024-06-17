@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UpgradeService } from '../../requests/GET/DataPromocional/upgrade.service';
 import { Upgrade } from '../../../interfaces/DataPromocional/upgrade.interface';
-import { CommunicationDataService } from '../../communication/communicationData.service';
+import { DataPromocionInformationService } from '../../subscribeData/data-promocion-information.service';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class FdUpgradeService {
 
   constructor(
     private upgr: UpgradeService,
-    private comData: CommunicationDataService
+    private comData: DataPromocionInformationService
   ) { }
 
   fetchDataUpgrade(Tariffplan: number, TFPV: number, index: number){

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TariffPlan_X_TariffPlanVariant, TariffPlanes, TariffPlanesVariant } from '../../../../interfaces/planes/tariffplanes.interface';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
 const API_GET_PLANES = environment.API_GET_PLANES;

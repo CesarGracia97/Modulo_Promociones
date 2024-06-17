@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CommunicationVisibleService } from '../../../../../services/communication/communicationVisible.service';
+import { CommunicationVisibleService } from '../../../../../services/subscribeData/communicationVisible.service';
 import { CommonModule } from '@angular/common';
 import { FdPlanesService } from '../../../../../services/fetchData/fd-planes.service';
 import { InjectionDataService } from '../../../../../services/injection/injection-data.service';

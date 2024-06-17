@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PrecioRegular } from '../../../interfaces/DataPromocional/precio-regular.interface';
 import { PrecioRegularService } from '../../requests/GET/DataPromocional/precio-regular.service';
-import { CommunicationDataService } from '../../communication/communicationData.service';
+import { DataPromocionInformationService } from '../../subscribeData/data-promocion-information.service';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class FdPrecioRegularService {
 
   constructor(
     private prec: PrecioRegularService,
-    private comData: CommunicationDataService
+    private comData: DataPromocionInformationService
   ) { }
 
   fetchDataPrecioRegular(id_Producto: number, TFPV: number, index: number){

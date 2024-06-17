@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ciudades } from '../../../../interfaces/places/ciudad.interface';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 const API_MAIN = environment.MAIN_URL;
 const GET_PLACES = environment.API_GET_PLACES;

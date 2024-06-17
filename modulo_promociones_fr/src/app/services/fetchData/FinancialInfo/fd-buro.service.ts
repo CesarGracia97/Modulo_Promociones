@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommunicationDataService } from '../../communication/communicationData.service';
+import { DataPromocionInformationService } from '../../subscribeData/data-promocion-information.service';
 import { Buro } from '../../../interfaces/financial/buro.interface';
 import { BuroService } from '../../requests/GET/FinancialInfo/buro.service';
 import { map, Observable } from 'rxjs';
@@ -11,7 +11,7 @@ export class FdBuroService {
   buroData: Buro[] = []
 
   constructor(
-    private comData: CommunicationDataService,
+    private comData: DataPromocionInformationService,
     private buro: BuroService
   ) { }
 
