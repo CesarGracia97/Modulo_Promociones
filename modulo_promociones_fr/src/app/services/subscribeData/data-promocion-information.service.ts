@@ -14,6 +14,8 @@ import { DiasGozados } from '../../interfaces/DataPromocional/dias-gozados.inter
 import { Productos } from '../../interfaces/planes/productos.interface';
 import { PrecioRegular } from '../../interfaces/DataPromocional/precio-regular.interface';
 import { Upgrade } from '../../interfaces/DataPromocional/upgrade.interface';
+import { Entidades } from '../../interfaces/financial/entidades.interface';
+import { Tarjetas } from '../../interfaces/financial/tarjetas.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +25,17 @@ export class DataPromocionInformationService {
   private NombrePromocion: string[][] = [];
   private FechaInicioPromocion: Date[][] = []; private FechaFinPromocion: Date[][] = [];
   private planData: TariffPlanes[][] = []; private planVData: TariffPlanesVariant[][] = [];
+  private canalData: Number[][] = [];
+  private entidadesData: Entidades[][] = []; private tarjetasData: Tarjetas[][] = [];
   private prodData: Productos[][] = [];
   private mdpgData: ModosPago[][] = [];
   private buroData: Buro[][] = [];
   private provinciaData: Provincias[][] = []; private ciudadData: Ciudades[][] = []; private sectoresData: Sectores[][] = [];
   private diasGozadosData: DiasGozados[][] = [];
-  private precioRegularData: PrecioRegular[][] = [];
+  private precioRegularData: PrecioRegular[][] = []; private precioPromocional: Number [][] = [];
   private upgradeData: Upgrade [][] = [];
+  private mesInicioPromo: Number [][] = [];
+  private mesFinPromo: Number [][] = [];
 
   private dNombrePromocion_Subject = new Subject<String[][]>();
   dNombrePromocion$ = this.dNombrePromocion_Subject.asObservable();
@@ -42,6 +48,9 @@ export class DataPromocionInformationService {
   
   private dServicios_Subject = new Subject<Servicios[]>();
   dServicios$ = this.dServicios_Subject.asObservable();
+
+  private dCanal_Subject = new Subject<Number[][]>();
+  dCanal$ = this.dCanal_Subject.asObservable();
 
   private dPLAN_Subject = new Subject<TariffPlanes[][]>();
   dPlan$ = this.dPLAN_Subject.asObservable();
@@ -58,6 +67,12 @@ export class DataPromocionInformationService {
   private dModoPago_Subject = new Subject<ModosPago[][]>();
   dModoPago$ = this.dModoPago_Subject.asObservable();
 
+  private dEntidades_Subject = new Subject<Entidades[][]>();
+  dEntidades$ = this.dEntidades_Subject.asObservable();
+
+  private dTarjetas_Subject = new Subject<Tarjetas[][]>();
+  dTarjetas$ = this.dTarjetas_Subject.asObservable();
+
   private dProvincias_Subject = new Subject<Provincias[][]>();
   dProvincias$ = this.dProvincias_Subject.asObservable();
 
@@ -70,11 +85,20 @@ export class DataPromocionInformationService {
   private dPrecioRegular_Subject = new Subject<PrecioRegular[][]>();
   dPrecioRegular$ = this.dPrecioRegular_Subject.asObservable();
 
+  private dPrecioPromo_Subject = new Subject<Number[][]>();
+  dPrecioPromo$ = this.dPrecioPromo_Subject.asObservable();
+
   private dDiasGozados_Subject = new Subject<DiasGozados[][]>();
   dDiasGozados$ = this.dDiasGozados_Subject.asObservable();
 
   private dUpgrade_Subject = new Subject<Upgrade[][]>();
   dUpgrade$ = this.dUpgrade_Subject.asObservable();
+
+  private dMesInicioPromo_Subject = new Subject<Number[][]>();
+  dMesInicioPromo$ = this.dMesInicioPromo_Subject.asObservable();
+
+  private dMesFinPromo_Subject = new Subject<Number[][]>();
+  dMesFinPromo$ = this.dMesFinPromo_Subject.asObservable();
 
   constructor() { }
 
@@ -130,6 +154,16 @@ export class DataPromocionInformationService {
     }
   }
 
+  sendDataCanal(data: number, index: number){
+    if(!this.canalData[index]){
+      this.canalData[index] = [];
+      this.canalData[index].push(data);
+      this.dCanal_Subject.next(this.canalData);
+    } else {
+      console.log("En esta posicion ya existe un dato");
+    }
+  }
+
   sendDataPRODUCTO(data: Productos[], index: number){
     if(!this.prodData[index]){
       this.prodData[index] = [];
@@ -155,6 +189,25 @@ export class DataPromocionInformationService {
       this.mdpgData[index] = [];
       this.mdpgData[index].push(...data);
       this.dModoPago_Subject.next(this.mdpgData);
+    } else {
+      console.log("En esta posicion ya existe un dato");
+    }
+  }
+
+  sendDataEntidades(data: Entidades[], index: number){
+    if(!this.entidadesData[index]){
+      this.entidadesData[index] = [];
+      this.entidadesData[index].push(...data);
+      this.dTarjetas_Subject.next(this.entidadesData);
+    } else {
+      console.log("En esta posicion ya existe un dato");
+    }
+  }
+
+  sendDataTarjetas(data: Tarjetas[], index: number){
+    if(!this.tarjetasData[index]){
+      this.tarjetasData[index] = [];
+      this.tarjetasData[index].push(...data);
     } else {
       console.log("En esta posicion ya existe un dato");
     }
@@ -190,11 +243,21 @@ export class DataPromocionInformationService {
     }
   }
 
-  sendDataPrecioRegular(data: PrecioRegular[], index: number){
+  sendDataPrecioRegular(data: PrecioRegular[],index: number){
     if(!this.precioRegularData[index]){
       this.precioRegularData[index] = [];
       this.precioRegularData[index].push(...data);
       this.dPrecioRegular_Subject.next(this.precioRegularData)
+    } else {
+      console.log("En esta posicion ya existe un dato");
+    }
+  }
+
+  sendDataPrecioPromo(data: number, index: number){
+    if(!this.precioPromocional[index]){
+      this.precioPromocional[index] = [];
+      this.precioPromocional[index].push(data);
+      this.dPrecioPromo_Subject.next(this.precioPromocional);
     } else {
       console.log("En esta posicion ya existe un dato");
     }
@@ -217,6 +280,26 @@ export class DataPromocionInformationService {
       this.dUpgrade_Subject.next(this.upgradeData);
     } else {
       console.log("En esta posicion ya existe un dato");
+    }
+  }
+
+  sendDataMesPromocion(data: number, index: number, type: string){
+    if(type == "INICIO"){
+      if(!this.mesInicioPromo[index]){
+        this.mesInicioPromo[index] = [];
+        this.mesInicioPromo[index].push(data);
+        this.dMesInicioPromo_Subject.next(this.mesInicioPromo);
+      } else {
+        console.log("En esta posicion ya existe un dato");
+      }
+    } else if (type == "FIN"){
+      if(!this.mesFinPromo[index]){
+        this.mesFinPromo[index] = [];
+        this.mesFinPromo[index].push(data);
+        this.dMesFinPromo_Subject.next(this.mesFinPromo);
+      } else {
+        console.log("En esta posicion ya existe un dato");
+      }
     }
   }
 }

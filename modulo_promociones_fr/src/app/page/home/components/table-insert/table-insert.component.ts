@@ -64,8 +64,6 @@ export class TableInsertComponent implements OnInit {
   vPR: { [index: number]: { [type: string]: boolean } } = [];
 
   closing: boolean = false; modal_cs: boolean = false; modal_dp: boolean = false;
-type: any;
-text: any;
 
   constructor(
     private comData: DataPromocionInformationService,

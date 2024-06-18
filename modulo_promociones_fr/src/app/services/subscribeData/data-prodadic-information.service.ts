@@ -61,6 +61,12 @@ export class DataProdadicInformationService {
   private dMesRT_Subject = new Subject<Number[][]>();
   dMesRT$ = this.dMesRT_Subject.asObservable();
 
+  private dFechaFinUpgrade_Subject = new Subject<Date[][]>();
+  dFechaFinUpgrade$ = this.dFechaFinUpgrade_Subject.asObservable();
+
+  private dFechaCaducidad_Subject = new Subject<Date[][]>();
+  dFechaCaducidad$ = this.dFechaCaducidad_Subject.asObservable();
+
   constructor() { }
   
   senDataPaquetesPlanes(data: TariffPlanesVariant[], index: number, table: number, type: string){
@@ -177,5 +183,9 @@ export class DataProdadicInformationService {
         this.dMesRT_Subject.next(this.mesesRT);
       }
     }
+  }
+
+  sendDataFechaUpgrade(data: Date, index: number, type: string){
+    if("")
   }
 }

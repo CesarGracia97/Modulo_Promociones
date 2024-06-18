@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CommunicationVisibleService } from '../../../../../services/subscribeData/communicationVisible.service';
+import { DataViewService } from '../../../../../services/subscribeData/data-view.service';
 import { CommonModule } from '@angular/common';
 import { FdPlanesService } from '../../../../../services/fetchData/fd-planes.service';
 import { InjectionDataService } from '../../../../../services/injection/injection-data.service';
@@ -18,7 +18,7 @@ export class ButtonsComponent implements OnInit {
   visibleValueDiv: string | null = null;
 
   constructor(
-    private comVisual: CommunicationVisibleService,
+    private comVisual: DataViewService,
     private fdplan: FdPlanesService,
     private getTo: InjectionDataService
   ){}

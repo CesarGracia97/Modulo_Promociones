@@ -2,80 +2,169 @@
     padding: 10px 10px;
     height: 95%;
     overflow: auto; /* Añadimos scroll si se excede el contenido */
+
+    #principalTable {
+        width: 100%; /* Aseguramos que ocupe todo el contenedor */
+        border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333; /* Color de texto oscuro para mejor contraste */
+
+        thead {
+            background-color: #f709eb9c;
+            color: #ffffff; /* Texto blanco para la cabecera */
+            font-size: 11pt; /* Un tamaño de fuente más grande y legible */
+        }
+
+        th, td {
+            padding: 12px 15px; /* Espaciado adecuado en las celdas */
+            border-bottom: 1px solid #dddddd; /* Línea divisoria sutil */
+            text-align: left; /* Alineación de texto a la izquierda */
+
+        }
+        td {
+            text-align: center; /* Centramos el contenido de las celdas horizontalmente */
+            vertical-align: middle; /* Centramos el contenido de las celdas verticalmente */
+
+            input.nom_promo{
+                width: 250px;
+                height: 30px;
+                border: 0.5px solid #615a5a;
+                border-radius: 4px;
+                text-align: center;
+            }
+
+            table.fechas_promo {
+                margin: 0 auto; /* Centra la tabla dentro de la celda */
+                td {
+                    padding: 0;
+                    input {
+                        width: 250px;
+                        height: 30px;
+                        border: 0.5px solid #615a5a;
+                        border-radius: 4px;
+                        text-align: center;
+                    }
+                }
+                tr.fini td {
+                    border-bottom: none; /* Elimina el borde del último elemento */
+                }
+            }
+
+            #button {
+                display: block; /* Hace que los botones se comporten como bloques */
+                margin: 0 auto; /* Centra los botones horizontalmente */
+                text-align: center; /* Alinea el texto dentro del botón al centro */
+                cursor: pointer; /* Indica que es un elemento interactivo */
+                padding: 8px; /* Más espacio dentro del select */
+                border: 1px solid #ccc; /* Borde sutil */
+                border-radius: 4px; /* Bordes ligeramente redondeados para el select */
+                width: 200px; /* Hace que el select ocupe todo el espacio de la celda */
+                box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+                background-color: #ffffff;;
+                &:hover {
+                    background-color: #eee;
+                }
+            }
+        }
+
+        th {
+            position: relative; /* Hace que la cabecera sea fija */
+            top: 0; /* Fija la cabecera en la parte superior */
+            z-index: 10; /* Asegura que la cabecera se muestre sobre el contenido */
+            text-align: center;
+        }
+
+        tr:last-child td {
+            border-bottom: none; /* Elimina el borde del último elemento */
+        }
+
+        tr.mas td {
+            cursor: pointer; /* Indica que es un elemento interactivo */
+            text-align: center; /* Centra el contenido de '+', en caso de agregar funcionalidad */
+            background-color: #f0f0f0; /* Fondo distinto para resaltar la acción */
+            &:hover {
+                background-color: #e4e4e4;
+            }
+        }
+
+        tr:hover {
+            background-color: #f4f4f4;
+        }
+
+        thead tr:hover {
+            background-color: #a12987; /* Color de fondo para la cabecera */
+        }
+    }
 }
 
-#principalTable {
-    width: 100%; /* Aseguramos que ocupe todo el contenedor */
-    border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333; /* Color de texto oscuro para mejor contraste */
-}
+// Hasta aqui
 
+/*
 #principalTable #checkbox_container {
     font-size: 5pt;
 }
 
 #principalTable thead {
     background-color: #f709eb9c;
-    color: #ffffff; /* Texto blanco para la cabecera */
-    font-size: 11pt; /* Un tamaño de fuente más grande y legible */
+    color: #ffffff; // Texto blanco para la cabecera 
+    font-size: 11pt; // Un tamaño de fuente más grande y legible
 }
 
 #principalTable th, #principalTable td {
-    padding: 12px 15px; /* Espaciado adecuado en las celdas */
-    border-bottom: 1px solid #dddddd; /* Línea divisoria sutil */
-    text-align: left; /* Alineación de texto a la izquierda */
+    padding: 12px 15px; // Espaciado adecuado en las celdas 
+    border-bottom: 1px solid #dddddd; // Línea divisoria sutil 
+    text-align: left; // Alineación de texto a la izquierda 
 }
 
 #principalTable th {
-    position: relative; /* Hace que la cabecera sea fija */
-    top: 0; /* Fija la cabecera en la parte superior */
-    z-index: 10; /* Asegura que la cabecera se muestre sobre el contenido */
+    position: relative; // Hace que la cabecera sea fija 
+    top: 0; // Fija la cabecera en la parte superior 
+    z-index: 10; // Asegura que la cabecera se muestre sobre el contenido 
     text-align: center;
 }
 
 #principalTable tr:last-child td {
-    border-bottom: none; /* Elimina el borde del último elemento */
+    border-bottom: none; // Elimina el borde del último elemento *
 }
 
 select {
-    padding: 8px; /* Más espacio dentro del select */
-    border: 1px solid #ccc; /* Borde sutil */
-    border-radius: 4px; /* Bordes ligeramente redondeados para el select */
-    font-size: 7pt; /* Tamaño de fuente más grande para select */
-    width: 100%; /* Hace que el select ocupe todo el espacio de la celda */
-    box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+    padding: 8px; // Más espacio dentro del select *
+    border: 1px solid #ccc; /* Borde sutil *
+    border-radius: 4px; // Bordes ligeramente redondeados para el select *
+    font-size: 7pt; // Tamaño de fuente más grande para select *
+    width: 100%; // Hace que el select ocupe todo el espacio de la celda *
+    box-sizing: border-box; // Incluye el padding y border en el ancho total *
 }
 
 tr.mas td {
-    cursor: pointer; /* Indica que es un elemento interactivo */
-    text-align: center; /* Centra el contenido de '+', en caso de agregar funcionalidad */
-    background-color: #f0f0f0; /* Fondo distinto para resaltar la acción */
+    cursor: pointer; // Indica que es un elemento interactivo *
+    text-align: center; // Centra el contenido de '+', en caso de agregar funcionalidad *
+    background-color: #f0f0f0; // Fondo distinto para resaltar la acción *
     &:hover {
         background-color: #e4e4e4;
     }
 }
 
-/* Efectos de hover para mejorar la interacción */
+// Efectos de hover para mejorar la interacción *
 #principalTable tr:hover {
     background-color: #f4f4f4;
 }
 
 #principalTable thead tr:hover {
-    background-color: #a12987; /* Color de fondo para la cabecera */
+    background-color: #a12987; // Color de fondo para la cabecera *
 }
 
 #button {
-    display: block; /* Hace que los botones se comporten como bloques */
-    margin: 0 auto; /* Centra los botones horizontalmente */
-    text-align: center; /* Alinea el texto dentro del botón al centro */
-    cursor: pointer; /* Indica que es un elemento interactivo */
-    padding: 8px; /* Más espacio dentro del select */
-    border: 1px solid #ccc; /* Borde sutil */
-    border-radius: 4px; /* Bordes ligeramente redondeados para el select */
-    font-size: 7pt; /* Tamaño de fuente más grande para select */
-    width: 100%; /* Hace que el select ocupe todo el espacio de la celda */
-    box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+    display: block; // Hace que los botones se comporten como bloques *
+    margin: 0 auto; // Centra los botones horizontalmente *
+    text-align: center; // Alinea el texto dentro del botón al centro *
+    cursor: pointer; // Indica que es un elemento interactivo *
+    padding: 8px; // Más espacio dentro del select *
+    border: 1px solid #ccc; /* Borde sutil *
+    border-radius: 4px; // Bordes ligeramente redondeados para el select *
+    font-size: 7pt; // Tamaño de fuente más grande para select *
+    width: 100%; // Hace que el select ocupe todo el espacio de la celda *
+    box-sizing: border-box; // Incluye el padding y border en el ancho total *
     background-color: #ffffff;;
 }
 
@@ -88,7 +177,7 @@ tr.mas td {
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.3s ease-in-out;
-    width: 100%; /* Asegura que el contenedor del dropdown toma el ancho completo */
+    width: 100%; // Asegura que el contenedor del dropdown toma el ancho completo *
     background-color: #f9f9f9f9;
     border-radius: 10px;
     &.closing {
@@ -97,25 +186,25 @@ tr.mas td {
 }
 
 .dropdown.show {
-    max-height: 1000px; /* Un valor suficientemente alto para mostrar todo el contenido */
+    max-height: 1000px; // Un valor suficientemente alto para mostrar todo el contenido *
 }
 
-/* Estilos para eliminar el padding y los marcadores de lista */
+// Estilos para eliminar el padding y los marcadores de lista *
 .dropdown ul {
-    list-style: none;  /* Elimina los puntos de los items de lista */
-    padding: 0;        /* Elimina el padding predeterminado */
-    margin: 5px 5px;         /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
-    width: 100%; /* Ocupa el ancho completo para centrar los botones internamente */
-    display: flex; /* Utiliza flex para facilitar la alineación */
-    flex-direction: column; /* Alinea los elementos verticalmente */
+    list-style: none;  // Elimina los puntos de los items de lista *
+    padding: 0;        // Elimina el padding predeterminado *
+    margin: 5px 5px;         // Elimina el margen predeterminado para asegurarnos que no hay espacio extra *
+    width: 100%; // Ocupa el ancho completo para centrar los botones internamente *
+    display: flex; // Utiliza flex para facilitar la alineación *
+    flex-direction: column; // Alinea los elementos verticalmente *
     font-size: 7pt;
 }
   
 .dropdown li {
-    list-style: none;  /* Asegura que no hay marcadores de lista */
-    width: 100%; /* Ocupa el ancho completo para mejor alineación */
-    display: flex; /* Utiliza flexbox para facilitar la alineación */
-    align-items: center; /* Alinea verticalmente los elementos */
+    list-style: none;  // Asegura que no hay marcadores de lista *
+    width: 100%; // Ocupa el ancho completo para mejor alineación *
+    display: flex; // Utiliza flexbox para facilitar la alineación *
+    align-items: center; // Alinea verticalmente los elementos *
 }
 
 // --- Modal
@@ -161,18 +250,18 @@ tr.mas td {
         padding-bottom: 0px;
         font-size: 9pt;
         text-align: center;
-        display: flex; /* Establece el modal-body como contenedor Flex */
-        flex-direction: row; /* Alinea los elementos hijos en fila */
+        display: flex; //Establece el modal-body como contenedor Flex 
+        flex-direction: row; // Alinea los elementos hijos en fila 
         text-align: left;
         gap: 20px;
 
         #content_sectores_checklist, #content_ciudades_checklist {
-            flex: 1; /* Asigna el mismo espacio a cada columna */
-            display: flex; /* Hace que cada checklist sea también un contenedor flex */
-            flex-direction: column; /* Alinea verticalmente los contenidos internos */
+            flex: 1; // Asigna el mismo espacio a cada columna 
+            display: flex; // Hace que cada checklist sea también un contenedor flex 
+            flex-direction: column; // Alinea verticalmente los contenidos internos 
             display: flex;
             flex-direction: column;
-            width: 100%; /* Asegura que el contenedor del dropdown toma el ancho completo */
+            width: 100%; // Asegura que el contenedor del dropdown toma el ancho completo 
             border-radius: 10px;
             align-items: center;
             border-radius: 10px;
@@ -181,16 +270,16 @@ tr.mas td {
             max-height: 350px;
 
             #button {
-                display: block; /* Hace que los botones se comporten como bloques */
-                margin: 0 auto; /* Centra los botones horizontalmente */
-                text-align: center; /* Alinea el texto dentro del botón al centro */
-                cursor: pointer; /* Indica que es un elemento interactivo */
-                padding: 8px; /* Más espacio dentro del select */
-                border: 1px solid #ccc; /* Borde sutil */
-                border-radius: 4px; /* Bordes ligeramente redondeados para el select */
-                font-size: 7pt; /* Tamaño de fuente más grande para select */
-                width: 30%; /* Hace que el select ocupe todo el espacio de la celda */
-                box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+                display: block; // Hace que los botones se comporten como bloques *
+                margin: 0 auto; // Centra los botones horizontalmente *
+                text-align: center; // Alinea el texto dentro del botón al centro *
+                cursor: pointer; // Indica que es un elemento interactivo *
+                padding: 8px; // Más espacio dentro del select *
+                border: 1px solid #ccc; // Borde sutil *
+                border-radius: 4px; // Bordes ligeramente redondeados para el select *
+                font-size: 7pt; // Tamaño de fuente más grande para select *
+                width: 30%; // Hace que el select ocupe todo el espacio de la celda *
+                box-sizing: border-box; // Incluye el padding y border en el ancho total *
                 background-color: #ffffff;
                 &:hover {
                     background-color: #eee;
@@ -199,10 +288,10 @@ tr.mas td {
         }
 
         #ciudades_checklist, #sectores_checklist{
-            flex: 1; /* Asigna el mismo espacio a cada columna */
-            display: flex; /* Hace que cada checklist sea también un contenedor flex */
-            flex-direction: column; /* Alinea verticalmente los contenidos internos */
-            width: 100%; /* Asegura que el contenedor del dropdown toma el ancho completo */
+            flex: 1; // Asigna el mismo espacio a cada columna *
+            display: flex; // Hace que cada checklist sea también un contenedor flex *
+            flex-direction: column; // Alinea verticalmente los contenidos internos *
+            width: 100%; // Asegura que el contenedor del dropdown toma el ancho completo *
             align-items: center;
             padding: 5px 5px;
             max-height: 350px;
@@ -211,19 +300,19 @@ tr.mas td {
         
     
         #ciudades_checklist ul, #sectores_checklist ul{
-            list-style: none;  /* Elimina los puntos de los items de lista */
-            padding: 0;        /* Elimina el padding predeterminado */
-            margin: 5px 5px;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
-            display: flex; /* Utiliza flex para facilitar la alineación */
-            flex-direction: column; /* Alinea los elementos verticalmente */
+            list-style: none;  // Elimina los puntos de los items de lista *
+            padding: 0;        // Elimina el padding predeterminado *
+            margin: 5px 5px;          // Elimina el margen predeterminado para segurarnos que no hay espacio extra *
+            display: flex; // Utiliza flex para facilitar la alineación *
+            flex-direction: column; //& Alinea los elementos verticalmente *
             font-size: 6pt;
         }
     
         #ciudades_checklist li, #sectores_checklist li{
-            list-style: none;  /* Asegura que no hay marcadores de lista */
-            width: 100%; /* Ocupa el ancho completo para mejor alineación */
-            display: flex; /* Utiliza flexbox para facilitar la alineación */
-            align-items: center; /* Alinea verticalmente los elementos */
+            list-style: none;  // Asegura que no hay marcadores de lista *
+            width: 100%; // Ocupa el ancho completo para mejor alineación *
+            display: flex; // Utiliza flexbox para facilitar la alineación *
+            align-items: center; // Alinea verticalmente los elementos *
         }
     
         #ciudades_checklis #button{
@@ -321,18 +410,18 @@ tr.mas td {
                     align-items: center;
 
                     ul{
-                        list-style: none;  /* Elimina los puntos de los items de lista */
-                        padding: 0;        /* Elimina el padding predeterminado */
-                        margin: 5px 5px;          /* Elimina el margen predeterminado para asegurarnos que no hay espacio extra */
-                        display: flex; /* Utiliza flex para facilitar la alineación */
-                        flex-direction: column; /* Alinea los elementos verticalmente */
+                        list-style: none;  // Elimina los puntos de los items de lista *
+                        padding: 0;        // Elimina el padding predeterminado *
+                        margin: 5px 5px;          // Elimina el margen predeterminado para asegurarnos que no hay espacio extra *
+                        display: flex; // Utiliza flex para facilitar la alineación *
+                        flex-direction: column; //Alinea los elementos verticalmente
                         font-size: 6pt;
                     }
                     li{
-                        list-style: none;  /* Asegura que no hay marcadores de lista */
-                        width: 100%; /* Ocupa el ancho completo para mejor alineación */
-                        display: flex; /* Utiliza flexbox para facilitar la alineación */
-                        align-items: center; /* Alinea verticalmente los elementos */
+                        list-style: none;  //Asegura que no hay marcadores de lista 
+                        width: 100%; //Ocupa el ancho completo para mejor alineación
+                        display: flex; //Utiliza flexbox para facilitar la alineación
+                        align-items: center; // Alinea verticalmente los elementos
                     }
                 }
 
@@ -446,9 +535,10 @@ tr.mas td {
 
 .invalid {
     border: 1px solid red;
-  }
+}
   
-  .error-message {
+.error-message {
     color: red;
     font-size: 0.8em;
-  }
+}
+*/

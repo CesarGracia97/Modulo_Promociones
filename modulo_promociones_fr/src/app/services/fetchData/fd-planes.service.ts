@@ -31,7 +31,7 @@ export class FdPlanesService {
     });
   }
 
-  fetchDataTariffPlanVariantXProductoAdicional(SERVICIO: string, index: number){
+  /*fetchDataTariffPlanVariantXProductoAdicional(SERVICIO: string, index: number){
     this.plan.getTariffPlanesVariantXProducto_Adicional(SERVICIO).subscribe((response: any) => {
       if (response && response.PLANES) {
         this.planVData = response.PLANES.map((plan: any) => {
@@ -53,7 +53,7 @@ export class FdPlanesService {
         }
       }
     })
-  }
+  }*/
 
   //RETORNO DIRECTO
 
