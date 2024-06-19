@@ -16,6 +16,7 @@ import { PrecioRegular } from '../../interfaces/DataPromocional/precio-regular.i
 import { Upgrade } from '../../interfaces/DataPromocional/upgrade.interface';
 import { Entidades } from '../../interfaces/financial/entidades.interface';
 import { Tarjetas } from '../../interfaces/financial/tarjetas.interface';
+import { Canales } from '../../interfaces/financial/canales.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class DataPromocionInformationService {
   private NombrePromocion: string[][] = [];
   private FechaInicioPromocion: Date[][] = []; private FechaFinPromocion: Date[][] = [];
   private planData: TariffPlanes[][] = []; private planVData: TariffPlanesVariant[][] = [];
-  private canalData: Number[][] = [];
+  private canalData: Canales[][] = [];
   private entidadesData: Entidades[][] = []; private tarjetasData: Tarjetas[][] = [];
   private prodData: Productos[][] = [];
   private mdpgData: ModosPago[][] = [];
@@ -49,7 +50,7 @@ export class DataPromocionInformationService {
   private dServicios_Subject = new Subject<Servicios[]>();
   dServicios$ = this.dServicios_Subject.asObservable();
 
-  private dCanal_Subject = new Subject<Number[][]>();
+  private dCanal_Subject = new Subject<Canales[][]>();
   dCanal$ = this.dCanal_Subject.asObservable();
 
   private dPLAN_Subject = new Subject<TariffPlanes[][]>();
@@ -107,8 +108,6 @@ export class DataPromocionInformationService {
       this.NombrePromocion[index] = [];
       this.NombrePromocion[index].push(data);
       this.dNombrePromocion_Subject.next(this.NombrePromocion);
-    }else{
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -124,8 +123,6 @@ export class DataPromocionInformationService {
         this.FechaFinPromocion[index] = [];
         this.FechaFinPromocion[index].push(data);
         this.dFechaFinPromocion_Subject.next(this.FechaFinPromocion);
-      }else{
-        console.log("En esta posicion ya existe un dato");
       }
     }
   }
@@ -139,8 +136,6 @@ export class DataPromocionInformationService {
       this.planData[index] = [];
       this.planData[index].push(...data);
       this.dPLAN_Subject.next(this.planData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -149,18 +144,19 @@ export class DataPromocionInformationService {
       this.planVData[index] = [];
       this.planVData[index].push(...data);
       this.dPLANVARIANT_Subject.next(this.planVData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
-  sendDataCanal(data: number, index: number){
+  sendDataCanal(index: number){
     if(!this.canalData[index]){
       this.canalData[index] = [];
-      this.canalData[index].push(data);
+      this.canalData[index].push(...[
+        {ID: 3, NAME: 'Comercial'},
+        {ID: 4, NAME: 'Ecommerce'},
+        {ID: 5, NAME: 'Migración'},
+        {ID: 6, NAME: 'Retención'}
+      ]);
       this.dCanal_Subject.next(this.canalData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -169,8 +165,6 @@ export class DataPromocionInformationService {
       this.prodData[index] = [];
       this.prodData[index].push(...data);
       this.dPRODUCTO_Subject.next(this.prodData)
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -179,8 +173,6 @@ export class DataPromocionInformationService {
       this.buroData[index] = [];
       this.buroData[index].push(...data);
       this.dBuro_Subject.next(this.buroData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -189,8 +181,6 @@ export class DataPromocionInformationService {
       this.mdpgData[index] = [];
       this.mdpgData[index].push(...data);
       this.dModoPago_Subject.next(this.mdpgData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -199,8 +189,6 @@ export class DataPromocionInformationService {
       this.entidadesData[index] = [];
       this.entidadesData[index].push(...data);
       this.dTarjetas_Subject.next(this.entidadesData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -208,8 +196,6 @@ export class DataPromocionInformationService {
     if(!this.tarjetasData[index]){
       this.tarjetasData[index] = [];
       this.tarjetasData[index].push(...data);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -218,8 +204,6 @@ export class DataPromocionInformationService {
       this.provinciaData[index] = [];
       this.provinciaData[index].push(...data);
       this.dProvincias_Subject.next(this.provinciaData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -228,8 +212,6 @@ export class DataPromocionInformationService {
       this.ciudadData[index] = [];
       this.ciudadData[index].push(...data);
       this.dCiudades_Subject.next(this.ciudadData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
   
@@ -238,8 +220,6 @@ export class DataPromocionInformationService {
       this.sectoresData[index] = [];
       this.sectoresData[index].push(...data);
       this.dSectores_Subject.next(this.sectoresData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -248,8 +228,6 @@ export class DataPromocionInformationService {
       this.precioRegularData[index] = [];
       this.precioRegularData[index].push(...data);
       this.dPrecioRegular_Subject.next(this.precioRegularData)
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -258,8 +236,6 @@ export class DataPromocionInformationService {
       this.precioPromocional[index] = [];
       this.precioPromocional[index].push(data);
       this.dPrecioPromo_Subject.next(this.precioPromocional);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -268,8 +244,6 @@ export class DataPromocionInformationService {
       this.diasGozadosData[index] = [];
       this.diasGozadosData[index].push(...data);
       this.dDiasGozados_Subject.next(this.diasGozadosData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -278,8 +252,6 @@ export class DataPromocionInformationService {
       this.upgradeData[index] = [];
       this.upgradeData[index].push(...data);
       this.dUpgrade_Subject.next(this.upgradeData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
     }
   }
 
@@ -289,16 +261,12 @@ export class DataPromocionInformationService {
         this.mesInicioPromo[index] = [];
         this.mesInicioPromo[index].push(data);
         this.dMesInicioPromo_Subject.next(this.mesInicioPromo);
-      } else {
-        console.log("En esta posicion ya existe un dato");
       }
     } else if (type == "FIN"){
       if(!this.mesFinPromo[index]){
         this.mesFinPromo[index] = [];
         this.mesFinPromo[index].push(data);
         this.dMesFinPromo_Subject.next(this.mesFinPromo);
-      } else {
-        console.log("En esta posicion ya existe un dato");
       }
     }
   }

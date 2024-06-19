@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Options_PA } from '../../interfaces/Interfaces-View/Options_PA.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataViewService {
 
+  optionsData: Options_PA[][] = [];
   //Variables de Comunicacion visual entre componentes de Table Query
   private visibleItemPrincipal_Subject = new Subject<string>();
   visbleItemP$ = this.visibleItemPrincipal_Subject.asObservable(); //de Botones a Contenedor Prima
@@ -32,10 +34,13 @@ export class DataViewService {
   private dModalViewPA_Subject = new Subject<boolean>();
   dModalViewPA$ = this.dModalViewPA_Subject.asObservable();
 
+  private dOptionsDataView_Subject = new Subject<Options_PA[][]>();
+  dOptionsDataView$ = this.dOptionsDataView_Subject.asObservable();
+
   constructor() { }
 
   visiblePrincipalComponent(value: string){
-    this.visibleItemPrincipal_Subject .next(value);
+    this.visibleItemPrincipal_Subject.next(value);
   }
 
   visibleSecundarioComponent(value:string){
@@ -68,5 +73,32 @@ export class DataViewService {
 
   stateModalPA(state: boolean){
     this.dModalViewPA_Subject.next(state)
+  }
+
+  sendOptionsPAView( state: boolean, index: number){
+    if(state){
+      if(!this.optionsData[index]){
+        this.optionsData[index] = [];
+        this.optionsData[index].push(...[
+          {name: 'NO APLICAR', selected: false},
+          {name: 'STREAMING', selected: false},
+          {name: 'TELEFONIA', selected: false},
+          {name: 'TELEVISION', selected: false},
+          {name: 'ROUTER', selected: false }
+        ]);
+        this.dOptionsDataView_Subject.next(this.optionsData);
+      }
+    } else {
+      if(!this.optionsData[index]){
+        this.optionsData[index] = [];
+        this.optionsData[index].push(...[
+          {name: 'NO APLICAR', selected: false},
+          {name: 'STREAMING', selected: false},
+          {name: 'TELEFONIA', selected: false},
+          {name: 'TELEVISION', selected: false}
+        ]);
+        this.dOptionsDataView_Subject.next(this.optionsData);
+      }
+    }
   }
 }

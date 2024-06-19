@@ -1,0 +1,160 @@
+select {
+    padding: 8px; // Más espacio dentro del select *
+    border: 1px solid #ccc; //Borde sutil *
+    border-radius: 4px; // Bordes ligeramente redondeados para el select *
+    font-size: 7pt; // Tamaño de fuente más grande para select *
+    width: 100%; // Hace que el select ocupe todo el espacio de la celda *
+    box-sizing: border-box; // Incluye el padding y border en el ancho total *
+}
+
+#button {
+    display: block; /* Hace que los botones se comporten como bloques */
+    margin: 0 auto; /* Centra los botones horizontalmente */
+    text-align: center; /* Alinea el texto dentro del botón al centro */
+    cursor: pointer; /* Indica que es un elemento interactivo */
+    padding: 8px; /* Más espacio dentro del select */
+    border: 1px solid #ccc; /* Borde sutil */
+    border-radius: 4px; /* Bordes ligeramente redondeados para el select */
+    width: 200px; /* Hace que el select ocupe todo el espacio de la celda */
+    box-sizing: border-box; /* Incluye el padding y border en el ancho total */
+    background-color: #ffffff;;
+    &:hover {
+        background-color: #eee;
+    }
+}
+
+.modal_dp {
+    background-color: white;
+    border-radius: 10px;
+    max-width: 1000px;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    animation: doorOpen 0.5s;
+    border: 2px solid #ccc;
+    z-index: 1000;
+
+    .door-open {
+        animation-name: doorOpen;
+    }
+    
+    @keyframes doorOpen {
+        0% { transform: translate(-50%, -50%) rotateY(90deg); }
+        100% { transform: translate(-50%, -50%) rotateY(0deg); }
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+
+        .modal-title {
+            font-weight: bold;
+        }
+        
+        button.close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover{
+                background-color: #e4e4e4
+            }
+        }
+    }
+    
+    .modal-body {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%; 
+
+        .body1{
+            margin-bottom: 10px;
+            .b11, .b12{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+                .b11_1, .b11_2, .b11_3{
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            .b12{
+                margin-top: 10px;
+            }
+        }
+
+        .body2{
+            margin-bottom: 10px;
+            .b21{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .b22{
+                justify-content: center;
+            }
+        }
+
+        .body3{
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            border: 0.5px solid #ccc;
+            #dat_promo_ing {
+                display: flex;
+                flex-direction: row; 
+                gap: 5px; 
+                margin: 5px;
+                #precios, #dias, #upgrade, #meses {
+                    flex: 1;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 10px 12px;
+                    font-size: 7pt;
+                }
+                #precios #precioRegular{
+                    margin-top: 5px;
+                    width: 90%;
+                    height: 20px;
+                    border: 0.5px solid #615a5a;
+                    border-radius: 4px;
+                }
+                #precios span {
+                    margin-bottom: 5px;
+                }
+                #dias {
+                    align-items: center;
+                    ul{
+                        list-style: none;  // Elimina los puntos de los items de lista *
+                        padding: 0;        // Elimina el padding predeterminado *
+                        margin: 5px 5px;          // Elimina el margen predeterminado para asegurarnos que no hay espacio extra *
+                        display: flex; // Utiliza flex para facilitar la alineación *
+                        flex-direction: column; //Alinea los elementos verticalmente
+                        font-size: 6pt;
+                    }
+                    li{
+                        list-style: none;  //Asegura que no hay marcadores de lista 
+                        width: 100%; //Ocupa el ancho completo para mejor alineación
+                        display: flex; //Utiliza flexbox para facilitar la alineación
+                        align-items: center; // Alinea verticalmente los elementos
+                    }
+                }
+                #upgrade select {
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}

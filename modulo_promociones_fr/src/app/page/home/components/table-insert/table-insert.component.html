@@ -32,7 +32,7 @@
                     </table>
                 </td>    
                 <td>
-                    <button id="button">Abrir</button>
+                    <button id="button" (click)="openModalDatosPromocionales(i, row)">Abrir</button>
                 </td>
                 <td>
                     <button id="button">Enviar</button>
@@ -73,6 +73,7 @@
             </div>
         </div>
     </div>
+    <app-modal-data-promocional></app-modal-data-promocional>
 
     <div *ngIf="modal_dp" class="modal_dp" [ngClass]="{'door-open': modal_dp}" id="modal_dp-{{rowId+1}}">
         <div class="modal-header">
@@ -138,8 +139,7 @@
                             <tr>
                                 <td><span>PAQUETE</span></td>
                                 <td>
-                                    <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1"
-                                    (ngModelChange)="getPrecioRegular(1000065, tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1, selectedTable[rowId], rowId, 'PA_STREAMING')">
+                                    <select name="PRAD_V1" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V1">
                                         <option [value]="">PAQ. STREAMING</option>
                                         <option *ngFor="let plan of paquetesStreaming[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
@@ -152,9 +152,7 @@
                                 <td>
                                     <div id="precio_content">                                    
                                         <input name="PRAD_ST_V2" [(ngModel)]="tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2" 
-                                        placeholder="Ing. Pr. Promocional" type="number" min="1" [max]="precioRegular.PRECIO"
-                                        (ngModelChange)="validatePrice($event, precioRegular.PRECIO, 'STREAMING')"
-                                        [class.invalid]="!validatePrice(rows[rowId]._V9, precioRegular.PRECIO, 'STREAMING')"/>
+                                        placeholder="Ing. Pr. Promocional" type="number" min="1"/>
                                     </div>
                                     <div *ngIf="!validatePrice(tablesRow[rowId][selectedTable[rowId]].PRAD_ST_V2, precioRegular.PRECIO, 'STREAMING')" class="error-message">
                                         El precio promocional no puede superar el precio regular.
@@ -185,9 +183,7 @@
                             <tr>
                                 <td><span>PLANES</span></td>
                                 <td>
-                                    <select name="PRAD_TF_V1" [(ngModel)]="rows[rowId].PRAD_TF_V1"
-                                    (ngModelChange)="getPrecioRegular(0, rows[rowId].PRAD_TF_V1, selectedTable[rowId], rowId, 'PA_TELEFONIA');
-                                    validate(rows[rowId].PRAD_TF_V1, rows[rowId].PRAD_TF_V2, rows[rowId].PRAD_TF_V3, rows[rowId].PRAD_TF_V4, rowId, 'TELEFONIA')">
+                                    <select name="PRAD_TF_V1" [(ngModel)]="rows[rowId].PRAD_TF_V1">
                                         <option [value]="">PLAN. TELEFONICO</option>
                                         <option *ngFor="let plan of planesTelefonicos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
@@ -233,9 +229,7 @@
                             <tr>
                                 <td><span>PLANES</span></td>
                                 <td>
-                                    <select name="PRAD_TV_V1" [(ngModel)]="rows[rowId].PRAD_TV_V1"
-                                    (ngModelChange)="getPrecioRegular(darIdProducto(rowId), rows[rowId].PRAD_TV_V1, 0, rowId, 'PA_TELEVISION');
-                                    validate(rows[rowId].PRAD_TV_V1, rows[rowId].PRAD_TV_V2, rows[rowId].PRAD_TV_V3, rows[rowId].PRAD_TV_V4, rowId, 'TELEVISION')">
+                                    <select name="PRAD_TV_V1" [(ngModel)]="rows[rowId].PRAD_TV_V1">
                                         <option [value]="">PLAN. TELEVISION</option>
                                         <option *ngFor="let plan of planesTelevisivos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                     </select>
@@ -281,9 +275,7 @@
                             <tr>
                                 <td><span>ROUTER</span></td>
                                 <td>
-                                    <select name="PRAD_RT_V1" [(ngModel)]="rows[rowId].PRAD_RT_V1"
-                                    (ngModelChange)="getPrecioRegular(rows[rowId].PRAD_RT_V1, rows[rowId]._V3, 0, rowId, 'PA_ROUTER');
-                                    validate(rows[rowId].PRAD_RT_V1, rows[rowId].PRAD_RT_V2, rows[rowId].PRAD_RT_V3, rows[rowId].PRAD_RT_V4, rowId, 'ROUTER')">
+                                    <select name="PRAD_RT_V1" [(ngModel)]="rows[rowId].PRAD_RT_V1">
                                         <option [value]="">MODELO ROUTER</option>
                                         <option *ngFor="let modelo of modelosRouter[rowId]" [value]="modelo.PRODUCTID">{{modelo.PRODUCTO}}</option>
                                     </select>

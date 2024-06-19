@@ -22,23 +22,19 @@ import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interfac
 import { Options_PA } from '../../../../interfaces/Interfaces-View/Options_PA.interface';
 import { FdPlanesService } from '../../../../services/fetchData/fd-planes.service';
 import { InjectionDataService } from '../../../../services/injection/injection-data.service';
+import { DataViewService } from '../../../../services/subscribeData/data-view.service';
+import { ModalDataPromocionalComponent } from './modal-data-promocional/modal-data-promocional.component';
 
 
 @Component({
   selector: 'app-table-insert',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalDataPromocionalComponent],
   templateUrl: './table-insert.component.html',
   styleUrl: './table-insert.component.scss'
 })
 export class TableInsertComponent implements OnInit {
   @Input() rows: any[] = []; rowId: number = 0;
-
-  _V1: string = ''; _V2: string = ''; _V3: string = ''; 
-  _V4: string = ''; _V9: string = ''; _V11: string = '';
-  PRAD_TF_V1: string = ''; PRAD_TF_V2: string = ''; PRAD_TF_V3: string = ''; PRAD_TF_V4: string = '';
-  PRAD_TV_V1: string = ''; PRAD_TV_V2: string = ''; PRAD_TV_V3: string = ''; PRAD_TV_V4: string = '';
-  PRAD_RT_V1: string = ''; PRAD_RT_V2: string = ''; PRAD_RT_V3: string = ''; PRAD_RT_V4: string = '';
 
   tablesRow: any[][] = [];
   PRAD_ST_V1: string =''; PRAD_ST_V2: string ='';  PRAD_ST_V3: string ='';
@@ -75,7 +71,8 @@ export class TableInsertComponent implements OnInit {
     private fddg: FdDiasGozadosService,
     private fdpr: FdPrecioRegularService,
     private fdup: FdUpgradeService,
-    private send: InjectionDataService
+    private send: InjectionDataService,
+    private data_views: DataViewService, private data_information: DataPromocionInformationService
   ){}
 
   ngOnInit(): void {
@@ -101,7 +98,6 @@ export class TableInsertComponent implements OnInit {
     this.planVData.push([]);
     this.productosData.push([]); 
     this.upgradeData.push([]);
-    this.getModoPagosData_BuroData_DiasGozadosData(this.rows.length - 1);
     this.ciudadData.push([]);
     this.sectoresData.push([]);
     this.upgradeData.push([]);
@@ -130,111 +126,13 @@ export class TableInsertComponent implements OnInit {
 
   }
 
-  getDataPLAN(SERVICIO: string, index: number): void {
-    try {
-      if(SERVICIO){
-        if (SERVICIO === 'INTERNET')
-          this.optionsData[index].push({ name: 'ROUTER', selected: false });
-        this.fdcb.fetchDataComboPLAN_RETURN(SERVICIO)
-        .subscribe((plan: TariffPlanes[]) => { this.planData[index] = plan; })
-        if (SERVICIO == 'STREAMING')
-          this.visibleBtnPromocionAdicional[index] = true;
-        else
-          this.visibleBtnPromocionAdicional[index] = false;
-        if (SERVICIO == 'TELEVISION' || SERVICIO == 'TELEFONIA' || SERVICIO == 'STREAMING')
-          this.visibleUpgrade[index] = true;
-        else
-          this.visibleUpgrade[index] = false;
-      }
-    } catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
-
-  getDataPLANVARIANT(id_Plan: number, index: number): void {
-    try {
-      if(id_Plan){
-        this.fdcb.fetchDataComboPLANVARIANT_RETURN(id_Plan)
-        .subscribe((planv: TariffPlanesVariant[]) => { this.planVData[index] = planv; });
-      }
-    } catch (error) {
-      console.log("Error Detectado: ",error)
-    }
-  }
-
-  getDataPROD_CiudadesTariffplanVariantProducto(TPV: number, ProductoId: number, index: number): void {
-    try {
-      if(TPV){
-        this.fdcb.fetchDataComboPROD_RETURN(TPV)
-        .subscribe((prod: Productos[]) => { this.productosData[index] = prod; });
-        if (TPV & ProductoId)
-          this.fdpl.fetchDataCiudadesALLXTariffplanVariant_RETURN(TPV, ProductoId)
-          .subscribe((city: Ciudades[]) => { this.ciudadData[index] = city; });
-      }
-    } catch(error){
-      console.log("Error Detectado: ",error)
-    }
-  }
-
-  getModoPagosData_BuroData_DiasGozadosData(index: number): void {
-    try {
-      this.fdmp.fetchDataModosPago_RETURN()
-      .subscribe((modosPago: ModosPago[]) => { this.modoPagosData[index] = modosPago; });
-      this.fdb.fetchDataBuro_RETURN()
-      .subscribe((buro: Buro[]) => { this.buroData[index] = buro; });
-      this.fddg.fetchDiasGozados_RETURN()
-      .subscribe((digd: DiasGozados[]) => { this.diasGozadosData[index] = digd; });
-    } catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
-
-  getPrecioRegular(id_Producto: number, TPV: number, table: number, index: number, type: string): void {
-    try{
-      if (id_Producto && TPV){
-        if(type == 'NORMAL'){
-          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
-          .subscribe((prec: any) => { this.precioRegularData[index] = prec; });
-        }
-        if(type == 'PA_STREAMING'){
-          if (!this.precioRegularStreamingData[index]) {
-            this.precioRegularStreamingData[index] = [];
-          }
-          if (!this.precioRegularStreamingData[index][table]) {
-            this.precioRegularStreamingData[index][table] = [];
-          }
-          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
-            .subscribe((prec: any) => { this.precioRegularStreamingData[index][table] = prec;});
-        }
-        if(type == 'PA_TELEFONIA'){
-          /*this.fdpr.getPrecioRegular_RETURN(id_Producto, TPV)
-          .subscribe((prec: any) => { this.precioRegularTelefoniaData[index] = prec; });*/
-        }
-        if(type == 'PA_TELEVISION'){
-          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
-          .subscribe((prec: any) => { this.precioRegularTelevisioData[index] = prec; });
-        }
-        if(type == 'PA_ROUTER'){
-          this.fdpr.fetchDataPrecioRegular_RETURN(id_Producto, TPV)
-          .subscribe((prec: any) => { this.precioRegularRouter[index] = prec; });
-        }
-      }
-    } catch (error) {
-      console.log("Error detectado: ",error)
-    }
-  }
-
-  getDataUpgrade(SERVICIO: string, id_Plan: number, TPV: number, index: number): void {
-    try{
-      if (SERVICIO && id_Plan && TPV) {
-        if (SERVICIO == 'INTERNET'){
-          this.fdup.fetchDataUpgrade_RETURN(id_Plan, TPV)
-          .subscribe((upgr: Upgrade[]) => { this.upgradeData[index] = upgr });
-        }
-      }
-    } catch (error) {
-      console.log("Error detectado: ",error)
-    }
+  openModalDatosPromocionales(index: number, row: any){
+    this.data_views.indexMoment(index);
+    this.data_views.stateModalDP(true);
+    this.data_information.sendDataCanal(index);
+    this.fdmp.fetchDataModosPago(index);
+    this.fdb.fetchDataBuro(index);
+    this.fddg.fetchDiasGozados(index);
   }
 
   darIdProducto(index: number): number {

@@ -72,8 +72,8 @@ export class FdPlacesService {
     });
   }
 
-  fetchDataCiudadesALLXTariffplanVariant(tariffplanvariant: number, index: number){
-    this.city.getCiudadesALLXTariffplanVariant(tariffplanvariant).subscribe((response: any) => {
+  fetchDataCiudadesALLXTariffplanVariant(IdVariant: number, ProductoId: number, index: number){
+    this.city.getCiudadesALLXTariffplanVariantXProductoId(IdVariant, ProductoId).subscribe((response: any) => {
       if (response && response.CITIESxPROV) {
         this.ciudadData = response.CITIESxPROV.map((city: any) => {
           return {

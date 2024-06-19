@@ -1,1 +1,101 @@
-<p>modal-data-promocional works!</p>
+<div *ngIf="dp_state" class="modal_dp" [ngClass]="{'door-open': dp_state}" id="modal_dp-{{rowId+1}}">
+  <div class="modal-header">
+    <span class="modal-title">Datos de Promocion - F# {{rowId+1}}</span>
+    <button class="close-button" (click)="closeModalDatosPromocionales()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="body1">
+      <div class="b11">
+        <div class="b11_1">
+          <span>Servicio</span>
+          <select name="_V1">
+            <option value="">Elija el Servicio</option>
+            <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
+          </select>
+        </div>
+        <div class="b11_2">
+          <span>Planes</span>
+          <select name="_V2">
+             <option value="">Elija un Plan</option>
+             <!-- <option value="" *ngIf="planData[rowId].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
+             <option value="" *ngIf="planData[rowId].length === 0 && row._V1">Cargando Datos..</option> -->
+             <option *ngFor=" let plan of planData[rowId]" [value]="plan.TARIFFPLANID" >{{plan.TARIFFPLAN}}</option>    
+         </select>
+        </div>
+        <div class="b11_3">
+          <span>Variants</span>
+          <select name="_V3">
+              <option value="">Elija un Plan Variant</option>
+              <!-- <option value="" *ngIf="planVData[rowId].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
+              <option value="" *ngIf="planVData[rowId].length === 0 && row._V2">Cargando Datos..</option> -->
+              <option *ngFor=" let planV of planVData[rowId]" [value]="planV.TARIFFPLANVARIANTID" >{{planV.TARIFFPLANVARIANT}}</option>    
+          </select>
+        </div>
+      </div>
+      <div class="b12">
+        <div class="b12_1">
+          <span>Productos</span>
+          <select name="_V4">
+              <option value="">Elija un Producto</option>
+              <!-- <option value="" *ngIf="productosData[rowId].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
+              <option value="" *ngIf="productosData[rowId].length === 0 && row._V2">Cargando Datos..</option> -->
+              <option *ngFor=" let prod of productosData[rowId]" [value]="prod.PRODUCTID" >{{prod.PRODUCTO}}</option>    
+          </select>
+        </div>
+        <div class="b12_2">
+          <span>Canal</span>
+          <select name="_V5">
+            <option value="">Elije un Canal</option>
+            <option *ngFor=" let canal of canalData[rowId] " [value]="canal.ID">{{canal.NAME}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="body2">
+      <div class="b21">
+        <button id="button">Forma de Pago</button>
+        <button id="button">Buro</button>
+      </div>
+      <div class="b22">
+        <button id="button">Ciudades y Sectores</button>
+      </div>
+    </div>
+    <div class="body3">
+      <div id="dat_promo_ing">
+        <div id="precios" *ngFor="let precioRegular of precioRegularData[rowId]">
+          <div id="precio_content">
+            <span>PRECIO REGULAR: ${{ precioRegular.PRECIO }}</span>
+            <input id="precioRegular" name="_V9"type="number" [min]="1"/>
+          </div>
+          <!-- <div *ngIf="!vPR[rowId]['NORMAL']" class="error-message">
+            El precio promocional no puede superar el precio regular.
+          </div> -->
+        </div>
+        <div id="dias">
+          <span>DIAS GOZADOS</span>
+          <div id="checklist">
+            <ul>
+              <li *ngFor="let dias of diasGozadosData[rowId]">
+                <input type="radio" name="_V10" [value]="dias.NAME" /> {{dias.NAME}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="upgrade" *ngIf="!upgradeData[rowId]">
+          <span>UPGRADE</span>
+          <select name="_V11">
+            <option value="">Selecciona un UPGRADE</option>
+            <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID" >{{upgrade.PLAN_UPGRADE}}</option>   
+          </select>
+        </div>
+        <div id="meses">
+          <span>Mes de Finalizacion</span>
+          <input id="precioRegular"/>
+        </div>
+      </div>
+    </div>
+    <div class="body_pa">
+
+    </div>
+  </div>
+</div>
