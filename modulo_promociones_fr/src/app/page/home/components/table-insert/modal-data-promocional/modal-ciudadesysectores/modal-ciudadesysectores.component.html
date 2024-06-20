@@ -1,0 +1,29 @@
+<div *ngIf="cs_state" class="modal_cs" [ngClass]="{'door-open': cs_state}" id="modal_cs-{{ rowId+1 }}">
+    <div class="modal-header">
+        <span class="modal-title">Seleccionar Ciudades y Sectores - F# {{rowId+1}}</span>
+        <button class="close-button" (click)="closeModalCiudades_y_Sectores()">×</button>
+      </div>
+    <div class="modal-body">
+        <div id="content_ciudades_checklist">
+            <div id="ciudades_checklist">
+                <span>Ciudades</span>
+                <ul>
+                    <li *ngFor="let city of ciudadData[rowId]">
+                        <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{city.PROVINCIA}} - {{ city.CIUDAD }}
+                    </li>
+                </ul>
+            </div>
+            <button id="button"[disabled]="!disableBusqueda()" (click)="buscarSectores()">Buscar Sectores</button>
+        </div>
+        <div id="content_sectores_checklist">
+            <div id="sectores_checklist">
+                <span>Sectores</span>
+                <ul>
+                    <li *ngFor="let sect of sectoresData[rowId]">
+                        <input type="checkbox"  [value]="sect.SECTOR_ID"/>{{sect.CIUDAD}} - {{sect.SECTOR}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

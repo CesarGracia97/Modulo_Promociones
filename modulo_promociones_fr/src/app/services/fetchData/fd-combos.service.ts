@@ -4,6 +4,7 @@ import { CombosService } from '../requests/GET/planes/combos.service';
 import { DataPromocionInformationService } from '../subscribeData/data-promocion-information.service';
 import { Productos } from '../../interfaces/planes/productos.interface';
 import { map, Observable } from 'rxjs';
+import { DataProdadicInformationService } from '../subscribeData/data-prodadic-information.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class FdCombosService {
 
   constructor(
     private combo: CombosService,
-    private dataCommunication: DataPromocionInformationService
+    private dataCommunication: DataPromocionInformationService,
+    private dataPromocionalAdicional: DataProdadicInformationService
   ) { }
   
   fetchDataComboPLAN(SERVICIO: string, index: number) {
@@ -60,6 +62,20 @@ export class FdCombosService {
         this.dataCommunication.sendDataPRODUCTO(this.c_prod, index)
       }
     })
+  }
+
+  fetchDataComboPROD_ROUTER(index: number){
+    this.combo.getCombosProductos_Router().subscribe((response: any) => {
+      if(response && response.COMBO_PRODUCTO) {
+        this.c_prod = response.COMBO_PRODUCTO.map((prod: Productos) => {
+          return {
+            PRODUCTID: prod.PRODUCTID,
+            PRODUCTO: prod.PRODUCTO
+          }
+        })
+        this.dataPromocionalAdicional.sendDataModelosRouter(this.c_prod, index)
+      }
+    });
   }
 
   //RETORNO DIRECTO

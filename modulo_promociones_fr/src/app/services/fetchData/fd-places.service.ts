@@ -136,6 +136,22 @@ export class FdPlacesService {
     })
   }
 
+  fetchDataSectoresMasivosXTariffplanVariantXProducto(id_Cities: number[], tariffplanvariant: number, productoId: number, index: number){
+    this.sect.getSectoresMasivosXTariffplanVariantXProductoId(id_Cities, tariffplanvariant, productoId).subscribe((response: any) => {
+      if(response && response.SECTORSxCITY){
+        this.sectorData = response.SECTORSxCITY.map((sect: any) => {
+          return {
+            SECTOR_ID: sect.SECTOR_ID,
+            SECTOR: sect.SECTOR,
+            CIUDAD: sect.CIUDAD,
+            selected: false
+          };
+        });
+        this.comData.sendDataSectores(this.sectorData, index);
+      }
+    });
+  }
+
   // RETORNO DIRECTO
 
   fetchDataProvinciasXTariffplanVariant_RETURN(tariffplanvariant: number): Observable<Provincias[]> {

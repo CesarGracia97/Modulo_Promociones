@@ -1,0 +1,211 @@
+.modal_dp {
+    background-color: white;
+    border-radius: 10px;
+    max-width: 1000px;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    animation: doorOpen 0.5s;
+    border: 2px solid #ccc;
+    z-index: 1000;
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+
+        .modal-title {
+            font-weight: bold;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+    
+    .modal-body {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column; 
+
+        #dat_promo, #pro_adici, #modal_dp_button {
+            padding: 5px;
+        }
+
+        #dat_promo {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            border: 0.5px solid #ccc;
+
+            #dat_promo_ing {
+                display: flex;
+                flex-direction: row; 
+                gap: 5px; 
+                margin: 5px;
+
+                #precios, #dias, #upgrade {
+                    flex: 1;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 10px 12px;
+                    font-size: 7pt;
+                }
+
+                #precios #precioRegular{
+                    margin-top: 5px;
+                    width: 90%;
+                    height: 20px;
+                    border: 0.5px solid #615a5a;
+                    border-radius: 4px;
+                }
+
+                #precios span {
+                    margin-bottom: 5px;
+                }
+
+                #dias {
+                    align-items: center;
+
+                    ul{
+                        list-style: none;  // Elimina los puntos de los items de lista *
+                        padding: 0;        // Elimina el padding predeterminado *
+                        margin: 5px 5px;          // Elimina el margen predeterminado para asegurarnos que no hay espacio extra *
+                        display: flex; // Utiliza flex para facilitar la alineación *
+                        flex-direction: column; //Alinea los elementos verticalmente
+                        font-size: 6pt;
+                    }
+                    li{
+                        list-style: none;  //Asegura que no hay marcadores de lista 
+                        width: 100%; //Ocupa el ancho completo para mejor alineación
+                        display: flex; //Utiliza flexbox para facilitar la alineación
+                        align-items: center; // Alinea verticalmente los elementos
+                    }
+                }
+
+                #upgrade select {
+                    margin-top: 5px;
+                }
+            }
+
+            #dat_promo_butt {
+                display: flex;
+                flex-direction: row; 
+                margin: 5px;
+                gap: 10px;
+
+                #btn_dtpro_promo, #btn_dtpro_send {
+                    display: block;
+                    text-align: center;
+                    cursor: pointer;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    height: 30px;
+                    border-radius: 4px;
+                    font-size: 7pt;
+                    box-sizing: border-box;
+                    background-color: #ffffff;
+                }
+
+                #btn_dtpro_send {
+                    width: 20%;
+                }
+                
+
+                #btn_dtpro_promo:hover, #btn_dtpro_send:hover {
+                    background-color: #eee;
+                }
+                
+                #content_btn_dtpro_dropdown {
+                    width: 20%;
+                    #btn_dtpro_promo{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        #pro_adici {
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row; 
+            gap: 10px;
+
+            #television, #streaming, #router, #telefonia{
+                border-radius: 5px;
+                border: 0.5px solid #ccc;
+                font-size: 9pt;
+                width: 100%;
+                height: 200px;
+                .content_streaming, #content_telefonia, #content_television,#content_television{
+                    font-size: 7pt;
+                    strong{
+                        font-size: 9pt;
+                    }
+
+                    select{
+                        width: 95%;
+                        padding: 4px;
+                    }
+                    
+                    input{
+                        margin-top: 5px;
+                        width: 90%;
+                        height: 20px;
+                        border: 0.5px solid #615a5a;
+                        border-radius: 4px;
+                        font-size: 7pt;
+                    }
+                }
+                
+                #streaming_items{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    
+                    #btn_new_table{
+                        display: block;
+                        text-align: center;
+                        cursor: pointer;
+                        padding: 4px;
+                        border: 1px solid #ccc;
+                        height: 30px;
+                        border-radius: 4px;
+                        font-size: 7pt;
+                        box-sizing: border-box;
+                        background-color: #ffffff;
+                        width: 95%;
+                        margin: 5px 10px;
+                        &:hover {
+                            background-color: #eee;
+                        }
+                    }
+
+                    select{
+                        margin: 5px 10px;
+                        width: 95%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.invalid {
+    border: 1px solid red;
+}
+  
+.error-message {
+    color: red;
+    font-size: 0.8em;
+}

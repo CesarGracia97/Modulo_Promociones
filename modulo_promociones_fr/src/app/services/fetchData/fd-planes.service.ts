@@ -5,6 +5,7 @@ import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { DataPromocionInformationService } from '../subscribeData/data-promocion-information.service';
 import { map, Observable } from 'rxjs';
+import { DataProdadicInformationService } from '../subscribeData/data-prodadic-information.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +18,22 @@ export class FdPlanesService {
   constructor(
     private serv: ServiciosService,
     private plan: TariffplanesService,
-    private comData: DataPromocionInformationService
+    private comDataPromocion: DataPromocionInformationService,
+    private comDataDataPromocionAdicional: DataProdadicInformationService
   ) { }
 
   fetchDataServicio(){
     this.serv.getServiciosALL().subscribe((response: any) => {
       if (response && response.SERVICIOS) {
         this.serviciosData = response.SERVICIOS.map((servicio: any) => servicio.SERVICIO);
-        this.comData.sendDataServicio(this.serviciosData);
+        this.comDataPromocion.sendDataServicio(this.serviciosData);
       } else {
         console.error("La respuesta no contiene la propiedad 'SERVICIOS'.");
       }
     });
   }
 
-  /*fetchDataTariffPlanVariantXProductoAdicional(SERVICIO: string, index: number){
+  fetchDataTariffPlanVariantXProductoAdicional(SERVICIO: string, index: number, tabla: number){
     this.plan.getTariffPlanesVariantXProducto_Adicional(SERVICIO).subscribe((response: any) => {
       if (response && response.PLANES) {
         this.planVData = response.PLANES.map((plan: any) => {
@@ -40,21 +42,10 @@ export class FdPlanesService {
             TARIFFPLANVARIANT: plan.TARIFFPLANVARIANT
           };
         });
-        switch(SERVICIO){
-          case 'STREAMING':
-            this.comData.senDataPaquetesStreaming(this.planVData, index);
-            break;
-          case 'TELEFONIA':
-            this.comData.sendDataPlanesTelefonicos(this.planVData, index);
-            break;
-          case 'TELEVISION':
-            this.comData.sendDataPlanesTelevisivos(this.planVData, index);
-            break;
-        }
+        this.comDataDataPromocionAdicional.senDataPaquetesPlanes(this.planVData, index, tabla, SERVICIO);
       }
     })
-  }*/
-
+  }
   //RETORNO DIRECTO
 
   fetchDataTariffPlanVariantXProductoAdicional_RETURN(SERVICIO: string): Observable<TariffPlanesVariant[]> {

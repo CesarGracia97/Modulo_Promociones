@@ -8,6 +8,7 @@ import { Options_PA } from '../../interfaces/Interfaces-View/Options_PA.interfac
 export class DataViewService {
 
   optionsData: Options_PA[][] = [];
+  rows: any [] = [];
   //Variables de Comunicacion visual entre componentes de Table Query
   private visibleItemPrincipal_Subject = new Subject<string>();
   visbleItemP$ = this.visibleItemPrincipal_Subject.asObservable(); //de Botones a Contenedor Prima
@@ -18,6 +19,9 @@ export class DataViewService {
 
   private dIndex_Subject = new Subject<number>();
   dIndex$ = this.dIndex_Subject.asObservable();
+
+  private dRows_Subject = new Subject<any[]>();
+  dRows$ = this.dRows_Subject.asObservable();
 
   private dModalViewDP_Subject = new Subject<boolean>();
   dModalViewDP$ = this.dModalViewDP_Subject.asObservable();
@@ -53,6 +57,14 @@ export class DataViewService {
 
   indexMoment(index: number){
     this.dIndex_Subject.next(index);
+  }
+
+  rowMoment(data: any, index: number){
+    if(!this.rows[index]){
+      this.rows[index] = {};
+      Object.assign(this.rows[index], data);
+      this.dRows_Subject.next(this.rows);
+    }
   }
 
   stateModalDP(state: boolean){

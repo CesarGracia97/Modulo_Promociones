@@ -184,8 +184,4 @@ export class DataProdadicInformationService {
       }
     }
   }
-
-  sendDataFechaUpgrade(data: Date, index: number, type: string){
-    if("")
-  }
 }

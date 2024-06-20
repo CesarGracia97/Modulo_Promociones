@@ -1,0 +1,120 @@
+.modal_cs {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    padding: 10px 20px;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+    animation: doorOpen 0.5s;
+    background-color: white;
+    border: 2px solid #615a5a;
+    border-radius: 10px;
+
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+
+        .modal-title {
+            font-weight: bold;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+    .modal-body {
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 0px;
+        font-size: 9pt;
+        text-align: center;
+        display: flex; //Establece el modal-body como contenedor Flex 
+        flex-direction: row; // Alinea los elementos hijos en fila 
+        text-align: left;
+        gap: 20px;
+
+        #content_sectores_checklist, #content_ciudades_checklist {
+            flex: 1; // Asigna el mismo espacio a cada columna 
+            display: flex; // Hace que cada checklist sea también un contenedor flex 
+            flex-direction: column; // Alinea verticalmente los contenidos internos 
+            display: flex;
+            flex-direction: column;
+            width: 100%; // Asegura que el contenedor del dropdown toma el ancho completo 
+            border-radius: 10px;
+            align-items: center;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 5px 5px;
+            max-height: 350px;
+
+            #button {
+                display: block; // Hace que los botones se comporten como bloques *
+                margin: 0 auto; // Centra los botones horizontalmente *
+                text-align: center; // Alinea el texto dentro del botón al centro *
+                cursor: pointer; // Indica que es un elemento interactivo *
+                padding: 8px; // Más espacio dentro del select *
+                border: 1px solid #ccc; // Borde sutil *
+                border-radius: 4px; // Bordes ligeramente redondeados para el select *
+                font-size: 7pt; // Tamaño de fuente más grande para select *
+                width: 30%; // Hace que el select ocupe todo el espacio de la celda *
+                box-sizing: border-box; // Incluye el padding y border en el ancho total *
+                background-color: #ffffff;
+                &:hover {
+                    background-color: #eee;
+                }
+            }
+        }
+
+        #ciudades_checklist, #sectores_checklist{
+            flex: 1; // Asigna el mismo espacio a cada columna *
+            display: flex; // Hace que cada checklist sea también un contenedor flex *
+            flex-direction: column; // Alinea verticalmente los contenidos internos *
+            width: 100%; // Asegura que el contenedor del dropdown toma el ancho completo *
+            align-items: center;
+            padding: 5px 5px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        
+    
+        #ciudades_checklist ul, #sectores_checklist ul{
+            list-style: none;  // Elimina los puntos de los items de lista *
+            padding: 0;        // Elimina el padding predeterminado *
+            margin: 5px 5px;          // Elimina el margen predeterminado para segurarnos que no hay espacio extra *
+            display: flex; // Utiliza flex para facilitar la alineación *
+            flex-direction: column; //& Alinea los elementos verticalmente *
+            font-size: 6pt;
+        }
+    
+        #ciudades_checklist li, #sectores_checklist li{
+            list-style: none;  // Asegura que no hay marcadores de lista *
+            width: 100%; // Ocupa el ancho completo para mejor alineación *
+            display: flex; // Utiliza flexbox para facilitar la alineación *
+            align-items: center; // Alinea verticalmente los elementos *
+        }
+    
+        #ciudades_checklis #button{
+            margin: 20px 10px;
+        }
+    }
+    
+    .door-open {
+        animation-name: doorOpen;
+    }
+    
+    @keyframes doorOpen {
+        0% { transform: translate(-50%, -50%) rotateY(90deg); }
+        100% { transform: translate(-50%, -50%) rotateY(0deg); }
+    }
+}
