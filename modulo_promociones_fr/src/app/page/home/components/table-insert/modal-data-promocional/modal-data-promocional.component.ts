@@ -20,6 +20,8 @@ import { ModalCiudadesysectoresComponent } from './modal-ciudadesysectores/modal
 import { ModalPromocionesAdicionalesComponent } from './modal-promociones-adicionales/modal-promociones-adicionales.component';
 import { ModalEntidadesComponent } from './modal-entidades/modal-entidades.component';
 import { ModalTarjetasComponent } from './modal-tarjetas/modal-tarjetas.component';
+import { ToggleSelectAllService } from '../../../../../services/complements/toggle-select-all.service';
+import { DataPromocionSupportService } from '../../../../../services/subscribeData/data-promocion-support.service';
 
 @Component({
   selector: 'app-modal-data-promocional',
@@ -31,7 +33,7 @@ import { ModalTarjetasComponent } from './modal-tarjetas/modal-tarjetas.componen
 })
 export class ModalDataPromocionalComponent implements OnInit {
   //Variables de Vista
-  rowId: number = 0; rowData: any[] = [];
+  rowId: number = 0;   rowData: any = {};
   dp_state: boolean = false;
   showDDMP: boolean[] = []; showDDB: boolean[] = []; closing: boolean = false; 
   permitirPA: boolean = false;
@@ -48,12 +50,14 @@ export class ModalDataPromocionalComponent implements OnInit {
     private data_information: DataPromocionInformationService,
     private fd_combos: FdCombosService, private fd_lugares: FdPlacesService,
     private fd_precios: FdPrecioRegularService,
-    private fd_upgrade: FdUpgradeService
+    private fd_upgrade: FdUpgradeService,
+    private complement: ToggleSelectAllService,
+    private support: DataPromocionSupportService
   ){}
 
   ngOnInit(): void {
     this.data_views.dIndex$.subscribe( data => {this.rowId = data});
-    this.data_views.dRows$.subscribe( data => {this.rowData = data});
+    this.data_views.dRows$.subscribe( data => {if(data)this.rowData = data});
     this.data_views.dModalViewDP$.subscribe( data => {this.dp_state = data});
     this.data_information.dServicios$.subscribe( data => {this.serviciosData = data;});
     this.data_information.dPlan$.subscribe( data => {this.planData = data});
@@ -92,6 +96,8 @@ export class ModalDataPromocionalComponent implements OnInit {
       if(IdVariant && ProductoId){
         this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(IdVariant, ProductoId, this.rowId);
         this.fd_precios.fetchDataPrecioRegular(ProductoId, IdVariant, this.rowId);
+        this.support.sendDataIdProducto(ProductoId, this.rowId);
+        this.support.sendDataIdVariant(IdVariant, this.rowId);
       }
     }
   }
@@ -129,5 +135,9 @@ export class ModalDataPromocionalComponent implements OnInit {
   
   openModalProductosAdicionales(): void {
     this.data_views.stateModalPA(true);
+  }
+
+  toggleSelectAllCheckboxes(event: any, type: string){
+    this.complement.SelectTypeALL(event, type, this.rowId)
   }
 }

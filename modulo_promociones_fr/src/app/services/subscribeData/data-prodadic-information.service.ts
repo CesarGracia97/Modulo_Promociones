@@ -71,117 +71,79 @@ export class DataProdadicInformationService {
   
   senDataPaquetesPlanes(data: TariffPlanesVariant[], index: number, table: number, type: string){
     if(type == "TELEFONIA"){
-      if(!this.planVTFData[index]){
-        this.planVTFData[index] = [];
-        this.planVTFData[index].push(...data);
-        this.dPlanesTelefonicos_Subject.next(this.planVTFData);
-      } else {
-        console.log("En esta posicion ya existe un dato");
-      }
+      this.planVTFData[index] = [];
+      this.planVTFData[index].push(...data);
+      this.dPlanesTelefonicos_Subject.next(this.planVTFData);
     }else if(type == "TELEVISION"){
-      if(!this.planVTVData[index]){
-        this.planVTVData[index] = [];
-        this.planVTVData[index].push(...data);
-        this.dPlanesTelevisivos_Subject.next(this.planVTVData);
-      } else {
-        console.log("En esta posicion ya existe un dato");
-      }
+      this.planVTVData[index] = [];
+      this.planVTVData[index].push(...data);
+      this.dPlanesTelevisivos_Subject.next(this.planVTVData);
     }else if(type == "STREAMING"){
-      if(!this.planVSData[index][table]){
-        this.planVSData[index][table] = [];
-        this.planVSData[index][table].push(...data);
-        this.dPaquetesStreaming_Subject.next(this.planVSData);
-      } else {
-        console.log("En esta posicion ya existe un dato");
-      }
+      this.planVSData[index][table] = [];
+      this.planVSData[index][table].push(...data);
+      this.dPaquetesStreaming_Subject.next(this.planVSData);
     }
   }
 
   sendDataModelosRouter(data: Productos[], index: number){
-    if(!this.modeloRTData[index]){
-      this.modeloRTData[index] = [];
-      this.modeloRTData[index].push(...data);
-      this.dModelosRouter_Subject.next(this.modeloRTData);
-    } else {
-      console.log("En esta posicion ya existe un dato");
-    }
+    this.modeloRTData[index] = [];
+    this.modeloRTData[index].push(...data);
+    this.dModelosRouter_Subject.next(this.modeloRTData);
   }
 
   sendDataPreciosPA(data: PrecioRegular[], index: number, tabla: number, type: string){
     if(type == "TELEFONIA"){
-      if(!this.precioRegularTFData[index]){
-        this.precioRegularTFData[index] = [];
-        this.precioRegularTFData[index].push(...data);
-        this.dPrRefTF_Subject.next(this.precioRegularTFData);
-      }
+      this.precioRegularTFData[index] = [];
+      this.precioRegularTFData[index].push(...data);
+      this.dPrRefTF_Subject.next(this.precioRegularTFData);
     }else if(type == "TELEVISION"){
-      if(!this.precioRegularTVData[index]){
-        this.precioRegularTVData[index] = [];
-        this.precioRegularTVData[index].push(...data);
-        this.dPrRefTV_Subject.next(this.precioRegularTVData);
-      }
+      this.precioRegularTVData[index] = [];
+      this.precioRegularTVData[index].push(...data);
+      this.dPrRefTV_Subject.next(this.precioRegularTVData);
     }else if(type == "ROUTER"){
-      if(!this.precioRegularRTData[index]){
-        this.precioRegularRTData[index] = [];
-        this.precioRegularRTData[index].push(...data);
-        this.dPrRefRT_Subject.next(this.precioRegularRTData);
-      }
+      this.precioRegularRTData[index] = [];
+      this.precioRegularRTData[index].push(...data);
+      this.dPrRefRT_Subject.next(this.precioRegularRTData);
     }else if(type == "STREAMING"){
-      if(!this.precioRegularSTData[index][tabla]){
-        this.precioRegularSTData[index][tabla] = [];
-        this.precioRegularSTData[index][tabla].push(...data);
-        this.dPrRegST_Subject.next(this.precioRegularSTData);
-      }
+      this.precioRegularSTData[index][tabla] = [];
+      this.precioRegularSTData[index][tabla].push(...data);
+      this.dPrRegST_Subject.next(this.precioRegularSTData);
     }
   }
 
   sendDataCantidad(data: number, index: number, type: string){
     if(type == "TELEFONIA"){
-      if(!this.cantidadTF[index]){
-        this.cantidadTF[index] = [];
-        this.cantidadTF[index].push(data);
-        this.dCantTV_Subject.next(this.cantidadTF);
-      }
+      this.cantidadTF[index] = [];
+      this.cantidadTF[index].push(data);
+      this.dCantTV_Subject.next(this.cantidadTF);
     }else if (type == "TELEVISION"){
-      if(!this.cantidadTV[index]){
-        this.cantidadTV[index] = [];
-        this.cantidadTV[index].push(data);
-        this.dCantTV_Subject.next(this.cantidadTV);
-      }
+      this.cantidadTV[index] = [];
+      this.cantidadTV[index].push(data);
+      this.dCantTV_Subject.next(this.cantidadTV);
     }else if (type == "ROUTER"){
-      if(!this.cantidadRT[index]){
-        this.cantidadRT[index] = [];
-        this.cantidadRT[index].push(data);
-        this.dCantRT_Subject.next(this.cantidadRT);
-      }
+      this.cantidadRT[index] = [];
+      this.cantidadRT[index].push(data);
+      this.dCantRT_Subject.next(this.cantidadRT);
     }
   }
 
   sendDataMes(data: number, index: number, tabla: number, type: string){
     if(type == "STREAMING"){
-      if(!this.mesesST[index][tabla]){
-        this.mesesST[index][tabla] = [];
-        this.mesesST[index][tabla].push(data);
-        this.dMesST_Subject.next(this.mesesST);
-      }
+      this.mesesST[index][tabla] = [];
+      this.mesesST[index][tabla].push(data);
+      this.dMesST_Subject.next(this.mesesST);
     }else if(type == "TELEFONIA"){
-      if(!this.mesesTF[index]){
-        this.mesesTF[index] = [];
-        this.mesesTF[index].push(data);
-        this.dMesTF_Subject.next(this.mesesTF);
-      }
+      this.mesesTF[index] = [];
+      this.mesesTF[index].push(data);
+      this.dMesTF_Subject.next(this.mesesTF);
     }else if (type == "TELEVISION"){
-      if(!this.mesesTV[index]){
-        this.mesesTV[index] = [];
-        this.mesesTV[index].push(data);
-        this.dMesTV_Subject.next(this.mesesTV);
-      }
+      this.mesesTV[index] = [];
+      this.mesesTV[index].push(data);
+      this.dMesTV_Subject.next(this.mesesTV);
     }else if (type == "ROUTER"){
-      if(!this.mesesRT[index]){
-        this.mesesRT[index] = [];
-        this.mesesRT[index].push(data);
-        this.dMesRT_Subject.next(this.mesesRT);
-      }
+      this.mesesRT[index] = [];
+      this.mesesRT[index].push(data);
+      this.dMesRT_Subject.next(this.mesesRT);
     }
   }
 }

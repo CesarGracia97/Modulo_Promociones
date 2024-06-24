@@ -8,26 +8,27 @@
       <div class="b11">
         <div class="b11_1">
           <span>SERVICIO</span>
-          <select name="_V4" [(ngModel)]="rowData[rowId]._V4">
+          <select name="_V4" [(ngModel)]="rowData._V4" (ngModelChange)="getPLAN(rowData._V4); getDataUpgrade(rowData._V4, rowData._V5, rowData._V6)">
             <option value="">Elija el Servicio</option>
             <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
           </select>
         </div>
         <div class="b11_2">
           <span>PLANES</span>
-          <select name="_V5">
+          <select name="_V5" [(ngModel)]="rowData._V5" (ngModelChange)="getPLANVARIANT(rowData._V5); getDataUpgrade(rowData._V4, rowData._V5, rowData._V6)">
              <option value="">Elija un Plan</option>
-             <!-- <option value="" *ngIf="planData[rowId].length === 0 && !row._V1">Selecc. antes los otros elementos</option>
-             <option value="" *ngIf="planData[rowId].length === 0 && row._V1">Cargando Datos..</option> -->
+             <option value="" *ngIf="planData[rowId]?.length === 0 || !rowData._V4">Selecc. antes los otros elementos</option>
+             <option value="" *ngIf="!planData[rowId] && rowData._V4">Cargando Datos..</option>
              <option *ngFor=" let plan of planData[rowId]" [value]="plan.TARIFFPLANID" >{{plan.TARIFFPLAN}}</option>    
          </select>
         </div>
         <div class="b11_3">
           <span>VARIANTES</span>
-          <select name="_V6">
+          <select name="_V6" [(ngModel)]="rowData._V6" (ngModelChange)="getPROD_CiudadesTariffplanVariantProducto(rowData._V6, rowData._V7);
+          getDataUpgrade(rowData._V4, rowData._V5, rowData._V6)">
               <option value="">Elija un Plan Variant</option>
-              <!-- <option value="" *ngIf="planVData[rowId].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
-              <option value="" *ngIf="planVData[rowId].length === 0 && row._V2">Cargando Datos..</option> -->
+              <option value="" *ngIf="planVData[rowId]?.length === 0 || !rowData._V5">Selecc. antes los otros elementos</option>
+              <option value="" *ngIf="!planVData[rowId] && rowData._V5">Cargando Datos..</option>
               <option *ngFor=" let planV of planVData[rowId]" [value]="planV.TARIFFPLANVARIANTID" >{{planV.TARIFFPLANVARIANT}}</option>    
           </select>
         </div>
@@ -35,16 +36,16 @@
       <div class="b12">
         <div class="b12_1">
           <span>PRODUCTOS</span>
-          <select name="_V7">
+          <select name="_V7" [(ngModel)]="rowData._V7" (ngModelChange)="getPROD_CiudadesTariffplanVariantProducto(rowData._V6, rowData._V7)">
               <option value="">Elija un Producto</option>
-              <!-- <option value="" *ngIf="productosData[rowId].length === 0 && !row._V2">Selecc. antes los otros elementos</option>
-              <option value="" *ngIf="productosData[rowId].length === 0 && row._V2">Cargando Datos..</option> -->
+              <option value="" *ngIf="productosData[rowId]?.length === 0 || !rowData._V6">Selecc. antes los otros elementos</option>
+              <option value="" *ngIf="!productosData[rowId] && rowData._V6">Cargando Datos..</option>
               <option *ngFor=" let prod of productosData[rowId]" [value]="prod.PRODUCTID" >{{prod.PRODUCTO}}</option>    
           </select>
         </div>
         <div class="b12_2">
           <span>CANALES</span>
-          <select name="_V8">
+          <select name="_V8" [(ngModel)]="rowData._V8">
             <option value="">Elije un Canal</option>
             <option *ngFor=" let canal of canalData[rowId] " [value]="canal.ID">{{canal.NAME}}</option>
           </select>
@@ -58,7 +59,7 @@
           <div [ngClass]="{'show': showDDMP[rowId], 'closing': closing}" class="dropdown">
             <ul>
               <li *ngFor="let mdpg of modoPagosData[rowId]">
-                <input type="checkbox" name="_V9" [value]="mdpg.ID" />{{ mdpg.NAME }} 
+                <input type="checkbox" name="_V9" [value]="mdpg.ID" [(ngModel)]="mdpg.selected"/>{{ mdpg.NAME }} 
               </li>
             </ul>
           </div>
@@ -67,8 +68,11 @@
           <button id="button" (click)="openDropDown('B')">BURO DE CREDITO</button>
           <div [ngClass]="{'show': showDDB[rowId], 'closing': closing}" class="dropdown">
             <ul>
+              <li>
+                <input type="checkbox" (change)="toggleSelectAllCheckboxes($event, 'B')"/> Seleccionar/Deseleccionar Todos
+              </li>
               <li *ngFor="let buro of buroData[rowId]">
-                <input type="checkbox" name="_V10" [value]="buro.ID"/>{{buro.NAME}}
+                <input type="checkbox" name="_V10" [value]="buro.ID" [(ngModel)]="buro.selected"/>{{buro.NAME}}
               </li>
             </ul>
           </div>
@@ -83,7 +87,7 @@
         <div id="precios">
           <div id="precio_content">
             <span>PRECIO REGULAR:</span>
-            <input class="numeros" name="_V13"type="number" [min]="1"/>
+            <input class="numeros" name="_V13"type="number" [min]="1" [(ngModel)]="rowData._V13"/>
           </div>
         </div>
         <div id="dias">
@@ -91,16 +95,18 @@
           <div id="checklist">
             <ul>
               <li *ngFor="let dias of diasGozadosData[rowId]">
-                <input type="radio" name="_V14" [value]="dias.NAME" /> {{dias.NAME}}
+                <input type="radio" name="_V14" [value]="dias.NAME" [(ngModel)]="dias.selected"/> {{dias.NAME}}
               </li>
             </ul>
           </div>
         </div>
-        <div id="upgrade" *ngIf="!upgradeData[rowId]">
+        <div id="upgrade" *ngIf="upgradeData[rowId]">
           <span>UPGRADE</span>
-          <select name="_V15">
+          <select name="_V15" [(ngModel)]="rowData._V15">
             <option value="">Selecciona un UPGRADE</option>
-            <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID" >{{upgrade.PLAN_UPGRADE}}</option>   
+            <option value="" *ngIf="upgradeData[rowId]?.length === 0 || !rowData._V4 || !rowData._V5 || !rowData._V6">Selecc. antes los otros elementos</option>
+            <option value="" *ngIf="!upgradeData[rowId] && rowData._V4 && rowData._V5 && rowData._V6">Cargando Datos..</option>
+            <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID">{{upgrade.PLAN_UPGRADE}}</option>   
           </select>
         </div>
         <div id="meses">
@@ -108,11 +114,11 @@
           <div class="content_meses">
             <div class="ini">
               <span>INICIO</span>
-              <input name="_V16" class="numeros" type="number" [min]="0" [max]="24"/>
+              <input name="_V16" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V16"/>
             </div>
             <div class="fin">
               <span>FIN</span>
-              <input name="_V17" class="numeros" type="number" [min]="1" [max]="24"/>
+              <input name="_V17" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V17"/>
             </div>
           </div>
         </div>

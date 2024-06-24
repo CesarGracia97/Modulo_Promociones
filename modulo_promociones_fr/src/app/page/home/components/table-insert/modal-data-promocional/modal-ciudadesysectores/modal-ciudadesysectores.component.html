@@ -5,9 +5,15 @@
       </div>
     <div class="modal-body">
         <div id="content_ciudades_checklist">
-            <div id="ciudades_checklist">
+            <div id="ciudades_checklist" *ngIf="!ciudadData[rowId]">
+                Cargando Ciudades...
+            </div>
+            <div id="ciudades_checklist" *ngIf="ciudadData[rowId]">
                 <span>Ciudades</span>
                 <ul>
+                    <li>
+                        <input type="checkbox" (change)="toggleSelectAllCheckboxes($event, 'C')"/> Seleccionar/Deseleccionar Todos
+                    </li>
                     <li *ngFor="let city of ciudadData[rowId]">
                         <input type="checkbox" [(ngModel)]="city.selected" [value]="city.CIUDAD_ID" />{{city.PROVINCIA}} - {{ city.CIUDAD }}
                     </li>
@@ -16,9 +22,15 @@
             <button id="button"[disabled]="!disableBusqueda()" (click)="buscarSectores()">Buscar Sectores</button>
         </div>
         <div id="content_sectores_checklist">
-            <div id="sectores_checklist">
+            <div id="sectores_checklist" *ngIf="!sectoresData[rowId]">
+
+            </div>
+            <div id="sectores_checklist" *ngIf="sectoresData[rowId]">
                 <span>Sectores</span>
                 <ul>
+                    <li>
+                        <input type="checkbox" (change)="toggleSelectAllCheckboxes($event, 'S')"/> Seleccionar/Deseleccionar Todos
+                    </li>
                     <li *ngFor="let sect of sectoresData[rowId]">
                         <input type="checkbox"  [value]="sect.SECTOR_ID"/>{{sect.CIUDAD}} - {{sect.SECTOR}}
                     </li>

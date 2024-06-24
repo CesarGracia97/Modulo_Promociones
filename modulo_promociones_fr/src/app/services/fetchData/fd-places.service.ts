@@ -147,6 +147,7 @@ export class FdPlacesService {
             selected: false
           };
         });
+        console.log("Se envio los datos")
         this.comData.sendDataSectores(this.sectorData, index);
       }
     });

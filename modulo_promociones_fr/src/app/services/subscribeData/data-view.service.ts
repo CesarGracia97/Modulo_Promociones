@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Options_PA } from '../../interfaces/Interfaces-View/Options_PA.interface';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class DataViewService {
   private dIndex_Subject = new Subject<number>();
   dIndex$ = this.dIndex_Subject.asObservable();
 
-  private dRows_Subject = new Subject<any[]>();
+  private dRows_Subject = new BehaviorSubject<any>(null);
   dRows$ = this.dRows_Subject.asObservable();
 
   private dModalViewDP_Subject = new Subject<boolean>();
@@ -59,12 +59,8 @@ export class DataViewService {
     this.dIndex_Subject.next(index);
   }
 
-  rowMoment(data: any, index: number){
-    if(!this.rows[index]){
-      this.rows[index] = {};
-      Object.assign(this.rows[index], data);
-      this.dRows_Subject.next(this.rows);
-    }
+  rowMoment(data: any) {
+    this.dRows_Subject.next(data);
   }
 
   stateModalDP(state: boolean){

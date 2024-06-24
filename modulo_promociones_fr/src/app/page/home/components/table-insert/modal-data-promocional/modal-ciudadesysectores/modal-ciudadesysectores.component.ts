@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { Ciudades } from '../../../../../../interfaces/places/ciudad.interface';
 import { Sectores } from '../../../../../../interfaces/places/sector.interface';
 import { FdPlacesService } from '../../../../../../services/fetchData/fd-places.service';
+import { ToggleSelectAllService } from '../../../../../../services/complements/toggle-select-all.service';
+import { DataPromocionSupportService } from '../../../../../../services/subscribeData/data-promocion-support.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-modal-ciudadesysectores',
@@ -21,11 +24,14 @@ export class ModalCiudadesysectoresComponent implements OnInit {
   cs_state: boolean = false;
   //Variables de datos
   ciudadData: Ciudades[][] = []; sectoresData: Sectores[][] = [];
+  idVariant: number[][] = []; idProducto: number[][] = [];
 
   constructor(
     private data_views: DataViewService,
     private data_information: DataPromocionInformationService,
-    private fdata_place: FdPlacesService
+    private fdata_place: FdPlacesService,
+    private complement: ToggleSelectAllService,
+    private support: DataPromocionSupportService
   ){}
   
   ngOnInit(): void {
@@ -33,6 +39,8 @@ export class ModalCiudadesysectoresComponent implements OnInit {
     this.data_views.dModalViewCS$.subscribe( data => {this.cs_state = data});
     this.data_information.dCiudades$.subscribe( data => {this.ciudadData = data});
     this.data_information.dSectores$.subscribe( data => {this.sectoresData = data});
+    this.support.dProductoId$.subscribe(data => {this.idProducto = data});
+    this.support.dVariantId$.subscribe(data => {this.idVariant = data});
   }
 
   closeModalCiudades_y_Sectores(): void {
@@ -41,10 +49,19 @@ export class ModalCiudadesysectoresComponent implements OnInit {
 
   buscarSectores() {
     const ciudades = this.ciudadData[this.rowId].filter(city => city.selected).map(city => city.CIUDAD_ID);
-    this.fdata_place.fetchDataSectoresMasivosXTariffplanVariantXProducto(ciudades, 0, 0, this.rowId);
+    const variantId = this.idVariant[this.rowId] ? this.idVariant[this.rowId][0] : null; // Asegúrate de obtener un solo valor
+    const productoId = this.idProducto[this.rowId] ? this.idProducto[this.rowId][0] : null;
+    if (variantId !== null && productoId !== null){
+      console.log("Entro a la condicion")
+      this.fdata_place.fetchDataSectoresMasivosXTariffplanVariantXProducto(ciudades, variantId, productoId, this.rowId);
+    }
   }
 
   disableBusqueda(): boolean {
-    return this.ciudadData[this.rowId].some(ciudad => ciudad.selected);
+    return this.ciudadData[this.rowId]?.some(ciudad => ciudad.selected);
+  }
+
+  toggleSelectAllCheckboxes(event: any, type: string){
+    this.complement.SelectTypeALL(event, type, this.rowId)
   }
 }

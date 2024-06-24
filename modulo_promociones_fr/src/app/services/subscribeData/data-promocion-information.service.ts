@@ -132,19 +132,15 @@ export class DataPromocionInformationService {
   }
 
   sendDataPLAN(data: TariffPlanes[], index: number){
-    if (!this.planData[index]) {
-      this.planData[index] = [];
-      this.planData[index].push(...data);
-      this.dPLAN_Subject.next(this.planData);
-    }
+    this.planData[index] = [];
+    this.planData[index].push(...data);
+    this.dPLAN_Subject.next(this.planData);
   }
 
   sendDataPLANVARIANT(data: TariffPlanesVariant[], index: number){
-    if(!this.planVData[index]){
-      this.planVData[index] = [];
-      this.planVData[index].push(...data);
-      this.dPLANVARIANT_Subject.next(this.planVData);
-    }
+    this.planVData[index] = [];
+    this.planVData[index].push(...data);
+    this.dPLANVARIANT_Subject.next(this.planVData);
   }
 
   sendDataCanal(index: number){
@@ -161,27 +157,21 @@ export class DataPromocionInformationService {
   }
 
   sendDataPRODUCTO(data: Productos[], index: number){
-    if(!this.prodData[index]){
-      this.prodData[index] = [];
-      this.prodData[index].push(...data);
-      this.dPRODUCTO_Subject.next(this.prodData)
-    }
+    this.prodData[index] = [];
+    this.prodData[index].push(...data);
+    this.dPRODUCTO_Subject.next(this.prodData)
   }
 
   sendDataBuro(data: Buro[], index: number){
-    if(!this.buroData[index]){
-      this.buroData[index] = [];
-      this.buroData[index].push(...data);
-      this.dBuro_Subject.next(this.buroData);
-    }
+    this.buroData[index] = [];
+    this.buroData[index].push(...data);
+    this.dBuro_Subject.next(this.buroData);
   }
 
   sendDataModosPago(data: ModosPago[], index: number){
-    if(!this.mdpgData[index]){
-      this.mdpgData[index] = [];
-      this.mdpgData[index].push(...data);
-      this.dModoPago_Subject.next(this.mdpgData);
-    }
+    this.mdpgData[index] = [];
+    this.mdpgData[index].push(...data);
+    this.dModoPago_Subject.next(this.mdpgData);
   }
 
   sendDataEntidades(data: Entidades[], index: number){
@@ -196,78 +186,61 @@ export class DataPromocionInformationService {
     if(!this.tarjetasData[index]){
       this.tarjetasData[index] = [];
       this.tarjetasData[index].push(...data);
+      this.dTarjetas_Subject.next(this.tarjetasData)
     }
   }
 
   sendDataProvincias(data: Provincias[], index: number){
-    if(!this.provinciaData[index]){
-      this.provinciaData[index] = [];
-      this.provinciaData[index].push(...data);
-      this.dProvincias_Subject.next(this.provinciaData);
-    }
+    this.provinciaData[index] = [];
+    this.provinciaData[index].push(...data);
+    this.dProvincias_Subject.next(this.provinciaData);
   }
 
   sendDataCiudades(data: Ciudades[], index: number){
-    if(!this.ciudadData[index]){
-      this.ciudadData[index] = [];
-      this.ciudadData[index].push(...data);
-      this.dCiudades_Subject.next(this.ciudadData);
-    }
+    this.ciudadData[index] = [];
+    this.ciudadData[index].push(...data);
+    this.dCiudades_Subject.next(this.ciudadData);
   }
   
   sendDataSectores(data: Sectores[], index: number){
-    if(!this.sectoresData[index]){
-      this.sectoresData[index] = [];
-      this.sectoresData[index].push(...data);
-      this.dSectores_Subject.next(this.sectoresData);
-    }
+    this.sectoresData[index] = [];
+    this.sectoresData[index].push(...data);
+    this.dSectores_Subject.next(this.sectoresData);
   }
 
   sendDataPrecioRegular(data: PrecioRegular[],index: number){
-    if(!this.precioRegularData[index]){
-      this.precioRegularData[index] = [];
-      this.precioRegularData[index].push(...data);
-      this.dPrecioRegular_Subject.next(this.precioRegularData)
-    }
+    this.precioRegularData[index] = [];
+    this.precioRegularData[index].push(...data);
+    this.dPrecioRegular_Subject.next(this.precioRegularData)
   }
 
   sendDataPrecioPromo(data: number, index: number){
-    if(!this.precioPromocional[index]){
-      this.precioPromocional[index] = [];
-      this.precioPromocional[index].push(data);
-      this.dPrecioPromo_Subject.next(this.precioPromocional);
-    }
+    this.precioPromocional[index] = [];
+    this.precioPromocional[index].push(data);
+    this.dPrecioPromo_Subject.next(this.precioPromocional);
   }
 
   sendDataDiasGozados(data: DiasGozados[], index: number){
-    if(!this.diasGozadosData[index]){
-      this.diasGozadosData[index] = [];
-      this.diasGozadosData[index].push(...data);
-      this.dDiasGozados_Subject.next(this.diasGozadosData);
-    }
+    this.diasGozadosData[index] = [];
+    this.diasGozadosData[index].push(...data);
+    this.dDiasGozados_Subject.next(this.diasGozadosData);
   }
 
   sendDataUPGRADE(data: Upgrade[], index: number){
-    if(!this.upgradeData[index]) {
-      this.upgradeData[index] = [];
-      this.upgradeData[index].push(...data);
-      this.dUpgrade_Subject.next(this.upgradeData);
-    }
+    this.upgradeData[index] = [];
+    this.upgradeData[index].push(...data);
+    this.dUpgrade_Subject.next(this.upgradeData);
   }
 
   sendDataMesPromocion(data: number, index: number, type: string){
     if(type == "INICIO"){
-      if(!this.mesInicioPromo[index]){
-        this.mesInicioPromo[index] = [];
-        this.mesInicioPromo[index].push(data);
-        this.dMesInicioPromo_Subject.next(this.mesInicioPromo);
-      }
+      this.mesInicioPromo[index] = [];
+      this.mesInicioPromo[index].push(data);
+      this.dMesInicioPromo_Subject.next(this.mesInicioPromo);
     } else if (type == "FIN"){
-      if(!this.mesFinPromo[index]){
-        this.mesFinPromo[index] = [];
-        this.mesFinPromo[index].push(data);
-        this.dMesFinPromo_Subject.next(this.mesFinPromo);
-      }
+      this.mesFinPromo[index] = [];
+      this.mesFinPromo[index].push(data);
+      this.dMesFinPromo_Subject.next(this.mesFinPromo);
     }
   }
 }

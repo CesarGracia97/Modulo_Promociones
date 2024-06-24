@@ -39,7 +39,8 @@ export class TableInsertComponent implements OnInit {
   addRow(): void {
     const newRow = {
       id: this.rows.length,
-      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '', _V6: '',  _V7: '', _V8: ''
+      _V1: '', _V2: '', _V3: '', _V4: '', _V5: '', _V6: '',  _V7: '', _V8: '', _V11:'', _V15:'', _V16: '', _V17: '',
+      serviciosData: [], planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [],
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
   }
@@ -47,7 +48,7 @@ export class TableInsertComponent implements OnInit {
   openModalDatosPromocionales(index: number){
     const rowData = this.rows[index];
     this.data_views.indexMoment(index);
-    this.data_views.rowMoment(index, rowData);
+    this.data_views.rowMoment(rowData);
     this.data_views.stateModalDP(true);
     this.data_information.sendDataCanal(index);
     this.fdmp.fetchDataModosPago(index);
