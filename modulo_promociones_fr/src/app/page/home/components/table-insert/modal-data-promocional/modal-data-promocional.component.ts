@@ -36,15 +36,16 @@ export class ModalDataPromocionalComponent implements OnInit {
   rowId: number = 0;   rowData: any = {};
   dp_state: boolean = false;
   showDDMP: boolean[] = []; showDDB: boolean[] = []; closing: boolean = false; 
-  permitirPA: boolean = false;
-  //V. de Datos b1
+  permitirPA: boolean = false; precValid: boolean[] = [];
+  //V. de Datos
   serviciosData: Servicios[] = []; planData: TariffPlanes[][] = []; planVData: TariffPlanesVariant[][] = [];
   productosData: Productos[][] = []; canalData: Canales[][] = [];
-  //V. de Datos b2
   modoPagosData: ModosPago[][] = []; buroData: Buro[][] = []; 
-  //V. de Datos b2
   upgradeData: Upgrade [][] = []; diasGozadosData: DiasGozados[][] = []; precioRegularData: PrecioRegular[][] = [];
 
+  //Dicionario de datos
+  diccionario: { [key: string]: number | string } = {};
+  
   constructor(
     private data_views: DataViewService,
     private data_information: DataPromocionInformationService,
@@ -52,7 +53,7 @@ export class ModalDataPromocionalComponent implements OnInit {
     private fd_precios: FdPrecioRegularService,
     private fd_upgrade: FdUpgradeService,
     private complement: ToggleSelectAllService,
-    private support: DataPromocionSupportService
+    private support: DataPromocionSupportService,
   ){}
 
   ngOnInit(): void {
@@ -82,29 +83,53 @@ export class ModalDataPromocionalComponent implements OnInit {
       if(SERVICIO != "INTERNET")
         this.data_views.sendOptionsPAView(false, this.rowId,);
       this.fd_combos.fetchDataComboPLAN(SERVICIO, this.rowId);
+      this.diccionario['SERVICIO'] = SERVICIO;
+      this.data_information.sendDataDiccionario(this.diccionario, this.rowId )
     }
   }
 
   getPLANVARIANT(IdPlan: number): void{
     if(IdPlan)
       this.fd_combos.fetchDataComboPLANVARIANT(IdPlan, this.rowId)
+    this.diccionario['Plan_Id'] = IdPlan;
+    this.data_information.sendDataDiccionario(this.diccionario, this.rowId )
   }
 
-  getPROD_CiudadesTariffplanVariantProducto(IdVariant: number, ProductoId: number): void {
-    if(IdVariant){
-      this.fd_combos.fetchDataComboPROD(IdVariant, this.rowId);
-      if(IdVariant && ProductoId){
-        this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(IdVariant, ProductoId, this.rowId);
-        this.fd_precios.fetchDataPrecioRegular(ProductoId, IdVariant, this.rowId);
+  getPROD_CiudadesTariffplanVariantProducto(idVariant: number, ProductoId: number): void {
+    if(idVariant){
+      this.fd_combos.fetchDataComboPROD(idVariant, this.rowId);
+      if(idVariant && ProductoId){
+        this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(idVariant, ProductoId, this.rowId);
+        this.fd_precios.fetchDataPrecioRegular(ProductoId, idVariant, this.rowId);
         this.support.sendDataIdProducto(ProductoId, this.rowId);
-        this.support.sendDataIdVariant(IdVariant, this.rowId);
+        this.support.sendDataIdVariant(idVariant, this.rowId);
+        this.diccionario['Variant_Id'] = idVariant;
+        this.diccionario['Producto_Id'] = idVariant;
+        this.data_information.sendDataDiccionario(this.diccionario, this.rowId )
       }
     }
   }
 
-  getDataUpgrade(SERVICIO: string, id_Plan: number, IdVariant: number): void {
+  getUpgrade(SERVICIO: string, id_Plan: number, IdVariant: number): void {
     if((SERVICIO && SERVICIO == 'INTERNET') && id_Plan && IdVariant)
       this.fd_upgrade.fetchDataUpgrade(id_Plan, IdVariant, this.rowId)
+  }
+
+  getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, IdProdcuto: number, mInicio: number, mFin: string): void {
+    if(IdCanal && value && IdProdcuto && mInicio && (!mFin || mFin =='')){
+      this.diccionario['Canal'] = IdCanal;
+      this.diccionario['Precio Promocional'] = value;
+      this.diccionario['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
+      this.diccionario['MesIniPromocion'] = mInicio
+      this.diccionario['MesFinPromocion'] = 'SIEMPRE';
+    } else if(IdCanal && value && IdProdcuto && mInicio && mFin){
+      this.diccionario['Canal'] = IdCanal;
+      this.diccionario['Precio Promocional'] = value;
+      this.diccionario['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
+      this.diccionario['MesIniPromocion'] = mInicio;
+      this.diccionario['MesFinPromocion'] = mFin;
+    }
+    this.data_information.sendDataDiccionario(this.diccionario, this.rowId)
   }
 
   openDropDown(type: string): void {
@@ -129,6 +154,7 @@ export class ModalDataPromocionalComponent implements OnInit {
       break;
     }
   }
+
   openModalCiudades_y_Sectores(): void {
     this.data_views.stateModalCS(true);
   }
@@ -139,5 +165,18 @@ export class ModalDataPromocionalComponent implements OnInit {
 
   toggleSelectAllCheckboxes(event: any, type: string){
     this.complement.SelectTypeALL(event, type, this.rowId)
+  }
+
+  validatePrice(value: number, precio_max: number): boolean {
+    if(value){
+      if(value <= 0 || value >= precio_max){
+        this.precValid[this.rowId] = true;
+        return true;
+      } else {
+        this.precValid[this.rowId] = false;
+        return false;
+      }
+    }
+    return false;
   }
 }

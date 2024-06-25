@@ -261,3 +261,11 @@ input.numeros{
         }
     }
 }
+.invalid {
+    border: 1px solid red;
+}
+  
+.error-message {
+    color: red;
+    font-size: 7pt;
+}

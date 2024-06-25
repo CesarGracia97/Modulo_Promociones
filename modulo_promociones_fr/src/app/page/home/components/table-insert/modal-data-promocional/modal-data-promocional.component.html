@@ -8,14 +8,14 @@
       <div class="b11">
         <div class="b11_1">
           <span>SERVICIO</span>
-          <select name="_V4" [(ngModel)]="rowData._V4" (ngModelChange)="getPLAN(rowData._V4); getDataUpgrade(rowData._V4, rowData._V5, rowData._V6)">
+          <select name="_V4" [(ngModel)]="rowData._V4" (ngModelChange)="getPLAN(rowData._V4); getUpgrade(rowData._V4, rowData._V5, rowData._V6)">
             <option value="">Elija el Servicio</option>
             <option *ngFor=" let servicio of serviciosData" [value]="servicio" >{{servicio}}</option>
           </select>
         </div>
         <div class="b11_2">
           <span>PLANES</span>
-          <select name="_V5" [(ngModel)]="rowData._V5" (ngModelChange)="getPLANVARIANT(rowData._V5); getDataUpgrade(rowData._V4, rowData._V5, rowData._V6)">
+          <select name="_V5" [(ngModel)]="rowData._V5" (ngModelChange)="getPLANVARIANT(rowData._V5); getUpgrade(rowData._V4, rowData._V5, rowData._V6)">
              <option value="">Elija un Plan</option>
              <option value="" *ngIf="planData[rowId]?.length === 0 || !rowData._V4">Selecc. antes los otros elementos</option>
              <option value="" *ngIf="!planData[rowId] && rowData._V4">Cargando Datos..</option>
@@ -25,7 +25,7 @@
         <div class="b11_3">
           <span>VARIANTES</span>
           <select name="_V6" [(ngModel)]="rowData._V6" (ngModelChange)="getPROD_CiudadesTariffplanVariantProducto(rowData._V6, rowData._V7);
-          getDataUpgrade(rowData._V4, rowData._V5, rowData._V6)">
+          getUpgrade(rowData._V4, rowData._V5, rowData._V6)">
               <option value="">Elija un Plan Variant</option>
               <option value="" *ngIf="planVData[rowId]?.length === 0 || !rowData._V5">Selecc. antes los otros elementos</option>
               <option value="" *ngIf="!planVData[rowId] && rowData._V5">Cargando Datos..</option>
@@ -45,7 +45,8 @@
         </div>
         <div class="b12_2">
           <span>CANALES</span>
-          <select name="_V8" [(ngModel)]="rowData._V8">
+          <select name="_V8" [(ngModel)]="rowData._V8"
+          (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)">
             <option value="">Elije un Canal</option>
             <option *ngFor=" let canal of canalData[rowId] " [value]="canal.ID">{{canal.NAME}}</option>
           </select>
@@ -84,13 +85,19 @@
     </div>
     <div class="body3">
       <div id="dat_promo_ing">
-        <div id="precios">
+        <div id="precios" *ngFor="let precioRegular of precioRegularData[rowId]">
           <div id="precio_content">
-            <span>PRECIO REGULAR:</span>
-            <input class="numeros" name="_V13"type="number" [min]="1" [(ngModel)]="rowData._V13"/>
+            <span>PRECIO REGULAR: ${{ precioRegular.PRECIO }}</span>
+            <input class="numeros" name="_V13" type="number" [(ngModel)]="rowData._V13" [min]="1" [max]="precioRegular.PRECIO" 
+            (ngModelChange)="validatePrice($event, precioRegular.PRECIO); getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)" 
+            [class.invalid]="!precValid[rowId]"
+            placeholder="Ingrese un Precio Promocional"/>
+          </div>
+          <div class="error-message" *ngIf="precValid[rowId]">
+            El precio promocional no puede ser menor o igual a 0 ni superar el precio regular.
           </div>
         </div>
-        <div id="dias">
+        <div id="dias" *ngIf="diasGozadosData[rowId]">
           <span>DIAS GOZADOS</span>
           <div id="checklist">
             <ul>
@@ -102,7 +109,7 @@
         </div>
         <div id="upgrade" *ngIf="upgradeData[rowId]">
           <span>UPGRADE</span>
-          <select name="_V15" [(ngModel)]="rowData._V15">
+          <select name="_V15" [(ngModel)]="rowData._V15" (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)">
             <option value="">Selecciona un UPGRADE</option>
             <option value="" *ngIf="upgradeData[rowId]?.length === 0 || !rowData._V4 || !rowData._V5 || !rowData._V6">Selecc. antes los otros elementos</option>
             <option value="" *ngIf="!upgradeData[rowId] && rowData._V4 && rowData._V5 && rowData._V6">Cargando Datos..</option>
@@ -114,11 +121,13 @@
           <div class="content_meses">
             <div class="ini">
               <span>INICIO</span>
-              <input name="_V16" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V16"/>
+              <input name="_V16" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V16"
+              (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)"/>
             </div>
             <div class="fin">
               <span>FIN</span>
-              <input name="_V17" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V17"/>
+              <input name="_V17" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V17"
+              (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)"/>
             </div>
           </div>
         </div>

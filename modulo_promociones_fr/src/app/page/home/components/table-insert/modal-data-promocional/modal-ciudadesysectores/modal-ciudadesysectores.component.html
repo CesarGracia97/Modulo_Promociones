@@ -23,7 +23,7 @@
         </div>
         <div id="content_sectores_checklist">
             <div id="sectores_checklist" *ngIf="!sectoresData[rowId]">
-
+                Cargando Sectores...
             </div>
             <div id="sectores_checklist" *ngIf="sectoresData[rowId]">
                 <span>Sectores</span>
@@ -32,7 +32,7 @@
                         <input type="checkbox" (change)="toggleSelectAllCheckboxes($event, 'S')"/> Seleccionar/Deseleccionar Todos
                     </li>
                     <li *ngFor="let sect of sectoresData[rowId]">
-                        <input type="checkbox"  [value]="sect.SECTOR_ID"/>{{sect.CIUDAD}} - {{sect.SECTOR}}
+                        <input type="checkbox" [(ngModel)]="sect.selected"  [value]="sect.SECTOR_ID"/>{{sect.CIUDAD}} - {{sect.SECTOR}}
                     </li>
                 </ul>
             </div>

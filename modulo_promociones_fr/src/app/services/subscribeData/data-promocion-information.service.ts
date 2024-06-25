@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { TipoServicios } from '../../interfaces/planes/tiposervicios.interface';
-import { Tecnologias } from '../../interfaces/planes/tecnologias.interface';
 import { TariffPlanes, TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { Provincias } from '../../interfaces/places/provincias.interface';
-import { C_Ciudades, C_Sectores } from '../../interfaces/planes/combos.interface';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
 import { Ciudades } from '../../interfaces/places/ciudad.interface';
 import { Sectores } from '../../interfaces/places/sector.interface';
@@ -37,6 +34,10 @@ export class DataPromocionInformationService {
   private upgradeData: Upgrade [][] = [];
   private mesInicioPromo: Number [][] = [];
   private mesFinPromo: Number [][] = [];
+  /*------------------DICCIONARIO DE DATOS----------------------*/
+  private diccionario: { [key: string]: any }[] = [];
+  /*------------------DICCIONARIO DE DATOS----------------------*/
+
 
   private dNombrePromocion_Subject = new Subject<String[][]>();
   dNombrePromocion$ = this.dNombrePromocion_Subject.asObservable();
@@ -101,29 +102,29 @@ export class DataPromocionInformationService {
   private dMesFinPromo_Subject = new Subject<Number[][]>();
   dMesFinPromo$ = this.dMesFinPromo_Subject.asObservable();
 
+  /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
+  private dDiccionario_Subject = new Subject<{ [key: string]: any }[]>();
+  dDiccionario$ = this.dDiccionario_Subject.asObservable();
+
+  /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
+
   constructor() { }
 
   sendDataNombrePromo(data: string, index: number){
-    if(!this.NombrePromocion[index]){
-      this.NombrePromocion[index] = [];
-      this.NombrePromocion[index].push(data);
-      this.dNombrePromocion_Subject.next(this.NombrePromocion);
-    }
+    this.NombrePromocion[index] = [];
+    this.NombrePromocion[index].push(data);
+    this.dNombrePromocion_Subject.next(this.NombrePromocion);
   }
 
   sendDataFechas(data: Date, index: number, type: string){
     if(type == "INICIO"){
-      if(!this.FechaInicioPromocion[index]){
-        this.FechaInicioPromocion[index] = [];
-        this.FechaInicioPromocion[index].push(data);
-        this.dFechaInicioPromocion_Subject.next(this.FechaInicioPromocion);
-      }
+      this.FechaInicioPromocion[index] = [];
+      this.FechaInicioPromocion[index].push(data);
+      this.dFechaInicioPromocion_Subject.next(this.FechaInicioPromocion);
     }else if(type == "FIN"){
-      if(!this.FechaFinPromocion[index]){
-        this.FechaFinPromocion[index] = [];
-        this.FechaFinPromocion[index].push(data);
-        this.dFechaFinPromocion_Subject.next(this.FechaFinPromocion);
-      }
+      this.FechaFinPromocion[index] = [];
+      this.FechaFinPromocion[index].push(data);
+      this.dFechaFinPromocion_Subject.next(this.FechaFinPromocion);
     }
   }
 
@@ -243,4 +244,12 @@ export class DataPromocionInformationService {
       this.dMesFinPromo_Subject.next(this.mesFinPromo);
     }
   }
+
+  /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
+  sendDataDiccionario(data:{ [key: string]: any }, index: number){
+    this.diccionario[index] = {};
+    Object.keys(data).forEach(key => {this.diccionario[index][key] = data[key];});
+    this.dDiccionario_Subject.next(this.diccionario);
+  }
+  /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
 }

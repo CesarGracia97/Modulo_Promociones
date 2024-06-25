@@ -22,18 +22,20 @@ export class TableInsertComponent implements OnInit {
 
   //v. Estructura de datos
   serviciosData: Servicios[] = [];
+  diccionario: { [key: string]: number | string }[] = [];
 
   constructor(
-    private comData: DataPromocionInformationService,
+    private data_information: DataPromocionInformationService,
     private fdmp: FdModospagosService,
     private fdb: FdBuroService,
     private fddg: FdDiasGozadosService,
-    private data_views: DataViewService, private data_information: DataPromocionInformationService
+    private data_views: DataViewService
   ){}
 
   ngOnInit(): void {
     this.addRow(); // Añade la primera fila automáticamente al cargar
-    this.comData.dServicios$.subscribe(data => {this.serviciosData = data;});
+    this.data_information.dServicios$.subscribe(data => {this.serviciosData = data;});
+    this.data_information.dDiccionario$.subscribe(data => {this.diccionario = data;});
   }
 
   addRow(): void {
