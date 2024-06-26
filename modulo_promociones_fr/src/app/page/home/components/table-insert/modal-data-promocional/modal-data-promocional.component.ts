@@ -44,7 +44,7 @@ export class ModalDataPromocionalComponent implements OnInit {
   upgradeData: Upgrade [][] = []; diasGozadosData: DiasGozados[][] = []; precioRegularData: PrecioRegular[][] = [];
 
   //Dicionario de datos
-  diccionario: { [key: string]: number | string } = {};
+  diccionario: { [key: string]: any }[] = [];
   
   constructor(
     private data_views: DataViewService,
@@ -53,7 +53,7 @@ export class ModalDataPromocionalComponent implements OnInit {
     private fd_precios: FdPrecioRegularService,
     private fd_upgrade: FdUpgradeService,
     private complement: ToggleSelectAllService,
-    private support: DataPromocionSupportService,
+    private support: DataPromocionSupportService
   ){}
 
   ngOnInit(): void {
@@ -66,10 +66,11 @@ export class ModalDataPromocionalComponent implements OnInit {
     this.data_information.dProductos$.subscribe( data => {this.productosData = data});
     this.data_information.dCanal$.subscribe( data => {this.canalData = data});
     this.data_information.dModoPago$.subscribe( data => {this.modoPagosData = data});
-    this.data_information.dBuro$.subscribe( data => {this.buroData = data})
+    this.data_information.dBuro$.subscribe( data => {this.buroData = data});
     this.data_information.dUpgrade$.subscribe( data => {this.upgradeData = data});
     this.data_information.dDiasGozados$.subscribe( data => { this.diasGozadosData = data});
     this.data_information.dPrecioRegular$.subscribe( data => {this.precioRegularData = data});
+    this.data_information.dDiccionario$.subscribe( data => {this.diccionario = data});
   }
 
   closeModalDatosPromocionales(): void {
@@ -83,16 +84,16 @@ export class ModalDataPromocionalComponent implements OnInit {
       if(SERVICIO != "INTERNET")
         this.data_views.sendOptionsPAView(false, this.rowId,);
       this.fd_combos.fetchDataComboPLAN(SERVICIO, this.rowId);
-      this.diccionario['SERVICIO'] = SERVICIO;
-      this.data_information.sendDataDiccionario(this.diccionario, this.rowId )
+      this.diccionario[this.rowId]['SERVICIO'] = SERVICIO;
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }
 
   getPLANVARIANT(IdPlan: number): void{
     if(IdPlan)
       this.fd_combos.fetchDataComboPLANVARIANT(IdPlan, this.rowId)
-    this.diccionario['Plan_Id'] = IdPlan;
-    this.data_information.sendDataDiccionario(this.diccionario, this.rowId )
+    this.diccionario[this.rowId]['Plan_Id'] = IdPlan;
+    this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
   }
 
   getPROD_CiudadesTariffplanVariantProducto(idVariant: number, ProductoId: number): void {
@@ -103,9 +104,9 @@ export class ModalDataPromocionalComponent implements OnInit {
         this.fd_precios.fetchDataPrecioRegular(ProductoId, idVariant, this.rowId);
         this.support.sendDataIdProducto(ProductoId, this.rowId);
         this.support.sendDataIdVariant(idVariant, this.rowId);
-        this.diccionario['Variant_Id'] = idVariant;
-        this.diccionario['Producto_Id'] = idVariant;
-        this.data_information.sendDataDiccionario(this.diccionario, this.rowId )
+        this.diccionario[this.rowId]['Variant_Id'] = idVariant;
+        this.diccionario[this.rowId]['Producto_Id'] = idVariant;
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     }
   }
@@ -117,19 +118,19 @@ export class ModalDataPromocionalComponent implements OnInit {
 
   getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, IdProdcuto: number, mInicio: number, mFin: string): void {
     if(IdCanal && value && IdProdcuto && mInicio && (!mFin || mFin =='')){
-      this.diccionario['Canal'] = IdCanal;
-      this.diccionario['Precio Promocional'] = value;
-      this.diccionario['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
-      this.diccionario['MesIniPromocion'] = mInicio
-      this.diccionario['MesFinPromocion'] = 'SIEMPRE';
+      this.diccionario[this.rowId]['Canal'] = IdCanal;
+      this.diccionario[this.rowId]['Precio Promocional'] = value;
+      this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
+      this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio
+      this.diccionario[this.rowId]['Mes Fin Promocion'] = 'SIEMPRE';
     } else if(IdCanal && value && IdProdcuto && mInicio && mFin){
-      this.diccionario['Canal'] = IdCanal;
-      this.diccionario['Precio Promocional'] = value;
-      this.diccionario['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
-      this.diccionario['MesIniPromocion'] = mInicio;
-      this.diccionario['MesFinPromocion'] = mFin;
+      this.diccionario[this.rowId]['Canal'] = IdCanal;
+      this.diccionario[this.rowId]['Precio Promocional'] = value;
+      this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
+      this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio;
+      this.diccionario[this.rowId]['Mes Fin Promocion'] = mFin;
     }
-    this.data_information.sendDataDiccionario(this.diccionario, this.rowId)
+    this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
   }
 
   openDropDown(type: string): void {

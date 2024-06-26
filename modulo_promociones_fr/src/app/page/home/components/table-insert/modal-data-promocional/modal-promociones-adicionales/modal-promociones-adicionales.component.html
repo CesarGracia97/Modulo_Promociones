@@ -1,6 +1,6 @@
 <div *ngIf="pa_state" class="modal_dp" [ngClass]="{'door-open': pa_state}" id="modal_dp-{{rowId+1}}">
     <div class="modal-header">
-      <span class="modal-title">Datos de Promocion - F# {{rowId+1}}</span>
+      <span class="modal-title">PROMOCIONES ADICIONALES - F# {{rowId+1}}</span>
       <button class="close-button" (click)="closeModalProductosAdicionales()">×</button>
     </div>
     <div class="modal-body">
@@ -55,8 +55,8 @@
                     </table>
                 </div>
                 <div id="streaming_items">
-                    <button id="btn_new_table" (click)="addNewTable(rowId)">Nueva Tabla</button>
-                    <select class="change_table" (change)="changeTable($event, rowId)">
+                    <button id="btn_new_table" (click)="addNewTable()">Nueva Tabla</button>
+                    <select class="change_table" (change)="changeTable($event)">
                         <option>Cambiar de Tabla</option>
                         <option *ngFor="let table of tablesRow[rowId]; let i = index" [value]="i">Tabla {{ i + 1 }}</option>
                     </select>

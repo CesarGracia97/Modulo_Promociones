@@ -85,28 +85,24 @@ export class DataViewService {
 
   sendOptionsPAView( state: boolean, index: number){
     if(state){
-      if(!this.optionsData[index]){
-        this.optionsData[index] = [];
-        this.optionsData[index].push(...[
-          {name: 'NO APLICAR', selected: false},
-          {name: 'STREAMING', selected: false},
-          {name: 'TELEFONIA', selected: false},
-          {name: 'TELEVISION', selected: false},
-          {name: 'ROUTER', selected: false }
-        ]);
-        this.dOptionsDataView_Subject.next(this.optionsData);
-      }
+      this.optionsData[index] = [];
+      this.optionsData[index].push(...[
+        {name: 'NO APLICAR', selected: false},
+        {name: 'STREAMING', selected: false},
+        {name: 'TELEFONIA', selected: false},
+        {name: 'TELEVISION', selected: false},
+        {name: 'ROUTER', selected: false }
+      ]);
+      this.dOptionsDataView_Subject.next(this.optionsData);
     } else {
-      if(!this.optionsData[index]){
-        this.optionsData[index] = [];
-        this.optionsData[index].push(...[
-          {name: 'NO APLICAR', selected: false},
-          {name: 'STREAMING', selected: false},
-          {name: 'TELEFONIA', selected: false},
-          {name: 'TELEVISION', selected: false}
-        ]);
-        this.dOptionsDataView_Subject.next(this.optionsData);
-      }
+      this.optionsData[index] = [];
+      this.optionsData[index].push(...[
+        {name: 'NO APLICAR', selected: false},
+        {name: 'STREAMING', selected: false},
+        {name: 'TELEFONIA', selected: false},
+        {name: 'TELEVISION', selected: false}
+      ]);
+      this.dOptionsDataView_Subject.next(this.optionsData);
     }
   }
 }

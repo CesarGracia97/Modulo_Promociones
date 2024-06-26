@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataViewService } from '../../../../../../services/subscribeData/data-view.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { FdCombosService } from '../../../../../../services/fetchData/fd-combos.
 import { TariffPlanesVariant } from '../../../../../../interfaces/planes/tariffplanes.interface';
 import { PrecioRegular } from '../../../../../../interfaces/DataPromocional/precio-regular.interface';
 import { Productos } from '../../../../../../interfaces/planes/productos.interface';
+import { DataPromocionInformationService } from '../../../../../../services/subscribeData/data-promocion-information.service';
 
 @Component({
   selector: 'app-modal-promociones-adicionales',
@@ -19,8 +20,8 @@ import { Productos } from '../../../../../../interfaces/planes/productos.interfa
 export class ModalPromocionesAdicionalesComponent implements OnInit {
 
   //Variables Visuales
-  rowId: number = 0; selectedTable: number[] = [];
-  tablesRow: any[][] = [];
+  rowId: number = 0; selectedTable: number[] = [];  rowData: any = {};
+  @Input() tablesRow: any[][] = [];
   pa_state: boolean = false; showPROAD: boolean[] = []; closing: boolean = false;
   optionsData: Options_PA[][] = [];
   //Variables de Datos
@@ -33,13 +34,17 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   constructor(
     private data_views: DataViewService,
     private fd_place: FdPlanesService,
-    private fd_planes: FdCombosService
+    private fd_planes: FdCombosService,
+    private data_promo_adicional: DataPromocionInformationService
   ){}
 
   ngOnInit(): void {
-    this.data_views.dIndex$.subscribe( data => {this.rowId = data});
+    this.addNewTable();
+    this.data_views.dIndex$.subscribe( data => {this.rowId = data; this.initializeTablesRow();});
     this.data_views.dModalViewPA$.subscribe( data => {this.pa_state = data});
     this.data_views.dOptionsDataView$.subscribe( data => {this.optionsData = data});
+    this.data_views.dRows$.subscribe( data => {if(data)this.rowData = data; this.initializeTablesRow();});
+    this.data_promo_adicional
   }
 
   closeModalProductosAdicionales(): void {
@@ -76,24 +81,36 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     }
   }
 
-  addNewTable(rowId: number): void {
-    const newTable = {
-        id: this.tablesRow[rowId].length,
-        paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
-    };
-    this.tablesRow[rowId].push(newTable);
-    if (!this.selectedTable[rowId])
-      this.selectedTable[rowId] = 0;
-    this.selectedTable[rowId] = this.tablesRow[rowId].length - 1;
-    if (!this.precioRegularStreamingData[rowId])
-      this.precioRegularStreamingData[rowId] = [];
-    this.precioRegularStreamingData[rowId].push([]);
+  initializeTablesRow(): void {
+    if (!this.tablesRow[this.rowId]) {
+      this.tablesRow[this.rowId] = [{
+        id: 0, paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
+      }];
+    }
   }
 
-  changeTable(event: Event, rowId: number): void {
+  addNewTable(): void {
+    if (!this.tablesRow[this.rowId]) {
+      this.tablesRow[this.rowId] = [];
+    }
+
+    const newTable = {
+      id: this.tablesRow[this.rowId].length,
+      paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
+    };
+
+    this.tablesRow[this.rowId].push(newTable);
+
+    if (this.selectedTable[this.rowId] === undefined)
+      this.selectedTable[this.rowId] = 0;
+
+    this.selectedTable[this.rowId] = this.tablesRow[this.rowId].length - 1;
+  }
+
+  changeTable(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const index = parseInt(target.value, 10);
-    if (!isNaN(index)) this.selectedTable[rowId] = index; // Actualiza la tabla seleccionada para la fila específica
+    if (!isNaN(index)) this.selectedTable[this.rowId] = index; // Actualiza la tabla seleccionada para la fila específica
   }
 
 }

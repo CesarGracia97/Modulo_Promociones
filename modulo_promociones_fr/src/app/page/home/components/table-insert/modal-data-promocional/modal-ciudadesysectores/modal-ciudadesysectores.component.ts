@@ -8,7 +8,6 @@ import { Sectores } from '../../../../../../interfaces/places/sector.interface';
 import { FdPlacesService } from '../../../../../../services/fetchData/fd-places.service';
 import { ToggleSelectAllService } from '../../../../../../services/complements/toggle-select-all.service';
 import { DataPromocionSupportService } from '../../../../../../services/subscribeData/data-promocion-support.service';
-import { log } from 'console';
 
 @Component({
   selector: 'app-modal-ciudadesysectores',
@@ -25,6 +24,8 @@ export class ModalCiudadesysectoresComponent implements OnInit {
   //Variables de datos
   ciudadData: Ciudades[][] = []; sectoresData: Sectores[][] = [];
   idVariant: number[][] = []; idProducto: number[][] = [];
+  //Dicionario de datos
+  diccionario: { [key: string]: any }[] = [];
 
   constructor(
     private data_views: DataViewService,
@@ -39,11 +40,17 @@ export class ModalCiudadesysectoresComponent implements OnInit {
     this.data_views.dModalViewCS$.subscribe( data => {this.cs_state = data});
     this.data_information.dCiudades$.subscribe( data => {this.ciudadData = data});
     this.data_information.dSectores$.subscribe( data => {this.sectoresData = data});
-    this.support.dProductoId$.subscribe(data => {this.idProducto = data});
-    this.support.dVariantId$.subscribe(data => {this.idVariant = data});
+    this.support.dProductoId$.subscribe( data => {this.idProducto = data});
+    this.support.dVariantId$.subscribe( data => {this.idVariant = data});
+    this.data_information.dDiccionario$.subscribe( data => {this.diccionario = data});
   }
 
   closeModalCiudades_y_Sectores(): void {
+    const sectores = this.sectoresData[this.rowId].filter(sect => sect.selected).map(sect => sect.SECTOR_ID);
+    if (sectores.length > 0) {
+      this.diccionario[this.rowId]['SECTORES'] = sectores;
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+    }
     this.data_views.stateModalCS(false);
   }
 
@@ -52,8 +59,9 @@ export class ModalCiudadesysectoresComponent implements OnInit {
     const variantId = this.idVariant[this.rowId] ? this.idVariant[this.rowId][0] : null; // Asegúrate de obtener un solo valor
     const productoId = this.idProducto[this.rowId] ? this.idProducto[this.rowId][0] : null;
     if (variantId !== null && productoId !== null){
-      console.log("Entro a la condicion")
       this.fdata_place.fetchDataSectoresMasivosXTariffplanVariantXProducto(ciudades, variantId, productoId, this.rowId);
+      this.diccionario[this.rowId]['CIUDADES'] = ciudades;
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }
 

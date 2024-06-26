@@ -164,15 +164,19 @@ export class DataPromocionInformationService {
   }
 
   sendDataBuro(data: Buro[], index: number){
-    this.buroData[index] = [];
-    this.buroData[index].push(...data);
-    this.dBuro_Subject.next(this.buroData);
+    if(!this.buroData[index]){
+      this.buroData[index] = [];
+      this.buroData[index].push(...data);
+      this.dBuro_Subject.next(this.buroData);
+    }
   }
 
   sendDataModosPago(data: ModosPago[], index: number){
-    this.mdpgData[index] = [];
-    this.mdpgData[index].push(...data);
-    this.dModoPago_Subject.next(this.mdpgData);
+    if(!this.mdpgData[index]){
+      this.mdpgData[index] = [];
+      this.mdpgData[index].push(...data);
+      this.dModoPago_Subject.next(this.mdpgData);
+    }
   }
 
   sendDataEntidades(data: Entidades[], index: number){
@@ -222,9 +226,11 @@ export class DataPromocionInformationService {
   }
 
   sendDataDiasGozados(data: DiasGozados[], index: number){
-    this.diasGozadosData[index] = [];
-    this.diasGozadosData[index].push(...data);
-    this.dDiasGozados_Subject.next(this.diasGozadosData);
+    if(!this.diasGozadosData[index]){
+      this.diasGozadosData[index] = [];
+      this.diasGozadosData[index].push(...data);
+      this.dDiasGozados_Subject.next(this.diasGozadosData);
+    }
   }
 
   sendDataUPGRADE(data: Upgrade[], index: number){
@@ -246,8 +252,14 @@ export class DataPromocionInformationService {
   }
 
   /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
-  sendDataDiccionario(data:{ [key: string]: any }, index: number){
-    this.diccionario[index] = {};
+  sendDataNewDiccionario(index:number){
+    this.diccionario[index] = {}; 
+    this.dDiccionario_Subject.next(this.diccionario);
+    console.log("Diccionario creado index: "+index);
+    console.log(this.diccionario);
+  }
+
+  sendDataUptadeDiccionario(data:{ [key: string]: any }, index: number){
     Object.keys(data).forEach(key => {this.diccionario[index][key] = data[key];});
     this.dDiccionario_Subject.next(this.diccionario);
   }

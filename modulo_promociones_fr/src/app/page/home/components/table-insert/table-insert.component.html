@@ -16,7 +16,7 @@
             <tr id="getData" *ngFor="let row of rows; let i = index" [attr.id]="'row-' + (i + 1)">
                 <td>{{ row.id+1 }}</td>
                 <td>
-                    <input class="nom_promo" type="text" name="_V1" [(ngModel)]="row._V1" 
+                    <input class="nom_promo" type="text" name="_V1" [(ngModel)]="row._V1" (ngModelChange)="getNombrePromocion(row._V1, i)"
                     placeholder="Ing. el Nombre para la promocion"/>
                     
                 </td> 
@@ -25,21 +25,23 @@
                         <tr class="fini">
                             <td><span>Inicio</span></td>
                             <td class="inputDate">
-                                <input type="date" name="_V2" [(ngModel)]="row._V2" (ngModelChange)="row.errorV2 = validateV2(row)" />
+                                <input type="date" name="_V2" [(ngModel)]="row._V2" 
+                                (ngModelChange)="row.errorV2 = validateV2(row); getFechasInicioFin(row._V2, row._V3, i)" />
                                 <span *ngIf="row.errorV2" class="error">{{ row.errorV2 }}</span>
                             </td>
                         </tr>
                         <tr class="ffin">
                             <td><span>Fin</span></td>
                             <td class="inputDate">
-                                <input type="date" name="_V3" [(ngModel)]="row._V3" [disabled]="!row._V2" (ngModelChange)="row.errorV3 = validateV3(row)" />
+                                <input type="date" name="_V3" [(ngModel)]="row._V3" [disabled]="!row._V2" 
+                                (ngModelChange)="row.errorV3 = validateV3(row); getFechasInicioFin(row._V2, row._V3, i)" />
                                 <span *ngIf="row.errorV3" class="error">{{ row.errorV3 }}</span>
                             </td>
                         </tr>
                     </table>
                 </td>    
                 <td>
-                    <button id="button" (click)="openModalDatosPromocionales(i)">Abrir</button>
+                    <button id="button" (click)="openModalDatosPromocionales(i)" [disabled]="!disableDatosPromocionales(i)">Abrir</button>
                 </td>
                 <td>
                     <button id="button">Enviar</button>
