@@ -109,25 +109,20 @@
         </div>
         <div id="upgrade" *ngIf="upgradeData[rowId]">
           <span>UPGRADE</span>
-          <select name="_V15" [(ngModel)]="rowData._V15" (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)">
-            <option value="">Selecciona un UPGRADE</option>
-            <option value="" *ngIf="upgradeData[rowId]?.length === 0 || !rowData._V4 || !rowData._V5 || !rowData._V6">Selecc. antes los otros elementos</option>
-            <option value="" *ngIf="!upgradeData[rowId] && rowData._V4 && rowData._V5 && rowData._V6">Cargando Datos..</option>
-            <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID">{{upgrade.PLAN_UPGRADE}}</option>   
-          </select>
+          <button id="button" (click)="openModalUpgrade()">CONFIGURAR UPGRADE</button>
         </div>
         <div id="meses">
           <span>MES DE INICIO Y FINALIZACION</span>
           <div class="content_meses">
             <div class="ini">
               <span>INICIO</span>
-              <input name="_V16" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V16"
-              (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)"/>
+              <input name="_V19" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V19"
+              (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V19, rowData._V20)"/>
             </div>
             <div class="fin">
               <span>FIN</span>
-              <input name="_V17" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V17"
-              (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)"/>
+              <input name="_V20" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V20"
+              (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V19, rowData._V20)"/>
             </div>
           </div>
         </div>
@@ -148,3 +143,4 @@
 <app-modal-promociones-adicionales />
 <app-modal-entidades />
 <app-modal-tarjetas />
+<app-modal-upgrade />

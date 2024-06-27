@@ -1,0 +1,36 @@
+<div *ngIf="up_state" class="modal_dp" [ngClass]="{'door-open': up_state}" id="modal_dp-{{rowId+1}}">
+    <div class="modal-header">
+        <span class="modal-title">UPGRADE - F# {{rowId+1}}</span>
+        <button class="close-button" (click)="closeModalDatosPromocionales()">×</button>
+    </div>
+    <div class="modal-body">
+        <div id="upgrade">
+            <span>UPGRADE</span>
+            <select name="_V15" [(ngModel)]="rowData._V15" (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)">
+                <option value="">Selecciona un UPGRADE</option>
+                <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID">{{upgrade.PLAN_UPGRADE}}</option>   
+            </select>
+        </div>
+        <div id="caducidad">
+            <span>FECHA DE CADUCIDAD</span>
+            <input type="date" name="_V16" [(ngModel)]="rowData._V16" 
+            (ngModelChange)="rowData.errorV2 = validateV18(rowData); getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)" />
+            <span *ngIf="rowData.errorV2" class="error">{{ rowData.errorV2 }}</span>
+        </div>
+        <div id="meses">
+            <span>MES DE INICIO Y FINALIZACION</span>
+            <div class="content_meses">
+                <div class="ini">
+                    <span>INICIO</span>
+                    <input name="_V17" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V17"
+                    (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)"/>
+                </div>
+                <div class="fin">
+                    <span>FIN</span>
+                    <input name="_V18" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V18"
+                    (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

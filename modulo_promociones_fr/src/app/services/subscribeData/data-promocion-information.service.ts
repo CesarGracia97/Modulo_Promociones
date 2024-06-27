@@ -255,8 +255,6 @@ export class DataPromocionInformationService {
   sendDataNewDiccionario(index:number){
     this.diccionario[index] = {}; 
     this.dDiccionario_Subject.next(this.diccionario);
-    console.log("Diccionario creado index: "+index);
-    console.log(this.diccionario);
   }
 
   sendDataUptadeDiccionario(data:{ [key: string]: any }, index: number){

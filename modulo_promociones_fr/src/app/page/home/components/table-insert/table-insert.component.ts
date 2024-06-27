@@ -43,14 +43,16 @@ export class TableInsertComponent implements OnInit {
     const newRow = {
       id: this.rows.length,
       _V1: '', _V2: '', _V3: '', _V4: '', _V5: '', _V6: '',  _V7: '', _V8: '', _V11:'', _V15:'', _V16: '', _V17: '',
+      _V18: '', _V19: '',  _V20: '',
       serviciosData: [], planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [], upgradeData: [],
       selectedTable: 0, // Cambiado de array a un solo número
       tablesRow: [{
-        id: 0, paquetesStreaming: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
-      }], planesTelevisivos: [], planesTelefonicos: [], modelosRouter: [],
-      PRAD_TF_V1: '', PRAD_TF_V2: '', PRAD_TF_V3: '', PRAD_TF_V4: '',
-      PRAD_TV_V1: '', PRAD_TV_V2: '', PRAD_TV_V3: '', PRAD_TV_V4: '',
-      PRAD_RT_V1: '', PRAD_RT_V2: '', PRAD_RT_V3: '', PRAD_RT_V4: '' // Cambiado de array a un solo número
+        id: 0, paquetesStreaming: [], precioRegularStreamingData: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
+      }], 
+      planesTelevisivos: [], planesTelefonicos: [], modelosRouter: [],
+      PRAD_TF_V1: '', PRAD_TF_V2: '', PRAD_TF_V3: '', PRAD_TF_V4: '', PRAD_TF_V5: '',
+      PRAD_TV_V1: '', PRAD_TV_V2: '', PRAD_TV_V3: '', PRAD_TV_V4: '', PRAD_TV_V5: '',
+      PRAD_RT_V1: '', PRAD_RT_V2: '', PRAD_RT_V3: '', PRAD_RT_V4: '', PRAD_RT_V5: '', // Cambiado de array a un solo número
     };
     this.rows.push(newRow); // Añade el nuevo objeto al array de filas
     this.data_information.sendDataNewDiccionario(this.rows.length - 1); // Manda a generar un nuevo diccionario

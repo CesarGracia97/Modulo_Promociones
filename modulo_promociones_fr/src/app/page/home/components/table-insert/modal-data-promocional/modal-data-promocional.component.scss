@@ -217,6 +217,11 @@ input.numeros{
                         align-items: center; // Alinea verticalmente los elementos *
                     }
                 }
+                #upgrade{
+                    #button{
+                        margin-top: 10px;
+                    }
+                }
                 #meses{
                     .content_meses{
                         margin-top: 4px;

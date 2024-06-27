@@ -1,0 +1,103 @@
+select {
+    padding: 8px; // Más espacio dentro del select *
+    border: 1px solid #ccc; //Borde sutil *
+    border-radius: 4px; // Bordes ligeramente redondeados para el select *
+    font-size: 7pt; // Tamaño de fuente más grande para select *
+    width: 100%; // Hace que el select ocupe todo el espacio de la celda *
+    box-sizing: border-box; // Incluye el padding y border en el ancho total *
+    margin-top: 4px;
+}
+
+.modal_dp {
+    background-color: white;
+    border-radius: 10px;
+    max-width: 1000px;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    animation: doorOpen 0.5s;
+    border: 2px solid #ccc;
+    z-index: 1000;
+
+    .door-open {
+        animation-name: doorOpen;
+    }
+    
+    @keyframes doorOpen {
+        0% { transform: translate(-50%, -50%) rotateY(90deg); }
+        100% { transform: translate(-50%, -50%) rotateY(0deg); }
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+
+        .modal-title {
+            font-weight: bold;
+        }
+        
+        button.close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover{
+                background-color: #e4e4e4
+            }
+        }
+    }
+    
+    .modal-body {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        width: 100%; 
+        font-size: 7pt;
+        gap: 5px;
+        #upgrade, #meses, #caducidad {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px 12px;
+            font-size: 7pt;
+            width: 100%;
+            #meses{
+                .content_meses {
+                    margin-top: 4px;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+
+                    .ini, .fin {
+                        display: flex;
+                        flex-direction: row;
+                        span {
+                            width: 40px;
+                            display: flex; // Utiliza flexbox para facilitar la alineación *
+                            align-items: center; // Alinea verticalmente los elementos *
+                        }
+                        .numeros {
+                            margin-top: 0;
+                            width: 1500px;
+                        }
+                    }
+                    .fin {
+                        margin-top: 4px;
+                    }
+                }
+            }
+            #caducidad {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}

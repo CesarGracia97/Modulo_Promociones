@@ -22,12 +22,13 @@ import { ModalEntidadesComponent } from './modal-entidades/modal-entidades.compo
 import { ModalTarjetasComponent } from './modal-tarjetas/modal-tarjetas.component';
 import { ToggleSelectAllService } from '../../../../../services/complements/toggle-select-all.service';
 import { DataPromocionSupportService } from '../../../../../services/subscribeData/data-promocion-support.service';
+import { ModalUpgradeComponent } from './modal-upgrade/modal-upgrade.component';
 
 @Component({
   selector: 'app-modal-data-promocional',
   standalone: true,
   imports: [CommonModule, FormsModule, ModalCiudadesysectoresComponent, ModalPromocionesAdicionalesComponent,
-    ModalEntidadesComponent, ModalTarjetasComponent],
+    ModalEntidadesComponent, ModalTarjetasComponent, ModalUpgradeComponent],
   templateUrl: './modal-data-promocional.component.html',
   styleUrl: './modal-data-promocional.component.scss'
 })
@@ -123,14 +124,15 @@ export class ModalDataPromocionalComponent implements OnInit {
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
       this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio
       this.diccionario[this.rowId]['Mes Fin Promocion'] = 'SIEMPRE';
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if(IdCanal && value && IdProdcuto && mInicio && mFin){
       this.diccionario[this.rowId]['Canal'] = IdCanal;
       this.diccionario[this.rowId]['Precio Promocional'] = value;
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
       this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio;
       this.diccionario[this.rowId]['Mes Fin Promocion'] = mFin;
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
-    this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
   }
 
   openDropDown(type: string): void {
@@ -162,6 +164,10 @@ export class ModalDataPromocionalComponent implements OnInit {
   
   openModalProductosAdicionales(): void {
     this.data_views.stateModalPA(true);
+  }
+
+  openModalUpgrade(): void {
+    this.data_views.stateModalUP(true);
   }
 
   toggleSelectAllCheckboxes(event: any, type: string){
