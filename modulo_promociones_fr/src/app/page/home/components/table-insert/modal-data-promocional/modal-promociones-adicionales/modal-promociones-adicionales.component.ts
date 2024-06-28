@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataViewService } from '../../../../../../services/subscribeData/data-view.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,10 @@ import { TariffPlanesVariant } from '../../../../../../interfaces/planes/tariffp
 import { PrecioRegular } from '../../../../../../interfaces/DataPromocional/precio-regular.interface';
 import { Productos } from '../../../../../../interfaces/planes/productos.interface';
 import { DataPromocionInformationService } from '../../../../../../services/subscribeData/data-promocion-information.service';
+import { DataPromocionSupportService } from '../../../../../../services/subscribeData/data-promocion-support.service';
+import { DataProdadicInformationService } from '../../../../../../services/subscribeData/data-prodadic-information.service';
+import { FdPrecioRegularService } from '../../../../../../services/fetchData/DataPromocional/fd-precio_regular.service';
+import { Ciudades } from '../../../../../../interfaces/places/ciudad.interface';
 
 @Component({
   selector: 'app-modal-promociones-adicionales',
@@ -23,6 +27,8 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   rowId: number = 0; rowData: any = {};
   pa_state: boolean = false; showPROAD: boolean[] = []; closing: boolean = false;
   optionsData: Options_PA[][] = [];
+  selectedTableIndex: number[] = [];
+
   
   //Variables de Datos
   paquetesStreaming: TariffPlanesVariant[][] = [];
@@ -30,27 +36,70 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   modelosRouter: Productos[][] = [];
   precioRegularTelefoniaData: PrecioRegular[][] = []; precioRegularTelevisioData: PrecioRegular[][] = [];
   precioRegularRouter: PrecioRegular[][] = []; precioRegularStreamingData: PrecioRegular[][][] = [];
+  ciudadData: Ciudades[][] = [];
+  idVariant: number[][] = [];
 
   //Dicionario de datos
   diccionario: { [key: string]: any }[] = [];
 
   constructor(
     private data_views: DataViewService,
+    private data_promo: DataPromocionInformationService,
+    private data_promo_adi: DataProdadicInformationService,
+    private support: DataPromocionSupportService,
     private fd_place: FdPlanesService,
-    private fd_planes: FdCombosService,
-    private data_promo_adicional: DataPromocionInformationService
+    private fd_combos: FdCombosService,
+    private fd_precio: FdPrecioRegularService
+
   ){}
 
   ngOnInit(): void {
-    this.data_views.dIndex$.subscribe( data => {this.rowId = data });
+    this.data_views.dRows$.subscribe(data => { if(data)this.rowData = data });
+    this.data_views.dIndex$.subscribe(data => {this.rowId = data; if (!this.selectedTableIndex[this.rowId]) this.selectedTableIndex[this.rowId] = 0; }); // Inicializar selectedTableIndex para la fila actual si no existe
     this.data_views.dModalViewPA$.subscribe(data => { this.pa_state = data });
     this.data_views.dOptionsDataView$.subscribe(data => { this.optionsData = data });
-    this.data_views.dRows$.subscribe(data => { if (data) { this.rowData = data }});
-    this.data_promo_adicional.dDiccionario$.subscribe(data => { this.diccionario = data });
+    this.data_promo.dDiccionario$.subscribe(data => { this.diccionario = data });
+    this.data_promo.dCiudades$.subscribe(data => {this.ciudadData = data});
+    this.data_promo_adi.dPrRegST$.subscribe(data => {this.precioRegularStreamingData = data});
+    this.data_promo_adi.dPrRefTF$.subscribe(data => {this.precioRegularTelefoniaData = data});
+    this.data_promo_adi.dPrRefTV$.subscribe(data => {this.precioRegularTelevisioData = data});
+    this.data_promo_adi.dPrRefRT$.subscribe(data => {this.precioRegularRouter = data});
+    this.data_promo_adi.dPaquetesStreaming$.subscribe(data => {this.paquetesStreaming = data});
+    this.data_promo_adi.dPlanesTelefonicos$.subscribe(data => {this.planesTelefonicos = data});
+    this.data_promo_adi.dPlanesTelevisivos$.subscribe(data => {this.planesTelevisivos = data});
+    this.data_promo_adi.dModelosRouter$.subscribe(data => {this.modelosRouter = data});
+    this.support.dVariantId$.subscribe(data => {this.idVariant = data});
   }
 
   closeModalProductosAdicionales(): void {
     this.data_views.stateModalPA(false);
+  }
+
+  getPrecioRegular(PlanesPaquetesModelos: number, type: string): void {
+    const variantId = this.idVariant[this.rowId] ? this.idVariant[this.rowId][0] : null;
+    if(PlanesPaquetesModelos){
+      if(type == "STREAMING"){
+        this.fd_precio.fetchDataPrecioRegularPA(1000065, PlanesPaquetesModelos, this.rowId, this.selectedTableIndex[this.rowId], type);
+      } else if(type == "TELEFONIA") {
+        //
+      } else if(type == "TELEVISION") {
+        this.fd_precio.fetchDataPrecioRegularPA(this.darIdProducto(), PlanesPaquetesModelos, this.rowId, 0, type);
+      } else if(variantId !== null && type == "ROUTER") {
+        this.fd_precio.fetchDataPrecioRegularPA(PlanesPaquetesModelos, variantId, this.rowId, 0, type);
+      }
+    }
+  }
+
+  darIdProducto(): number {
+    const idsEspeciales = [95999, 96010, 96007];
+    const ciudadesSeleccionadas = this.ciudadData[this.rowId].filter(ciudad => ciudad.selected);
+    const idsSeleccionados = ciudadesSeleccionadas.map(ciudad => ciudad.CIUDAD_ID);
+    const todosIdsEspecialesSeleccionados = idsEspeciales.every(id => idsSeleccionados.includes(id));
+    if (todosIdsEspecialesSeleccionados) {
+        return 170;
+    } else {
+        return 5;
+    }
   }
 
   openDropDown(): void {
@@ -73,13 +122,27 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
       options[0].selected = false;
     }
     if (index === 1 && options[1].selected){
-      //this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', this.rowId, 0)
+      this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', this.rowId, this.selectedTableIndex[this.rowId])
     } else if (index === 2 && options[2].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA', this.rowId, 0)
     } else if (index == 3 && options[3].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION', this.rowId, 0)
     } else if (index == 4 && options[4].selected){
-      this.fd_planes.fetchDataComboPROD_ROUTER(this.rowId);
+      this.fd_combos.fetchDataComboPROD_ROUTER(this.rowId);
     }
+  }
+
+  addNewTable(): void {
+    const newTable = {
+      id: this.rowData.tablas.length,
+      PRAD_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: '', PRAD_ST_V4: ''
+    };
+    this.rowData.tablas.push(newTable);
+    this.selectedTableIndex[this.rowId] = this.rowData.tablas.length - 1;
+  }
+
+  changeTable(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedTableIndex[this.rowId] = parseInt(target.value, 10);
   }
 }

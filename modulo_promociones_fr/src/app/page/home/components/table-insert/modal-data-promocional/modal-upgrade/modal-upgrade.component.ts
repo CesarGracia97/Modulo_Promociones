@@ -54,23 +54,4 @@ export class ModalUpgradeComponent implements OnInit {
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }
-
-  isWeekend(date: string): boolean {
-    const day = new Date(date).getDay();
-    return day === 5 || day === 6; // Domingo = 6, Sábado = 5
-  }
-
-  validateV18(row: any): string | null {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Ignorar la parte de horas
-    const dateV18 = new Date(row._V18);
-
-    if (dateV18 < today) {
-      return 'La fecha no puede ser menor a la fecha actual.';
-    }
-    if (this.isWeekend(row._V18)) {
-      return 'Las fechas de fin de semana no son permitidas.';
-    }
-    return null;
-  }
 }

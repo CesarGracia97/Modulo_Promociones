@@ -14,7 +14,7 @@
         <div id="caducidad">
             <span>FECHA DE CADUCIDAD</span>
             <input type="date" name="_V16" [(ngModel)]="rowData._V16" 
-            (ngModelChange)="rowData.errorV2 = validateV18(rowData); getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)" />
+            (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)" />
             <span *ngIf="rowData.errorV2" class="error">{{ rowData.errorV2 }}</span>
         </div>
         <div id="meses">

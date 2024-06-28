@@ -9,14 +9,14 @@ import { Productos } from '../../interfaces/planes/productos.interface';
 })
 export class DataProdadicInformationService {
 
-  private planVSData: TariffPlanesVariant[][][] = []; private planVTFData: TariffPlanesVariant[][] = []; private planVTVData: TariffPlanesVariant[][] = [];
+  private planVSData: TariffPlanesVariant[][] = []; private planVTFData: TariffPlanesVariant[][] = []; private planVTVData: TariffPlanesVariant[][] = [];
   private modeloRTData: Productos[][] = [];
   private precioRegularSTData: PrecioRegular[][][] = []; private precioRegularTFData: PrecioRegular[][] = [];
   private precioRegularTVData: PrecioRegular[][] = []; private precioRegularRTData: PrecioRegular[][] = [];
   private cantidadTF: number[][] = []; private cantidadTV: Number[][] = [];  private cantidadRT: Number[][] = [];
   private mesesST: Number[][][] = []; private mesesTF: Number[][] = []; private mesesTV: Number[][] = []; private mesesRT: Number[][] = [];
 
-  private dPaquetesStreaming_Subject = new Subject<TariffPlanesVariant[][][]>();
+  private dPaquetesStreaming_Subject = new Subject<TariffPlanesVariant[][]>();
   dPaquetesStreaming$ = this.dPaquetesStreaming_Subject.asObservable();
 
   private dPlanesTelefonicos_Subject = new Subject<TariffPlanesVariant[][]>();
@@ -79,8 +79,8 @@ export class DataProdadicInformationService {
       this.planVTVData[index].push(...data);
       this.dPlanesTelevisivos_Subject.next(this.planVTVData);
     }else if(type == "STREAMING"){
-      this.planVSData[index][table] = [];
-      this.planVSData[index][table].push(...data);
+      this.planVSData[index] = [];
+      this.planVSData[index].push(...data);
       this.dPaquetesStreaming_Subject.next(this.planVSData);
     }
   }

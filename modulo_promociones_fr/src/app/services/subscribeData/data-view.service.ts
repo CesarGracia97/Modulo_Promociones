@@ -8,7 +8,6 @@ import { Options_PA } from '../../interfaces/Interfaces-View/Options_PA.interfac
 export class DataViewService {
 
   optionsData: Options_PA[][] = [];
-  rows: any [] = [];
   //Variables de Comunicacion visual entre componentes de Table Query
   private visibleItemPrincipal_Subject = new Subject<string>();
   visbleItemP$ = this.visibleItemPrincipal_Subject.asObservable(); //de Botones a Contenedor Prima

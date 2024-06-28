@@ -50,7 +50,8 @@ export class ModalDataPromocionalComponent implements OnInit {
   constructor(
     private data_views: DataViewService,
     private data_information: DataPromocionInformationService,
-    private fd_combos: FdCombosService, private fd_lugares: FdPlacesService,
+    private fd_combos: FdCombosService, 
+    private fd_lugares: FdPlacesService,
     private fd_precios: FdPrecioRegularService,
     private fd_upgrade: FdUpgradeService,
     private complement: ToggleSelectAllService,
@@ -87,6 +88,7 @@ export class ModalDataPromocionalComponent implements OnInit {
       this.fd_combos.fetchDataComboPLAN(SERVICIO, this.rowId);
       this.diccionario[this.rowId]['SERVICIO'] = SERVICIO;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+      this.support.sendDataServicio(SERVICIO, this.rowId);
     }
   }
 

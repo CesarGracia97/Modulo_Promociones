@@ -23,49 +23,50 @@
         <div id="pro_adici">
             <div id="streaming" *ngIf="optionsData[rowId][1].selected">
                 <div class="content_streaming">
-                    <label><strong>STREAMING #</strong></label>
+                    <label><strong>STREAMING  #{{selectedTableIndex[rowId] + 1}}</strong></label>
                     <table>
                         <tr>
                             <td><span>PAQUETE</span></td>
                             <td>
-                                <select name="PRAD_V1">
+                                <select name="PRAD_V1" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_V1"
+                                (ngModelChange)="getPrecioRegular(rowData.tablas[selectedTableIndex[rowId]].PRAD_V1, 'STREAMING')">
                                     <option [value]="">PAQ. STREAMING</option>
-                                    <option></option>
+                                    <option *ngFor="let plan of paquetesStreaming[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngFor="let precioRegular of precioRegularStreamingData[rowId]?.[selectedTableIndex[rowId]]">
                             <td>
-                                <span>PRE. REGULAR $</span>
+                                <span>PRE. REGULAR $${{ precioRegular.PRECIO }}</span>
                             </td>
                             <td>
                                 <div id="precio_content">                                    
-                                    <input name="PRAD_ST_V2"
-                                    placeholder="Ing. Pr. Promocional" type="number" min="1"/>
+                                    <input name="PRAD_ST_V2" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2"
+                                    placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MES INICIAL</span></td>
                             <td>
-                                <input name="PRAD_ST_V3"
+                                <input name="PRAD_ST_V3" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3"
                                 type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MES FINAL</span></td>
                             <td>
-                                <input name="PRAD_ST_V4"
+                                <input name="PRAD_ST_V4" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4"
                                 type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div id="streaming_items">
-                    <button id="btn_new_table">Nueva Tabla</button>
-                    <select class="change_table">
+                    <button id="btn_new_table" (click)="addNewTable()">Nueva Tabla</button>
+                    <select class="change_table" (change)="changeTable($event)">
                         <option>Cambiar de Tabla</option>
-                        <option>Tabla #</option>
+                        <option *ngFor="let table of rowData.tablas; let i = index" [value]="i">Tabla #{{i+1}}</option>
                     </select>
                 </div>
             </div>
@@ -76,19 +77,20 @@
                         <tr>
                             <td><span>PLANES</span></td>
                             <td>
-                                <select name="PRAD_TF_V1" [(ngModel)]="rowData.PRAD_TF_V1">
+                                <select name="PRAD_TF_V1" [(ngModel)]="rowData.PRAD_TF_V1"
+                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TF_V1, 'TELEFONIA')">
                                     <option [value]="">PLAN. TELEFONICO</option>
                                     <option *ngFor="let plan of planesTelefonicos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngFor="let precioRegular of precioRegularTelefoniaData[rowId]">
                             <td>
-                                <span>PRE. REGULAR $</span>
+                                <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                             </td>
                             <td>
                                 <div id="precio_content">
-                                    <input name="PRAD_TF_V2" [(ngModel)]="rowData.PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" min="1"/>    
+                                    <input name="PRAD_TF_V2" [(ngModel)]="rowData.PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
                                 </div>
                             </td>
                         </tr>
@@ -120,26 +122,27 @@
                         <tr>
                             <td><span>PLANES</span></td>
                             <td>
-                                <select name="PRAD_TV_V1">
+                                <select name="PRAD_TV_V1" [(ngModel)]="rowData.PRAD_TV_V1"
+                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TF_V1, 'TELEVISION')">
                                     <option [value]="">PLAN. TELEVISION</option>
                                     <option *ngFor="let plan of planesTelevisivos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngFor="let precioRegular of precioRegularTelevisioData[rowId]">
                             <td>
-                                <span>PRE. REGULAR $</span>
+                                <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                             </td>
                             <td>
                                 <div id="precio_content">
-                                    <input name="PRAD_TV_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1"/>    
+                                    <input name="PRAD_TV_V2" [(ngModel)]="rowData.PRAD_TV_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td><span>CANTIDAD</span></td>
                             <td>
-                                <input name="PRAD_TV_V3" type="number"/>
+                                <input name="PRAD_TV_V3" [(ngModel)]="rowData.PRAD_TV_V3" type="number"/>
                             </td>
                         </tr>
                         <tr>
@@ -164,26 +167,27 @@
                         <tr>
                             <td><span>ROUTER</span></td>
                             <td>
-                                <select name="PRAD_RT_V1">
+                                <select name="PRAD_RT_V1" [(ngModel)]="rowData.PRAD_RT_V1"
+                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TF_V1, 'ROUTER')">
                                     <option [value]="">MODELO ROUTER</option>
                                     <option *ngFor="let modelo of modelosRouter[rowId]" [value]="modelo.PRODUCTID">{{modelo.PRODUCTO}}</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngFor="let precioRegular of precioRegularRouter[rowId]">
                             <td>
-                                <span>PRE. REGULAR $</span>
+                                <span>PRE. REGULAR ${{precioRegular.PRECIO}}</span>
                             </td>
                             <td>
                                 <div id="precio_content">
-                                    <input name="PRAD_RT_V2"placeholder="Ing. Pr. Promocional" type="number" [min]="1"/>    
+                                    <input name="PRAD_RT_V2" [(ngModel)]="rowData.PRAD_RT_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td><span>CANTIDAD</span></td>
                             <td>
-                                <input name="PRAD_RT_V3" type="number" [min]="1"/>
+                                <input name="PRAD_RT_V3" [(ngModel)]="rowData.PRAD_RT_V3" type="number" [min]="1"/>
                             </td>
                         </tr>
                         <tr>

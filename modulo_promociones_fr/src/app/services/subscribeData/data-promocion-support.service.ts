@@ -7,12 +7,16 @@ import { Subject } from 'rxjs';
 export class DataPromocionSupportService {
   private idVariant: number[][] = [];
   private idProducto: number[][] = [];
+  private Servicio: string[][] = [];
 
   private dProductoId_Subject = new Subject<number[][]>();
   dProductoId$ = this.dProductoId_Subject.asObservable();
 
   private dVariantId_Subject = new Subject<number[][]>();
   dVariantId$ = this.dVariantId_Subject.asObservable();
+
+  private dServicio_Subject = new Subject<string[][]>
+  dServicio$ = this.dServicio_Subject.asObservable();
 
   constructor() { }
 
@@ -26,5 +30,11 @@ export class DataPromocionSupportService {
     this.idVariant[index] = [];
     this.idVariant[index].push(value);
     this.dVariantId_Subject.next(this.idVariant);
+  }
+
+  sendDataServicio(value: string, index: number){
+    this.Servicio[index] = [];
+    this.Servicio[index].push(value);
+    this.dServicio_Subject.next(this.Servicio);
   }
 }

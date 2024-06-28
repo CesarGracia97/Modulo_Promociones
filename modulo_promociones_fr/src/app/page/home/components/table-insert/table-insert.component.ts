@@ -46,9 +46,12 @@ export class TableInsertComponent implements OnInit {
       _V18: '', _V19: '',  _V20: '',
       serviciosData: [], planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [], upgradeData: [],
       selectedTable: 0, // Cambiado de array a un solo número
-      tablesRow: [{
-        id: 0, paquetesStreaming: [], precioRegularStreamingData: [], PRAD_ST_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: ''
-      }], 
+      tablas: [
+        {
+          id: 0,
+          PRAD_V1: '', PRAD_ST_V2: '', PRAD_ST_V3: '', PRAD_ST_V4: ''
+        }
+      ],
       planesTelevisivos: [], planesTelefonicos: [], modelosRouter: [],
       PRAD_TF_V1: '', PRAD_TF_V2: '', PRAD_TF_V3: '', PRAD_TF_V4: '', PRAD_TF_V5: '',
       PRAD_TV_V1: '', PRAD_TV_V2: '', PRAD_TV_V3: '', PRAD_TV_V4: '', PRAD_TV_V5: '',
