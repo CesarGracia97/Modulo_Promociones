@@ -43,6 +43,9 @@ export class ModalDataPromocionalComponent implements OnInit {
   productosData: Productos[][] = []; canalData: Canales[][] = [];
   modoPagosData: ModosPago[][] = []; buroData: Buro[][] = []; 
   upgradeData: Upgrade [][] = []; diasGozadosData: DiasGozados[][] = []; precioRegularData: PrecioRegular[][] = [];
+  //Validaciones de errores
+  errorM_V19: string[] = []; errorM_V20: string[] = [];
+
 
   //Dicionario de datos
   diccionario: { [key: string]: any }[] = [];
@@ -120,20 +123,35 @@ export class ModalDataPromocionalComponent implements OnInit {
   }
 
   getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, IdProdcuto: number, mInicio: number, mFin: string): void {
-    if(IdCanal && value && IdProdcuto && mInicio && (!mFin || mFin =='')){
+    this.validateV19(mInicio);
+    this.validateV20(parseInt(mFin));
+    if(IdCanal && value && IdProdcuto && mInicio){
       this.diccionario[this.rowId]['Canal'] = IdCanal;
       this.diccionario[this.rowId]['Precio Promocional'] = value;
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
       this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio
-      this.diccionario[this.rowId]['Mes Fin Promocion'] = 'SIEMPRE';
+      if(!mFin || mFin ==''){
+        this.diccionario[this.rowId]['Mes Fin Promocion'] = 'SIEMPRE';
+      } else if(mFin) {
+        this.diccionario[this.rowId]['Mes Fin Promocion'] = mFin;
+      }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
-    } else if(IdCanal && value && IdProdcuto && mInicio && mFin){
-      this.diccionario[this.rowId]['Canal'] = IdCanal;
-      this.diccionario[this.rowId]['Precio Promocional'] = value;
-      this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
-      this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio;
-      this.diccionario[this.rowId]['Mes Fin Promocion'] = mFin;
-      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+    }
+  }
+
+  validateV19(value: number) {
+    if (value < 0 || value > 24) {
+      this.errorM_V19[this.rowId] = 'LIMITE SUPERADO 0-24';
+    } else {
+      this.errorM_V19[this.rowId] = '';
+    }
+  }
+
+  validateV20(value: number) {
+    if (value <= this.rowData._V19) {
+      this.errorM_V20[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+    } else {
+      this.errorM_V20[this.rowId]= '';
     }
   }
 

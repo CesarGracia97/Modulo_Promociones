@@ -26,7 +26,6 @@
                             <td><span>Inicio</span></td>
                             <td class="inputDate">
                                 <input type="date" name="_V2" [(ngModel)]="row._V2" 
-                                [min]="today"
                                 (ngModelChange)="row.errorV2 = validateV2(row); getFechasInicioFin(row._V2, row._V3, i)" />
                                 <span *ngIf="row.errorV2" class="error">{{ row.errorV2 }}</span>
                             </td>

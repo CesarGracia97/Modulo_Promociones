@@ -24,7 +24,6 @@ export class TableInsertComponent implements OnInit {
   serviciosData: Servicios[] = [];
   private diccionario: { [key: string]: any }[] = [];
   _inp1: boolean[] = []; _inp2: boolean[] = [];
-  today: string = '';
 
   constructor(
     private data_information: DataPromocionInformationService,
@@ -38,8 +37,6 @@ export class TableInsertComponent implements OnInit {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.data_information.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.data_information.dDiccionario$.subscribe(data => {this.diccionario = data;});
-    const today = new Date();
-    this.today = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
   }
 
   addRow(): void {
@@ -122,13 +119,6 @@ export class TableInsertComponent implements OnInit {
   }
 
   validateV2(row: any): string | null {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Ignorar la parte de horas
-    const dateV2 = new Date(row._V2);
-
-    if (dateV2 < today) {
-      return 'La fecha no puede ser menor a la fecha actual.';
-    }
     if (this.isWeekend(row._V2)) {
       return 'Las fechas de fin de semana no son permitidas.';
     }

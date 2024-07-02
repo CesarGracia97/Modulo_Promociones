@@ -228,22 +228,36 @@ input.numeros{
                         display: flex;
                         flex-direction: column;
                         text-align: center;
-
-                        .ini, .fin{
+                        .content_ini, .content_fin{
                             display: flex;
-                            flex-direction: row;
-                            span{
-                                width: 40px;
-                                display: flex; // Utiliza flexbox para facilitar la alineación *
-                                align-items: center; // Alinea verticalmente los elementos *
+                            flex-direction: column;
+                            .ini{
+                                display: flex;
+                                flex-direction: row;
+                                span{
+                                    width: 40px;
+                                    display: flex; // Utiliza flexbox para facilitar la alineación *
+                                    align-items: center; // Alinea verticalmente los elementos *
+                                }
+                                .numeros{
+                                    margin-top: 0;
+                                    width: 100%;
+                                }    
                             }
-                            .numeros{
-                                margin-top: 0;
-                                width: 100%;
+                            .fin{
+                                display: flex;
+                                flex-direction: row;
+                                margin-top: 4px;
+                                span{
+                                    width: 40px;
+                                    display: flex; // Utiliza flexbox para facilitar la alineación *
+                                    align-items: center; // Alinea verticalmente los elementos *
+                                }
+                                .numeros{
+                                    margin-top: 0;
+                                    width: 100%;
+                                }
                             }
-                        }
-                        .fin{
-                            margin-top: 4px;
                         }
                     }
                 }

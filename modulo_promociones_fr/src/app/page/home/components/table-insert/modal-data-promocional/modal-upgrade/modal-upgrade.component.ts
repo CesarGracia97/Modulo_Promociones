@@ -40,17 +40,15 @@ export class ModalUpgradeComponent implements OnInit {
   }
 
   getUpgradeCaducidadMIiMf(Upgrade: number, FechaCaducidad: Date, MesInicio: string, MesFinalizacion: string): void {
-    if(Upgrade && FechaCaducidad && MesInicio && (!MesFinalizacion || MesFinalizacion =='')){
+    if(Upgrade && FechaCaducidad && MesInicio){
       this.diccionario[this.rowId]['UPGRADE'] = Upgrade;
       this.diccionario[this.rowId]['Fecha de Caducidad UPGRADE'] = FechaCaducidad.toString();
       this.diccionario[this.rowId]['Mes Inicio UPGRADE'] = MesInicio;
-      this.diccionario[this.rowId]['Mes Fin UPGRADE'] = 'SIEMPRE';
-      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
-    } else if (Upgrade && FechaCaducidad && MesInicio && MesFinalizacion){
-      this.diccionario[this.rowId]['UPGRADE'] = Upgrade;
-      this.diccionario[this.rowId]['Fecha de Caducidad UPGRADE'] = FechaCaducidad.toString();
-      this.diccionario[this.rowId]['Mes Inicio UPGRADE'] = MesInicio;
-      this.diccionario[this.rowId]['Mes Fin UPGRADE'] = MesFinalizacion;
+      if(!MesFinalizacion || MesFinalizacion ==''){
+        this.diccionario[this.rowId]['Mes Fin UPGRADE'] = 'SIEMPRE';
+      } else if (MesFinalizacion) {
+        this.diccionario[this.rowId]['Mes Fin UPGRADE'] = MesFinalizacion;
+      }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }
