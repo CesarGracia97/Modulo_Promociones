@@ -24,6 +24,7 @@ export class TableInsertComponent implements OnInit {
   serviciosData: Servicios[] = [];
   private diccionario: { [key: string]: any }[] = [];
   _inp1: boolean[] = []; _inp2: boolean[] = [];
+  today: string = '';
 
   constructor(
     private data_information: DataPromocionInformationService,
@@ -37,6 +38,8 @@ export class TableInsertComponent implements OnInit {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.data_information.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.data_information.dDiccionario$.subscribe(data => {this.diccionario = data;});
+    const today = new Date();
+    this.today = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
   }
 
   addRow(): void {

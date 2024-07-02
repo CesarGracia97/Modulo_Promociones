@@ -17,7 +17,7 @@
                         </ul>
                     </div>
                 </div>
-                <button id="btn_dtpro_send">Enviar</button>
+                <button id="btn_dtpro_send" (click)="sendDiccionario()">Enviar</button>
             </div>
         </div>
         <div id="pro_adici">
@@ -42,6 +42,7 @@
                             <td>
                                 <div id="precio_content">                                    
                                     <input name="PRAD_ST_V2" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2"
+                                    (ngModelChange)="getPrecMIniMFinCantidad(rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4, 0, 'STREAMING')"
                                     placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>
                                 </div>
                             </td>
@@ -50,6 +51,7 @@
                             <td><span>MES INICIAL</span></td>
                             <td>
                                 <input name="PRAD_ST_V3" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4, 0, 'STREAMING')"
                                 type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
@@ -57,6 +59,7 @@
                             <td><span>MES FINAL</span></td>
                             <td>
                                 <input name="PRAD_ST_V4" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4, 0, 'STREAMING')"
                                 type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
@@ -78,7 +81,7 @@
                             <td><span>PLANES</span></td>
                             <td>
                                 <select name="PRAD_TF_V1" [(ngModel)]="rowData.PRAD_TF_V1"
-                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TF_V1, 'TELEFONIA')">
+                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TF_V1, 'TELEFONIA');">
                                     <option [value]="">PLAN. TELEFONICO</option>
                                     <option *ngFor="let plan of planesTelefonicos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                 </select>
@@ -90,26 +93,34 @@
                             </td>
                             <td>
                                 <div id="precio_content">
-                                    <input name="PRAD_TF_V2" [(ngModel)]="rowData.PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
+                                    <input name="PRAD_TF_V2" 
+                                    (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
+                                    [(ngModel)]="rowData.PRAD_TF_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td><span>CANTIDAD</span></td>
                             <td>
-                                <input name="PRAD_TF_V3" [(ngModel)]="rowData.PRAD_TF_V3" type="number" [min]="1"/>
+                                <input name="PRAD_TF_V3" [(ngModel)]="rowData.PRAD_TF_V3" 
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
+                                type="number" [min]="1"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MESES INICIAL</span></td>
                             <td>
-                                <input name="PRAD_TF_V4" [(ngModel)]="rowData.PRAD_TF_V4" type="number" [min]="2" [max]="24"/>
+                                <input name="PRAD_TF_V4" [(ngModel)]="rowData.PRAD_TF_V4" 
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
+                                type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MESES FINAL</span></td>
                             <td>
-                                <input name="PRAD_TF_V5" [(ngModel)]="rowData.PRAD_TF_V5" type="number" [min]="2" [max]="24"/>
+                                <input name="PRAD_TF_V5" [(ngModel)]="rowData.PRAD_TF_V5" 
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
+                                type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                     </table>
@@ -135,26 +146,34 @@
                             </td>
                             <td>
                                 <div id="precio_content">
-                                    <input name="PRAD_TV_V2" [(ngModel)]="rowData.PRAD_TV_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
+                                    <input name="PRAD_TV_V2" [(ngModel)]="rowData.PRAD_TV_V2"
+                                    (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TV_V2, rowData.PRAD_TV_V4, rowData.PRAD_TV_V5, rowData.PRAD_TV_V3, 'TELEVISION')"
+                                    placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td><span>CANTIDAD</span></td>
                             <td>
-                                <input name="PRAD_TV_V3" [(ngModel)]="rowData.PRAD_TV_V3" type="number"/>
+                                <input name="PRAD_TV_V3" [(ngModel)]="rowData.PRAD_TV_V3"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TV_V2, rowData.PRAD_TV_V4, rowData.PRAD_TV_V5, rowData.PRAD_TV_V3, 'TELEVISION')"
+                                type="number"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MESES INICIAL</span></td>
                             <td>
-                                <input name="PRAD_TV_V4" [(ngModel)]="rowData.PRAD_TV_V4" type="number" [min]="2" [max]="24"/>
+                                <input name="PRAD_TV_V4" [(ngModel)]="rowData.PRAD_TV_V4"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TV_V2, rowData.PRAD_TV_V4, rowData.PRAD_TV_V5, rowData.PRAD_TV_V3, 'TELEVISION')"
+                                type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MESES FINAL</span></td>
                             <td>
-                                <input name="PRAD_TV_V5" [(ngModel)]="rowData.PRAD_TV_V5" type="number" [min]="2" [max]="24"/>
+                                <input name="PRAD_TV_V5" [(ngModel)]="rowData.PRAD_TV_V5"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TV_V2, rowData.PRAD_TV_V4, rowData.PRAD_TV_V5, rowData.PRAD_TV_V3, 'TELEVISION')"
+                                type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                     </table>
@@ -180,26 +199,34 @@
                             </td>
                             <td>
                                 <div id="precio_content">
-                                    <input name="PRAD_RT_V2" [(ngModel)]="rowData.PRAD_RT_V2" placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
+                                    <input name="PRAD_RT_V2" [(ngModel)]="rowData.PRAD_RT_V2"
+                                    (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_RT_V2, rowData.PRAD_RT_V4, rowData.PRAD_RT_V5, rowData.PRAD_RT_V3, 'ROUTER')"
+                                    placeholder="Ing. Pr. Promocional" type="number" [min]="1" [max]="precioRegular.PRECIO"/>    
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td><span>CANTIDAD</span></td>
                             <td>
-                                <input name="PRAD_RT_V3" [(ngModel)]="rowData.PRAD_RT_V3" type="number" [min]="1"/>
+                                <input name="PRAD_RT_V3" [(ngModel)]="rowData.PRAD_RT_V3"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_RT_V2, rowData.PRAD_RT_V4, rowData.PRAD_RT_V5, rowData.PRAD_RT_V3, 'ROUTER')"
+                                type="number" [min]="1"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MESES INICIAL</span></td>
                             <td>
-                                <input name="PRAD_RT_V4" [(ngModel)]="rowData.PRAD_RT_V4" type="number" [min]="2" [max]="24"/>
+                                <input name="PRAD_RT_V4" [(ngModel)]="rowData.PRAD_RT_V4"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_RT_V2, rowData.PRAD_RT_V4, rowData.PRAD_RT_V5, rowData.PRAD_RT_V3, 'ROUTER')"
+                                type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                         <tr>
                             <td><span>MESES FINAL</span></td>
                             <td>
-                                <input name="PRAD_RT_V5" [(ngModel)]="rowData.PRAD_RT_V5" type="number" [min]="2" [max]="24"/>
+                                <input name="PRAD_RT_V5" [(ngModel)]="rowData.PRAD_RT_V5"
+                                (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_RT_V2, rowData.PRAD_RT_V4, rowData.PRAD_RT_V5, rowData.PRAD_RT_V3, 'ROUTER')"
+                                type="number" [min]="2" [max]="24"/>
                             </td>
                         </tr>
                     </table>

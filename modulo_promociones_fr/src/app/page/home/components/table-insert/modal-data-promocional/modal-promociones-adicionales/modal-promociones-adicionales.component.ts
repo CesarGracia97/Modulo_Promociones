@@ -13,6 +13,9 @@ import { DataPromocionSupportService } from '../../../../../../services/subscrib
 import { DataProdadicInformationService } from '../../../../../../services/subscribeData/data-prodadic-information.service';
 import { FdPrecioRegularService } from '../../../../../../services/fetchData/DataPromocional/fd-precio_regular.service';
 import { Ciudades } from '../../../../../../interfaces/places/ciudad.interface';
+import { Buro } from '../../../../../../interfaces/financial/buro.interface';
+import { ModosPago } from '../../../../../../interfaces/financial/modos-pago.interface';
+import { DiasGozados } from '../../../../../../interfaces/DataPromocional/dias-gozados.interface';
 
 @Component({
   selector: 'app-modal-promociones-adicionales',
@@ -28,8 +31,9 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   pa_state: boolean = false; showPROAD: boolean[] = []; closing: boolean = false;
   optionsData: Options_PA[][] = [];
   selectedTableIndex: number[] = [];
-
-  
+  //Variables de Datos Externos
+  modoPagosData: ModosPago[][] = []; buroData: Buro[][] = []; 
+  diasGozadosData: DiasGozados[][] = [];
   //Variables de Datos
   paquetesStreaming: TariffPlanesVariant[][] = [];
   planesTelefonicos: TariffPlanesVariant[][] = []; planesTelevisivos: TariffPlanesVariant[][] = [];
@@ -44,7 +48,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
 
   constructor(
     private data_views: DataViewService,
-    private data_promo: DataPromocionInformationService,
+    private data_information: DataPromocionInformationService,
     private data_promo_adi: DataProdadicInformationService,
     private support: DataPromocionSupportService,
     private fd_place: FdPlanesService,
@@ -58,8 +62,8 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     this.data_views.dIndex$.subscribe(data => {this.rowId = data; if (!this.selectedTableIndex[this.rowId]) this.selectedTableIndex[this.rowId] = 0; }); // Inicializar selectedTableIndex para la fila actual si no existe
     this.data_views.dModalViewPA$.subscribe(data => { this.pa_state = data });
     this.data_views.dOptionsDataView$.subscribe(data => { this.optionsData = data });
-    this.data_promo.dDiccionario$.subscribe(data => { this.diccionario = data });
-    this.data_promo.dCiudades$.subscribe(data => {this.ciudadData = data});
+    this.data_information.dDiccionario$.subscribe(data => { this.diccionario = data });
+    this.data_information.dCiudades$.subscribe(data => {this.ciudadData = data});
     this.data_promo_adi.dPrRegST$.subscribe(data => {this.precioRegularStreamingData = data});
     this.data_promo_adi.dPrRefTF$.subscribe(data => {this.precioRegularTelefoniaData = data});
     this.data_promo_adi.dPrRefTV$.subscribe(data => {this.precioRegularTelevisioData = data});
@@ -69,6 +73,9 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     this.data_promo_adi.dPlanesTelevisivos$.subscribe(data => {this.planesTelevisivos = data});
     this.data_promo_adi.dModelosRouter$.subscribe(data => {this.modelosRouter = data});
     this.support.dVariantId$.subscribe(data => {this.idVariant = data});
+    this.data_information.dModoPago$.subscribe( data => {this.modoPagosData = data});
+    this.data_information.dBuro$.subscribe( data => {this.buroData = data});
+    this.data_information.dDiasGozados$.subscribe( data => { this.diasGozadosData = data});
   }
 
   closeModalProductosAdicionales(): void {
@@ -80,14 +87,69 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     if(PlanesPaquetesModelos){
       if(type == "STREAMING"){
         this.fd_precio.fetchDataPrecioRegularPA(1000065, PlanesPaquetesModelos, this.rowId, this.selectedTableIndex[this.rowId], type);
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = [];
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PAQUETES'] = PlanesPaquetesModelos;
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(type == "TELEFONIA") {
         //
       } else if(type == "TELEVISION") {
         this.fd_precio.fetchDataPrecioRegularPA(this.darIdProducto(), PlanesPaquetesModelos, this.rowId, 0, type);
+        this.diccionario[this.rowId]['TELEVISION']['PLANES'] = PlanesPaquetesModelos;
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(variantId !== null && type == "ROUTER") {
         this.fd_precio.fetchDataPrecioRegularPA(PlanesPaquetesModelos, variantId, this.rowId, 0, type);
+        this.diccionario[this.rowId]['ROUTER']['MODELO'] = PlanesPaquetesModelos;
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     }
+  }
+
+  getPrecMIniMFinCantidad(value: number, mIni: number, mFin: string, cantidad: number, type: string): void {
+    if(type == 'STREAMING'){
+      if(value && mIni) {
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PRECIO REFERENCIAL'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PRECIO PROMOCIONAL'] = value;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['MES INICIO'] = mIni;
+        if(!mFin || mFin == '') {
+          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['MES FIN'] = 'SIEMPRE';
+        } else if (mFin){
+          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['MES FIN'] = mFin;
+        }
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+      }
+    } else if (type == 'TELEVISION' || type == 'TELEFONIA' || type == 'ROUTER'){
+      if(value && mIni && cantidad) {
+        this.diccionario[this.rowId][type]['CANTIDAD'] = cantidad;
+        this.diccionario[this.rowId][type]['PRECIO PROMOCIONAL'] = value;
+        if(type =='TELEVISION') {
+          this.diccionario[this.rowId][type]['PRECIO REFERENCIAL'] = this.precioRegularTelevisioData[this.rowId][0].PRECIO;
+        } else if (type == 'TELEFONIA') {
+          this.diccionario[this.rowId][type]['PRECIO REFERENCIAL'] = this.precioRegularTelefoniaData[this.rowId][0].PRECIO;
+        } else if (type == 'ROUTER') {
+          this.diccionario[this.rowId][type]['PRECIO REFERENCIAL'] = this.precioRegularRouter[this.rowId][0].PRECIO;
+        }
+        this.diccionario[this.rowId][type]['MES INICIO'] = mIni;
+        if (!mFin || mFin == '') {
+          this.diccionario[this.rowId][type]['MES FIN'] = 'SIEMPRE';
+        } else if (mFin) {
+          this.diccionario[this.rowId][type]['MES INICIO'] = mIni;
+        }
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+      }
+    }
+  }
+
+  sendDiccionario(): void {
+    const buro = this.buroData[this.rowId].filter(buro => buro.selected).map(buro => buro.ID);
+    const modo = this.modoPagosData[this.rowId].filter(modo => modo.selected).map(modo => modo.ID);
+    const dias = this.diasGozadosData[this.rowId].filter(dias => dias.selected).map(dias => dias.NAME);
+    if(buro != null && modo != null && dias != null){
+      this.diccionario[this.rowId]['BURO'] = buro;
+      this.diccionario[this.rowId]['MODO DE PAGO'] = modo;
+      this.diccionario[this.rowId]['DIAS GOZADOS'] = dias;
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+    }
+    console.log(this.diccionario[this.rowId]);
   }
 
   darIdProducto(): number {
@@ -123,12 +185,20 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     }
     if (index === 1 && options[1].selected){
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', this.rowId, this.selectedTableIndex[this.rowId])
+      this.diccionario[this.rowId]['STREAMING'] = [];
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index === 2 && options[2].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA', this.rowId, 0)
+      this.diccionario[this.rowId]['TELEFONIA'] = [];
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index == 3 && options[3].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION', this.rowId, 0)
+      this.diccionario[this.rowId]['TELEVISION'] = [];
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index == 4 && options[4].selected){
       this.fd_combos.fetchDataComboPROD_ROUTER(this.rowId);
+      this.diccionario[this.rowId]['ROUTER'] = [];
+      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }
 
