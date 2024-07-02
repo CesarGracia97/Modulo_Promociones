@@ -105,6 +105,12 @@ export class DataProdadicInformationService {
       this.precioRegularRTData[index].push(...data);
       this.dPrRefRT_Subject.next(this.precioRegularRTData);
     }else if(type == "STREAMING"){
+      if (!this.precioRegularSTData[index]) {
+        this.precioRegularSTData[index] = [];
+      }
+      if (!this.precioRegularSTData[index][tabla]) {
+        this.precioRegularSTData[index][tabla] = [];
+      }
       this.precioRegularSTData[index][tabla] = [];
       this.precioRegularSTData[index][tabla].push(...data);
       this.dPrRegST_Subject.next(this.precioRegularSTData);
