@@ -3,8 +3,10 @@ from flask import Blueprint, jsonify, request
 
 from config.config import config
 
-backp_bp = Blueprint('rapi_backp_GET', __name__)
-__URL_BKP__ = config.get('URL', 'URL_BACKENDPOINT')
+backpG_bp = Blueprint('rapi_backp_GET', __name__)
+backpP_bp = Blueprint('rapi_backp_POST', __name__)
+__URL_BKP_G__ = config.get('URL', 'URL_BACKENDPOINT_GET')
+__URL_BKP_P__ = config.get('URL', 'URL_BACKENDPOINT_POST')
 
 
 class BackEndpointController:
@@ -27,7 +29,7 @@ class BackEndpointController:
             print("Error en la solicitud:", e)
             return {'error': e}, 500
 
-    @backp_bp.route(__URL_BKP__, methods=['GET'])
+    @backpG_bp.route(__URL_BKP_G__, methods=['GET'])
     def back_endpoint():
         controller = BackEndpointController()
         try:
@@ -37,7 +39,7 @@ class BackEndpointController:
                 if any((controller.__URL_Lugares + ruta) in referer for ruta in controller.__Lugares):
                     print("\nFase de Escucha | ENDPOINT ACTIVADO")
                     print("PLACE - Lugares")
-                    print("BACK ENDPOINT ACTIVO\n")
+                    print("BACK ENDPOINT GET ACTIVO\n")
                     _type = request.args.get('type')
                     if _type:
                         _provincias = {"ALL_PROVS", "PROVINCIAS_ESPECIFICASxTFV"}
@@ -96,7 +98,7 @@ class BackEndpointController:
                 elif any((controller.__URL_Planes + ruta) in referer for ruta in controller.__Planes):
                     print("\nFase de Escucha | BACK-ENDPOINT ACTIVADO")
                     print("PLANS - Planes")
-                    print("BACK ENDPOINT ACTIVO\n")
+                    print("BACK ENDPOINT GET ACTIVO\n")
 
                     if request.args.get('type') == 'ALL_DATA':
                         valid_stype = {'OFER', 'SERV', 'TECN', 'TISE'}
@@ -122,7 +124,7 @@ class BackEndpointController:
                 elif any((controller.__URL_Finanzas + ruta) in referer for ruta in controller.__Finanzas):
                     print("\nFase de Escucha | BACK-ENDPOINT ACTIVADO")
                     print("FINANCE - Finance")
-                    print("BACK ENDPOINT ACTIVO\n")
+                    print("BACK ENDPOINT GET ACTIVO\n")
                     _type = request.args.get('type')
                     if _type:
                         _type = _type.upper()
@@ -142,6 +144,18 @@ class BackEndpointController:
                 print("No se proporcionó el encabezado Referer")
         except Exception as e:
             print("--------------------------------------------------------------------")
-            print("back_endpoint - back_endpoint | Error Detectado: ", e)
+            print("back_endpoint G - back_endpoint | Error Detectado: ", e)
+            print("--------------------------------------------------------------------")
+            return jsonify({'Error': 'Error interno'}), 500
+
+    @backpP_bp.route(__URL_BKP_P__, methods=['GET'])
+    def back_endpoint():
+        try:
+            print("\nFase de Escucha | BACK-ENDPOINT ACTIVADO")
+            print("FINANCE - Finance")
+            print("BACK ENDPOINT POST ACTIVO\n")
+        except Exception as e:
+            print("--------------------------------------------------------------------")
+            print("back_endpoint P - back_endpoint | Error Detectado: ", e)
             print("--------------------------------------------------------------------")
             return jsonify({'Error': 'Error interno'}), 500
