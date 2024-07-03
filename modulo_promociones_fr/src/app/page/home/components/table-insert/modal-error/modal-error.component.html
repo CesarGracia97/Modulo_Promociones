@@ -1,0 +1,9 @@
+<div *ngIf="er_state" class="modal_dp" [ngClass]="{'door-open': er_state}" id="modal_dp-{{rowId+1}}">
+    <div class="modal-header">
+      <span class="modal-title">Mensaje de Error - F# {{rowId+1}}</span>
+      <button class="close-button" (click)="closeModalError()">×</button>
+    </div>
+    <div class="modal-body">
+        <span>{{mensaje}}</span>
+    </div>
+</div>

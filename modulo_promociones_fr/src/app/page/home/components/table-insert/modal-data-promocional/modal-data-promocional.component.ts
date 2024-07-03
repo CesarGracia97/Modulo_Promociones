@@ -44,7 +44,7 @@ export class ModalDataPromocionalComponent implements OnInit {
   modoPagosData: ModosPago[][] = []; buroData: Buro[][] = []; 
   upgradeData: Upgrade [][] = []; diasGozadosData: DiasGozados[][] = []; precioRegularData: PrecioRegular[][] = [];
   //Validaciones de errores
-  errorM_V19: string[] = []; errorM_V20: string[] = [];
+  errorM_V18: string[] = []; errorM_V19: string[] = [];
 
 
   //Dicionario de datos
@@ -123,8 +123,8 @@ export class ModalDataPromocionalComponent implements OnInit {
   }
 
   getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, IdProdcuto: number, mInicio: number, mFin: string): void {
-    this.validateV19(mInicio);
-    this.validateV20(parseInt(mFin));
+    this.validateV18(mInicio);
+    this.validateV19(parseInt(mFin));
     if(IdCanal && value && IdProdcuto && mInicio){
       this.diccionario[this.rowId]['Canal'] = IdCanal;
       this.diccionario[this.rowId]['Precio Promocional'] = value;
@@ -139,19 +139,19 @@ export class ModalDataPromocionalComponent implements OnInit {
     }
   }
 
-  validateV19(value: number) {
+  validateV18(value: number) {
     if (value < 0 || value > 24) {
-      this.errorM_V19[this.rowId] = 'LIMITE SUPERADO 0-24';
+      this.errorM_V18[this.rowId] = 'LIMITE SUPERADO 0-24';
     } else {
-      this.errorM_V19[this.rowId] = '';
+      this.errorM_V18[this.rowId] = '';
     }
   }
 
-  validateV20(value: number) {
-    if (value <= this.rowData._V19) {
-      this.errorM_V20[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+  validateV19(value: number) {
+    if (value <= this.rowData._V18) {
+      this.errorM_V19[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
     } else {
-      this.errorM_V20[this.rowId]= '';
+      this.errorM_V19[this.rowId]= '';
     }
   }
 

@@ -14,12 +14,15 @@ import { Upgrade } from '../../interfaces/DataPromocional/upgrade.interface';
 import { Entidades } from '../../interfaces/financial/entidades.interface';
 import { Tarjetas } from '../../interfaces/financial/tarjetas.interface';
 import { Canales } from '../../interfaces/financial/canales.interface';
+import { DataViewService } from './data-view.service';
+import { SendDataPOSTService } from '../requests/POST/send-data-POST.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DataPromocionInformationService {
+  private index: number = 0;
   private NombrePromocion: string[][] = [];
   private FechaInicioPromocion: Date[][] = []; private FechaFinPromocion: Date[][] = [];
   private planData: TariffPlanes[][] = []; private planVData: TariffPlanesVariant[][] = [];
@@ -108,7 +111,16 @@ export class DataPromocionInformationService {
 
   /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
 
-  constructor() { }
+  constructor(
+    private data_views: DataViewService,
+    private request: SendDataPOSTService
+  ) {
+    this.data_views.dIndex$.subscribe(data => {this.index = data;} );
+    this.dDiccionario$.subscribe(data => { this.diccionario = data });
+    this.dModoPago$.subscribe( data => {this.mdpgData = data});
+    this.dBuro$.subscribe( data => {this.buroData = data});
+    this.dDiasGozados$.subscribe( data => { this.diasGozadosData = data});
+  }
 
   sendDataNombrePromo(data: string, index: number){
     this.NombrePromocion[index] = [];
@@ -260,6 +272,26 @@ export class DataPromocionInformationService {
   sendDataUptadeDiccionario(data:{ [key: string]: any }, index: number){
     Object.keys(data).forEach(key => {this.diccionario[index][key] = data[key];});
     this.dDiccionario_Subject.next(this.diccionario);
+  }
+
+  sendDiccionario(){
+    try {
+      const buro = this.buroData[this.index].filter(buro => buro.selected).map(buro => buro.ID);
+      const modo = this.mdpgData[this.index].filter(modo => modo.selected).map(modo => modo.ID);
+      const dias = this.diasGozadosData[this.index].filter(dias => dias.selected).map(dias => dias.NAME);
+      if(buro != null && modo != null && dias != null){
+        this.diccionario[this.index]['BURO'] = buro;
+        this.diccionario[this.index]['MODO DE PAGO'] = modo;
+        this.diccionario[this.index]['DIAS GOZADOS'] = dias;
+        this.sendDataUptadeDiccionario(this.diccionario[this.index], this.index);
+        this.request.InjectionData_POST(this.diccionario[this.index]);
+      }
+      console.log(this.diccionario[this.index]);
+    } catch (error) {
+      const mensajeError = 'Error: Generacion de Diccionario \n -|'+error+'|-\n En Resumen falta Elementos importantes para generar el diccionario. Complete todos.'
+      this.data_views.messaggeError(mensajeError)
+      this.data_views.stateModalER(true);
+    }
   }
   /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
 }

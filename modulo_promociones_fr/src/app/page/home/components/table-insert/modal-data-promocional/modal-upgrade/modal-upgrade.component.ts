@@ -15,8 +15,9 @@ import { Upgrade } from '../../../../../../interfaces/DataPromocional/upgrade.in
 export class ModalUpgradeComponent implements OnInit {
 
   rowId: number = 0;   rowData: any = {};
-  up_state: boolean = false;
+  up_state: boolean = false; 
   upgradeData: Upgrade [][] = [];
+  errorM_V16: string[] = []; errorM_V17: string[] = [];
 
   //Dicionario de datos
   diccionario: { [key: string]: any }[] = [];
@@ -32,17 +33,17 @@ export class ModalUpgradeComponent implements OnInit {
     this.data_views.dModalViewUP$.subscribe( data => {this.up_state = data});
     this.data_information.dUpgrade$.subscribe( data => {this.upgradeData = data});
     this.data_information.dDiccionario$.subscribe( data => {this.diccionario = data});
-    
   }
 
   closeModalDatosPromocionales(): void {
     this.data_views.stateModalUP(false);
   }
 
-  getUpgradeCaducidadMIiMf(Upgrade: number, FechaCaducidad: Date, MesInicio: string, MesFinalizacion: string): void {
-    if(Upgrade && FechaCaducidad && MesInicio){
+  getUpgradeCaducidadMIiMf(Upgrade: number, MesInicio: number, MesFinalizacion: string): void {
+    this.validateV16(MesInicio);
+    this.validateV17(parseInt(MesFinalizacion));
+    if(Upgrade && MesInicio){
       this.diccionario[this.rowId]['UPGRADE'] = Upgrade;
-      this.diccionario[this.rowId]['Fecha de Caducidad UPGRADE'] = FechaCaducidad.toString();
       this.diccionario[this.rowId]['Mes Inicio UPGRADE'] = MesInicio;
       if(!MesFinalizacion || MesFinalizacion ==''){
         this.diccionario[this.rowId]['Mes Fin UPGRADE'] = 'SIEMPRE';
@@ -50,6 +51,22 @@ export class ModalUpgradeComponent implements OnInit {
         this.diccionario[this.rowId]['Mes Fin UPGRADE'] = MesFinalizacion;
       }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+    }
+  }
+
+  validateV16(value: number) {
+    if (value < 0 || value > 24) {
+      this.errorM_V16[this.rowId] = 'LIMITE SUPERADO 0-24';
+    } else {
+      this.errorM_V16[this.rowId] = '';
+    }
+  }
+
+  validateV17(value: number) {
+    if (value <= this.rowData._V16) {
+      this.errorM_V17[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+    } else {
+      this.errorM_V17[this.rowId]= '';
     }
   }
 }

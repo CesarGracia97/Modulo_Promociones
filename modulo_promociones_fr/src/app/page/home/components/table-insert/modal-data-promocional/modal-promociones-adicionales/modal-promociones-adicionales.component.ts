@@ -32,8 +32,8 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   optionsData: Options_PA[][] = [];
   selectedTableIndex: number[] = [];
   //Variables de Datos Externos
-  modoPagosData: ModosPago[][] = []; buroData: Buro[][] = []; 
-  diasGozadosData: DiasGozados[][] = [];
+  private modoPagosData: ModosPago[][] = []; private buroData: Buro[][] = []; 
+  private diasGozadosData: DiasGozados[][] = [];
   //Variables de Datos
   paquetesStreaming: TariffPlanesVariant[][] = [];
   planesTelefonicos: TariffPlanesVariant[][] = []; planesTelevisivos: TariffPlanesVariant[][] = [];
@@ -42,6 +42,12 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   precioRegularRouter: PrecioRegular[][] = []; precioRegularStreamingData: PrecioRegular[][][] = [];
   ciudadData: Ciudades[][] = [];
   idVariant: number[][] = [];
+
+  //Variables de Validaciones
+  eMIniST: string[][] = []; eMFinST: string[][] = [];
+  eMIniTF: string[] = []; eMFinTF: string[] = [];
+  eMIniTL: string[] = []; eMFinTL: string[] = [];
+  eMIniRT: string[] = []; eMFinRT: string[] = [];
 
   //Dicionario de datos
   diccionario: { [key: string]: any }[] = [];
@@ -105,6 +111,8 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   }
 
   getPrecMIniMFinCantidad(value: number, mIni: number, mFin: string, cantidad: number, type: string): void {
+    this.validateINI(mIni, type);
+    this.validateFIN(parseInt(mFin), type);
     if(type == 'STREAMING'){
       if(value && mIni) {
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PRECIO REFERENCIAL'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
@@ -139,17 +147,64 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     }
   }
 
-  sendDiccionario(): void {
-    const buro = this.buroData[this.rowId].filter(buro => buro.selected).map(buro => buro.ID);
-    const modo = this.modoPagosData[this.rowId].filter(modo => modo.selected).map(modo => modo.ID);
-    const dias = this.diasGozadosData[this.rowId].filter(dias => dias.selected).map(dias => dias.NAME);
-    if(buro != null && modo != null && dias != null){
-      this.diccionario[this.rowId]['BURO'] = buro;
-      this.diccionario[this.rowId]['MODO DE PAGO'] = modo;
-      this.diccionario[this.rowId]['DIAS GOZADOS'] = dias;
-      this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+  validateINI(value: number, type: string): void {
+    if(type == 'STREAMING'){
+      if (value < 0 || value > 24) {
+        this.eMIniST[this.rowId][this.selectedTableIndex[this.rowId]] = 'LIMITE SUPERADO 0-24';
+      } else {
+        this.eMIniST[this.rowId][this.selectedTableIndex[this.rowId]] = '';
+      }
+    } else if (type == 'TELEFONIA') {
+      if (value < 0 || value > 24) {
+        this.eMIniTF[this.rowId] = 'LIMITE SUPERADO 0-24';
+      } else {
+        this.eMIniTF[this.rowId] = '';
+      }
+    } else if (type == 'TELEVISION') {
+      if (value < 0 || value > 24) {
+        this.eMIniTL[this.rowId] = 'LIMITE SUPERADO 0-24';
+      } else {
+        this.eMIniTL[this.rowId] = '';
+      }
+    } else if (type == 'ROUTER') {
+      if (value < 0 || value > 24) {
+        this.eMIniRT[this.rowId] = 'LIMITE SUPERADO 0-24';
+      } else {
+        this.eMIniRT[this.rowId] = '';
+      }
     }
-    console.log(this.diccionario[this.rowId]);
+  }
+
+  validateFIN(value: number, type: string) {
+    if(type == 'STREMING'){
+      if (value <= this.rowData[this.rowId].tablas[this.selectedTableIndex[this.rowId]].PRAD_ST_V3) {
+        this.eMFinST[this.rowId][this.selectedTableIndex[this.rowId]] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+      } else {
+        this.eMFinST[this.rowId][this.selectedTableIndex[this.rowId]] = '';
+      }
+    } else if (type == 'TELEFONIA') {
+      if (value <= this.rowData.PRAD_TF_V4){
+        this.eMFinTF[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+      } else {
+        this.eMFinTF[this.rowId] = '';
+      }
+    } else if (type == 'TELEVISION') {
+      if (value <= this.rowData.PRAD_TV_V4){
+        this.eMFinTL[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+      } else {
+        this.eMFinTF[this.rowId] = '';
+      }
+    } else if (type == 'ROUTER') {
+      if (value <= this.rowData.PRAD_RT_V4){
+        this.eMFinRT[this.rowId] = 'EL VALOR NO DEBE SER MENOR AL INICIAL';
+      } else {
+        this.eMFinRT[this.rowId] = '';
+      }
+    }
+  }
+
+  sendDiccionario(): void {
+    this.data_information.sendDiccionario();
   }
 
   darIdProducto(): number {

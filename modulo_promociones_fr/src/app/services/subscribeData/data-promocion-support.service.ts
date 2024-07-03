@@ -18,7 +18,7 @@ export class DataPromocionSupportService {
   private dServicio_Subject = new Subject<string[][]>
   dServicio$ = this.dServicio_Subject.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   sendDataIdProducto(value: number, index: number){
     this.idProducto[index] = [];

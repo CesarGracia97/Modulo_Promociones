@@ -6,29 +6,29 @@
     <div class="modal-body">
         <div id="upgrade">
             <span>UPGRADE</span>
-            <select name="_V15" [(ngModel)]="rowData._V15" (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)">
+            <select name="_V15" [(ngModel)]="rowData._V15" (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17)">
                 <option value="">Selecciona un UPGRADE</option>
                 <option *ngFor=" let upgrade of upgradeData[rowId]" [value]="upgrade.ID">{{upgrade.PLAN_UPGRADE}}</option>   
             </select>
         </div>
-        <div id="caducidad">
-            <span>FECHA DE CADUCIDAD</span>
-            <input type="date" name="_V16" [(ngModel)]="rowData._V16" 
-            (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)" />
-            <span *ngIf="rowData.errorV2" class="error">{{ rowData.errorV2 }}</span>
-        </div>
         <div id="meses">
             <span>MES DE INICIO Y FINALIZACION</span>
             <div class="content_meses">
-                <div class="ini">
-                    <span>INICIO</span>
-                    <input name="_V17" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V17"
-                    (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)"/>
+                <div class="content_ini">
+                    <div class="ini">
+                        <span class="title_mes">INICIO</span>
+                        <input name="_V16" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V16"
+                        (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17)"/>
+                    </div>
+                    <span class="error-message" *ngIf="errorM_V16[rowId]">{{ errorM_V16[rowId] }}</span>    
                 </div>
-                <div class="fin">
-                    <span>FIN</span>
-                    <input name="_V18" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V18"
-                    (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17, rowData._V18)"/>
+                <div class="content_fin">
+                    <div class="fin">
+                        <span class="title_mes">FIN</span>
+                        <input name="_V17" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V17"
+                        (ngModelChange)="getUpgradeCaducidadMIiMf(rowData._V15, rowData._V16, rowData._V17)"/>
+                    </div>
+                    <span class="error-message" *ngIf="errorM_V17[rowId]">{{ errorM_V17[rowId] }}</span>
                 </div>
             </div>
         </div>

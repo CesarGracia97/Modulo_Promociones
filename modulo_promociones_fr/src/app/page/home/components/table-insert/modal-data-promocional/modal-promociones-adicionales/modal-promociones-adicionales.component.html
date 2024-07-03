@@ -53,6 +53,7 @@
                                 <input name="PRAD_ST_V3" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3"
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4, 0, 'STREAMING')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMIniST[rowId][selectedTableIndex[rowId]]">{{ eMIniST[rowId][selectedTableIndex[rowId]] }}</span> -->
                             </td>
                         </tr>
                         <tr>
@@ -61,6 +62,7 @@
                                 <input name="PRAD_ST_V4" [(ngModel)]="rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4"
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V2, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V3, rowData.tablas[selectedTableIndex[rowId]].PRAD_ST_V4, 0, 'STREAMING')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMFinST[rowId][selectedTableIndex[rowId]]">{{ eMFinST[rowId][selectedTableIndex[rowId]] }}</span> -->
                             </td>
                         </tr>
                     </table>
@@ -104,7 +106,7 @@
                             <td>
                                 <input name="PRAD_TF_V3" [(ngModel)]="rowData.PRAD_TF_V3" 
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
-                                type="number" [min]="1"/>
+                                type="number" [min]="1"/>>
                             </td>
                         </tr>
                         <tr>
@@ -113,6 +115,7 @@
                                 <input name="PRAD_TF_V4" [(ngModel)]="rowData.PRAD_TF_V4" 
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMIniTF[rowId]">{{ eMIniTF[rowId] }}</span> -->
                             </td>
                         </tr>
                         <tr>
@@ -121,6 +124,7 @@
                                 <input name="PRAD_TF_V5" [(ngModel)]="rowData.PRAD_TF_V5" 
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMFinTF[rowId]">{{ eMFinTF[rowId] }}</span> -->
                             </td>
                         </tr>
                     </table>
@@ -166,6 +170,7 @@
                                 <input name="PRAD_TV_V4" [(ngModel)]="rowData.PRAD_TV_V4"
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TV_V2, rowData.PRAD_TV_V4, rowData.PRAD_TV_V5, rowData.PRAD_TV_V3, 'TELEVISION')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMIniTL[rowId]">{{ eMIniTL[rowId] }}</span> -->
                             </td>
                         </tr>
                         <tr>
@@ -174,6 +179,7 @@
                                 <input name="PRAD_TV_V5" [(ngModel)]="rowData.PRAD_TV_V5"
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TV_V2, rowData.PRAD_TV_V4, rowData.PRAD_TV_V5, rowData.PRAD_TV_V3, 'TELEVISION')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMFinTL[rowId]">{{ eMFinTL[rowId] }}</span> -->
                             </td>
                         </tr>
                     </table>
@@ -219,6 +225,7 @@
                                 <input name="PRAD_RT_V4" [(ngModel)]="rowData.PRAD_RT_V4"
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_RT_V2, rowData.PRAD_RT_V4, rowData.PRAD_RT_V5, rowData.PRAD_RT_V3, 'ROUTER')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMIniRT[rowId]">{{ eMIniRT[rowId] }}</span> -->
                             </td>
                         </tr>
                         <tr>
@@ -227,6 +234,7 @@
                                 <input name="PRAD_RT_V5" [(ngModel)]="rowData.PRAD_RT_V5"
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_RT_V2, rowData.PRAD_RT_V4, rowData.PRAD_RT_V5, rowData.PRAD_RT_V3, 'ROUTER')"
                                 type="number" [min]="2" [max]="24"/>
+                                <!-- <span class="error-message" *ngIf="eMFinRT[rowId]">{{ eMFinRT[rowId] }}</span> -->
                             </td>
                         </tr>
                     </table>

@@ -8,22 +8,29 @@ import { FdBuroService } from '../../../../services/fetchData/FinancialInfo/fd-b
 import { FdDiasGozadosService } from '../../../../services/fetchData/DataPromocional/fd-dias_gozados.service';
 import { DataViewService } from '../../../../services/subscribeData/data-view.service';
 import { ModalDataPromocionalComponent } from './modal-data-promocional/modal-data-promocional.component';
+import { DataPromocionSupportService } from '../../../../services/subscribeData/data-promocion-support.service';
+import { ModalErrorComponent } from './modal-error/modal-error.component';
 
 
 @Component({
   selector: 'app-table-insert',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalDataPromocionalComponent],
+  imports: [CommonModule, FormsModule, ModalDataPromocionalComponent, ModalErrorComponent],
   templateUrl: './table-insert.component.html',
   styleUrl: './table-insert.component.scss'
 })
 export class TableInsertComponent implements OnInit {
   @Input() rows: any[] = [];
 
-  //v. Estructura de datos
+  //Variables de Datos
   serviciosData: Servicios[] = [];
+
+  //Variables de vista 
+  _inp1: boolean[] = []; _inp2: boolean[] = []; valideBtn: boolean = false; cont: number[] = [];
+  minDate_V2: string = ''; minDate_V3: string [] = [];
+
+  //Diccionario de Datos
   private diccionario: { [key: string]: any }[] = [];
-  _inp1: boolean[] = []; _inp2: boolean[] = [];
 
   constructor(
     private data_information: DataPromocionInformationService,
@@ -31,19 +38,22 @@ export class TableInsertComponent implements OnInit {
     private fdb: FdBuroService,
     private fddg: FdDiasGozadosService,
     private data_views: DataViewService
+
   ){}
 
   ngOnInit(): void {
     this.addRow(); // Añade la primera fila automáticamente al cargar
     this.data_information.dServicios$.subscribe(data => {this.serviciosData = data;});
     this.data_information.dDiccionario$.subscribe(data => {this.diccionario = data;});
+    this.data_views.dModalViewDP$.subscribe( data => {this.valideBtn = data;})
+    this.minDate_V2 = this.formatDate(new Date());
   }
 
   addRow(): void {
     const newRow = {
       id: this.rows.length,
       _V1: '', _V2: '', _V3: '', _V4: '', _V5: '', _V6: '',  _V7: '', _V8: '', _V11:'', _V15:'', _V16: '', _V17: '',
-      _V18: '', _V19: '',  _V20: '',
+      _V18: '', _V19: '',
       serviciosData: [], planData: [], planVData: [], productosData: [], ciudadData: [], sectoresData: [], upgradeData: [],
       selectedTable: 0, // Cambiado de array a un solo número
       tablas: [
@@ -73,6 +83,9 @@ export class TableInsertComponent implements OnInit {
   }
 
   getFechasInicioFin(Fecha_Inicio: Date, Fecha_Finalizacion: Date, index: number): void{
+    let newDate = new Date(Fecha_Inicio);
+    newDate.setDate(newDate.getDate() + 2);
+    this.minDate_V3[index] = this.formatDate(newDate);
     if(Fecha_Inicio && Fecha_Finalizacion){
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Ignorar la parte de horas
@@ -98,7 +111,7 @@ export class TableInsertComponent implements OnInit {
     }
   }
 
-  openModalDatosPromocionales(index: number){
+  openModalDatosPromocionales(index: number): void {
     const rowData = this.rows[index];
     this.data_views.indexMoment(index);
     this.data_views.rowMoment(rowData);
@@ -112,6 +125,19 @@ export class TableInsertComponent implements OnInit {
   checkSDLoading() {
     return this.serviciosData.length === 0;
   }
+
+  sendDiccionario(index: number): void {
+    this.data_views.indexMoment(index);
+    this.data_information.sendDiccionario();
+  }
+  
+  formatDate(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+
 
   isWeekend(date: string): boolean {
     const day = new Date(date).getDay();

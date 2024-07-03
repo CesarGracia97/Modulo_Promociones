@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DataViewService } from '../../../../../services/subscribeData/data-view.service';
 import { CommonModule } from '@angular/common';
 import { FdPlanesService } from '../../../../../services/fetchData/fd-planes.service';
-import { InjectionDataService } from '../../../../../services/injection/injection-data.service';
 
 @Component({
   selector: 'app-buttons',
@@ -19,8 +18,7 @@ export class ButtonsComponent implements OnInit {
 
   constructor(
     private comVisual: DataViewService,
-    private fdplan: FdPlanesService,
-    private getTo: InjectionDataService
+    private fdplan: FdPlanesService
   ){}
 
   ngOnInit(): void {

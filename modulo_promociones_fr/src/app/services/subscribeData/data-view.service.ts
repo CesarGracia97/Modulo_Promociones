@@ -43,6 +43,12 @@ export class DataViewService {
   private dOptionsDataView_Subject = new Subject<Options_PA[][]>();
   dOptionsDataView$ = this.dOptionsDataView_Subject.asObservable();
 
+  private dModalViewER_Subject = new Subject<boolean>();
+  dModalViewER$ = this.dModalViewER_Subject.asObservable();
+
+  private dMensajeViewER_Subject = new Subject<string>();
+  dMensajeViewER$ = this.dMensajeViewER_Subject.asObservable();
+
   constructor() { }
 
   visiblePrincipalComponent(value: string){
@@ -87,6 +93,14 @@ export class DataViewService {
 
   stateModalUP(state: boolean){
     this.dModalViewUP_Subject.next(state)
+  }
+
+  stateModalER(state: boolean){
+    this.dModalViewER_Subject.next(state)
+  }
+
+  messaggeError(mensaje: string){
+    this.dMensajeViewER_Subject.next(mensaje);
   }
 
   sendOptionsPAView( state: boolean, index: number){

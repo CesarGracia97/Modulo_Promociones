@@ -10,12 +10,17 @@ select {
 
 input.numeros{
     margin-top: 4px;
-    width: 100%;
+    width: 87%;
     height: 20px;
     border: 0.5px solid #615a5a;
     border-radius: 4px;
     padding: 2.5px;
     text-align: right;
+}
+span.title_mes{
+    width: 40px;
+    display: inline-block; /* Cambiar a inline-block para que respete el ancho */
+    text-align: left; /* Alinear el texto a la izquierda */
 }
 
 .modal_dp {
@@ -73,7 +78,7 @@ input.numeros{
         width: 100%; 
         font-size: 7pt;
         gap: 5px;
-        #upgrade, #meses, #caducidad {
+        #upgrade, #meses{
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 10px 12px;
@@ -82,31 +87,52 @@ input.numeros{
             display: flex;
             flex-direction: column;
             #meses{
-                .content_meses {
+                .content_meses{
                     margin-top: 4px;
                     display: flex;
                     flex-direction: column;
                     text-align: center;
-
-                    .ini, .fin {
+                    .content_ini, .content_fin{
                         display: flex;
-                        flex-direction: row;
-                        span {
-                            width: 40px;
-                            display: flex; // Utiliza flexbox para facilitar la alineación *
-                            align-items: center; // Alinea verticalmente los elementos *
+                        flex-direction: column;
+                        .ini{
+                            display: flex;
+                            flex-direction: row;
+                            span{
+                                width: 40px;
+                                display: flex; // Utiliza flexbox para facilitar la alineación *
+                                align-items: center; // Alinea verticalmente los elementos *
+                            }
+                            .numeros{
+                                margin-top: 0;
+                                width: 100%;
+                            }    
+                        }
+                        .fin{
+                            display: flex;
+                            flex-direction: row;
+                            margin-top: 4px;
+                            span{
+                                width: 40px;
+                                display: flex; // Utiliza flexbox para facilitar la alineación *
+                                align-items: center; // Alinea verticalmente los elementos *
+                            }
+                            .numeros{
+                                margin-top: 0;
+                                width: 100%;
+                            }
                         }
                     }
-                    .fin {
-                        margin-top: 4px;
-                    }
                 }
-            }
-            #caducidad {
-                input{
-                    margin-top: 4px;
-                }
+
             }
         }
     }
+}
+.invalid {
+    border: 1px solid red;
+}
+.error-message {
+    color: red;
+    font-size: 7pt;
 }
