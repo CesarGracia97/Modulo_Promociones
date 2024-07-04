@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { catchError, Subject } from 'rxjs';
 import { TariffPlanes, TariffPlanesVariant } from '../../interfaces/planes/tariffplanes.interface';
 import { Provincias } from '../../interfaces/places/provincias.interface';
 import { Servicios } from '../../interfaces/planes/servicios.interface';
@@ -284,7 +284,18 @@ export class DataPromocionInformationService {
         this.diccionario[this.index]['MODO DE PAGO'] = modo;
         this.diccionario[this.index]['DIAS GOZADOS'] = dias;
         this.sendDataUptadeDiccionario(this.diccionario[this.index], this.index);
-        this.request.InjectionData_POST(this.diccionario[this.index]);
+        this.request.InjectionData_POST(this.diccionario[this.index]).pipe(
+          catchError(error => {
+            this.handleRequestError(error);
+            return of(null); // Return a fallback observable to keep the stream alive
+          })
+        )
+        .subscribe(response => {
+          if (response) {
+            console.log('Operación exitosa', response);
+            // Manejar respuesta exitosa aquí
+          }
+        });
       }
       console.log(this.diccionario[this.index]);
     } catch (error) {
@@ -294,4 +305,14 @@ export class DataPromocionInformationService {
     }
   }
   /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
+
+  private handleRequestError(error: any) {
+    const mensajeError = 'Error en la petición POST: \n -|' + error + '|-\n Por favor, intente nuevamente más tarde.';
+    this.data_views.messaggeError(mensajeError);
+    this.data_views.stateModalER(true);
+  }
 }
+function of(arg0: null): any {
+  throw new Error('Function not implemented.');
+}
+

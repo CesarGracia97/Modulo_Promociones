@@ -22,6 +22,7 @@ export const environment = {
 
     //API POST
     API_POST_DATA: 'rest/postdata-modulos-promocionales-api/v1.0/injection',
+    API_BEND_POST: 'rest/backendpoint-modulos-promocionales-api/v1.0/backendpoint',
 
     //KEY
     KEY: '*Overwatch.2023!090349433ZeroXAxl2704617*'
