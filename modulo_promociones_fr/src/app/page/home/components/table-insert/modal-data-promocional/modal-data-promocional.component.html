@@ -46,7 +46,7 @@
         <div class="b12_2">
           <span>CANALES</span>
           <select name="_V8" [(ngModel)]="rowData._V8"
-          (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)">
+          (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V16, rowData._V17)">
             <option value="">Elije un Canal</option>
             <option *ngFor=" let canal of canalData[rowId] " [value]="canal.ID">{{canal.NAME}}</option>
           </select>
@@ -89,7 +89,7 @@
           <div id="precio_content">
             <span>PRECIO REGULAR: ${{ precioRegular.PRECIO }}</span>
             <input class="numeros" name="_V13" type="number" [(ngModel)]="rowData._V13" [min]="1" [max]="precioRegular.PRECIO" 
-            (ngModelChange)="validatePrice($event, precioRegular.PRECIO); getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V16, rowData._V17)" 
+            (ngModelChange)="validatePrice($event, precioRegular.PRECIO); getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V16, rowData._V17)" 
             [class.invalid]="!precValid[rowId]"
             placeholder="Ingrese un Precio Promocional"/>
           </div>
@@ -102,7 +102,7 @@
           <div id="checklist">
             <ul>
               <li *ngFor="let dias of diasGozadosData[rowId]">
-                <input type="radio" name="_V14" [value]="dias.NAME" [(ngModel)]="dias.selected"/> {{dias.NAME}}
+                <input type="radio" name="_V14" [value]="dias.NAME" [(ngModel)]="dias.selected" (ngModelChange)="most(dias.NAME)"/> {{dias.NAME}}
               </li>
             </ul>
           </div>
@@ -118,7 +118,7 @@
               <div class="ini">
                 <span>INICIO</span>
                 <input name="_V18" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V18"
-                (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V18, rowData._V20)"/>
+                (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V18, rowData._V20)"/>
               </div>
               <span class="error-message" *ngIf="errorM_V18[rowId]">{{ errorM_V18[rowId] }}</span>
             </div>
@@ -126,7 +126,7 @@
               <div class="fin">
                 <span>FIN</span>
                 <input name="_V19" class="numeros" type="number" [min]="1" [max]="24" [(ngModel)]="rowData._V19"
-                (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V15, rowData._V18, rowData._V19)"/>
+                (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V18, rowData._V19)"/>
               </div>
               <span class="error-message" *ngIf="errorM_V19[rowId]">{{ errorM_V19[rowId] }}</span>
             </div>

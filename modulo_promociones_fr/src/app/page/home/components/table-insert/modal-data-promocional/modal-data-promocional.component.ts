@@ -89,7 +89,7 @@ export class ModalDataPromocionalComponent implements OnInit {
       if(SERVICIO != "INTERNET")
         this.data_views.sendOptionsPAView(false, this.rowId,);
       this.fd_combos.fetchDataComboPLAN(SERVICIO, this.rowId);
-      this.diccionario[this.rowId]['SERVICIO'] = SERVICIO;
+      this.diccionario[this.rowId]['Servicio'] = SERVICIO;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       this.support.sendDataServicio(SERVICIO, this.rowId);
     }
@@ -122,10 +122,14 @@ export class ModalDataPromocionalComponent implements OnInit {
       this.fd_upgrade.fetchDataUpgrade(id_Plan, IdVariant, this.rowId)
   }
 
-  getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, IdProdcuto: number, mInicio: number, mFin: string): void {
+  most(value: string): void {
+    this.diccionario[this.rowId]['Dias Gozados'] = value;
+  }
+
+  getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, mInicio: number, mFin: string): void {
     this.validateV18(mInicio);
     this.validateV19(parseInt(mFin));
-    if(IdCanal && value && IdProdcuto && mInicio){
+    if(IdCanal && value && mInicio){
       this.diccionario[this.rowId]['Canal'] = IdCanal;
       this.diccionario[this.rowId]['Precio Promocional'] = value;
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;

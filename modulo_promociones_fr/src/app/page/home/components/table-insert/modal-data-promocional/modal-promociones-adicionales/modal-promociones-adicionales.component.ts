@@ -94,53 +94,51 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
       if(type == "STREAMING"){
         this.fd_precio.fetchDataPrecioRegularPA(1000065, PlanesPaquetesModelos, this.rowId, this.selectedTableIndex[this.rowId], type);
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = [];
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PAQUETES'] = PlanesPaquetesModelos;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Paquete'] = PlanesPaquetesModelos;
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(type == "TELEFONIA") {
         //
       } else if(type == "TELEVISION") {
         this.fd_precio.fetchDataPrecioRegularPA(this.darIdProducto(), PlanesPaquetesModelos, this.rowId, 0, type);
-        this.diccionario[this.rowId]['TELEVISION']['PLANES'] = PlanesPaquetesModelos;
+        this.diccionario[this.rowId]['TELEVISION']['Planes'] = PlanesPaquetesModelos;
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(variantId !== null && type == "ROUTER") {
         this.fd_precio.fetchDataPrecioRegularPA(PlanesPaquetesModelos, variantId, this.rowId, 0, type);
-        this.diccionario[this.rowId]['ROUTER']['MODELO'] = PlanesPaquetesModelos;
+        this.diccionario[this.rowId]['ROUTER']['Modelo'] = PlanesPaquetesModelos;
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     }
   }
 
   getPrecMIniMFinCantidad(value: number, mIni: number, mFin: string, cantidad: number, type: string): void {
-    this.validateINI(mIni, type);
-    this.validateFIN(parseInt(mFin), type);
     if(type == 'STREAMING'){
       if(value && mIni) {
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PRECIO REFERENCIAL'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['PRECIO PROMOCIONAL'] = value;
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['MES INICIO'] = mIni;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Referencial'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Promocional'] = value;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Inicio'] = mIni;
         if(!mFin || mFin == '') {
-          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['MES FIN'] = 'SIEMPRE';
+          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Fin'] = 'SIEMPRE';
         } else if (mFin){
-          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['MES FIN'] = mFin;
+          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Fin'] = mFin;
         }
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     } else if (type == 'TELEVISION' || type == 'TELEFONIA' || type == 'ROUTER'){
       if(value && mIni && cantidad) {
-        this.diccionario[this.rowId][type]['CANTIDAD'] = cantidad;
-        this.diccionario[this.rowId][type]['PRECIO PROMOCIONAL'] = value;
+        this.diccionario[this.rowId][type]['Cantidad'] = cantidad;
+        this.diccionario[this.rowId][type]['Precio Promocional'] = value;
         if(type =='TELEVISION') {
-          this.diccionario[this.rowId][type]['PRECIO REFERENCIAL'] = this.precioRegularTelevisioData[this.rowId][0].PRECIO;
+          this.diccionario[this.rowId][type]['Precio Referencial'] = this.precioRegularTelevisioData[this.rowId][0].PRECIO;
         } else if (type == 'TELEFONIA') {
-          this.diccionario[this.rowId][type]['PRECIO REFERENCIAL'] = this.precioRegularTelefoniaData[this.rowId][0].PRECIO;
+          this.diccionario[this.rowId][type]['Precio Referencial'] = this.precioRegularTelefoniaData[this.rowId][0].PRECIO;
         } else if (type == 'ROUTER') {
-          this.diccionario[this.rowId][type]['PRECIO REFERENCIAL'] = this.precioRegularRouter[this.rowId][0].PRECIO;
+          this.diccionario[this.rowId][type]['Precio Referencial'] = this.precioRegularRouter[this.rowId][0].PRECIO;
         }
-        this.diccionario[this.rowId][type]['MES INICIO'] = mIni;
+        this.diccionario[this.rowId][type]['Mes Inicio'] = mIni;
         if (!mFin || mFin == '') {
-          this.diccionario[this.rowId][type]['MES FIN'] = 'SIEMPRE';
+          this.diccionario[this.rowId][type]['Mes Fin'] = 'SIEMPRE';
         } else if (mFin) {
-          this.diccionario[this.rowId][type]['MES INICIO'] = mIni;
+          this.diccionario[this.rowId][type]['Mes Inicio'] = mIni;
         }
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }

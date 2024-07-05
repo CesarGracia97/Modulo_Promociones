@@ -43,12 +43,13 @@ export class ModalUpgradeComponent implements OnInit {
     this.validateV16(MesInicio);
     this.validateV17(parseInt(MesFinalizacion));
     if(Upgrade && MesInicio){
-      this.diccionario[this.rowId]['UPGRADE'] = Upgrade;
-      this.diccionario[this.rowId]['Mes Inicio UPGRADE'] = MesInicio;
+      this.diccionario[this.rowId]['UPGRADE'] = [];
+      this.diccionario[this.rowId]['UPGRADE']['UPGRADE'] = Upgrade;
+      this.diccionario[this.rowId]['UPGRADE']['Mes Inicio UPGRADE'] = MesInicio;
       if(!MesFinalizacion || MesFinalizacion ==''){
-        this.diccionario[this.rowId]['Mes Fin UPGRADE'] = 'SIEMPRE';
+        this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = 'SIEMPRE';
       } else if (MesFinalizacion) {
-        this.diccionario[this.rowId]['Mes Fin UPGRADE'] = MesFinalizacion;
+        this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = MesFinalizacion;
       }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }

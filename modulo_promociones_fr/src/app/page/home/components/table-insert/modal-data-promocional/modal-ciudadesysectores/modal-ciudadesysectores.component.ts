@@ -48,7 +48,7 @@ export class ModalCiudadesysectoresComponent implements OnInit {
   closeModalCiudades_y_Sectores(): void {
     const sectores = this.sectoresData[this.rowId].filter(sect => sect.selected).map(sect => sect.SECTOR_ID);
     if (sectores.length > 0) {
-      this.diccionario[this.rowId]['SECTORES'] = sectores;
+      this.diccionario[this.rowId]['Sectores'] = sectores;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
     this.data_views.stateModalCS(false);
@@ -60,7 +60,7 @@ export class ModalCiudadesysectoresComponent implements OnInit {
     const productoId = this.idProducto[this.rowId] ? this.idProducto[this.rowId][0] : null;
     if (variantId !== null && productoId !== null){
       this.fdata_place.fetchDataSectoresMasivosXTariffplanVariantXProducto(ciudades, variantId, productoId, this.rowId);
-      this.diccionario[this.rowId]['CIUDADES'] = ciudades;
+      this.diccionario[this.rowId]['Ciudades'] = ciudades;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }

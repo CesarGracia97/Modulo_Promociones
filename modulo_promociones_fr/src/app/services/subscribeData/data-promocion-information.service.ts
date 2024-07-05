@@ -280,9 +280,9 @@ export class DataPromocionInformationService {
       const modo = this.mdpgData[this.index].filter(modo => modo.selected).map(modo => modo.ID);
       const dias = this.diasGozadosData[this.index].filter(dias => dias.selected).map(dias => dias.NAME);
       if(buro != null && modo != null && dias != null){
-        this.diccionario[this.index]['BURO'] = buro;
-        this.diccionario[this.index]['MODO DE PAGO'] = modo;
-        this.diccionario[this.index]['DIAS GOZADOS'] = dias;
+        this.diccionario[this.index]['Buro'] = buro;
+        this.diccionario[this.index]['Forma de Pago'] = modo;
+        this.diccionario[this.index]['Fecha Generacion Registro'] = new Date().toString();
         this.sendDataUptadeDiccionario(this.diccionario[this.index], this.index);
         this.request.InjectionData_POST(this.diccionario[this.index]).pipe(
           catchError(error => {
@@ -312,7 +312,7 @@ export class DataPromocionInformationService {
     this.data_views.stateModalER(true);
   }
 }
+
 function of(arg0: null): any {
   throw new Error('Function not implemented.');
 }
-

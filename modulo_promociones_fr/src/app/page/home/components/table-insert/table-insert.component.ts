@@ -74,7 +74,8 @@ export class TableInsertComponent implements OnInit {
 
   getNombrePromocion(NombrePromocion: string, index: number): void {
     if(NombrePromocion){
-      this.diccionario[index]['Nombre_Promocion'] = NombrePromocion;
+      this.diccionario[index]['Id Registro'] = index
+      this.diccionario[index]['Nombre Promocion'] = NombrePromocion;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[index], index);
       this._inp1[index] = true;
     } else  {
@@ -104,8 +105,8 @@ export class TableInsertComponent implements OnInit {
         this._inp2[index] = false;
         return;
       }
-      this.diccionario[index]['Fecha_Inicio_Promocion'] = Fecha_Inicio.toString();
-      this.diccionario[index]['Fecha_Finalizacion_Promocion'] = Fecha_Finalizacion.toString();
+      this.diccionario[index]['Fecha Inicio Promocion'] = Fecha_Inicio.toString();
+      this.diccionario[index]['Fecha Finalizacion Promocion'] = Fecha_Finalizacion.toString();
       this.data_information.sendDataUptadeDiccionario(this.diccionario[index], index);
       this._inp2[index] = true;
     }
