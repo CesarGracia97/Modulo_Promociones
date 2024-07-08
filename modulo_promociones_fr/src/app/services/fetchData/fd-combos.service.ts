@@ -73,7 +73,6 @@ export class FdCombosService {
             PRODUCTO: prod.PRODUCTO
           }
         })
-        console.log(this.c_prod);
         this.dataPromocionalAdicional.sendDataModelosRouter(this.c_prod, index)
       }
     });

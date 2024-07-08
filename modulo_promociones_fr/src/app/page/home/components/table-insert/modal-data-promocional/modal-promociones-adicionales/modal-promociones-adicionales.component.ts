@@ -93,7 +93,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     if(PlanesPaquetesModelos){
       if(type == "STREAMING"){
         this.fd_precio.fetchDataPrecioRegularPA(1000065, PlanesPaquetesModelos, this.rowId, this.selectedTableIndex[this.rowId], type);
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = [];
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = {};
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Paquete'] = PlanesPaquetesModelos;
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(type == "TELEFONIA") {
@@ -238,19 +238,19 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     }
     if (index === 1 && options[1].selected){
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', this.rowId, this.selectedTableIndex[this.rowId])
-      this.diccionario[this.rowId]['STREAMING'] = [];
+      this.diccionario[this.rowId]['STREAMING'] = {};
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index === 2 && options[2].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA', this.rowId, 0)
-      this.diccionario[this.rowId]['TELEFONIA'] = [];
+      this.diccionario[this.rowId]['TELEFONIA'] = {};
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index == 3 && options[3].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEVISION', this.rowId, 0)
-      this.diccionario[this.rowId]['TELEVISION'] = [];
+      this.diccionario[this.rowId]['TELEVISION'] = {};
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index == 4 && options[4].selected){
       this.fd_combos.fetchDataComboPROD_ROUTER(this.rowId);
-      this.diccionario[this.rowId]['ROUTER'] = [];
+      this.diccionario[this.rowId]['ROUTER'] = {};
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
   }

@@ -287,16 +287,16 @@ export class DataPromocionInformationService {
         this.request.InjectionData_POST(this.diccionario[this.index]).pipe(
           catchError(error => {
             this.handleRequestError(error);
-            return of(null); // Return a fallback observable to keep the stream alive
+            return of(null); // Mantener el stream vivo
           })
-        )
-        .subscribe(response => {
+        ).subscribe(response => {
           if (response) {
             console.log('Operación exitosa', response);
-            // Manejar respuesta exitosa aquí
+            this.handleSuccess(response); // Manejar respuesta exitosa aquí
           }
         });
       }
+      console.log("Diccionario: ");
       console.log(this.diccionario[this.index]);
     } catch (error) {
       const mensajeError = 'Error: Generacion de Diccionario \n -|'+error+'|-\n En Resumen falta Elementos importantes para generar el diccionario. Complete todos.'
@@ -306,10 +306,23 @@ export class DataPromocionInformationService {
   }
   /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
 
-  private handleRequestError(error: any) {
-    const mensajeError = 'Error en la petición POST: \n -|' + error + '|-\n Por favor, intente nuevamente más tarde.';
-    this.data_views.messaggeError(mensajeError);
-    this.data_views.stateModalER(true);
+  handleRequestError(error: any) {
+    if (error.error && error.error.Error && error.error.Faltantes) {
+      console.error('Error del servidor:', error.error.Error);
+      console.error('Detalles:', error.error.Faltantes);
+    } else if (error.error && error.error.Error && error.error.Detalles) {
+      console.error('Error del servidor:', error.error.Error);
+      console.error('Detalles:', error.error.Detalles);
+    } else {
+      console.error('Error desconocido:', error);
+    }
+  }
+
+  handleSuccess(response: any) {
+    if (response && response.mensaje) {
+      console.log('Mensaje del servidor:', response.mensaje);
+    }
+    // Otras acciones para manejar la respuesta exitosa
   }
 }
 
