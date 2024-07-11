@@ -3,8 +3,7 @@
         "URL_BASE": "http://127.0.0.1:5012",
         "URL_POST_TOKEN": "/rest/token-api/v1.0/generate",
         "URL_POST_BD": "/rest/postdata-modulos-promocionales-api/v1.0/injection",
-        "URL_BACKENDPOINT_GET": "/rest/backendpoint-modulos-promocionales-api/v1.0/backendpoint_G",
-        "URL_BACKENDPOINT_POST": "/rest/backendpoint-modulos-promocionales-api/v1.0/backendpoint_P",
+        "URL_BACKENDPOINT": "/rest/backendpoint-modulos-promocionales-api/v1.0/backendpoint",
         "URL_FINANCE": {
             "URL_BASE": "/rest/getdata-modulos-promocionales-api/v1.0/finance",
             "BURO": "/buro",

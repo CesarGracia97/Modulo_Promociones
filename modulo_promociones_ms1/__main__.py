@@ -1,4 +1,6 @@
 from flask import Flask
+
+from Controllers.InjectionPostController import receptor_bpost
 from Resources.database.connection import connection
 from Controllers.PeticionPlacesController import receptor_bplc
 from Controllers.PeticionPlanesController import receptor_bpln
@@ -19,8 +21,10 @@ def create_app():
         app.register_blueprint(receptor_bplc)
         app.register_blueprint(receptor_bpln)
         app.register_blueprint(receptor_bfinan)
+        app.register_blueprint(receptor_bpost)
 
     return app
+
 
 if __name__ == '__main__':
     app = create_app()

@@ -282,7 +282,15 @@ export class DataPromocionInformationService {
       if(buro != null && modo != null && dias != null){
         this.diccionario[this.index]['Buro'] = buro;
         this.diccionario[this.index]['Forma de Pago'] = modo;
-        this.diccionario[this.index]['Fecha Generacion Registro'] = new Date().toString();
+        const now = new Date();
+        // Extrae la fecha en formato YYYY-MM-DD
+        const date = now.toISOString().split('T')[0];
+        // Extrae la hora en formato HH:MM:SS
+        const time = now.toTimeString().split(' ')[0];
+        // Combina fecha y hora en el formato deseado
+        const formattedDateTime = `${date} ${time}`;
+        // Asigna el valor al diccionario
+        this.diccionario[this.index]['Fecha Generacion Registro'] = formattedDateTime;
         this.sendDataUptadeDiccionario(this.diccionario[this.index], this.index);
         this.request.InjectionData_POST(this.diccionario[this.index]).pipe(
           catchError(error => {

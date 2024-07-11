@@ -2,13 +2,13 @@ from typing import Any
 import cx_Oracle
 
 
-class connection:
+class connectionb:
     def __init__(self):
-        self.host = "192.168.21.165"
+        self.host = "192.168.21.146"
         self.port = "1521"
-        self.service_name = "SQL"
-        self.username = "bscc"
-        self.password = "titan66"
+        self.service_name = "bsdesa"
+        self.username = "BSDESA"
+        self.password = "DESA1234"
         self.connection = None
 
     def connect(self):
@@ -20,9 +20,9 @@ class connection:
             print("-----------------------------------------")
             return self.connection
         except cx_Oracle.Error as error:
-            print("--------------------------------------------------")
+            print("-----------------------------------------")
             print("Error al conectar a la base de datos:", error)
-            print("--------------------------------------------------")
+            print("-----------------------------------------")
             return None
 
     def close(self):
@@ -36,23 +36,23 @@ class connection:
                 result = cursor.fetchall()
                 return result
         except cx_Oracle.Error as error:
-            print("--------------------------------------------------------------------")
-            print("Connection - OracleDB | Error al ejecutar la consulta:", error)
-            print("--------------------------------------------------------------------")
+            print("-----------------------------------------")
+            print("Error al ejecutar la consulta:", error)
+            print("-----------------------------------------")
             return None
 
-    def insert_data(self, query: str, parameters: tuple = ()) -> bool:
+    def insert_data(self, query: str, data: dict) -> bool:
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute(query, parameters)
+                cursor.execute(query, data)
                 self.connection.commit()
-                print("--------------------------------------------------------------------")
-                print("Connection - OracleDB | Inserción de datos exitosa.")
-                print("--------------------------------------------------------------------")
+                print("-----------------------------------------")
+                print("Datos insertados exitosamente.")
+                print("-----------------------------------------")
                 return True
         except cx_Oracle.Error as error:
-            print("--------------------------------------------------------------------")
-            print("Connection - OracleDB | Error al insertar datos:", error)
-            print("--------------------------------------------------------------------")
+            print("-----------------------------------------")
+            print("Error al insertar datos:", error)
+            print("-----------------------------------------")
+            self.connection.rollback()
             return False
-
