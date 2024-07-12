@@ -16,7 +16,7 @@ class connectionb:
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, service_name=self.service_name)
             self.connection = cx_Oracle.connect(user=self.username, password=self.password, dsn=dsn_tns)
             print("-----------------------------------------")
-            print("Conexión a la base de datos exitosa.")
+            print("Conexión a la base de datos exitosa de Inyeccion")
             print("-----------------------------------------")
             return self.connection
         except cx_Oracle.Error as error:
@@ -41,10 +41,10 @@ class connectionb:
             print("-----------------------------------------")
             return None
 
-    def insert_data(self, query: str, data: dict) -> bool:
+    def insert_data(self, query: str) -> bool:
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute(query, data)
+                cursor.execute(query)
                 self.connection.commit()
                 print("-----------------------------------------")
                 print("Datos insertados exitosamente.")

@@ -95,23 +95,23 @@ export class ModalDataPromocionalComponent implements OnInit {
     }
   }
 
-  getPLANVARIANT(IdPlan: number): void{
+  getPLANVARIANT(IdPlan: string): void{
     if(IdPlan)
-      this.fd_combos.fetchDataComboPLANVARIANT(IdPlan, this.rowId)
-    this.diccionario[this.rowId]['Plan_Id'] = IdPlan;
+      this.fd_combos.fetchDataComboPLANVARIANT(parseInt(IdPlan), this.rowId)
+    this.diccionario[this.rowId]['Plan_Id'] = parseInt(IdPlan);
     this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
   }
 
-  getPROD_CiudadesTariffplanVariantProducto(idVariant: number, ProductoId: number): void {
+  getPROD_CiudadesTariffplanVariantProducto(idVariant: string, ProductoId: string): void {
     if(idVariant){
-      this.fd_combos.fetchDataComboPROD(idVariant, this.rowId);
+      this.fd_combos.fetchDataComboPROD(parseInt(idVariant), this.rowId);
       if(idVariant && ProductoId){
-        this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(idVariant, ProductoId, this.rowId);
-        this.fd_precios.fetchDataPrecioRegular(ProductoId, idVariant, this.rowId);
-        this.support.sendDataIdProducto(ProductoId, this.rowId);
-        this.support.sendDataIdVariant(idVariant, this.rowId);
-        this.diccionario[this.rowId]['Variant_Id'] = idVariant;
-        this.diccionario[this.rowId]['Producto_Id'] = idVariant;
+        this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(parseInt(idVariant), parseInt(ProductoId), this.rowId);
+        this.fd_precios.fetchDataPrecioRegular(parseInt(ProductoId), parseInt(idVariant), this.rowId);
+        this.support.sendDataIdProducto(parseInt(ProductoId), this.rowId);
+        this.support.sendDataIdVariant(parseInt(idVariant), this.rowId);
+        this.diccionario[this.rowId]['Variant_Id'] = parseInt(idVariant);
+        this.diccionario[this.rowId]['Producto_Id'] = parseInt(idVariant);
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     }
@@ -126,18 +126,18 @@ export class ModalDataPromocionalComponent implements OnInit {
     this.diccionario[this.rowId]['Dias Gozados'] = value;
   }
 
-  getCanalesPrecioUpgradeMIiMf(IdCanal: number, value: number, mInicio: number, mFin: string): void {
-    this.validateV18(mInicio);
+  getCanalesPrecioUpgradeMIiMf(IdCanal: string, value: number, mInicio: string, mFin: string): void {
+    this.validateV18(parseInt(mInicio));
     this.validateV19(parseInt(mFin));
     if(IdCanal && value && mInicio){
-      this.diccionario[this.rowId]['Canal'] = IdCanal;
+      this.diccionario[this.rowId]['Canal'] = parseInt(IdCanal);
       this.diccionario[this.rowId]['Precio Promocional'] = value;
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
-      this.diccionario[this.rowId]['Mes Inicio Promocion'] = mInicio
+      this.diccionario[this.rowId]['Mes Inicio Promocion'] = parseInt(mInicio);
       if(!mFin || mFin ==''){
         this.diccionario[this.rowId]['Mes Fin Promocion'] = 'SIEMPRE';
       } else if(mFin) {
-        this.diccionario[this.rowId]['Mes Fin Promocion'] = mFin;
+        this.diccionario[this.rowId]['Mes Fin Promocion'] = parseInt(mFin);
       }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }

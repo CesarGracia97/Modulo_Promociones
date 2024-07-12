@@ -39,17 +39,17 @@ export class ModalUpgradeComponent implements OnInit {
     this.data_views.stateModalUP(false);
   }
 
-  getUpgradeCaducidadMIiMf(Upgrade: number, MesInicio: number, MesFinalizacion: string): void {
-    this.validateV16(MesInicio);
+  getUpgradeCaducidadMIiMf(Upgrade: string, MesInicio: string, MesFinalizacion: string): void {
+    this.validateV16(parseInt(MesInicio));
     this.validateV17(parseInt(MesFinalizacion));
     if(Upgrade && MesInicio){
       this.diccionario[this.rowId]['UPGRADE'] = {};
-      this.diccionario[this.rowId]['UPGRADE']['UPGRADE'] = Upgrade;
-      this.diccionario[this.rowId]['UPGRADE']['Mes Inicio UPGRADE'] = MesInicio;
+      this.diccionario[this.rowId]['UPGRADE']['UPGRADE'] = parseInt(Upgrade);
+      this.diccionario[this.rowId]['UPGRADE']['Mes Inicio UPGRADE'] = parseInt(MesInicio);
       if(!MesFinalizacion || MesFinalizacion ==''){
         this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = 'SIEMPRE';
       } else if (MesFinalizacion) {
-        this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = MesFinalizacion;
+        this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = parseInt(MesFinalizacion);
       }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }

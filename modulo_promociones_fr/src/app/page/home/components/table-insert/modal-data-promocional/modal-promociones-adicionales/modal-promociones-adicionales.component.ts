@@ -88,23 +88,23 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     this.data_views.stateModalPA(false);
   }
 
-  getPrecioRegular(PlanesPaquetesModelos: number, type: string): void {
+  getPrecioRegular(PlanesPaquetesModelos: string, type: string): void {
     const variantId = this.idVariant[this.rowId] ? this.idVariant[this.rowId][0] : null;
     if(PlanesPaquetesModelos){
       if(type == "STREAMING"){
-        this.fd_precio.fetchDataPrecioRegularPA(1000065, PlanesPaquetesModelos, this.rowId, this.selectedTableIndex[this.rowId], type);
+        this.fd_precio.fetchDataPrecioRegularPA(1000065, parseInt(PlanesPaquetesModelos), this.rowId, this.selectedTableIndex[this.rowId], type);
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = {};
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Paquete'] = PlanesPaquetesModelos;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Paquete'] = parseInt(PlanesPaquetesModelos);
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(type == "TELEFONIA") {
         //
       } else if(type == "TELEVISION") {
-        this.fd_precio.fetchDataPrecioRegularPA(this.darIdProducto(), PlanesPaquetesModelos, this.rowId, 0, type);
-        this.diccionario[this.rowId]['TELEVISION']['Planes'] = PlanesPaquetesModelos;
+        this.fd_precio.fetchDataPrecioRegularPA(this.darIdProducto(), parseInt(PlanesPaquetesModelos), this.rowId, 0, type);
+        this.diccionario[this.rowId]['TELEVISION']['Planes'] = parseInt(PlanesPaquetesModelos);
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(variantId !== null && type == "ROUTER") {
-        this.fd_precio.fetchDataPrecioRegularPA(PlanesPaquetesModelos, variantId, this.rowId, 0, type);
-        this.diccionario[this.rowId]['ROUTER']['Modelo'] = PlanesPaquetesModelos;
+        this.fd_precio.fetchDataPrecioRegularPA(parseInt(PlanesPaquetesModelos), variantId, this.rowId, 0, type);
+        this.diccionario[this.rowId]['ROUTER']['Modelo'] = parseInt(PlanesPaquetesModelos);
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     }
@@ -113,6 +113,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   getPrecMIniMFinCantidad(value: number, mIni: number, mFin: string, cantidad: number, type: string): void {
     if(type == 'STREAMING'){
       if(value && mIni) {
+        this.diccionario[this.rowId][type][this.selectedTableIndex[this.rowId]]['Producto Adicional'] = type
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Referencial'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Promocional'] = value;
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Inicio'] = mIni;
@@ -125,6 +126,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
       }
     } else if (type == 'TELEVISION' || type == 'TELEFONIA' || type == 'ROUTER'){
       if(value && mIni && cantidad) {
+        this.diccionario[this.rowId][type]['Producto Adicional'] = type
         this.diccionario[this.rowId][type]['Cantidad'] = cantidad;
         this.diccionario[this.rowId][type]['Precio Promocional'] = value;
         if(type =='TELEVISION') {
