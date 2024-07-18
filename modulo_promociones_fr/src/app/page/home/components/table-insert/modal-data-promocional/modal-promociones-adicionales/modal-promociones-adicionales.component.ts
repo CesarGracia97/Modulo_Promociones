@@ -110,13 +110,13 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     }
   }
 
-  getPrecMIniMFinCantidad(value: number, mIni: number, mFin: string, cantidad: number, type: string): void {
+  getPrecMIniMFinCantidad(value: string, mIni: string, mFin: string, cantidad: number, type: string): void {
     if(type == 'STREAMING'){
-      if(value && mIni) {
+      if((parseInt(value) >= 0) && (parseInt(mIni) >= 0 && parseInt(mIni) <= 24)) {
         this.diccionario[this.rowId][type][this.selectedTableIndex[this.rowId]]['Producto Adicional'] = type
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Referencial'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Promocional'] = value;
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Inicio'] = mIni;
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Promocional'] = parseFloat(value);
+        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Inicio'] = parseInt(mIni);
         if(!mFin || mFin == '') {
           this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Fin'] = 'SIEMPRE';
         } else if (mFin){

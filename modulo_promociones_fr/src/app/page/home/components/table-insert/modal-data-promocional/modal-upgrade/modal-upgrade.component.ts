@@ -42,7 +42,7 @@ export class ModalUpgradeComponent implements OnInit {
   getUpgradeCaducidadMIiMf(Upgrade: string, MesInicio: string, MesFinalizacion: string): void {
     this.validateV16(parseInt(MesInicio));
     this.validateV17(parseInt(MesFinalizacion));
-    if(Upgrade && MesInicio){
+    if(Upgrade && (parseInt(MesInicio) >= 0 && parseInt(MesInicio) <= 24)){
       this.diccionario[this.rowId]['UPGRADE'] = {};
       this.diccionario[this.rowId]['UPGRADE']['UPGRADE'] = parseInt(Upgrade);
       this.diccionario[this.rowId]['UPGRADE']['Mes Inicio UPGRADE'] = parseInt(MesInicio);

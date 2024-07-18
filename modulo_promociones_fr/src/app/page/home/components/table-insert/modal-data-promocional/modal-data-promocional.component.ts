@@ -111,7 +111,7 @@ export class ModalDataPromocionalComponent implements OnInit {
         this.support.sendDataIdProducto(parseInt(ProductoId), this.rowId);
         this.support.sendDataIdVariant(parseInt(idVariant), this.rowId);
         this.diccionario[this.rowId]['Variant_Id'] = parseInt(idVariant);
-        this.diccionario[this.rowId]['Producto_Id'] = parseInt(idVariant);
+        this.diccionario[this.rowId]['Producto_Id'] = parseInt(ProductoId);
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     }
@@ -126,12 +126,12 @@ export class ModalDataPromocionalComponent implements OnInit {
     this.diccionario[this.rowId]['Dias Gozados'] = value;
   }
 
-  getCanalesPrecioUpgradeMIiMf(IdCanal: string, value: number, mInicio: string, mFin: string): void {
+  getCanalesPrecioUpgradeMIiMf(IdCanal: string, value: string, mInicio: string, mFin: string): void {
     this.validateV18(parseInt(mInicio));
     this.validateV19(parseInt(mFin));
-    if(IdCanal && value && mInicio){
+    if(IdCanal && value && (parseInt(mInicio)  >= 0 && parseInt(mInicio) <= 24)){
       this.diccionario[this.rowId]['Canal'] = parseInt(IdCanal);
-      this.diccionario[this.rowId]['Precio Promocional'] = value;
+      this.diccionario[this.rowId]['Precio Promocional'] = parseFloat(value);
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;
       this.diccionario[this.rowId]['Mes Inicio Promocion'] = parseInt(mInicio);
       if(!mFin || mFin ==''){
