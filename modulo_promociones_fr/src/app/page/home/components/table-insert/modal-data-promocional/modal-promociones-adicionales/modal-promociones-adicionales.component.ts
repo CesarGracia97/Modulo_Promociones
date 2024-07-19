@@ -100,7 +100,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
         //
       } else if(type == "TELEVISION") {
         this.fd_precio.fetchDataPrecioRegularPA(this.darIdProducto(), parseInt(PlanesPaquetesModelos), this.rowId, 0, type);
-        this.diccionario[this.rowId]['TELEVISION']['Planes'] = parseInt(PlanesPaquetesModelos);
+        this.diccionario[this.rowId]['TELEVISION']['Plan'] = parseInt(PlanesPaquetesModelos);
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       } else if(variantId !== null && type == "ROUTER") {
         this.fd_precio.fetchDataPrecioRegularPA(parseInt(PlanesPaquetesModelos), variantId, this.rowId, 0, type);
@@ -125,7 +125,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     } else if (type == 'TELEVISION' || type == 'TELEFONIA' || type == 'ROUTER'){
-      if(value && mIni && cantidad) {
+      if((parseInt(value) >= 0) && (parseInt(mIni) >= 0 && parseInt(mIni) <= 24) && cantidad >= 0) {
         this.diccionario[this.rowId][type]['Producto Adicional'] = type
         this.diccionario[this.rowId][type]['Cantidad'] = cantidad;
         this.diccionario[this.rowId][type]['Precio Promocional'] = value;

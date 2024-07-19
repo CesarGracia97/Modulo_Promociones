@@ -106,7 +106,7 @@
                             <td>
                                 <input name="PRAD_TF_V3" [(ngModel)]="rowData.PRAD_TF_V3" 
                                 (ngModelChange)="getPrecMIniMFinCantidad(rowData.PRAD_TF_V2, rowData.PRAD_TF_V4, rowData.PRAD_TF_V5, rowData.PRAD_TF_V3, 'TELEFONIA')"
-                                type="number" [min]="1"/>>
+                                type="number" [min]="1"/>
                             </td>
                         </tr>
                         <tr>
@@ -138,7 +138,7 @@
                             <td><span>PLANES</span></td>
                             <td>
                                 <select name="PRAD_TV_V1" [(ngModel)]="rowData.PRAD_TV_V1"
-                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TF_V1, 'TELEVISION')">
+                                (ngModelChange)="getPrecioRegular(rowData.PRAD_TV_V1, 'TELEVISION')">
                                     <option [value]="">PLAN. TELEVISION</option>
                                     <option *ngFor="let plan of planesTelevisivos[rowId]" [value]="plan.TARIFFPLANVARIANTID">{{ plan.TARIFFPLANVARIANT }}</option>
                                 </select>

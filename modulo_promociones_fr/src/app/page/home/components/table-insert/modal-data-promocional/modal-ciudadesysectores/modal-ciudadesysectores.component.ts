@@ -48,7 +48,8 @@ export class ModalCiudadesysectoresComponent implements OnInit {
   closeModalCiudades_y_Sectores(): void {
     const sectores = this.sectoresData[this.rowId].filter(sect => sect.selected).map(sect => sect.SECTOR_ID);
     if (sectores.length > 0) {
-      this.diccionario[this.rowId]['Sectores'] = sectores;
+      const allSelected = this.sectoresData[this.rowId].every(sect => sect.selected);
+      this.diccionario[this.rowId]['Sectores'] = allSelected ? ["TODOS"] : sectores;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }
     this.data_views.stateModalCS(false);
