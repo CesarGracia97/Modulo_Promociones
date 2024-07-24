@@ -8,14 +8,13 @@ import { FdBuroService } from '../../../../services/fetchData/FinancialInfo/fd-b
 import { FdDiasGozadosService } from '../../../../services/fetchData/DataPromocional/fd-dias_gozados.service';
 import { DataViewService } from '../../../../services/subscribeData/data-view.service';
 import { ModalDataPromocionalComponent } from './modal-data-promocional/modal-data-promocional.component';
-import { DataPromocionSupportService } from '../../../../services/subscribeData/data-promocion-support.service';
-import { ModalErrorComponent } from './modal-error/modal-error.component';
+import { ModalInformacionComponent } from './modal-informacion/modal-informacion.component';
 
 
 @Component({
   selector: 'app-table-insert',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalDataPromocionalComponent, ModalErrorComponent],
+  imports: [CommonModule, FormsModule, ModalDataPromocionalComponent, ModalInformacionComponent],
   templateUrl: './table-insert.component.html',
   styleUrl: './table-insert.component.scss'
 })

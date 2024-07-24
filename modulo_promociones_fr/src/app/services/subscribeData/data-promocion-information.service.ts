@@ -16,6 +16,7 @@ import { Tarjetas } from '../../interfaces/financial/tarjetas.interface';
 import { Canales } from '../../interfaces/financial/canales.interface';
 import { DataViewService } from './data-view.service';
 import { SendDataPOSTService } from '../requests/POST/send-data-POST.service';
+import { DataPromocionSupportService } from './data-promocion-support.service';
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +114,7 @@ export class DataPromocionInformationService {
 
   constructor(
     private data_views: DataViewService,
+    private data_support: DataPromocionSupportService,
     private request: SendDataPOSTService
   ) {
     this.data_views.dIndex$.subscribe(data => {this.index = data;} );
@@ -160,7 +162,7 @@ export class DataPromocionInformationService {
     if(!this.canalData[index]){
       this.canalData[index] = [];
       this.canalData[index].push(...[
-        {ID: 3, NAME: 'Comercial'},
+        {ID: 3, NAME: 'Ingreso de Contratos'},
         {ID: 4, NAME: 'Ecommerce'},
         {ID: 5, NAME: 'Migración'},
         {ID: 6, NAME: 'Retención'}
@@ -308,8 +310,8 @@ export class DataPromocionInformationService {
       console.log(this.diccionario[this.index]);
     } catch (error) {
       const mensajeError = 'Error: Generacion de Diccionario \n -|'+error+'|-\n En Resumen falta Elementos importantes para generar el diccionario. Complete todos.'
-      this.data_views.messaggeError(mensajeError)
-      this.data_views.stateModalER(true);
+      this.data_support.messagge(mensajeError)
+      this.data_views.stateModalMessage(true);
     }
   }
   /*----------------------------DICCIONARIO DE DATOS--------------------------------*/
@@ -318,17 +320,29 @@ export class DataPromocionInformationService {
     if (error.error && error.error.Error && error.error.Faltantes) {
       console.error('Error del servidor:', error.error.Error);
       console.error('Detalles:', error.error.Faltantes);
+      const mensaje = "Error del servidor: "+ error.error.Error+"\n Detalles: "+error.error.Faltantes
+      this.data_support.messagge(mensaje)
+      this.data_views.stateModalMessage(true);
     } else if (error.error && error.error.Error && error.error.Detalles) {
       console.error('Error del servidor:', error.error.Error);
       console.error('Detalles:', error.error.Detalles);
+      const mensaje = "Error del servidor: "+ error.error.Error+"\n Detalles: "+error.error.Faltantes
+      this.data_support.messagge(mensaje)
+      this.data_views.stateModalMessage(true);
     } else {
       console.error('Error desconocido:', error);
+      const mensaje = "Error desconocido: "+ error
+      this.data_support.messagge(mensaje)
+      this.data_views.stateModalMessage(true);
     }
   }
 
   handleSuccess(response: any) {
     if (response && response.mensaje) {
       console.log('Mensaje del servidor:', response.mensaje);
+      const mensaje = "Mensaje del Servidor: " +response.mensaje
+      this.data_support.messagge(mensaje)
+      this.data_views.stateModalMessage(true);
     }
     // Otras acciones para manejar la respuesta exitosa
   }

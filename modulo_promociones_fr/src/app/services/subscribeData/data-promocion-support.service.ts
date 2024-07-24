@@ -18,6 +18,9 @@ export class DataPromocionSupportService {
   private dServicio_Subject = new Subject<string[][]>
   dServicio$ = this.dServicio_Subject.asObservable();
 
+  private dMensajeModalView_Subject = new Subject<string>();
+  dMensajeModalView$ = this.dMensajeModalView_Subject.asObservable();
+
   constructor() {}
 
   sendDataIdProducto(value: number, index: number){
@@ -36,5 +39,9 @@ export class DataPromocionSupportService {
     this.Servicio[index] = [];
     this.Servicio[index].push(value);
     this.dServicio_Subject.next(this.Servicio);
+  }
+
+  messagge(mensaje: string){
+    this.dMensajeModalView_Subject.next(mensaje);
   }
 }
