@@ -21,6 +21,9 @@ export class DataPromocionSupportService {
   private dMensajeModalView_Subject = new Subject<string>();
   dMensajeModalView$ = this.dMensajeModalView_Subject.asObservable();
 
+  private dDicionarioComprobabled_Subject = new Subject<boolean[]>();
+  dDicionarioComprobabled$ = this.dDicionarioComprobabled_Subject.asObservable();
+
   constructor() {}
 
   sendDataIdProducto(value: number, index: number){
@@ -43,5 +46,9 @@ export class DataPromocionSupportService {
 
   messagge(mensaje: string){
     this.dMensajeModalView_Subject.next(mensaje);
+  }
+
+  disableButtonSendDiccionario(data:{ [key: string]: any }, index: number) {
+
   }
 }

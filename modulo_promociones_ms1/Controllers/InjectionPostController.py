@@ -11,41 +11,28 @@ class InjectionPostController:
         try:
             if request.method == "POST":
                 diccionarioDatos = request.json
-
-                # Crear la conexión a la base de datos
                 db = connectionb()
                 db.connect()
-
-                # Generar el valor para IDREGISTRO
                 id_registro = generate_id_registro(diccionarioDatos.get('Id Registro'),
                                                    diccionarioDatos.get('Fecha Generacion Registro'))
-
-                # Preparar el diccionario de datos para la tabla principal
                 data_to_insert = moduloprin_data(diccionarioDatos, id_registro)
-
-                # Generar y ejecutar el query para la tabla principal
                 query = generate_query_modpromo(data_to_insert)
                 success = db.insert_data(query)
-
                 if not success:
                     db.close()
                     return jsonify({'Error': 'Error al insertar datos en la tabla principal.'}), 400
-
-                # Insertar datos en la tabla de promociones adicionales
                 success = handle_promociones_adicionales(db, diccionarioDatos, id_registro)
-
-                # Cerrar la conexión a la base de datos
-                db.close()
-
                 if not success:
+                    db.close()
                     return jsonify({'Error': 'Error al insertar datos en la tabla de promociones adicionales.'}), 400
 
+                db.close()
                 return jsonify({'Message': 'Datos insertados exitosamente.'}), 200
         except Exception as e:
             print("--------------------------------------------------------------------")
             print("FASE DE ESCUCHA - InjectionPostController | Error detectado: ", e)
             print("--------------------------------------------------------------------")
-            return jsonify({'Error': str(e)}), 400
+            return jsonify({'Error': str(e)}), 500
 
 
 def convert_to_date(date_str):
@@ -86,7 +73,7 @@ def moduloprin_data(diccionarioDatos, id_registro):
         "FORMADEPAGO": ','.join(map(str, diccionarioDatos.get('Forma de Pago', []))),
         "ENTIDADBANCARIA": None,
         "EMISORTARJETA": None,
-        "CIUDADES": ','.join(map(str, diccionarioDatos.get('Ciudades', []))),
+        "CIUDADES": json.dumps((diccionarioDatos.get('Ciudades', []))),
         "SECTORES": json.dumps(diccionarioDatos.get('Sectores', [])),
         "SUBSECTORES": json.dumps(diccionarioDatos.get('Subsectores', [])),
         "UPGRADE": json.dumps(diccionarioDatos.get('UPGRADE', None))
@@ -111,7 +98,7 @@ def generate_query_modpromo(data):
             json_value = json.dumps(v).replace("'", "''")
             values_list.append("'{}'".format(json_value))
     values = ', '.join(values_list)
-    squery = "INSERT INTO YTBL_MODULOPROMOPRIN ({}) VALUES ({})".format(columns, values)
+    squery = "INSERT INTO YTBL_MODULOPROMO_PRIN ({}) VALUES ({})".format(columns, values)
     return squery
 
 
@@ -120,16 +107,16 @@ def handle_promociones_adicionales(db, diccionarioDatos, id_registro):
     for producto in productos_adicionales:
         if producto in diccionarioDatos:
             if producto == 'STREAMING':
-                for streaming_data in diccionarioDatos['STREAMING']:
+                for streaming_data in diccionarioDatos['STREAMING'].values():
                     data_to_insert = {
                         "IDREGISTRO": id_registro,
                         "PRODUCTO": 'STREAMING',
-                        "PLANPAQUETEMODELO": streaming_data.get('Paquete'),
+                        "PLANPAQUETEMODELO": int(streaming_data.get('Paquete', 0)),
                         "CANTIDAD": 0,
                         "PRECIOREGULAR": float(streaming_data.get('Precio Referencial', 0.0)),
                         "PRECIOPROMOCIONAL": float(streaming_data.get('Precio Promocional', 0.0)),
                         "MESINICIAL": int(streaming_data.get('Mes Inicio', 0)),
-                        "MESFINAL": int(streaming_data.get('Mes Fin', 0))
+                        "MESFINAL": streaming_data.get('Mes Fin')
                     }
                     query = generate_query_modpromo_adic(data_to_insert)
                     if not db.insert_data(query):
@@ -143,7 +130,7 @@ def handle_promociones_adicionales(db, diccionarioDatos, id_registro):
                     "PRECIOREGULAR": float(diccionarioDatos[producto].get('Precio Referencial', 0.0)),
                     "PRECIOPROMOCIONAL": float(diccionarioDatos[producto].get('Precio Promocional', 0.0)),
                     "MESINICIAL": int(diccionarioDatos[producto].get('Mes Inicio', 0)),
-                    "MESFINAL": int(diccionarioDatos[producto].get('Mes Fin', 0))
+                    "MESFINAL": diccionarioDatos[producto].get('Mes Fin')
                 }
                 query = generate_query_modpromo_adic(data_to_insert)
                 if not db.insert_data(query):
@@ -169,5 +156,5 @@ def generate_query_modpromo_adic(data):
             json_value = json.dumps(v).replace("'", "''")
             values_list.append("'{}'".format(json_value))
     values = ', '.join(values_list)
-    squery = "INSERT INTO YTBL_MODULOPROMOADIC ({}) VALUES ({})".format(columns, values)
+    squery = "INSERT INTO YTBL_MODULOPROMO_ADIC ({}) VALUES ({})".format(columns, values)
     return squery

@@ -301,8 +301,12 @@ export class DataPromocionInformationService {
           })
         ).subscribe(response => {
           if (response) {
-            console.log('Operación exitosa', response);
+            const mensage = "Ingreso de Datos de Exitosa, se bloqueara la fila para evitar repeticion de Datos";
             this.handleSuccess(response); // Manejar respuesta exitosa aquí
+            this.data_support.messagge(mensage)
+            this.data_views.stateModalMessage(true);
+            const index = parseInt(this.diccionario[this.index]['Id Registro'])
+            console.log("Valor de Fila "+index)
           }
         });
       }
@@ -318,19 +322,14 @@ export class DataPromocionInformationService {
 
   handleRequestError(error: any) {
     if (error.error && error.error.Error && error.error.Faltantes) {
-      console.error('Error del servidor:', error.error.Error);
-      console.error('Detalles:', error.error.Faltantes);
       const mensaje = "Error del servidor: "+ error.error.Error+"\n Detalles: "+error.error.Faltantes
       this.data_support.messagge(mensaje)
       this.data_views.stateModalMessage(true);
     } else if (error.error && error.error.Error && error.error.Detalles) {
-      console.error('Error del servidor:', error.error.Error);
-      console.error('Detalles:', error.error.Detalles);
       const mensaje = "Error del servidor: "+ error.error.Error+"\n Detalles: "+error.error.Faltantes
       this.data_support.messagge(mensaje)
       this.data_views.stateModalMessage(true);
     } else {
-      console.error('Error desconocido:', error);
       const mensaje = "Error desconocido: "+ error
       this.data_support.messagge(mensaje)
       this.data_views.stateModalMessage(true);
@@ -339,12 +338,10 @@ export class DataPromocionInformationService {
 
   handleSuccess(response: any) {
     if (response && response.mensaje) {
-      console.log('Mensaje del servidor:', response.mensaje);
       const mensaje = "Mensaje del Servidor: " +response.mensaje
       this.data_support.messagge(mensaje)
       this.data_views.stateModalMessage(true);
     }
-    // Otras acciones para manejar la respuesta exitosa
   }
 }
 

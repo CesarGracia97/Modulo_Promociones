@@ -224,6 +224,7 @@ class BackEndpointController:
                 try:
                     response = requests.post('http://localhost:5011/api/ms/postDatos', json=data)
                     response.raise_for_status()
+                    return response.json(), response.status_code
                 except requests.exceptions.RequestException as e:
                     print(f"Error al enviar la solicitud a la segunda URL: {e}")
                     return jsonify({'Error': 'Error al enviar la solicitud a la segunda URL'}), 500
