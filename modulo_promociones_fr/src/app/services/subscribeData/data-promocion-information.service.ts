@@ -294,6 +294,9 @@ export class DataPromocionInformationService {
         // Asigna el valor al diccionario
         this.diccionario[this.index]['Fecha Generacion Registro'] = formattedDateTime;
         this.sendDataUptadeDiccionario(this.diccionario[this.index], this.index);
+        console.log("Diccionario: ");
+        console.log(this.diccionario[this.index]);
+        console.log("-")
         this.request.InjectionData_POST(this.diccionario[this.index]).pipe(
           catchError(error => {
             this.handleRequestError(error);

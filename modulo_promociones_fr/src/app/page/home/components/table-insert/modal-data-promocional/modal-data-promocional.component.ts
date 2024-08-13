@@ -34,7 +34,8 @@ import { ModalUpgradeComponent } from './modal-upgrade/modal-upgrade.component';
 })
 export class ModalDataPromocionalComponent implements OnInit {
   //Variables de Vista
-  rowId: number = 0;   rowData: any = {};
+  rowId: number = 0;   rowData: any = {};  name: string = '';
+
   dp_state: boolean = false;
   showDDMP: boolean[] = []; showDDB: boolean[] = []; closing: boolean = false; 
   permitirPA: boolean = false; precValid: boolean[] = [];
@@ -63,6 +64,7 @@ export class ModalDataPromocionalComponent implements OnInit {
 
   ngOnInit(): void {
     this.data_views.dIndex$.subscribe( data => {this.rowId = data});
+    this.data_views.dNombrePromocionView$.subscribe( data => {this.name = data});
     this.data_views.dRows$.subscribe( data => {if(data)this.rowData = data});
     this.data_views.dModalViewDP$.subscribe( data => {this.dp_state = data});
     this.data_information.dServicios$.subscribe( data => {this.serviciosData = data;});
@@ -129,7 +131,7 @@ export class ModalDataPromocionalComponent implements OnInit {
   getCanalesPrecioUpgradeMIiMf(IdCanal: string, value: string, mInicio: string, mFin: string): void {
     this.validateV18(parseInt(mInicio));
     this.validateV19(parseInt(mFin));
-    if(IdCanal && value && (parseInt(mInicio)  >= 0 && parseInt(mInicio) <= 24)){
+    if(IdCanal && value && (parseInt(mInicio) >= 0 && parseInt(mInicio) <= 24)){
       this.diccionario[this.rowId]['Canal'] = parseInt(IdCanal);
       this.diccionario[this.rowId]['Precio Promocional'] = parseFloat(value);
       this.diccionario[this.rowId]['Precio Referencial'] = this.precioRegularData[this.rowId][0].PRECIO;

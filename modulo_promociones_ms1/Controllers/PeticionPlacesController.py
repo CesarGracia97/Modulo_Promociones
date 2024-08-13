@@ -8,7 +8,7 @@ receptor_bplc = Blueprint('ms_peticionPlaces', __name__)
 class PeticionPlacesController:
     @receptor_bplc.route('/api/ms/peticionPlaces', methods=['GET'])
     def faseEscucha():
-        _valid_type_AD = {"ALL_PROVS", "ALL_CITIES", "ALL_SECTORS"}
+        _valid_type_AD = {"ALL_PROV", "ALL_CITIES", "ALL_SECTORS"}
         _valid_type_SD = {"CIUDADES_ESPECIFICASxPROV", "SECTORES_ESPECIFICOSxCITY", "PROVINCIAS_ESPECIFICASxTFV",
                           "CIUDADES_ESPECIFICASxTFV", "SECTORES_ESPECIFICOSxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
                           "CIUDADES_ESPECIFICASxTFVxPROD", "SECTORES_ESPECIFICOSxCITYxTFV"}

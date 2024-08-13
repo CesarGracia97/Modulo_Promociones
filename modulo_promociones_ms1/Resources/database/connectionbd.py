@@ -4,12 +4,18 @@ import cx_Oracle
 
 class connectionb:
     def __init__(self):
-        self.host = "192.168.21.146"
-        self.port = "1521"
-        self.service_name = "bsdesa"
-        self.username = "BSDESA"
-        self.password = "DESA1234"
-        self.connection = None
+         self.host = "192.168.21.146"
+         self.port = "1521"
+         self.service_name = "bsdesa"
+         self.username = "BSDESA"
+         self.password = "DESA1234"
+         self.connection = None
+        # self.host = "192.168.21.165"
+        # self.port = "1521"
+        # self.service_name = "SQL"
+        # self.username = "bscc"
+        # self.password = "titan66"
+        # self.connection = None
 
     def connect(self):
         try:

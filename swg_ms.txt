@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Modulo Promocionales MS
+  description: Microservicio de Modulos Promocionales
+  version: 1.0.11
+servers:
+  - url: /rest/modulos-promocionales-ms/v1.0/
+tags:
+  - name: Lugares
+    description: Informacion de Provincias, Ciudades, Sectores y Zonas donde aplican los modulos.
+  - name: Financiero
+    description: Informacion de datos financieron como Modos de Pago, buro, y datos promocionales que aplican en los modulos.
+  - name: Planes
+    description: Informacion de datos sobre planes sobre productos de modulos.
+  - name: Modulo Promocional
+    description: Carga de Modulo Promocional
+paths:
+  /get/Planes:
+    post:
+      tags:
+        - Planes
+      operationId: get_Planes
+      requestBody:
+        content:
+          application/json:
+            schema:
+  /get/Lugares:
+    post:
+      tags:
+        - Lugares
+      operationId: get_Lugares
+      requestBody:
+        content:
+          application/json:
+            schema:
+  /get/Financiero:
+    post:
+      tags:
+        - Financiero
+      operationId: get_Financiero
+      requestBody:
+        content:
+          application/json:
+            schema:
+  /post/modulo-promocional:
+    post:
+      tags:
+        - Modulo Promocional
+      operationId: get_ModuloPromocional
+      requestBody:
+        content:
+          application/json:
+            schema:
+components:
+  schemas:
+    RequestGetLugares:
+    RequestGetPlanes:
+    RequestGetFinanciero:

@@ -73,6 +73,7 @@ export class TableInsertComponent implements OnInit {
 
   getNombrePromocion(NombrePromocion: string, index: number): void {
     if(NombrePromocion){
+      this.data_views.nombrePromocionView(NombrePromocion);
       this.diccionario[index]['Id Registro'] = index
       this.diccionario[index]['Nombre Promocion'] = NombrePromocion;
       this.data_information.sendDataUptadeDiccionario(this.diccionario[index], index);

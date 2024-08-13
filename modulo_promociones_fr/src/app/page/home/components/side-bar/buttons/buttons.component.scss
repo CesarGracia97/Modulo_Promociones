@@ -6,21 +6,20 @@
 }
 
 .main-button {
-    margin-bottom: 10px;
-    width: 80%; /* Ajuste de ancho inicial más flexible */
-    max-width: 250px; /* Ancho máximo para grandes pantallas */
-    background: none;
-    border: none;
-    text-decoration: none;
-    color: #333;
-    padding: 15px 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 7pt;
-    &:hover{
+  margin-bottom: 10px;
+  width: 80%;
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #333;
+  padding: 15px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 7pt;
+  &:hover{
       background-color: #eee;
-    }
+  }
 }
 
 .dropdown {
@@ -81,7 +80,7 @@
 
 @media (max-width: 768px) {
   .main-button, .dropdown-button {
-    padding: 12px 15px; /* Reducción del padding para espacios más pequeños */
-    width: 95%; /* Mayor porcentaje de ancho para uso eficiente del espacio disponible */
+    padding: 15px 20px; /* Reducción del padding para espacios más pequeños */
+    width: 80%; /* Mayor porcentaje de ancho para uso eficiente del espacio disponible */
   }
 }

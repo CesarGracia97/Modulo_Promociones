@@ -8,6 +8,7 @@
         border-collapse: collapse; /* Elimina el espacio entre bordes de celdas */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #333; /* Color de texto oscuro para mejor contraste */
+        overflow-y: auto;
 
         thead {
             background-color: #f709eb9c;

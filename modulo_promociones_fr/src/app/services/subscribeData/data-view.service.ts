@@ -46,6 +46,9 @@ export class DataViewService {
   private dModalViewMessage_Subject = new Subject<boolean>();
   dModalViewMessage$ = this.dModalViewMessage_Subject.asObservable();
 
+  private dNombrePromocionView_Subject = new Subject<string>();
+  dNombrePromocionView$ = this.dNombrePromocionView_Subject.asObservable();
+
   constructor() { }
 
   visiblePrincipalComponent(value: string){
@@ -94,6 +97,10 @@ export class DataViewService {
 
   stateModalMessage(state: boolean){
     this.dModalViewMessage_Subject.next(state)
+  }
+
+  nombrePromocionView(name: string){
+    this.dNombrePromocionView_Subject.next(name);
   }
 
   sendOptionsPAView( state: boolean, index: number){

@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './modal-informacion.component.scss'
 })
 export class ModalInformacionComponent  implements OnInit {
-  state: boolean = false; rowId: number = 0;
+  state: boolean = false; rowId: number = 0;  name: string = '';
   mensaje: string= '';
 
   constructor(
@@ -21,6 +21,7 @@ export class ModalInformacionComponent  implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.data_views.dNombrePromocionView$.subscribe( data => {this.name = data});
     this.data_views.dIndex$.subscribe( data => {this.rowId = data;});
     this.data_views.dModalViewMessage$.subscribe( data => {this.state = data;})
     this.data_support.dMensajeModalView$.subscribe( data => {this.mensaje = data;})

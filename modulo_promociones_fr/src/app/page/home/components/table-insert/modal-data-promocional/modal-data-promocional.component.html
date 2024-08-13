@@ -1,6 +1,6 @@
 <div *ngIf="dp_state" class="modal_dp" [ngClass]="{'door-open': dp_state}" id="modal_dp-{{rowId+1}}">
   <div class="modal-header">
-    <span class="modal-title">Datos de Promocion - F# {{rowId+1}}</span>
+    <span class="modal-title">Datos de Promocion - #{{rowId+1}} {{name}}</span>
     <button class="close-button" (click)="closeModalDatosPromocionales()">×</button>
   </div>
   <div class="modal-body">
@@ -16,20 +16,20 @@
         <div class="b11_2">
           <span>PLANES</span>
           <select name="_V5" [(ngModel)]="rowData._V5" (ngModelChange)="getPLANVARIANT(rowData._V5); getUpgrade(rowData._V4, rowData._V5, rowData._V6)">
-             <option value="">Elija un Plan</option>
-             <option value="" *ngIf="planData[rowId]?.length === 0 || !rowData._V4">Selecc. antes los otros elementos</option>
-             <option value="" *ngIf="!planData[rowId] && rowData._V4">Cargando Datos..</option>
-             <option *ngFor=" let plan of planData[rowId]" [value]="plan.TARIFFPLANID" >{{plan.TARIFFPLAN}}</option>    
+            <option value="">Elija un Plan</option>
+            <option value="" *ngIf="planData[rowId]?.length === 0 || !rowData._V4">Selecc. antes los otros elementos</option>
+            <option value="" *ngIf="!planData[rowId] && rowData._V4">Cargando Datos..</option>
+            <option *ngFor=" let plan of planData[rowId]" [value]="plan.TARIFFPLANID" >{{plan.TARIFFPLAN}}</option>    
          </select>
         </div>
         <div class="b11_3">
           <span>VARIANTES</span>
           <select name="_V6" [(ngModel)]="rowData._V6" (ngModelChange)="getPROD_CiudadesTariffplanVariantProducto(rowData._V6, rowData._V7);
           getUpgrade(rowData._V4, rowData._V5, rowData._V6)">
-              <option value="">Elija un Plan Variant</option>
-              <option value="" *ngIf="planVData[rowId]?.length === 0 || !rowData._V5">Selecc. antes los otros elementos</option>
-              <option value="" *ngIf="!planVData[rowId] && rowData._V5">Cargando Datos..</option>
-              <option *ngFor=" let planV of planVData[rowId]" [value]="planV.TARIFFPLANVARIANTID" >{{planV.TARIFFPLANVARIANT}}</option>    
+            <option value="">Elija un Plan Variant</option>
+            <option value="" *ngIf="planVData[rowId]?.length === 0 || !rowData._V5">Selecc. antes los otros elementos</option>
+            <option value="" *ngIf="!planVData[rowId] && rowData._V5">Cargando Datos..</option>
+            <option *ngFor=" let planV of planVData[rowId]" [value]="planV.TARIFFPLANVARIANTID" >{{planV.TARIFFPLANVARIANT}}</option>    
           </select>
         </div>
       </div>
@@ -37,10 +37,10 @@
         <div class="b12_1">
           <span>PRODUCTOS</span>
           <select name="_V7" [(ngModel)]="rowData._V7" (ngModelChange)="getPROD_CiudadesTariffplanVariantProducto(rowData._V6, rowData._V7)">
-              <option value="">Elija un Producto</option>
-              <option value="" *ngIf="productosData[rowId]?.length === 0 || !rowData._V6">Selecc. antes los otros elementos</option>
-              <option value="" *ngIf="!productosData[rowId] && rowData._V6">Cargando Datos..</option>
-              <option *ngFor=" let prod of productosData[rowId]" [value]="prod.PRODUCTID" >{{prod.PRODUCTO}}</option>    
+            <option value="">Elija un Producto</option>
+            <option value="" *ngIf="productosData[rowId]?.length === 0 || !rowData._V6">Selecc. antes los otros elementos</option>
+            <option value="" *ngIf="!productosData[rowId] && rowData._V6">Cargando Datos..</option>
+            <option *ngFor=" let prod of productosData[rowId]" [value]="prod.PRODUCTID" >{{prod.PRODUCTO}}</option>    
           </select>
         </div>
         <div class="b12_2">
@@ -118,7 +118,7 @@
               <div class="ini">
                 <span>INICIO</span>
                 <input name="_V18" class="numeros" type="number" [min]="0" [max]="24" [(ngModel)]="rowData._V18"
-                (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V18, rowData._V20)"/>
+                (ngModelChange)="getCanalesPrecioUpgradeMIiMf(rowData._V8, rowData._V13, rowData._V18, rowData._V19)"/>
               </div>
               <span class="error-message" *ngIf="errorM_V18[rowId]">{{ errorM_V18[rowId] }}</span>
             </div>
