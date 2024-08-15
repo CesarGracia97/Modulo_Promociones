@@ -310,7 +310,7 @@ components:
           example: "0 - 24 o SIEMPRE"
         UPGRADE:
           allOf:
-            - $ref: '#/components/schemas/Upgrade'
+            - $ref: '#/components/schemas/DataUpgrade'
         Ciudades:
           type: array
           items:
@@ -352,18 +352,18 @@ components:
           example: "2024-08-08 11:10:18"
         STREAMING:
           allOf:
-            - $ref: '#/components/schemas/STREAMING'
+            - $ref: '#/components/schemas/DataSTREAMING'
         TELEFONIA:
           allOf:
-            - $ref: '#/components/schemas/TELEFONIA'
+            - $ref: '#/components/schemas/DataTELEFONIA'
         TELEVISION:
           allOf:
-            - $ref: '#/components/schemas/TELEVISION'
+            - $ref: '#/components/schemas/DataTELEVISION'
         ROUTER:
           allOf:
-            - $ref: '#/components/schemas/ROUTER'
+            - $ref: '#/components/schemas/DataROUTER'
     
-    Upgrade:
+    DataUpgrade:
       required:
         - UPGRADE
         - Mes Inicio UPGRADE
@@ -379,7 +379,7 @@ components:
           type: string
           example: "0 - 24 o siempre"
     
-    STREAMING:
+    DataSTREAMING:
       type: object
       additionalProperties:
         type: object
@@ -412,7 +412,7 @@ components:
             type: string
             example: "SIEMPRE"
     
-    TELEFONIA:
+    DataTELEFONIA:
       required:
         - Plan
       properties:
@@ -422,7 +422,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ProductoAdicional'
     
-    TELEVISION:
+    DataTELEVISION:
       required:
         - Plan
       properties:
@@ -432,7 +432,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ProductoAdicional'
     
-    ROUTER:
+    DataROUTER:
       required:
         - Modelo
       properties:
