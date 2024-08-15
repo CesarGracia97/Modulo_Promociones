@@ -19,20 +19,57 @@ paths:
     post:
       tags:
         - Planes
+      description: Consulta de Datos de Provincias segun sus parametros.
       operationId: get_Planes
       requestBody:
         content:
           application/json:
             schema:
+              $ref: '#/components/schemas/RequestGetPlanes'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ResponseGetOfertas'
+                  - $ref: '#/components/schemas/ResponseGetTipo_Servicio'
+                  - $ref: '#/components/schemas/ResponseGetTecnologias'
+                  - $ref: '#/components/schemas/ResponseGetServicio'
+                  - $ref: '#/components/schemas/ResponseGetCombo_Planes'
+                  - $ref: '#/components/schemas/ResponseGetCombo_PlanVariant'
+                  - $ref: '#/components/schemas/ResponseGetCombo_Producto'
+        "400":
+          description: BAD REQUEST
+  
   /get/Lugares:
     post:
       tags:
         - Lugares
+      description: Consulta de Datos de Provincias segun sus parametros.
       operationId: get_Lugares
       requestBody:
         content:
           application/json:
             schema:
+              $ref: '#/components/schemas/RequestGetLugares'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ResponseGetProvincias'
+                  - $ref: '#/components/schemas/ResponseGetCiudades'
+                  - $ref: '#/components/schemas/ResponseGetSectores'
+                  - $ref: '#/components/schemas/ResponseGetCiudadesPorProvincia'
+                  - $ref: '#/components/schemas/ResponseGetSectoresPorCiudad'
+                  - $ref: '#/components/schemas/ResponseGetSectoresPorCiudad'
+        "400":
+          description: BAD REQUEST
+  
   /get/Financiero:
     post:
       tags:
@@ -42,6 +79,22 @@ paths:
         content:
           application/json:
             schema:
+              $ref: '#/components/schemas/RequestGetFinanciero'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ResponseGetPrecio_Regular'
+                  - $ref: '#/components/schemas/ResponseGetDias_Gozados'
+                  - $ref: '#/components/schemas/ResponseGetBuro'
+                  - $ref: '#/components/schemas/ResponseGetModos_Pago'
+                  - $ref: '#/components/schemas/ResponseGetUpgrade'
+        "400":
+          description: BAD REQUEST
+  
   /post/modulo-promocional:
     post:
       tags:
@@ -51,8 +104,746 @@ paths:
         content:
           application/json:
             schema:
+              $ref: '#/components/schemas/ResquestPostDiccionarioDatos'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: BAD REQUEST
+
 components:
   schemas:
     RequestGetLugares:
+      required:
+        - channel
+        - type
+        - system
+        - externalTransactionId
+      properties:
+        system:
+          type: string
+          example: "ALEPO"
+        externalTransactionId:
+          type: string
+          example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+        channel:
+          type: string
+          example: "api-modulos-promocionales-lugares"
+        type:
+          type: string
+          example: "SECTORES_ESPECIFICOSxCITYxTFV"
+        TARIFFPLANVARIANT:
+          type: integer
+          example: 0
+        PRODUCTOID:
+          type: integer
+          example: 0
+        id_Prov:
+          type: integer
+          example: 0
+        id_Provs:
+          type: array
+          items:
+            type: integer
+          example: 
+            - 96006
+            - 96000
+        id_City:
+          type: integer
+          example: 0
+        id_Cities:
+          type: array
+          items:
+            type: integer
+          example: 
+            - 96006
+            - 96000
+    
     RequestGetPlanes:
+      required:
+        - channel
+        - type
+        - stype
+        - system
+        - externalTransactionId
+      properties:
+        system:
+          type: string
+          example: "ALEPO"
+        externalTransactionId:
+          type: string
+          example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+        channel:
+          type: string
+          example: "api-modulos-promocionales-lugares"
+        type:
+          type: string
+          example: "ALL_DATA O COMBO"
+        stype:
+          type: string
+          example: "SERV, OFER"
+        SERVICIO:
+          type: string
+          example: "INTERNET"
+        TIPO_SERVICIO:
+          type: string
+          example: "COORPORATIVO O RESIDENCIAL"
+    
     RequestGetFinanciero:
+      required:
+        - channel
+        - type
+        - system
+        - externalTransactionId
+      properties:
+        system:
+          type: string
+          example: "ALEPO"
+        externalTransactionId:
+          type: string
+          example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+        channel:
+          type: string
+          example: "api-modulos-promocionales-lugares"
+        type:
+          type: string
+          example: "DIAS_GOZADOS ALL_MPAGOS"
+        id_Prod:
+          type: integer
+          example: 0
+        TARIFFPLAN:
+          type: integer
+          example: 0
+        TARIFFPLANVARIANT:
+          type: integer
+          example: 0
+    
+    ResquestPostDiccionarioDatos:
+      required:
+        - channel
+        - data
+        - system
+        - externalTransactionId
+      properties:
+        system:
+          type: string
+          example: "ALEPO"
+        externalTransactionId:
+          type: string
+          example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+        channel:
+          type: string
+          example: web-modulos-promocionales
+        data:
+          $ref: '#/components/schemas/DataPostDiccionarioDatos'
+    
+    DataPostDiccionarioDatos:
+      required:
+        - Id Registro
+        - Nombre Promocion
+        - Fecha Inicio Promocion
+        - Fecha Finalizacion Promocion
+        - Servicio
+        - Plan_Id
+        - Variant_Id
+        - Producto_Id
+        - Dias Gozado
+        - Canal
+        - Precio Promocional
+        - Precio Referencial
+        - Mes Inicio Promocion
+        - Mes Fin Promocion
+        - Ciudades
+        - Sectores
+        - Buro
+        - Formas de Pago
+        - Fecha Generacion Registro
+      properties:
+        Id Registro:
+          type: integer
+          example: 090
+        Nombre Promocion:
+          type: string
+          example: "Prueba de Modulos"
+        Fecha Inicio Promocion:
+          type: string
+          format: date
+          example: "2024-08-08"
+        Fecha Finalizacion Promocion:
+          type: string
+          format: date
+          example: 2024-08-08
+        Servicio:
+          type: string
+          example: INTERNET
+        Plan_Id:
+          type: integer
+          example: 123322
+        Variant_Id:
+          type: integer
+          example: 123322
+        Producto_Id:
+          type: integer
+          example: 123322
+        Dias Gozados:      
+          type: string
+          enum:
+          - Yes
+          - No
+          example: YES
+        Canal:
+          type: integer
+          example: 12
+        Precio Promocional:
+          type: number
+          format: float
+          example: 99.99
+        Precio Referencial:
+          type: number
+          format: float
+          example: 99.99
+        Mes Inicio Promocion:
+          type: integer
+          example: 24
+        Mes Fin Promocion:
+          type: string
+          example: "0 - 24 o SIEMPRE"
+        UPGRADE:
+          allOf:
+            - $ref: '#/components/schemas/Upgrade'
+        Ciudades:
+          type: array
+          items:
+            type: integer
+          example: 
+            - 96006
+            - 96000
+        Sectores:
+          oneOf:
+          - type: array
+            items:
+              type: integer
+            example:
+              - 1
+              - 2
+              - 3
+          - type: array
+            items:
+              type: string
+            example:
+            - "TODOS"
+        Buro:
+          type: array
+          items:
+            type: integer
+          example: 
+            - 96006
+            - 96000
+        Formas de Pago:
+          type: array
+          items:
+            type: integer
+          example: 
+            - 96006
+            - 96000
+        Fecha Generacion Registro:
+          type: string
+          format: date-time
+          example: "2024-08-08 11:10:18"
+        STREAMING:
+          allOf:
+            - $ref: '#/components/schemas/STREAMING'
+        TELEFONIA:
+          allOf:
+            - $ref: '#/components/schemas/TELEFONIA'
+        TELEVISION:
+          allOf:
+            - $ref: '#/components/schemas/TELEVISION'
+        ROUTER:
+          allOf:
+            - $ref: '#/components/schemas/ROUTER'
+    
+    Upgrade:
+      required:
+        - UPGRADE
+        - Mes Inicio UPGRADE
+        - Mes Fin UPGRADE
+      properties:
+        UPGRADE:
+          type: integer
+          example: 1000582
+        Mes Inicio UPGRADE:
+          type: integer
+          example: 0
+        Mes Fin UPGRADE:
+          type: string
+          example: "0 - 24 o siempre"
+    
+    STREAMING:
+      type: object
+      additionalProperties:
+        type: object
+        required:
+          - Paquete
+          - Producto Adicional
+          - Precio Referencial
+          - Precio Promocional
+          - Mes Inicio
+          - Mes Fin
+        properties:
+          Paquete:
+            type: integer
+            example: 1000569
+          Producto Adicional:
+            type: string
+            example: "STREAMING"
+          Precio Referencial:
+            type: number
+            format: float
+            example: 0
+          Precio Promocional:
+            type: number
+            format: float
+            example: 0
+          Mes Inicio:
+            type: integer
+            example: 0
+          Mes Fin:
+            type: string
+            example: "SIEMPRE"
+    
+    TELEFONIA:
+      required:
+        - Plan
+      properties:
+        Plan:
+          type: integer
+          example: 1000569
+      allOf:
+        - $ref: '#/components/schemas/ProductoAdicional'
+    
+    TELEVISION:
+      required:
+        - Plan
+      properties:
+        Plan:
+          type: integer
+          example: 1000569
+      allOf:
+        - $ref: '#/components/schemas/ProductoAdicional'
+    
+    ROUTER:
+      required:
+        - Modelo
+      properties:
+        Modelo:
+          type: integer
+          example: 1000569
+      allOf:
+        - $ref: '#/components/schemas/ProductoAdicional'
+    
+    ProductoAdicional:
+      required:
+        - Producto Adicional
+        - Precio Referencial
+        - Precio Promocional
+        - Mes Inicio
+        - Mes Fin
+        - Cantidad
+      properties:
+        Producto Adicional:
+          type: string
+          example: "STREAMING"
+        Cantidad:
+          type: integer
+          example: 5
+        Precio Referencial:
+          type: number
+          format: float
+          example: 0
+        Precio Promocional:
+          type: number
+          format: float
+          example: 0
+        Mes Inicio:
+          type: integer
+          example: 0
+        Mes Fin:
+          type: string
+          example: " 0 - 24 o SIEMPRE"
+    
+    ResponseGetProvincias:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        PROVINCIES:
+          type: array
+          items:
+            type: object
+            properties:
+              PROVINCIA:
+                type: string
+              PROVINCIA_ID:
+                type: integer
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetCiudades:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        CITIES:
+          type: array
+          items:
+            type: object
+            properties:
+              CIUDAD:
+                type: string
+              CIUDAD_ID:
+                type: integer
+              PROVINCIA:
+                type: string
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetSectores:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        SECTORS:
+          type: array
+          items:
+            type: object
+            properties:
+              CIUDAD:
+                type: string
+              SECTOR:
+                type: string
+              SECTOR_ID:
+                type: integer
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetCiudadesPorProvincia:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        CITIESxPROV:
+          type: array
+          items:
+            type: object
+            properties:
+              CIUDAD:
+                type: string
+              CIUDAD_ID:
+                type: integer
+              PROVINCIA:
+                type: string
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetSectoresPorCiudad:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        SECTORSxCITY:
+          type: array
+          items:
+            type: object
+            properties:
+              CIUDAD:
+                type: string
+              SECTOR:
+                type: string
+              SECTOR_ID:
+                type: integer
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetServicio:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        SERVICIOS:
+          type: array
+          items:
+            type: object
+            properties:
+              SERVICIOS:
+                type: string
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetCombo_Planes:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        COMBO_PLAN:
+          type: array
+          items:
+            type: object
+            properties:
+              TARIFFPLAN:
+                type: string
+              TARIFFPLANID:
+                type: integer
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetCombo_PlanVariant:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        COMBO_PLANVARIANT:
+          type: array
+          items:
+            type: object
+            properties:
+              TARIFFPLANVARIANT:
+                type: string
+                example: "X-Futbol Standard HFC"
+              TARIFFPLANVARIANTID: 
+                type: integer
+                example: 1000632
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetCombo_Producto:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        COMBO_PRODUCTO:
+          type: array
+          items:
+            type: object
+            properties:
+              PRODUCTO:
+                type: string
+                example: "X-Futbol Standard HFC"
+              PRODUCTID:
+                type: integer
+                example: 1000632
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetOfertas:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        OFERTAS:
+          type: array
+          items:
+            type: object
+            properties:
+              OFERTA_ID:
+                type: integer
+                example: 9
+              OFERTA:
+                type: string
+                example: "PAPA"
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetTipo_Servicio:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        TIPO_SERVICIO:
+          type: array
+          items:
+            type: object
+            properties:
+              TIPO_SERVICIO:
+                type: string
+                example: "COORPORATIVO"
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetTecnologias:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        TECNOLOGIAS:
+          type: array
+          items:
+            type: object
+            properties:
+              TECNOLOGIA:
+                type: string
+                example: "HFC"
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetPrecio_Regular:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        PRECIO_REGULAR:
+          type: array
+          items:
+            type: object
+            properties:
+              PRECIO:
+                type: number
+                format: float
+                example: 99.99
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetDias_Gozados:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        DIAS_GOZADOS:
+          type: array
+          items:
+            type: object
+            properties:
+              NAME:
+                type: string
+                example: "YES"
+              ID:
+                type: integer
+                example: 1000632
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetBuro:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        BURO:
+          type: array
+          items:
+            type: object
+            properties:
+              NAME:
+                type: string
+                example: "A"
+              ID:
+                type: integer
+                example: 1000632
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetModos_Pago:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        MPAGOS:
+          type: array
+          items:
+            type: object
+            properties:
+              NAME:
+                type: string
+                example: "Efectivo"
+              ID:
+                type: integer
+                example: 500076
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    
+    ResponseGetUpgrade:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        UPGRADE:
+          type: array
+          items:
+            type: object
+            properties:
+              PLAN_UPGRADE:
+                type: string
+                example: "Turbo(300 MB)"
+              ID:
+                type: integer
+                example: 1000577
+        internalTransactionId:
+          type: integer
+        externalTransactionId:
+          type: integer
+        message:
+          type: string
+    

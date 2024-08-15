@@ -744,7 +744,7 @@ components:
     ResponseError:
       type: object
       properties:
-        errorCode:
+        errorCode:|
           type: integer
           example: 0
         internalTransactionId:
@@ -762,5 +762,4 @@ components:
     ResponseGetCiudad_data:
     
     ResponseGetSectores_Data:
-    
     

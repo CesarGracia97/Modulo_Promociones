@@ -27,7 +27,7 @@ class PlaceRepository:
                             print("--- EL RESULTADO DE LA CONSULTA FUE NULLO ---")
                             return data
 
-                        if _diccionario["name_Query"] == "ALL_PROVS":
+                        if _diccionario["name_Query"] == "ALL_PROV":
                             data['PROVINCIES'] = []
                             for result in results:
                                 provincias = Provincia(result[0], result[1])

@@ -5,7 +5,7 @@ class FormattedPlace:
     @staticmethod
     def formated_placeSIMPLEDATA(data, _type: str):
         try:
-            _provincias = {"ALL_PROVS", "PROVINCIAS_ESPECIFICASxTFV"}
+            _provincias = {"ALL_PROV", "PROVINCIAS_ESPECIFICASxTFV"}
             _ciudades = {"ALL_CITIES"}
             _sectores = {"ALL_SECTORS"}
             if _type in _provincias:
