@@ -1,0 +1,24 @@
+{
+  "type":"ALL_DATA_PROV",
+  "data": {
+    "PROVINCES":{
+      "PROVINCIA_ID": "",
+      "PROVINCIA": ""
+    },
+    "CITIES": {
+      "CIUDAD_ID": "",
+      "PROVINCIA_ID": "",
+      "CIUDAD": ""
+    },
+    "SECTORS": {
+      "SECTOR_ID": "",
+      "CIUDAD_ID": "",
+      "SECTOR": ""
+    },
+    "SUB_SECTORS": {
+      "SUBSECTOR_ID": "",
+      "SECTOR_ID": "",
+      "SUBSECTOR": ""
+    }
+  }
+}

@@ -49,7 +49,7 @@ export class CiudadService {
 
   getCiudadesMasivasXTariffplanVariant(id_Prov: number[], tariffplanvariant: number): Observable <Ciudades[]> {
     const a_idProv = id_Prov.join(',');
-    let params = new HttpParams().set('type', 'CIUDADES_ESPECIFICASxPROVxTFV')
+    let params = new HttpParams().set('type', 'CIUDADES_M_ESPECIFICASxPROVxTFV')
     .set('id_Provs', a_idProv)
     .set('TARIFFPLANVARIANT', tariffplanvariant.toString());
     return this.http.get<Ciudades[]>(API_MAIN+GET_PLACES+MASV, { params: params });

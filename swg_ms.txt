@@ -4,7 +4,7 @@ info:
   description: Microservicio de Modulos Promocionales
   version: 1.0.11
 servers:
-  - url: /rest/modulos-promocionales-ms/v1.0/
+  - url: /rest/modulos-promocionales-api/v1.0/
 tags:
   - name: Lugares
     description: Informacion de Provincias, Ciudades, Sectores y Zonas donde aplican los modulos.
@@ -41,7 +41,31 @@ paths:
                   - $ref: '#/components/schemas/ResponseGetCombo_PlanVariant'
                   - $ref: '#/components/schemas/ResponseGetCombo_Producto'
         "400":
-          description: BAD REQUEST
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                request incorrecto:
+                  value:
+                    codeError: -1
+                    internalTransactionId: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+                    externalTransactionId: "c5a07d5d-0f84-4ea1-a5b4-a413aa0d21b9"
+                    message: "El Request enviado no es el correcto"
+        "500":
+          description: Internal Error Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                request incorrecto:
+                  value:
+                    codeError: -1
+                    internalTransactionId: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+                    externalTransactionId: "c5a07d5d-0f84-4ea1-a5b4-a413aa0d21b9"
+                    message: "El Request enviado no es el correcto"
   
   /get/Lugares:
     post:
@@ -66,9 +90,32 @@ paths:
                   - $ref: '#/components/schemas/ResponseGetSectores'
                   - $ref: '#/components/schemas/ResponseGetCiudadesPorProvincia'
                   - $ref: '#/components/schemas/ResponseGetSectoresPorCiudad'
-                  - $ref: '#/components/schemas/ResponseGetSectoresPorCiudad'
         "400":
-          description: BAD REQUEST
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                request incorrecto:
+                  value:
+                    codeError: -1
+                    internalTransactionId: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+                    externalTransactionId: "c5a07d5d-0f84-4ea1-a5b4-a413aa0d21b9"
+                    message: "El Request enviado no es el correcto"
+        "500":
+          description: Internal Error Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                request incorrecto:
+                  value:
+                    codeError: -1
+                    internalTransactionId: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+                    externalTransactionId: "c5a07d5d-0f84-4ea1-a5b4-a413aa0d21b9"
+                    message: "El Request enviado no es el correcto"
   
   /get/Financiero:
     post:
@@ -93,7 +140,31 @@ paths:
                   - $ref: '#/components/schemas/ResponseGetModos_Pago'
                   - $ref: '#/components/schemas/ResponseGetUpgrade'
         "400":
-          description: BAD REQUEST
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                request incorrecto:
+                  value:
+                    codeError: -1
+                    internalTransactionId: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+                    externalTransactionId: "c5a07d5d-0f84-4ea1-a5b4-a413aa0d21b9"
+                    message: "El Request enviado no es el correcto"
+        "500":
+          description: Internal Error Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                request incorrecto:
+                  value:
+                    codeError: -1
+                    internalTransactionId: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
+                    externalTransactionId: "c5a07d5d-0f84-4ea1-a5b4-a413aa0d21b9"
+                    message: "El Request enviado no es el correcto"
   
   /post/modulo-promocional:
     post:
@@ -117,12 +188,8 @@ components:
       required:
         - channel
         - type
-        - system
         - externalTransactionId
       properties:
-        system:
-          type: string
-          example: "ALEPO"
         externalTransactionId:
           type: string
           example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
@@ -132,44 +199,20 @@ components:
         type:
           type: string
           example: "SECTORES_ESPECIFICOSxCITYxTFV"
-        TARIFFPLANVARIANT:
+        _V1:
           type: integer
-          example: 0
-        PRODUCTOID:
+        _V2:
           type: integer
-          example: 0
-        id_Prov:
-          type: integer
-          example: 0
-        id_Provs:
-          type: array
-          items:
-            type: integer
-          example: 
-            - 96006
-            - 96000
-        id_City:
-          type: integer
-          example: 0
-        id_Cities:
-          type: array
-          items:
-            type: integer
-          example: 
-            - 96006
-            - 96000
-    
+        _V3:
+          type: integer 
+          
     RequestGetPlanes:
       required:
         - channel
         - type
         - stype
-        - system
         - externalTransactionId
       properties:
-        system:
-          type: string
-          example: "ALEPO"
         externalTransactionId:
           type: string
           example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
@@ -193,12 +236,8 @@ components:
       required:
         - channel
         - type
-        - system
         - externalTransactionId
       properties:
-        system:
-          type: string
-          example: "ALEPO"
         externalTransactionId:
           type: string
           example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
@@ -222,12 +261,8 @@ components:
       required:
         - channel
         - data
-        - system
         - externalTransactionId
       properties:
-        system:
-          type: string
-          example: "ALEPO"
         externalTransactionId:
           type: string
           example: "c6ea905e-d77c-45c0-a1ab-8d85d1d1992d"
@@ -846,4 +881,25 @@ components:
           type: integer
         message:
           type: string
+    
+    ResponseError:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          example: 0
+        message:
+          type: string
+          example: OK
+        internalTransactionId:
+          type: string
+          example: 03c33780-88cf-46cf-ba22-925e4d5be471
+        externalTransactionId:
+          type: string
+          example: 82fb166d-c273-4840-9008-c895cf9de255
+      example:
+        errorCode: 0
+        internalTransactionId: 03c33780-88cf-46cf-ba22-925e4d5be471
+        externalTransactionId: 82fb166d-c273-4840-9008-c895cf9de255
+        message: OK
     

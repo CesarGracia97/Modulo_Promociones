@@ -42,7 +42,7 @@ export class SectorService {
 
   getSectoresMasivosXTariffplanVariant(id_Cities: number[], tariffplanvariant: number): Observable<Sectores[]> {
     const a_idCities = id_Cities.join(',');
-    let params = new HttpParams().set('type', 'SECTORES_ESPECIFICOSxCITYxTFV')
+    let params = new HttpParams().set('type', 'SECTORES_M__ESPECIFICOSxCITYxTFV')
     .set('id_Cities', a_idCities)
     .set('TARIFFPLANVARIANT', tariffplanvariant.toString());
     return this.http.get<Sectores[]>(API_MAIN+GET_PLACES+MASV, { params: params });
@@ -50,7 +50,7 @@ export class SectorService {
 
   getSectoresMasivosXTariffplanVariantXProductoId(id_Cities: number[], tariffplanvariant: number, ProductoId: number): Observable<Sectores[]> {
     const a_idCities = id_Cities.join(',');
-    let params = new HttpParams().set('type', 'SECTORES_ESPECIFICOSxCITYxTFVxPROD')
+    let params = new HttpParams().set('type', 'SECTORES_M_ESPECIFICOSxCITYxTFVxPROD')
     .set('id_Cities', a_idCities)
     .set('TARIFFPLANVARIANT', tariffplanvariant.toString())
     .set('PRODUCTOID', ProductoId.toString());

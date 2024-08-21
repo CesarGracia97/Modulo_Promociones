@@ -1,6 +1,6 @@
 from Models.model_place import Provincia, Ciudad, Sector
 from Models.model_plane import Ofertas, Servicios, Tipo_Servicios, TariffPlanes, TariffPlanVariant, \
-    TariffPlan_X_TariffPlanVariant, Tecnologias, Producto
+    Tecnologias, Producto
 from Resources.database.connection import connection
 from Utils.ReaderJSON import ReaderJSON
 
