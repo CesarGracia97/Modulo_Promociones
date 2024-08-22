@@ -14,7 +14,7 @@ class RequestGetFinanciero(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, id_prod: int=None, tariffplan: int=None, tariffplanvariant: int=None):  # noqa: E501
+    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, v1: int=None, v2: int=None):  # noqa: E501
         """RequestGetFinanciero - a model defined in Swagger
 
         :param external_transaction_id: The external_transaction_id of this RequestGetFinanciero.  # noqa: E501
@@ -23,36 +23,31 @@ class RequestGetFinanciero(Model):
         :type channel: str
         :param type: The type of this RequestGetFinanciero.  # noqa: E501
         :type type: str
-        :param id_prod: The id_prod of this RequestGetFinanciero.  # noqa: E501
-        :type id_prod: int
-        :param tariffplan: The tariffplan of this RequestGetFinanciero.  # noqa: E501
-        :type tariffplan: int
-        :param tariffplanvariant: The tariffplanvariant of this RequestGetFinanciero.  # noqa: E501
-        :type tariffplanvariant: int
+        :param v1: The v1 of this RequestGetFinanciero.  # noqa: E501
+        :type v1: int
+        :param v2: The v2 of this RequestGetFinanciero.  # noqa: E501
+        :type v2: int
         """
         self.swagger_types = {
             'external_transaction_id': str,
             'channel': str,
             'type': str,
-            'id_prod': int,
-            'tariffplan': int,
-            'tariffplanvariant': int
+            'v1': int,
+            'v2': int
         }
 
         self.attribute_map = {
             'external_transaction_id': 'externalTransactionId',
             'channel': 'channel',
             'type': 'type',
-            'id_prod': 'id_Prod',
-            'tariffplan': 'TARIFFPLAN',
-            'tariffplanvariant': 'TARIFFPLANVARIANT'
+            'v1': '_V1',
+            'v2': '_V2'
         }
         self._external_transaction_id = external_transaction_id
         self._channel = channel
         self._type = type
-        self._id_prod = id_prod
-        self._tariffplan = tariffplan
-        self._tariffplanvariant = tariffplanvariant
+        self._v1 = v1
+        self._v2 = v2
 
     @classmethod
     def from_dict(cls, dikt) -> 'RequestGetFinanciero':
@@ -135,64 +130,43 @@ class RequestGetFinanciero(Model):
         self._type = type
 
     @property
-    def id_prod(self) -> int:
-        """Gets the id_prod of this RequestGetFinanciero.
+    def v1(self) -> int:
+        """Gets the v1 of this RequestGetFinanciero.
 
 
-        :return: The id_prod of this RequestGetFinanciero.
+        :return: The v1 of this RequestGetFinanciero.
         :rtype: int
         """
-        return self._id_prod
+        return self._v1
 
-    @id_prod.setter
-    def id_prod(self, id_prod: int):
-        """Sets the id_prod of this RequestGetFinanciero.
+    @v1.setter
+    def v1(self, v1: int):
+        """Sets the v1 of this RequestGetFinanciero.
 
 
-        :param id_prod: The id_prod of this RequestGetFinanciero.
-        :type id_prod: int
+        :param v1: The v1 of this RequestGetFinanciero.
+        :type v1: int
         """
 
-        self._id_prod = id_prod
+        self._v1 = v1
 
     @property
-    def tariffplan(self) -> int:
-        """Gets the tariffplan of this RequestGetFinanciero.
+    def v2(self) -> int:
+        """Gets the v2 of this RequestGetFinanciero.
 
 
-        :return: The tariffplan of this RequestGetFinanciero.
+        :return: The v2 of this RequestGetFinanciero.
         :rtype: int
         """
-        return self._tariffplan
+        return self._v2
 
-    @tariffplan.setter
-    def tariffplan(self, tariffplan: int):
-        """Sets the tariffplan of this RequestGetFinanciero.
+    @v2.setter
+    def v2(self, v2: int):
+        """Sets the v2 of this RequestGetFinanciero.
 
 
-        :param tariffplan: The tariffplan of this RequestGetFinanciero.
-        :type tariffplan: int
+        :param v2: The v2 of this RequestGetFinanciero.
+        :type v2: int
         """
 
-        self._tariffplan = tariffplan
-
-    @property
-    def tariffplanvariant(self) -> int:
-        """Gets the tariffplanvariant of this RequestGetFinanciero.
-
-
-        :return: The tariffplanvariant of this RequestGetFinanciero.
-        :rtype: int
-        """
-        return self._tariffplanvariant
-
-    @tariffplanvariant.setter
-    def tariffplanvariant(self, tariffplanvariant: int):
-        """Sets the tariffplanvariant of this RequestGetFinanciero.
-
-
-        :param tariffplanvariant: The tariffplanvariant of this RequestGetFinanciero.
-        :type tariffplanvariant: int
-        """
-
-        self._tariffplanvariant = tariffplanvariant
+        self._v2 = v2

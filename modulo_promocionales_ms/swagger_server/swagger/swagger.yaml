@@ -184,32 +184,12 @@ components:
         type:
           type: string
           example: SECTORES_ESPECIFICOSxCITYxTFV
-        TARIFFPLANVARIANT:
+        _V1:
           type: integer
-          example: 0
-        PRODUCTOID:
+        _V2:
           type: integer
-          example: 0
-        id_Prov:
+        _V3:
           type: integer
-          example: 0
-        id_Provs:
-          type: array
-          example:
-          - 96006
-          - 96000
-          items:
-            type: integer
-        id_City:
-          type: integer
-          example: 0
-        id_Cities:
-          type: array
-          example:
-          - 96006
-          - 96000
-          items:
-            type: integer
     RequestGetPlanes:
       required:
       - channel
@@ -229,12 +209,11 @@ components:
         stype:
           type: string
           example: "SERV, OFER"
-        SERVICIO:
+        _V1:
           type: string
-          example: INTERNET
-        TIPO_SERVICIO:
+          example: puede ser ID o codigo string
+        _V2:
           type: string
-          example: COORPORATIVO O RESIDENCIAL
     RequestGetFinanciero:
       required:
       - channel
@@ -250,13 +229,10 @@ components:
         type:
           type: string
           example: DIAS_GOZADOS ALL_MPAGOS
-        id_Prod:
+        _V1:
           type: integer
           example: 0
-        TARIFFPLAN:
-          type: integer
-          example: 0
-        TARIFFPLANVARIANT:
+        _V2:
           type: integer
           example: 0
     ResquestPostDiccionarioDatos:

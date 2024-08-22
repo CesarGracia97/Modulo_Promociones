@@ -29,9 +29,9 @@ def get_lugares(body=None):  # noqa: E501
                     dt = frt.formated_placeSIMPLEDATA(data, body.type)
                     return jsonify(dt), 200
                 if _type in _valid_type_SD:
-                    _diccionario = {"popcion": "SPECIFIC_DATA", "name_Query": _type, "_V1": request.args.get('_V1')}
-                    if '_V2' in request.args:
-                        _diccionario["_V2"] = request.args.get('_V2')
+                    _diccionario = {"popcion": "SPECIFIC_DATA", "name_Query": _type, "_V1": body.v1}
+                    if body.v2 is none:
+                        _diccionario["_V2"] = body.v2
                     data = repository.getData_Places(_diccionario)
                     dt = frt.formated_placeMIXDATA(data, _type)
                     return jsonify(dt), 200

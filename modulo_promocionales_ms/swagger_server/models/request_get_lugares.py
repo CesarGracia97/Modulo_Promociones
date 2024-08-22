@@ -14,7 +14,7 @@ class RequestGetLugares(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, tariffplanvariant: int=None, productoid: int=None, id_prov: int=None, id_provs: List[int]=None, id_city: int=None, id_cities: List[int]=None):  # noqa: E501
+    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, v1: int=None, v2: int=None, v3: int=None):  # noqa: E501
         """RequestGetLugares - a model defined in Swagger
 
         :param external_transaction_id: The external_transaction_id of this RequestGetLugares.  # noqa: E501
@@ -23,51 +23,36 @@ class RequestGetLugares(Model):
         :type channel: str
         :param type: The type of this RequestGetLugares.  # noqa: E501
         :type type: str
-        :param tariffplanvariant: The tariffplanvariant of this RequestGetLugares.  # noqa: E501
-        :type tariffplanvariant: int
-        :param productoid: The productoid of this RequestGetLugares.  # noqa: E501
-        :type productoid: int
-        :param id_prov: The id_prov of this RequestGetLugares.  # noqa: E501
-        :type id_prov: int
-        :param id_provs: The id_provs of this RequestGetLugares.  # noqa: E501
-        :type id_provs: List[int]
-        :param id_city: The id_city of this RequestGetLugares.  # noqa: E501
-        :type id_city: int
-        :param id_cities: The id_cities of this RequestGetLugares.  # noqa: E501
-        :type id_cities: List[int]
+        :param v1: The v1 of this RequestGetLugares.  # noqa: E501
+        :type v1: int
+        :param v2: The v2 of this RequestGetLugares.  # noqa: E501
+        :type v2: int
+        :param v3: The v3 of this RequestGetLugares.  # noqa: E501
+        :type v3: int
         """
         self.swagger_types = {
             'external_transaction_id': str,
             'channel': str,
             'type': str,
-            'tariffplanvariant': int,
-            'productoid': int,
-            'id_prov': int,
-            'id_provs': List[int],
-            'id_city': int,
-            'id_cities': List[int]
+            'v1': int,
+            'v2': int,
+            'v3': int
         }
 
         self.attribute_map = {
             'external_transaction_id': 'externalTransactionId',
             'channel': 'channel',
             'type': 'type',
-            'tariffplanvariant': 'TARIFFPLANVARIANT',
-            'productoid': 'PRODUCTOID',
-            'id_prov': 'id_Prov',
-            'id_provs': 'id_Provs',
-            'id_city': 'id_City',
-            'id_cities': 'id_Cities'
+            'v1': '_V1',
+            'v2': '_V2',
+            'v3': '_V3'
         }
         self._external_transaction_id = external_transaction_id
         self._channel = channel
         self._type = type
-        self._tariffplanvariant = tariffplanvariant
-        self._productoid = productoid
-        self._id_prov = id_prov
-        self._id_provs = id_provs
-        self._id_city = id_city
-        self._id_cities = id_cities
+        self._v1 = v1
+        self._v2 = v2
+        self._v3 = v3
 
     @classmethod
     def from_dict(cls, dikt) -> 'RequestGetLugares':
@@ -150,127 +135,64 @@ class RequestGetLugares(Model):
         self._type = type
 
     @property
-    def tariffplanvariant(self) -> int:
-        """Gets the tariffplanvariant of this RequestGetLugares.
+    def v1(self) -> int:
+        """Gets the v1 of this RequestGetLugares.
 
 
-        :return: The tariffplanvariant of this RequestGetLugares.
+        :return: The v1 of this RequestGetLugares.
         :rtype: int
         """
-        return self._tariffplanvariant
+        return self._v1
 
-    @tariffplanvariant.setter
-    def tariffplanvariant(self, tariffplanvariant: int):
-        """Sets the tariffplanvariant of this RequestGetLugares.
+    @v1.setter
+    def v1(self, v1: int):
+        """Sets the v1 of this RequestGetLugares.
 
 
-        :param tariffplanvariant: The tariffplanvariant of this RequestGetLugares.
-        :type tariffplanvariant: int
+        :param v1: The v1 of this RequestGetLugares.
+        :type v1: int
         """
 
-        self._tariffplanvariant = tariffplanvariant
+        self._v1 = v1
 
     @property
-    def productoid(self) -> int:
-        """Gets the productoid of this RequestGetLugares.
+    def v2(self) -> int:
+        """Gets the v2 of this RequestGetLugares.
 
 
-        :return: The productoid of this RequestGetLugares.
+        :return: The v2 of this RequestGetLugares.
         :rtype: int
         """
-        return self._productoid
+        return self._v2
 
-    @productoid.setter
-    def productoid(self, productoid: int):
-        """Sets the productoid of this RequestGetLugares.
+    @v2.setter
+    def v2(self, v2: int):
+        """Sets the v2 of this RequestGetLugares.
 
 
-        :param productoid: The productoid of this RequestGetLugares.
-        :type productoid: int
+        :param v2: The v2 of this RequestGetLugares.
+        :type v2: int
         """
 
-        self._productoid = productoid
+        self._v2 = v2
 
     @property
-    def id_prov(self) -> int:
-        """Gets the id_prov of this RequestGetLugares.
+    def v3(self) -> int:
+        """Gets the v3 of this RequestGetLugares.
 
 
-        :return: The id_prov of this RequestGetLugares.
+        :return: The v3 of this RequestGetLugares.
         :rtype: int
         """
-        return self._id_prov
+        return self._v3
 
-    @id_prov.setter
-    def id_prov(self, id_prov: int):
-        """Sets the id_prov of this RequestGetLugares.
+    @v3.setter
+    def v3(self, v3: int):
+        """Sets the v3 of this RequestGetLugares.
 
 
-        :param id_prov: The id_prov of this RequestGetLugares.
-        :type id_prov: int
+        :param v3: The v3 of this RequestGetLugares.
+        :type v3: int
         """
 
-        self._id_prov = id_prov
-
-    @property
-    def id_provs(self) -> List[int]:
-        """Gets the id_provs of this RequestGetLugares.
-
-
-        :return: The id_provs of this RequestGetLugares.
-        :rtype: List[int]
-        """
-        return self._id_provs
-
-    @id_provs.setter
-    def id_provs(self, id_provs: List[int]):
-        """Sets the id_provs of this RequestGetLugares.
-
-
-        :param id_provs: The id_provs of this RequestGetLugares.
-        :type id_provs: List[int]
-        """
-
-        self._id_provs = id_provs
-
-    @property
-    def id_city(self) -> int:
-        """Gets the id_city of this RequestGetLugares.
-
-
-        :return: The id_city of this RequestGetLugares.
-        :rtype: int
-        """
-        return self._id_city
-
-    @id_city.setter
-    def id_city(self, id_city: int):
-        """Sets the id_city of this RequestGetLugares.
-
-
-        :param id_city: The id_city of this RequestGetLugares.
-        :type id_city: int
-        """
-
-        self._id_city = id_city
-
-    @property
-    def id_cities(self) -> List[int]:
-        """Gets the id_cities of this RequestGetLugares.
-
-
-        :return: The id_cities of this RequestGetLugares.
-        :rtype: List[int]
-        """
-        return self._id_cities
-
-    @id_cities.setter
-    def id_cities(self, id_cities: List[int]):
-        """Sets the id_cities of this RequestGetLugares.
-
-
-        :param id_cities: The id_cities of this RequestGetLugares.
-        :type id_cities: List[int]
-        """
-
-        self._id_cities = id_cities
+        self._v3 = v3

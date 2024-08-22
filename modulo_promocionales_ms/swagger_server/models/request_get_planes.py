@@ -14,7 +14,7 @@ class RequestGetPlanes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, stype: str=None, servicio: str=None, tipo_servicio: str=None):  # noqa: E501
+    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, stype: str=None, v1: str=None, v2: str=None):  # noqa: E501
         """RequestGetPlanes - a model defined in Swagger
 
         :param external_transaction_id: The external_transaction_id of this RequestGetPlanes.  # noqa: E501
@@ -25,18 +25,18 @@ class RequestGetPlanes(Model):
         :type type: str
         :param stype: The stype of this RequestGetPlanes.  # noqa: E501
         :type stype: str
-        :param servicio: The servicio of this RequestGetPlanes.  # noqa: E501
-        :type servicio: str
-        :param tipo_servicio: The tipo_servicio of this RequestGetPlanes.  # noqa: E501
-        :type tipo_servicio: str
+        :param v1: The v1 of this RequestGetPlanes.  # noqa: E501
+        :type v1: str
+        :param v2: The v2 of this RequestGetPlanes.  # noqa: E501
+        :type v2: str
         """
         self.swagger_types = {
             'external_transaction_id': str,
             'channel': str,
             'type': str,
             'stype': str,
-            'servicio': str,
-            'tipo_servicio': str
+            'v1': str,
+            'v2': str
         }
 
         self.attribute_map = {
@@ -44,15 +44,15 @@ class RequestGetPlanes(Model):
             'channel': 'channel',
             'type': 'type',
             'stype': 'stype',
-            'servicio': 'SERVICIO',
-            'tipo_servicio': 'TIPO_SERVICIO'
+            'v1': '_V1',
+            'v2': '_V2'
         }
         self._external_transaction_id = external_transaction_id
         self._channel = channel
         self._type = type
         self._stype = stype
-        self._servicio = servicio
-        self._tipo_servicio = tipo_servicio
+        self._v1 = v1
+        self._v2 = v2
 
     @classmethod
     def from_dict(cls, dikt) -> 'RequestGetPlanes':
@@ -158,43 +158,43 @@ class RequestGetPlanes(Model):
         self._stype = stype
 
     @property
-    def servicio(self) -> str:
-        """Gets the servicio of this RequestGetPlanes.
+    def v1(self) -> str:
+        """Gets the v1 of this RequestGetPlanes.
 
 
-        :return: The servicio of this RequestGetPlanes.
+        :return: The v1 of this RequestGetPlanes.
         :rtype: str
         """
-        return self._servicio
+        return self._v1
 
-    @servicio.setter
-    def servicio(self, servicio: str):
-        """Sets the servicio of this RequestGetPlanes.
+    @v1.setter
+    def v1(self, v1: str):
+        """Sets the v1 of this RequestGetPlanes.
 
 
-        :param servicio: The servicio of this RequestGetPlanes.
-        :type servicio: str
+        :param v1: The v1 of this RequestGetPlanes.
+        :type v1: str
         """
 
-        self._servicio = servicio
+        self._v1 = v1
 
     @property
-    def tipo_servicio(self) -> str:
-        """Gets the tipo_servicio of this RequestGetPlanes.
+    def v2(self) -> str:
+        """Gets the v2 of this RequestGetPlanes.
 
 
-        :return: The tipo_servicio of this RequestGetPlanes.
+        :return: The v2 of this RequestGetPlanes.
         :rtype: str
         """
-        return self._tipo_servicio
+        return self._v2
 
-    @tipo_servicio.setter
-    def tipo_servicio(self, tipo_servicio: str):
-        """Sets the tipo_servicio of this RequestGetPlanes.
+    @v2.setter
+    def v2(self, v2: str):
+        """Sets the v2 of this RequestGetPlanes.
 
 
-        :param tipo_servicio: The tipo_servicio of this RequestGetPlanes.
-        :type tipo_servicio: str
+        :param v2: The v2 of this RequestGetPlanes.
+        :type v2: str
         """
 
-        self._tipo_servicio = tipo_servicio
+        self._v2 = v2

@@ -10,9 +10,11 @@ class PlaceRepository:
 
     def getData_Places(self, _diccionario: dict) -> dict:
         _ciudades = {"CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
-                     "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD"}
+                     "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD",
+                     "CIUDADES_M_ESPECIFICASxPROVxTFV"}
         _sectores = {"SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV", "SECTORES_ESPECIFICOSxCITYxTFV",
-                     "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
+                     "SECTORES_ESPECIFICOSxCITYxTFVxPROD", "SECTORES_M_ESPECIFICOSxCITYxTFV",
+                     "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"}
         try:
             if "popcion" in _diccionario:
                 if _diccionario["popcion"] == "ALL_DATA":

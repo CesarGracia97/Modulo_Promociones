@@ -60,9 +60,10 @@ class FormattedPlace:
         try:
             _provincias = {"PROVINCIAS_ESPECIFICASxTFV"}
             _ciudades = {"CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFV",
-                         "CIUDADES_ESPECIFICASxTFVxPROD"}
+                         "CIUDADES_ESPECIFICASxTFVxPROD", "CIUDADES_M_ESPECIFICASxPROVxTFV"}
             _sectores = {"SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxCITYxTFV", "SECTORES_ESPECIFICOSxTFV",
-                         "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
+                         "SECTORES_ESPECIFICOSxCITYxTFVxPROD", "SECTORES_M_ESPECIFICOSxCITYxTFV",
+                         "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"}
             if _type in _provincias:
                 if _type in _provincias:
                     json_data = {
