@@ -5,7 +5,11 @@ class FormattedPlans:
     @staticmethod
     def formated_TypeALL(_type: str, data):
         try:
-            json_data = {}
+            json_data = {
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
+            }
             if _type == "OFER":
                 json_data['OFERTAS'] = []
                 for oferta in data['OFERTAS']:
@@ -42,7 +46,10 @@ class FormattedPlans:
     def formated_ADPlan(data, opcion: str):
         try:
             json_data = {
-                'PLANES': []
+                'PLANES': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             valid_opcion = {'AD_TARIFFPLAN', 'AD_TARIFFPLANVARIANT', 'AD_TARIFFPLAN_TARIFFPLANVARIANT',
                             'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL'}
@@ -80,7 +87,10 @@ class FormattedPlans:
     def formated_COPlan(data):
         try:
             json_data = {
-                'COMBO_PLAN': []
+                'COMBO_PLAN': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for plan in data['COMBO_PLAN']:
                 json_data['COMBO_PLAN'].append({
@@ -98,7 +108,10 @@ class FormattedPlans:
     def formated_COPlanVariant(data):
         try:
             json_data = {
-                'COMBO_PLANVARIANT': []
+                'COMBO_PLANVARIANT': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for plan in data['COMBO_PLANVARIANT']:
                 json_data['COMBO_PLANVARIANT'].append({
@@ -116,7 +129,10 @@ class FormattedPlans:
     def formated_COProducto(data):
         try:
             json_data = {
-                'COMBO_PRODUCTO': []
+                'COMBO_PRODUCTO': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for producto in data['COMBO_PRODUCTO']:
                 json_data['COMBO_PRODUCTO'].append({
@@ -134,7 +150,10 @@ class FormattedPlans:
     def formated_COTipoServicio(data):
         try:
             json_data = {
-                'COMBO_TIPO_SERVICIO': []
+                'COMBO_TIPO_SERVICIO': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for tiposervicio in data['COMBO_TIPO_SERVICIO']:
                 json_data['COMBO_TIPO_SERVICIO'].append({
@@ -151,7 +170,10 @@ class FormattedPlans:
     def formated_COProvincia(data):
         try:
             json_data = {
-                'C_PROVINCIA': []
+                'C_PROVINCIA': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for provincia in data['C_PROVINCIA']:
                 json_data['C_PROVINCIA'].append({
@@ -169,7 +191,10 @@ class FormattedPlans:
     def formated_COCiudad(data):
         try:
             json_data = {
-                'C_CIUDAD': []
+                'C_CIUDAD': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for ciudad in data['C_CIUDAD']:
                 json_data['C_CIUDAD'].append({
@@ -188,7 +213,10 @@ class FormattedPlans:
     def formated_COSector(data):
         try:
             json_data = {
-                'C_SECTOR': []
+                'C_SECTOR': [],
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
             }
             for sector in data['C_SECTOR']:
                 json_data['C_SECTOR'].append({

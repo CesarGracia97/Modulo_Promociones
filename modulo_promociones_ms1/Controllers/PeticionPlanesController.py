@@ -59,7 +59,6 @@ class PeticionPlanesController:
                     data_cpl = repository.getData_Planes(_diccionario)
                     dt_cpl = frt.formated_COPlanVariant(data_cpl)
                     return jsonify(dt_cpl), 200
-
                 if _stype.upper() == 'PRODUCTO':
                     _V1 = request.args.get('_V1')
                     _diccionario = {
@@ -70,7 +69,6 @@ class PeticionPlanesController:
                     data_prd = repository.getData_Planes(_diccionario)
                     dt_prd = frt.formated_COProducto(data_prd)
                     return jsonify(dt_prd), 200
-
                 if _stype.upper() == 'TIPO_SERVICIO':
                     _V1 = request.args.get('_V1')
                     _diccionario = {
@@ -98,7 +96,6 @@ class PeticionPlanesController:
                     data_cpr = repository.getData_Planes(_diccionario)
                     dt_cpr = frt.formated_COProvincia(data_cpr)
                     return jsonify(dt_cpr), 200
-
                 if _stype.upper() == 'CIUDAD':
                     _V1 = request.args.get('_V1')
                     _V2 = request.args.get('_V2')
@@ -117,7 +114,6 @@ class PeticionPlanesController:
                     data_cct = repository.getData_Planes(_diccionario)
                     dt_cct = frt.formated_COCiudad(data_cct)
                     return jsonify(dt_cct), 200
-
                 if _stype.upper() == 'SECTOR':
                     _V1 = request.args.get('_V1')
                     _V2 = request.args.get('_V2')
@@ -138,6 +134,7 @@ class PeticionPlanesController:
                     data_cst = repository.getData_Planes(_diccionario)
                     dt_cst = frt.formated_COSector(data_cst)
                     return jsonify(dt_cst), 200
+
                 if _stype.upper() == 'PRODUCTO_ROUTER':
                     _V1 = request.args.get('_V1')
                     _diccionario = {

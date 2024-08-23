@@ -184,6 +184,20 @@ components:
         type:
           type: string
           example: SECTORES_ESPECIFICOSxCITYxTFV
+        'id_Provs:':
+          type: array
+          example:
+          - 96006
+          - 96000
+          items:
+            type: integer
+        'id_Cities:':
+          type: array
+          example:
+          - 96006
+          - 96000
+          items:
+            type: integer
         _V1:
           type: integer
         _V2:

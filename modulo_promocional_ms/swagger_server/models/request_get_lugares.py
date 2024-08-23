@@ -14,7 +14,7 @@ class RequestGetLugares(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, v1: int=None, v2: int=None, v3: int=None):  # noqa: E501
+    def __init__(self, external_transaction_id: str=None, channel: str=None, type: str=None, id_provs: List[int]=None, id_cities: List[int]=None, v1: int=None, v2: int=None, v3: int=None):  # noqa: E501
         """RequestGetLugares - a model defined in Swagger
 
         :param external_transaction_id: The external_transaction_id of this RequestGetLugares.  # noqa: E501
@@ -23,6 +23,10 @@ class RequestGetLugares(Model):
         :type channel: str
         :param type: The type of this RequestGetLugares.  # noqa: E501
         :type type: str
+        :param id_provs: The id_provs of this RequestGetLugares.  # noqa: E501
+        :type id_provs: List[int]
+        :param id_cities: The id_cities of this RequestGetLugares.  # noqa: E501
+        :type id_cities: List[int]
         :param v1: The v1 of this RequestGetLugares.  # noqa: E501
         :type v1: int
         :param v2: The v2 of this RequestGetLugares.  # noqa: E501
@@ -34,6 +38,8 @@ class RequestGetLugares(Model):
             'external_transaction_id': str,
             'channel': str,
             'type': str,
+            'id_provs': List[int],
+            'id_cities': List[int],
             'v1': int,
             'v2': int,
             'v3': int
@@ -43,6 +49,8 @@ class RequestGetLugares(Model):
             'external_transaction_id': 'externalTransactionId',
             'channel': 'channel',
             'type': 'type',
+            'id_provs': 'id_Provs:',
+            'id_cities': 'id_Cities:',
             'v1': '_V1',
             'v2': '_V2',
             'v3': '_V3'
@@ -50,6 +58,8 @@ class RequestGetLugares(Model):
         self._external_transaction_id = external_transaction_id
         self._channel = channel
         self._type = type
+        self._id_provs = id_provs
+        self._id_cities = id_cities
         self._v1 = v1
         self._v2 = v2
         self._v3 = v3
@@ -133,6 +143,48 @@ class RequestGetLugares(Model):
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
 
         self._type = type
+
+    @property
+    def id_provs(self) -> List[int]:
+        """Gets the id_provs of this RequestGetLugares.
+
+
+        :return: The id_provs of this RequestGetLugares.
+        :rtype: List[int]
+        """
+        return self._id_provs
+
+    @id_provs.setter
+    def id_provs(self, id_provs: List[int]):
+        """Sets the id_provs of this RequestGetLugares.
+
+
+        :param id_provs: The id_provs of this RequestGetLugares.
+        :type id_provs: List[int]
+        """
+
+        self._id_provs = id_provs
+
+    @property
+    def id_cities(self) -> List[int]:
+        """Gets the id_cities of this RequestGetLugares.
+
+
+        :return: The id_cities of this RequestGetLugares.
+        :rtype: List[int]
+        """
+        return self._id_cities
+
+    @id_cities.setter
+    def id_cities(self, id_cities: List[int]):
+        """Sets the id_cities of this RequestGetLugares.
+
+
+        :param id_cities: The id_cities of this RequestGetLugares.
+        :type id_cities: List[int]
+        """
+
+        self._id_cities = id_cities
 
     @property
     def v1(self) -> int:

@@ -5,7 +5,11 @@ class FormattedFinance:
     @staticmethod
     def formatted_financial(_type: str, data):
         try:
-            json_data = {}
+            json_data = {
+                'message': 'OK',
+                'internalTransactionId': 0,
+                'externalTransactionId': 0
+            }
 
             if _type == "ALL_BURO":
                 json_data['BURO'] = []

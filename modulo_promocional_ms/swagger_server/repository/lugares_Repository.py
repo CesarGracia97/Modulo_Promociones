@@ -3,7 +3,7 @@ from swagger_server.resources.database.connection import connection
 from swagger_server.utils.ReaderJSON import ReaderJSON
 
 
-class PlaceRepository:
+class lugares_Repository:
     def __init__(self):
         self.db = connection()
         self.reader_json = ReaderJSON()
