@@ -1,7 +1,7 @@
 import connexion
 from flask import jsonify
 from swagger_server.models.request_get_lugares import RequestGetLugares  # noqa: E501
-from swagger_server.repository.lugares_Repository import PlaceRepository
+from swagger_server.repository.lugares_Repository import lugares_Repository
 from swagger_server.uses_cases.FormattedPlace import FormattedPlace
 
 
@@ -21,7 +21,7 @@ def get_lugares(body=None):  # noqa: E501
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
-                repository = PlaceRepository()
+                repository = lugares_Repository()
                 frt = FormattedPlace()
                 if body.type in _valid_type_AD:
                     _diccionario = {"popcion": "ALL_DATA", "name_Query": body.type}
