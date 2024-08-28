@@ -14,15 +14,17 @@ class RequestGetCiudades(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, channel: str=None, type: str=None, id_provs: int=None, tariffplanvariant: int=None, productoid: int=None):  # noqa: E501
+    def __init__(self, channel: str=None, type: str=None, id_prov: int=None, id_provs: List[int]=None, tariffplanvariant: int=None, productoid: int=None):  # noqa: E501
         """RequestGetCiudades - a model defined in Swagger
 
         :param channel: The channel of this RequestGetCiudades.  # noqa: E501
         :type channel: str
         :param type: The type of this RequestGetCiudades.  # noqa: E501
         :type type: str
+        :param id_prov: The id_prov of this RequestGetCiudades.  # noqa: E501
+        :type id_prov: int
         :param id_provs: The id_provs of this RequestGetCiudades.  # noqa: E501
-        :type id_provs: int
+        :type id_provs: List[int]
         :param tariffplanvariant: The tariffplanvariant of this RequestGetCiudades.  # noqa: E501
         :type tariffplanvariant: int
         :param productoid: The productoid of this RequestGetCiudades.  # noqa: E501
@@ -31,7 +33,8 @@ class RequestGetCiudades(Model):
         self.swagger_types = {
             'channel': str,
             'type': str,
-            'id_provs': int,
+            'id_prov': int,
+            'id_provs': List[int],
             'tariffplanvariant': int,
             'productoid': int
         }
@@ -39,12 +42,14 @@ class RequestGetCiudades(Model):
         self.attribute_map = {
             'channel': 'channel',
             'type': 'type',
+            'id_prov': 'id_Prov',
             'id_provs': 'id_Provs',
             'tariffplanvariant': 'TARIFFPLANVARIANT',
             'productoid': 'PRODUCTOID'
         }
         self._channel = channel
         self._type = type
+        self._id_prov = id_prov
         self._id_provs = id_provs
         self._tariffplanvariant = tariffplanvariant
         self._productoid = productoid
@@ -107,22 +112,43 @@ class RequestGetCiudades(Model):
         self._type = type
 
     @property
-    def id_provs(self) -> int:
+    def id_prov(self) -> int:
+        """Gets the id_prov of this RequestGetCiudades.
+
+
+        :return: The id_prov of this RequestGetCiudades.
+        :rtype: int
+        """
+        return self._id_prov
+
+    @id_prov.setter
+    def id_prov(self, id_prov: int):
+        """Sets the id_prov of this RequestGetCiudades.
+
+
+        :param id_prov: The id_prov of this RequestGetCiudades.
+        :type id_prov: int
+        """
+
+        self._id_prov = id_prov
+
+    @property
+    def id_provs(self) -> List[int]:
         """Gets the id_provs of this RequestGetCiudades.
 
 
         :return: The id_provs of this RequestGetCiudades.
-        :rtype: int
+        :rtype: List[int]
         """
         return self._id_provs
 
     @id_provs.setter
-    def id_provs(self, id_provs: int):
+    def id_provs(self, id_provs: List[int]):
         """Sets the id_provs of this RequestGetCiudades.
 
 
         :param id_provs: The id_provs of this RequestGetCiudades.
-        :type id_provs: int
+        :type id_provs: List[int]
         """
 
         self._id_provs = id_provs

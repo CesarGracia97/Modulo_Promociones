@@ -17,6 +17,29 @@ export class CombosService {
 
   constructor(private http:HttpClient) { }
 
+  getCombosProductos_Router(): Observable<Productos[]> {
+    let params = new HttpParams()
+    .set('type', 'COMBO')
+    .set('stype', 'PRODUCTO_ROUTER');
+    return this.http.get<Productos[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+  }
+
+  getCombosTipoServicios(Id_TPV: number):Observable<TipoServicios[]>{
+    let params = new HttpParams()
+    .set('type', 'COMBO')
+    .set('stype', 'TIPO_SERVICIO')
+    .set('_V1', Id_TPV.toString());
+    return this.http.get<TipoServicios[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+  }
+
+  getCombosProductos(Id_TPV: number):Observable<Productos[]>{
+    let params = new HttpParams()
+    .set('type', 'COMBO')
+    .set('stype', 'PRODUCTO')
+    .set('_V1', Id_TPV.toString());
+    return this.http.get<Productos[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+  }
+
   getCombosPlan(SERVICIO: string):Observable<TariffPlanes[]>{
     let params = new HttpParams()
     .set('type', 'COMBO')
@@ -31,28 +54,5 @@ export class CombosService {
     .set('stype', 'PLANVARIANT')
     .set('_V1', Id_Plan.toString());
     return this.http.get<TariffPlanesVariant[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
-  }
-
-  getCombosProductos(Id_TPV: number):Observable<Productos[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PRODUCTO')
-    .set('_V1', Id_TPV.toString());
-    return this.http.get<Productos[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
-  }
-
-  getCombosProductos_Router(): Observable<Productos[]> {
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PRODUCTO_ROUTER');
-    return this.http.get<Productos[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
-  }
-
-  getCombosTipoServicios(Id_TPV: number):Observable<TipoServicios[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'TIPO_SERVICIO')
-    .set('_V1', Id_TPV.toString());
-    return this.http.get<TipoServicios[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
   }
 }

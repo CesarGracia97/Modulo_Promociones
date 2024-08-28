@@ -370,9 +370,17 @@ components:
         type:
           type: string
           example: ALL_PROVS
-        id_Provs:
+        id_Prov:
           type: integer
           example: 12123
+        id_Provs:
+          type: array
+          example:
+          - 12123
+          - 45678
+          - 78901
+          items:
+            type: integer
         TARIFFPLANVARIANT:
           type: integer
           example: 200

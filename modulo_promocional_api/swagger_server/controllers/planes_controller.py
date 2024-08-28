@@ -30,8 +30,13 @@ def get_combos(body=None):  # noqa: E501
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
-
-        return 'do some magic!'
+                _stype_v = {"TIPO_SERVICIO", "PLAN", "PLANVARIANT", "PRODUCTO", "PRODUCTO_ROUTER"}
+                params_planes['type'] = body.type
+                params_planes['stype'] = body.stype
+                if body.stype in _stype_v:
+                    if body.v1 is not None:
+                        params_planes['_V1'] = body.v1
+                return 'do some magic!'
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -59,8 +64,9 @@ def get_ofertas(body=None):  # noqa: E501
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
-
-        return 'do some magic!'
+                params_planes['type'] = body.type
+                params_planes['stype'] = body.stype
+                return 'do some magic!'
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -88,8 +94,18 @@ def get_planes(body=None):  # noqa: E501
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
-
-        return 'do some magic!'
+                params_planes['type'] = body.type
+                params_planes['stype'] = body.stype
+                s_nvl_1 = {"AD_TARIFFPLAN", "AD_TARIFFPLAN_TARIFFPLANVARIANT"}
+                s_nvl_2 = {"AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL", "AD_TARIFFPLANVARIANT"}
+                if body.stype in s_nvl_1:
+                    return 'ooowwww.... are you witch'
+                if body.stype in s_nvl_2:
+                    if body.servicio is not None:
+                        params_planes['_V1'] = body.servicio
+                        if body.tipo_servicio is not None:
+                            params_planes['_V2'] = body.tipo_servicio
+                    return 'ooowwww.... are you witch'
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -118,8 +134,9 @@ def get_servicios(body=None):  # noqa: E501
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
-
-        return 'do some magic!'
+                params_planes['type'] = body.type
+                params_planes['stype'] = body.stype
+                return 'do some magic!'
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
