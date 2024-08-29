@@ -1,4 +1,5 @@
 import connexion
+import requests
 from flask import jsonify
 
 from swagger_server.models.request_get_combos import RequestGetCombos  # noqa: E501
@@ -36,7 +37,10 @@ def get_combos(body=None):  # noqa: E501
                 if body.stype in _stype_v:
                     if body.v1 is not None:
                         params_planes['_V1'] = body.v1
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/planes',
+                                         json=params_planes)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -66,7 +70,10 @@ def get_ofertas(body=None):  # noqa: E501
                 _type = body.type
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/planes',
+                                         json=params_planes)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -99,13 +106,19 @@ def get_planes(body=None):  # noqa: E501
                 s_nvl_1 = {"AD_TARIFFPLAN", "AD_TARIFFPLAN_TARIFFPLANVARIANT"}
                 s_nvl_2 = {"AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL", "AD_TARIFFPLANVARIANT"}
                 if body.stype in s_nvl_1:
-                    return 'ooowwww.... are you witch'
+                    response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/planes',
+                                             json=params_planes)
+                    response.raise_for_status()
+                    return response.json(), response.status_code
                 if body.stype in s_nvl_2:
                     if body.servicio is not None:
                         params_planes['_V1'] = body.servicio
                         if body.tipo_servicio is not None:
                             params_planes['_V2'] = body.tipo_servicio
-                    return 'ooowwww.... are you witch'
+                    response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/planes',
+                                             json=params_planes)
+                    response.raise_for_status()
+                    return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -136,7 +149,10 @@ def get_servicios(body=None):  # noqa: E501
                 _type = body.type
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/planes',
+                                         json=params_planes)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")

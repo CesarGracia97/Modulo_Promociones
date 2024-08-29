@@ -1,4 +1,5 @@
 import connexion
+import requests
 import six
 from flask import jsonify
 
@@ -15,7 +16,12 @@ from swagger_server import util
 
 __URL__ = config.get('URL', 'URL_PLACE', 'URL_BASE')
 params_lugares = {
-    'channel': 'api-modulos-promocionales-lugares'
+    'channel': 'api-modulos-promocionales-lugares',
+    'externalTransactionId': 'efqewfwrvdrvef'
+}
+headers_params_lugares = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
 }
 
 
@@ -62,7 +68,10 @@ def get_ciudades(body=None):  # noqa: E501
                         if body.productoid is not None:
                             params_lugares['_V2'] = body.productoid
 
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/lugares',
+                                         json=params_lugares)
+                response.raise_for_status()
+                return response.json(), response.status_code
 
     except Exception as e:
         print("--------------------------------------------------------------------")
@@ -96,16 +105,33 @@ def get_provincias(body=None):  # noqa: E501
                     params_lugares['type'] = body.type
                     if body.tariffplanvariant is not None:
                         params_lugares['_V1'] = body.tariffplanvariant
-                    return 'do some magic!'
+                    response = requests.post(
+                        'http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/Lugares',
+                        json=params_lugares, headers=headers_params_lugares)
+                    response.raise_for_status()
+                    return response.json(), response.status_code
+    except requests.exceptions.HTTPError as http_err:
+        print("--------------------------------------------------------------------")
+        print("faseEscucha - planes_Controller | Error detectado")
+        print("Tipo de Petición: ", _type)
+        print("HTTP Error: ", http_err.response.status_code, http_err.response.text)
+        print("--------------------------------------------------------------------")
+        error_respuesta = {
+            'errorCode': http_err.response.status_code,
+            'message': http_err.response.text,
+            'externalTransactionId': 0,
+            'internalTransactionId': 0
+        }
+        return jsonify(error_respuesta), http_err.response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
-        print("Tipo de Peticion: ", _type)
-        print("Error: ", e)
+        print("Tipo de Petición: ", _type)
+        print("Error: ", str(e))
         print("--------------------------------------------------------------------")
         error_respuesta = {
             'errorCode': -1,
-            'message': e,
+            'message': str(e),
             'externalTransactionId': 0,
             'internalTransactionId': 0
         }
@@ -140,7 +166,10 @@ def get_sectores(body=None):  # noqa: E501
                             params_lugares['_V2'] = body.tariffplanvariant
                             if body.productoid is not None:
                                 params_lugares['_V3'] = body.productoid
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/lugares',
+                                         json=params_lugares)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")

@@ -1,4 +1,5 @@
 import connexion
+import requests
 import six
 from flask import jsonify
 
@@ -34,7 +35,10 @@ def get_buro(body=None):  # noqa: E501
                 print(body.type)
                 _type = body.type
                 params_financiero['type'] = body.type
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/financiero',
+                                         json=params_financiero)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -63,7 +67,10 @@ def get_diasgozados(body=None):  # noqa: E501
                 print(body.type)
                 _type = body.type
                 params_financiero['type'] = body.type
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/financiero',
+                                         json=params_financiero)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -92,7 +99,10 @@ def get_modospago(body=None):  # noqa: E501
                 print(body.type)
                 _type = body.type
                 params_financiero['type'] = body.type
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/financiero',
+                                         json=params_financiero)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -123,7 +133,10 @@ def get_precioregular(body=None):  # noqa: E501
                 params_financiero['type'] = body.type
                 params_financiero['_V1'] = body.tariffplan
                 params_financiero['_V2'] = body.tariffplanvariant
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/financiero',
+                                         json=params_financiero)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
@@ -154,7 +167,10 @@ def get_upgrade(body=None):  # noqa: E501
                 params_financiero['type'] = body.type
                 params_financiero['_V1'] = body.tariffplan
                 params_financiero['_V2'] = body.tariffplanvariant
-                return 'do some magic!'
+                response = requests.post('http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0/get/financiero',
+                                         json=params_financiero)
+                response.raise_for_status()
+                return response.json(), response.status_code
     except Exception as e:
         print("--------------------------------------------------------------------")
         print("faseEscucha - planes_Controller | Error detectado")
