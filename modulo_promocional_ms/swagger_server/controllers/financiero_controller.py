@@ -10,7 +10,7 @@ from swagger_server.repository.financiero_Repository import financiero_Repositor
 from swagger_server.uses_cases.FormattedFinancial import FormattedFinance
 
 
-def get_financiero(body=None):  # noqa: E501
+def get_financiero(body: None):  # noqa: E501
     """get_financiero"""
     _type = None
     try:
