@@ -15,9 +15,7 @@ internal = TransactionId()
 
 
 def get_provincias(body=None):  # noqa: E501
-    """get_provincias
-    Consulta de Datos de Provincias segun sus parametros. # noqa: E501
-    """
+    """get_provincias Consulta de Datos de Provincias segun sus parametros. # noqa: E501 """
     if connexion.request.is_json:
         body = RequestGetProvincia.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
@@ -58,9 +56,7 @@ def get_provincias(body=None):  # noqa: E501
 
 
 def get_ciudades(body=None):  # noqa: E501
-    """get_ciudades
-    Consulta de Datos de Ciudades # noqa: E501
-    """
+    """get_ciudades Consulta de Datos de Ciudades # noqa: E501 """
     if connexion.request.is_json:
         body = RequestGetCiudades.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
@@ -116,9 +112,7 @@ def get_ciudades(body=None):  # noqa: E501
 
 
 def get_sectores(body=None):  # noqa: E501
-    """get_sectores
-    Consulta de Datos de Sectores # noqa: E501
-    """
+    """get_sectores Consulta de Datos de Sectores # noqa: E501 """
     if connexion.request.is_json:
         body = RequestGetSectores.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()

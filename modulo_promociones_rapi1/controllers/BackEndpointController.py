@@ -169,7 +169,7 @@ class BackEndpointController:
                     'Fecha Inicio Promocion', 'Forma de Pago', 'Nombre Promocion',
                     'Plan_Id', 'Producto_Id', 'Sectores', 'Servicio', 'Variant_Id',
                     'Mes Fin Promocion', 'Mes Inicio Promocion', 'Precio Referencial',
-                    'Precio Promocional', 'Canal'
+                    'Precio Promocional'
                 ]
                 REQUIRED_ARGS_ST = [
                     'Paquete', 'Precio Referencial', 'Precio Promocional', 'Mes Inicio', 'Mes Fin'
