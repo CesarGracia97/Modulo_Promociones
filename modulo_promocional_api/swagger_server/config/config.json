@@ -7,7 +7,15 @@
         "SECTORESM": ["SECTORES_M_ESPECIFICOSxCITYxTFV", "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"],
         "COMBOS": ["TIPO_SERVICIO", "PLAN", "PLANVARIANT", "PRODUCTO", "PRODUCTO_ROUTER"],
         "PLANES_T1": ["AD_TARIFFPLAN", "AD_TARIFFPLAN_TARIFFPLANVARIANT"],
-        "PLANES_T2": ["AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL", "AD_TARIFFPLANVARIANT"]
+        "PLANES_T2": ["AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL", "AD_TARIFFPLANVARIANT"],
+        "TELEFONIA": ["plan", "precio_referencial", "precio_promocional", "cantidad", "mes_inicio", "mes_fin", "producto_adicional"],
+        "TELEVISION": ["plan", "precio_referencial", "precio_promocional", "cantidad", "mes_inicio", "mes_fin", "producto_adicional"],
+        "ROUTER": ["modelo", "precio_referencial", "precio_promocional", "cantidad", "mes_inicio", "mes_fin", "producto_adicional"],
+        "STREAMING": ["paquete", "precio_referencial", "precio_promocional", "mes_inicio", "mes_fin", "producto_adicional"],
+        "UPGRADE": ["upgrade", "mes_inicio_upgrade", "mes_fin_upgrade"],
+        "ATRIBUTOS_POST": ["buro", "ciudades", "dias_gozados", "fecha_finalizacion_promocion", "fecha_inicio_promocion",
+            "formas_de_pago", "nombre_promocion", "plan_id", "producto_id", "sectores", "servicio", "variant_id",
+            "mes_fin_promocion", "mes_inicio_promocion", "precio_referencial", "precio_promocional"]
     },
     "RUTA_BASE": "http://192.168.59.115:2013/rest/modulos-promocionales-api/v1.0"
 }

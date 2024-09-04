@@ -6,7 +6,6 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.producto_adicional import ProductoAdicional  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,9 +14,11 @@ class DataTELEVISION(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, producto_adicional: str=None, cantidad: int=None, precio_referencial: float=None, precio_promocional: float=None, mes_inicio: int=None, mes_fin: str=None, plan: int=None):  # noqa: E501
+    def __init__(self, plan: int=None, producto_adicional: str=None, cantidad: int=None, precio_referencial: float=None, precio_promocional: float=None, mes_inicio: int=None, mes_fin: str=None):  # noqa: E501
         """DataTELEVISION - a model defined in Swagger
 
+        :param plan: The plan of this DataTELEVISION.  # noqa: E501
+        :type plan: int
         :param producto_adicional: The producto_adicional of this DataTELEVISION.  # noqa: E501
         :type producto_adicional: str
         :param cantidad: The cantidad of this DataTELEVISION.  # noqa: E501
@@ -30,35 +31,33 @@ class DataTELEVISION(Model):
         :type mes_inicio: int
         :param mes_fin: The mes_fin of this DataTELEVISION.  # noqa: E501
         :type mes_fin: str
-        :param plan: The plan of this DataTELEVISION.  # noqa: E501
-        :type plan: int
         """
         self.swagger_types = {
+            'plan': int,
             'producto_adicional': str,
             'cantidad': int,
             'precio_referencial': float,
             'precio_promocional': float,
             'mes_inicio': int,
-            'mes_fin': str,
-            'plan': int
+            'mes_fin': str
         }
 
         self.attribute_map = {
+            'plan': 'Plan',
             'producto_adicional': 'Producto Adicional',
             'cantidad': 'Cantidad',
             'precio_referencial': 'Precio Referencial',
             'precio_promocional': 'Precio Promocional',
             'mes_inicio': 'Mes Inicio',
-            'mes_fin': 'Mes Fin',
-            'plan': 'Plan'
+            'mes_fin': 'Mes Fin'
         }
+        self._plan = plan
         self._producto_adicional = producto_adicional
         self._cantidad = cantidad
         self._precio_referencial = precio_referencial
         self._precio_promocional = precio_promocional
         self._mes_inicio = mes_inicio
         self._mes_fin = mes_fin
-        self._plan = plan
 
     @classmethod
     def from_dict(cls, dikt) -> 'DataTELEVISION':
@@ -70,144 +69,6 @@ class DataTELEVISION(Model):
         :rtype: DataTELEVISION
         """
         return util.deserialize_model(dikt, cls)
-
-    @property
-    def producto_adicional(self) -> str:
-        """Gets the producto_adicional of this DataTELEVISION.
-
-
-        :return: The producto_adicional of this DataTELEVISION.
-        :rtype: str
-        """
-        return self._producto_adicional
-
-    @producto_adicional.setter
-    def producto_adicional(self, producto_adicional: str):
-        """Sets the producto_adicional of this DataTELEVISION.
-
-
-        :param producto_adicional: The producto_adicional of this DataTELEVISION.
-        :type producto_adicional: str
-        """
-        if producto_adicional is None:
-            raise ValueError("Invalid value for `producto_adicional`, must not be `None`")  # noqa: E501
-
-        self._producto_adicional = producto_adicional
-
-    @property
-    def cantidad(self) -> int:
-        """Gets the cantidad of this DataTELEVISION.
-
-
-        :return: The cantidad of this DataTELEVISION.
-        :rtype: int
-        """
-        return self._cantidad
-
-    @cantidad.setter
-    def cantidad(self, cantidad: int):
-        """Sets the cantidad of this DataTELEVISION.
-
-
-        :param cantidad: The cantidad of this DataTELEVISION.
-        :type cantidad: int
-        """
-        if cantidad is None:
-            raise ValueError("Invalid value for `cantidad`, must not be `None`")  # noqa: E501
-
-        self._cantidad = cantidad
-
-    @property
-    def precio_referencial(self) -> float:
-        """Gets the precio_referencial of this DataTELEVISION.
-
-
-        :return: The precio_referencial of this DataTELEVISION.
-        :rtype: float
-        """
-        return self._precio_referencial
-
-    @precio_referencial.setter
-    def precio_referencial(self, precio_referencial: float):
-        """Sets the precio_referencial of this DataTELEVISION.
-
-
-        :param precio_referencial: The precio_referencial of this DataTELEVISION.
-        :type precio_referencial: float
-        """
-        if precio_referencial is None:
-            raise ValueError("Invalid value for `precio_referencial`, must not be `None`")  # noqa: E501
-
-        self._precio_referencial = precio_referencial
-
-    @property
-    def precio_promocional(self) -> float:
-        """Gets the precio_promocional of this DataTELEVISION.
-
-
-        :return: The precio_promocional of this DataTELEVISION.
-        :rtype: float
-        """
-        return self._precio_promocional
-
-    @precio_promocional.setter
-    def precio_promocional(self, precio_promocional: float):
-        """Sets the precio_promocional of this DataTELEVISION.
-
-
-        :param precio_promocional: The precio_promocional of this DataTELEVISION.
-        :type precio_promocional: float
-        """
-        if precio_promocional is None:
-            raise ValueError("Invalid value for `precio_promocional`, must not be `None`")  # noqa: E501
-
-        self._precio_promocional = precio_promocional
-
-    @property
-    def mes_inicio(self) -> int:
-        """Gets the mes_inicio of this DataTELEVISION.
-
-
-        :return: The mes_inicio of this DataTELEVISION.
-        :rtype: int
-        """
-        return self._mes_inicio
-
-    @mes_inicio.setter
-    def mes_inicio(self, mes_inicio: int):
-        """Sets the mes_inicio of this DataTELEVISION.
-
-
-        :param mes_inicio: The mes_inicio of this DataTELEVISION.
-        :type mes_inicio: int
-        """
-        if mes_inicio is None:
-            raise ValueError("Invalid value for `mes_inicio`, must not be `None`")  # noqa: E501
-
-        self._mes_inicio = mes_inicio
-
-    @property
-    def mes_fin(self) -> str:
-        """Gets the mes_fin of this DataTELEVISION.
-
-
-        :return: The mes_fin of this DataTELEVISION.
-        :rtype: str
-        """
-        return self._mes_fin
-
-    @mes_fin.setter
-    def mes_fin(self, mes_fin: str):
-        """Sets the mes_fin of this DataTELEVISION.
-
-
-        :param mes_fin: The mes_fin of this DataTELEVISION.
-        :type mes_fin: str
-        """
-        if mes_fin is None:
-            raise ValueError("Invalid value for `mes_fin`, must not be `None`")  # noqa: E501
-
-        self._mes_fin = mes_fin
 
     @property
     def plan(self) -> int:
@@ -231,3 +92,129 @@ class DataTELEVISION(Model):
             raise ValueError("Invalid value for `plan`, must not be `None`")  # noqa: E501
 
         self._plan = plan
+
+    @property
+    def producto_adicional(self) -> str:
+        """Gets the producto_adicional of this DataTELEVISION.
+
+
+        :return: The producto_adicional of this DataTELEVISION.
+        :rtype: str
+        """
+        return self._producto_adicional
+
+    @producto_adicional.setter
+    def producto_adicional(self, producto_adicional: str):
+        """Sets the producto_adicional of this DataTELEVISION.
+
+
+        :param producto_adicional: The producto_adicional of this DataTELEVISION.
+        :type producto_adicional: str
+        """
+
+        self._producto_adicional = producto_adicional
+
+    @property
+    def cantidad(self) -> int:
+        """Gets the cantidad of this DataTELEVISION.
+
+
+        :return: The cantidad of this DataTELEVISION.
+        :rtype: int
+        """
+        return self._cantidad
+
+    @cantidad.setter
+    def cantidad(self, cantidad: int):
+        """Sets the cantidad of this DataTELEVISION.
+
+
+        :param cantidad: The cantidad of this DataTELEVISION.
+        :type cantidad: int
+        """
+
+        self._cantidad = cantidad
+
+    @property
+    def precio_referencial(self) -> float:
+        """Gets the precio_referencial of this DataTELEVISION.
+
+
+        :return: The precio_referencial of this DataTELEVISION.
+        :rtype: float
+        """
+        return self._precio_referencial
+
+    @precio_referencial.setter
+    def precio_referencial(self, precio_referencial: float):
+        """Sets the precio_referencial of this DataTELEVISION.
+
+
+        :param precio_referencial: The precio_referencial of this DataTELEVISION.
+        :type precio_referencial: float
+        """
+
+        self._precio_referencial = precio_referencial
+
+    @property
+    def precio_promocional(self) -> float:
+        """Gets the precio_promocional of this DataTELEVISION.
+
+
+        :return: The precio_promocional of this DataTELEVISION.
+        :rtype: float
+        """
+        return self._precio_promocional
+
+    @precio_promocional.setter
+    def precio_promocional(self, precio_promocional: float):
+        """Sets the precio_promocional of this DataTELEVISION.
+
+
+        :param precio_promocional: The precio_promocional of this DataTELEVISION.
+        :type precio_promocional: float
+        """
+
+        self._precio_promocional = precio_promocional
+
+    @property
+    def mes_inicio(self) -> int:
+        """Gets the mes_inicio of this DataTELEVISION.
+
+
+        :return: The mes_inicio of this DataTELEVISION.
+        :rtype: int
+        """
+        return self._mes_inicio
+
+    @mes_inicio.setter
+    def mes_inicio(self, mes_inicio: int):
+        """Sets the mes_inicio of this DataTELEVISION.
+
+
+        :param mes_inicio: The mes_inicio of this DataTELEVISION.
+        :type mes_inicio: int
+        """
+
+        self._mes_inicio = mes_inicio
+
+    @property
+    def mes_fin(self) -> str:
+        """Gets the mes_fin of this DataTELEVISION.
+
+
+        :return: The mes_fin of this DataTELEVISION.
+        :rtype: str
+        """
+        return self._mes_fin
+
+    @mes_fin.setter
+    def mes_fin(self, mes_fin: str):
+        """Sets the mes_fin of this DataTELEVISION.
+
+
+        :param mes_fin: The mes_fin of this DataTELEVISION.
+        :type mes_fin: str
+        """
+
+        self._mes_fin = mes_fin

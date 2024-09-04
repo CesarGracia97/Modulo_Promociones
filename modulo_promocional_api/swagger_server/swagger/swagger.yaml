@@ -1022,8 +1022,26 @@ components:
         Plan:
           type: integer
           example: 1000569
-      allOf:
-        $ref: '#/components/schemas/BodyProductoAdicional'
+        Producto Adicional:
+          type: string
+          example: STREAMING
+        Cantidad:
+          type: integer
+          example: 5
+        Precio Referencial:
+          type: number
+          format: float
+          example: 0
+        Precio Promocional:
+          type: number
+          format: float
+          example: 0
+        Mes Inicio:
+          type: integer
+          example: 0
+        Mes Fin:
+          type: string
+          example: ' 0 - 24 o SIEMPRE'
     TELEVISION:
       required:
       - Plan
@@ -1031,8 +1049,26 @@ components:
         Plan:
           type: integer
           example: 1000569
-      allOf:
-      - $ref: '#/components/schemas/BodyProductoAdicional'
+        Producto Adicional:
+          type: string
+          example: STREAMING
+        Cantidad:
+          type: integer
+          example: 5
+        Precio Referencial:
+          type: number
+          format: float
+          example: 0
+        Precio Promocional:
+          type: number
+          format: float
+          example: 0
+        Mes Inicio:
+          type: integer
+          example: 0
+        Mes Fin:
+          type: string
+          example: ' 0 - 24 o SIEMPRE'
     ROUTER:
       required:
       - Modelo
@@ -1040,17 +1076,6 @@ components:
         Modelo:
           type: integer
           example: 1000569
-      allOf:
-      - $ref: '#/components/schemas/BodyProductoAdicional'
-    BodyProductoAdicional:
-      required:
-      - Cantidad
-      - Mes Fin
-      - Mes Inicio
-      - Precio Promocional
-      - Precio Referencial
-      - Producto Adicional
-      properties:
         Producto Adicional:
           type: string
           example: STREAMING

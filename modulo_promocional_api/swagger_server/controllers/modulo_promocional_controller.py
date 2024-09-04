@@ -8,6 +8,22 @@ from swagger_server.utils.transactions.transaction import TransactionId
 
 reader = ReaderJSON()
 internal = TransactionId()
+params_post = {'channel': 'api-modulos-promocionales-post'}
+
+
+def validate_attributes(data, attributes, external_transaction_id, internal_transaction_id, section_name):
+    """Valida que los atributos no sean nulos o vacíos."""
+    for attribute in set(reader.get_type_list(attributes)):
+        value = getattr(data, attribute, None)
+        if value is None or (isinstance(value, str) and not value.strip()):
+            response = {
+                'errorCode': -2,
+                'message': f'Atributo faltante o nulo en {section_name}: {attribute}',
+                'externalTransactionId': external_transaction_id,
+                'internalTransactionId': internal_transaction_id
+            }
+            return jsonify(response), 400
+    return None
 
 
 def post_modulopromocional(body=None):  # noqa: E501
@@ -18,54 +34,42 @@ def post_modulopromocional(body=None):  # noqa: E501
         try:
             if body.channel == 'modulos-promocionales-web':
                 dic = body.diccionario_datos
-                streaming = dic.streaming
-                upgrade = dic.upgrade
-                telefonia = dic.telefonia
-                television = dic.television
-                router = dic.router
 
-                u_upgrade = upgrade.upgrade
-                u_mesinicio = upgrade.mes_inicio_upgrade
-                u_mesfin = upgrade.mes_fin_upgrade
-                tf_plan = telefonia.plan
-                tf_precioreferencial = telefonia.precio_referencial
-                tf_preciopromocional = telefonia.precio_promocional
-                tf_cantidad = telefonia.cantidad
-                tf_mesinicio = telefonia.mes_inicio
-                tf_mesfin = telefonia.mes_fin
-                tv_plan = television.plan
-                tv_precioreferencial = television.precio_referencial
-                tv_preciopromocional = television.precio_promocional
-                tv_cantidad = television.cantidad
-                tv_mesinicio = television.mes_inicio
-                tv_mesfin = television.mes_fin
-                rt_modelo = router.modelo
-                rt_precioreferencial = router.precio_referencial
-                rt_preciopromocional = router.precio_promocional
-                rt_cantidad = router.cantidad
-                rt_mesinicio = router.mes_inicio
-                rt_mesfin = router.mes_fin
+                # Validaciones generales
+                validation_response = validate_attributes(dic, 'ATRIBUTOS_POST', body.external_transaction_id,
+                                                          internal_transaction_id, 'Diccionario de Datos')
+                if validation_response:
+                    return validation_response
 
+                # Validaciones específicas
+                if dic.upgrade is not None:
+                    validation_response = validate_attributes(dic.upgrade, 'UPGRADE', body.external_transaction_id,
+                                                              internal_transaction_id, 'Upgrade')
+                    if validation_response:
+                        return validation_response
 
-                # Verificación de que los atributos no sean nulos
-                required_attributes = [
-                    'buro', 'ciudades', 'dias_gozados', 'fecha_finalizacion_promocion',
-                    'fecha_inicio_promocion', 'formas_de_pago', 'nombre_promocion',
-                    'plan_id', 'producto_id', 'sectores', 'servicio', 'variant_id',
-                    'mes_fin_promocion', 'mes_inicio_promocion', 'precio_referencial',
-                    'precio_promocional'
-                ]
+                if dic.telefonia is not None:
+                    validation_response = validate_attributes(dic.telefonia, 'TELEFONIA', body.external_transaction_id,
+                                                              internal_transaction_id, 'Telefonia')
+                    if validation_response:
+                        return validation_response
 
-                for attribute in required_attributes:
-                    value = getattr(dic, attribute, None)
-                    if value is None or (isinstance(value, str) and not value.strip()):
-                        response = {
-                            'errorCode': -2,
-                            'message': f'Atributo faltante o nulo: {attribute}',
-                            'externalTransactionId': body.external_transaction_id,
-                            'internalTransactionId': internal_transaction_id
-                        }
-                        return jsonify(response), 400
+                if dic.television is not None:
+                    validation_response = validate_attributes(dic.television, 'TELEVISION', body.external_transaction_id,
+                                                              internal_transaction_id, 'Television')
+                    if validation_response:
+                        return validation_response
+
+                if dic.router is not None:
+                    validation_response = validate_attributes(dic.router, 'ROUTER', body.external_transaction_id,
+                                                              internal_transaction_id, 'Router')
+                    if validation_response:
+                        return validation_response
+                params_post['externalTransactionId'] = internal_transaction_id
+                params_post['data'] = dic
+                response = requests.post(reader.get_base_url() + '/post/modulo-promocional', json=dic)
+                response.raise_for_status()
+                return response.json(), response.status_code
             else:
                 response = {
                     'errorCode': -1,

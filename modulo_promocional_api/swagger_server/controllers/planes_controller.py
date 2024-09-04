@@ -23,10 +23,9 @@ def get_combos(body=None):  # noqa: E501
             if body.channel == 'api-modulos-promocionales-web':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
-                _stype_v = {"TIPO_SERVICIO", "PLAN", "PLANVARIANT", "PRODUCTO", "PRODUCTO_ROUTER"}
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
-                if body.stype in _stype_v:
+                if body.stype in set(reader.get_type_list('COMBOS')):
                     if body.v1 is not None:
                         params_planes['_V1'] = body.v1
                 response = requests.post(reader.get_base_url() + '/get/Planes', json=params_planes)
@@ -104,11 +103,9 @@ def get_planes(body=None):  # noqa: E501
                 print(body.type)
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
-                s_nvl_1 = {"AD_TARIFFPLAN", "AD_TARIFFPLAN_TARIFFPLANVARIANT"}
-                s_nvl_2 = {"AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL", "AD_TARIFFPLANVARIANT"}
-                if body.stype in s_nvl_1:
+                if body.stype in set(reader.get_type_list('PLANES_T1')):
                     print("Que dios me libre si entra aqui")
-                elif body.stype in s_nvl_2:
+                elif body.stype in set(reader.get_type_list('PLANES_T2')):
                     if body.servicio is not None:
                         params_planes['_V1'] = body.servicio
                         if body.tipo_servicio is not None:
