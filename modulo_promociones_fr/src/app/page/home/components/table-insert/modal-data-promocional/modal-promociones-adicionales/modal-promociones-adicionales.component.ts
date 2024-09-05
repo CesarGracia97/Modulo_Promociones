@@ -93,9 +93,12 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     if(PlanesPaquetesModelos){
       if(type == "STREAMING"){
         this.fd_precio.fetchDataPrecioRegularPA(1000065, parseInt(PlanesPaquetesModelos), this.rowId, this.selectedTableIndex[this.rowId], type);
+        /*
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = {};
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Paquete'] = parseInt(PlanesPaquetesModelos);
+        */
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+        
       } else if(type == "TELEFONIA") {
         //
       } else if(type == "TELEVISION") {
@@ -113,6 +116,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   getPrecMIniMFinCantidad(value: string, mIni: string, mFin: string, cantidad: number, type: string): void {
     if(type == 'STREAMING'){
       if((parseInt(value) >= 0) && (parseInt(mIni) >= 0 && parseInt(mIni) <= 24)) {
+        /*
         this.diccionario[this.rowId][type][this.selectedTableIndex[this.rowId]]['Producto Adicional'] = type
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Referencial'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
         this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Promocional'] = parseFloat(value);
@@ -122,6 +126,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
         } else if (mFin){
           this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Fin'] = mFin;
         }
+        */
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     } else if (type == 'TELEVISION' || type == 'TELEFONIA' || type == 'ROUTER'){
@@ -240,7 +245,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     }
     if (index === 1 && options[1].selected){
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('STREAMING', this.rowId, this.selectedTableIndex[this.rowId])
-      this.diccionario[this.rowId]['STREAMING'] = {};
+      this.diccionario[this.rowId]['STREAMING'] = [];
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     } else if (index === 2 && options[2].selected) {
       this.fd_place.fetchDataTariffPlanVariantXProductoAdicional('TELEFONIA', this.rowId, 0)
