@@ -15,6 +15,8 @@ def get_modulo_promocional(body=None):  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
             if body.channel == 'modulos-promocionales-api':
+                diccionario_datos = body.data
+                diccionario_datos.telefonia.
 
             else:
                 response = {
