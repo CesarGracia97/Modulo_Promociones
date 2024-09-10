@@ -12,8 +12,8 @@ class PeticionPlacesController:
         _valid_type_SD = {"CIUDADES_ESPECIFICASxPROV", "SECTORES_ESPECIFICOSxCITY", "PROVINCIAS_ESPECIFICASxTFV",
                           "CIUDADES_ESPECIFICASxTFV", "SECTORES_ESPECIFICOSxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
                           "CIUDADES_ESPECIFICASxTFVxPROD", "SECTORES_ESPECIFICOSxCITYxTFV"}
-        _valid_type_MD = {"CIUDADES_ESPECIFICASxPROVxTFV", "SECTORES_ESPECIFICOSxCITYxTFV",
-                          "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
+        _valid_type_MD = {"CIUDADES_M_ESPECIFICASxPROVxTFV", "SECTORES_M_ESPECIFICOSxCITYxTFV",
+                          "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"}
         try:
             print("\n*** FASE DE ESCUCHA ACTIVA ***\n")
             frt = FormattedPlace()

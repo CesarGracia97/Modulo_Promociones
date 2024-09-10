@@ -12,7 +12,7 @@ class PlaceRepository:
         _ciudades = {"CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
                      "CIUDADES_ESPECIFICASxPROVxTFV", "CIUDADES_ESPECIFICASxTFVxPROD"}
         _sectores = {"SECTORES_ESPECIFICOSxCITY", "SECTORES_ESPECIFICOSxTFV", "SECTORES_ESPECIFICOSxCITYxTFV",
-                     "SECTORES_ESPECIFICOSxCITYxTFVxPROD"}
+                     "SECTORES_ESPECIFICOSxCITYxTFVxPROD", "SECTORES_M_ESPECIFICOSxCITYxTFV"}
         try:
             if "popcion" in _diccionario:
                 if _diccionario["popcion"] == "ALL_DATA":
@@ -102,14 +102,14 @@ class PlaceRepository:
                             print("--- EL RESULTADO DE LA CONSULTA FUE NULLO ---")
                             return data
 
-                        if _diccionario["name_Query"] == "CIUDADES_ESPECIFICASxPROVxTFV":
+                        if _diccionario["name_Query"] == "CIUDADES_M_ESPECIFICASxPROVxTFV":
                             data['CITIESxPROV'] = []
                             for result in results:
                                 sector = Ciudad(result[0], result[1], result[2])
                                 data['CITIESxPROV'].append(sector)
                             print("\n**** CIUDADES ESPECIFICAS POR PROVINCIA TT - DATOS OBTENIDOS ****\n")
-                        elif (_diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFV" or
-                              _diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFVxPROD"):
+                        elif (_diccionario["name_Query"] == "SECTORES_M_ESPECIFICOSxCITYxTFV" or
+                              _diccionario["name_Query"] == "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"):
                             data['SECTORSxCITY'] = []
                             for result in results:
                                 sector = Sector(result[0], result[1], result[2])
