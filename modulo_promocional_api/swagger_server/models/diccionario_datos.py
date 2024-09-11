@@ -8,7 +8,6 @@ from typing import List, Dict  # noqa: F401
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.all_of_diccionario_datos_upgrade import AllOfDiccionarioDatosUpgrade  # noqa: F401,E501
 from swagger_server.models.one_of_diccionario_datos_sectores import OneOfDiccionarioDatosSectores  # noqa: F401,E501
-from swagger_server.models.all_of_diccionario_datos_streaming import AllOfDiccionarioDatosStreaming  # noqa: F401,E501
 from swagger_server.models.all_of_diccionario_datos_telefonia import AllOfDiccionarioDatosTelefonia  # noqa: F401,E501
 from swagger_server.models.all_of_diccionario_datos_television import AllOfDiccionarioDatosTelevision  # noqa: F401,E501
 from swagger_server.models.all_of_diccionario_datos_router import AllOfDiccionarioDatosRouter  # noqa: F401,E501
@@ -20,7 +19,7 @@ class DiccionarioDatos(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id_registro: int=None, nombre_promocion: str=None, fecha_inicio_promocion: date=None, fecha_finalizacion_promocion: date=None, servicio: str=None, plan_id: int=None, variant_id: int=None, producto_id: int=None, dias_gozados: str=None, canal: int=None, precio_promocional: float=None, precio_referencial: float=None, mes_inicio_promocion: int=None, mes_fin_promocion: str=None, upgrade: AllOfDiccionarioDatosUpgrade=None, ciudades: List[int]=None, sectores: OneOfDiccionarioDatosSectores=None, buro: List[int]=None, formas_de_pago: List[int]=None, fecha_generacion_registro: datetime=None, streaming: AllOfDiccionarioDatosStreaming=None, telefonia: AllOfDiccionarioDatosTelefonia=None, television: AllOfDiccionarioDatosTelevision=None, router: AllOfDiccionarioDatosRouter=None):  # noqa: E501
+    def __init__(self, id_registro: int=None, nombre_promocion: str=None, fecha_inicio_promocion: date=None, fecha_finalizacion_promocion: date=None, servicio: str=None, plan_id: int=None, variant_id: int=None, producto_id: int=None, dias_gozados: str=None, canal: int=None, precio_promocional: float=None, precio_referencial: float=None, mes_inicio_promocion: int=None, mes_fin_promocion: str=None, upgrade: AllOfDiccionarioDatosUpgrade=None, ciudades: List[int]=None, sectores: OneOfDiccionarioDatosSectores=None, buro: List[int]=None, formas_de_pago: List[int]=None, fecha_generacion_registro: datetime=None, streaming: List[str]=None, telefonia: AllOfDiccionarioDatosTelefonia=None, television: AllOfDiccionarioDatosTelevision=None, router: AllOfDiccionarioDatosRouter=None):  # noqa: E501
         """DiccionarioDatos - a model defined in Swagger
 
         :param id_registro: The id_registro of this DiccionarioDatos.  # noqa: E501
@@ -64,7 +63,7 @@ class DiccionarioDatos(Model):
         :param fecha_generacion_registro: The fecha_generacion_registro of this DiccionarioDatos.  # noqa: E501
         :type fecha_generacion_registro: datetime
         :param streaming: The streaming of this DiccionarioDatos.  # noqa: E501
-        :type streaming: AllOfDiccionarioDatosStreaming
+        :type streaming: List[str]
         :param telefonia: The telefonia of this DiccionarioDatos.  # noqa: E501
         :type telefonia: AllOfDiccionarioDatosTelefonia
         :param television: The television of this DiccionarioDatos.  # noqa: E501
@@ -93,7 +92,7 @@ class DiccionarioDatos(Model):
             'buro': List[int],
             'formas_de_pago': List[int],
             'fecha_generacion_registro': datetime,
-            'streaming': AllOfDiccionarioDatosStreaming,
+            'streaming': List[str],
             'telefonia': AllOfDiccionarioDatosTelefonia,
             'television': AllOfDiccionarioDatosTelevision,
             'router': AllOfDiccionarioDatosRouter
@@ -624,22 +623,22 @@ class DiccionarioDatos(Model):
         self._fecha_generacion_registro = fecha_generacion_registro
 
     @property
-    def streaming(self) -> AllOfDiccionarioDatosStreaming:
+    def streaming(self) -> List[str]:
         """Gets the streaming of this DiccionarioDatos.
 
 
         :return: The streaming of this DiccionarioDatos.
-        :rtype: AllOfDiccionarioDatosStreaming
+        :rtype: List[str]
         """
         return self._streaming
 
     @streaming.setter
-    def streaming(self, streaming: AllOfDiccionarioDatosStreaming):
+    def streaming(self, streaming: List[str]):
         """Sets the streaming of this DiccionarioDatos.
 
 
         :param streaming: The streaming of this DiccionarioDatos.
-        :type streaming: AllOfDiccionarioDatosStreaming
+        :type streaming: List[str]
         """
 
         self._streaming = streaming

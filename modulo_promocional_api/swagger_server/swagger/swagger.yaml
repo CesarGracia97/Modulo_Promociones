@@ -983,38 +983,6 @@ components:
         Mes Fin UPGRADE:
           type: string
           example: 0 - 24 o siempre
-    STREAMING:
-      type: object
-      additionalProperties:
-        required:
-        - Mes Fin
-        - Mes Inicio
-        - Paquete
-        - Precio Promocional
-        - Precio Referencial
-        - Producto Adicional
-        type: object
-        properties:
-          Paquete:
-            type: integer
-            example: 1000569
-          Producto Adicional:
-            type: string
-            example: STREAMING
-          Precio Referencial:
-            type: number
-            format: float
-            example: 0
-          Precio Promocional:
-            type: number
-            format: float
-            example: 0
-          Mes Inicio:
-            type: integer
-            example: 0
-          Mes Fin:
-            type: string
-            example: SIEMPRE
     TELEFONIA:
       required:
       - Plan
@@ -1209,8 +1177,14 @@ components:
           type: string
           format: date-time
         STREAMING:
-          allOf:
-          - $ref: '#/components/schemas/STREAMING'
+          type: array
+          example:
+          - "{\"Paquete\":1000390,\"Precio Referencial\":0,\"Precio Promocional\"\
+            :4,\"Mes Inicio\":1,\"Mes Fin\":23}"
+          - "{\"Paquete\":1000268,\"Precio Referencial\":0,\"Precio Promocional\"\
+            :3,\"Mes Inicio\":21,\"Mes Fin\":22}"
+          items:
+            type: string
         TELEFONIA:
           allOf:
           - $ref: '#/components/schemas/TELEFONIA'

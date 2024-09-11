@@ -4,7 +4,6 @@
 from __future__ import absolute_import
 # import models into model package
 from swagger_server.models.all_of_diccionario_datos_router import AllOfDiccionarioDatosRouter
-from swagger_server.models.all_of_diccionario_datos_streaming import AllOfDiccionarioDatosStreaming
 from swagger_server.models.all_of_diccionario_datos_telefonia import AllOfDiccionarioDatosTelefonia
 from swagger_server.models.all_of_diccionario_datos_television import AllOfDiccionarioDatosTelevision
 from swagger_server.models.all_of_diccionario_datos_upgrade import AllOfDiccionarioDatosUpgrade
@@ -50,7 +49,6 @@ from swagger_server.models.response_post_diccionario_datos_data import ResponseP
 from swagger_server.models.response_servicios_data import ResponseServiciosData
 from swagger_server.models.response_servicios_data_servicios import ResponseServiciosDataSERVICIOS
 from swagger_server.models.resquest_post_diccionario_datos import ResquestPostDiccionarioDatos
-from swagger_server.models.streaming import STREAMING
 from swagger_server.models.telefonia import TELEFONIA
 from swagger_server.models.television import TELEVISION
 from swagger_server.models.upgrade import Upgrade

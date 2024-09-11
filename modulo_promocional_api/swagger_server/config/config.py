@@ -3,7 +3,7 @@ import os
 
 
 class ReaderJSON:
-    def __init__(self, config_file='config/config.json'):
+    def __init__(self, config_file='swagger_server/config/config.json'):
         self.config_file = config_file
         self.data = self._load_json()
 
