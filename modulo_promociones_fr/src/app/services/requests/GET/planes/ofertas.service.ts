@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_PLANES = environment.API_GET_PLANES;
 const OFERTA = environment.API_GET_PLANES_OFER;
 
 @Injectable({
@@ -18,6 +17,6 @@ export class OfertasService {
   getOfertasALL():Observable<Ofertas[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
     .set('stype', 'OFER');
-    return this.http.get<Ofertas[]>(MAIN_URL+API_GET_PLANES+OFERTA, { params: params });
+    return this.http.get<Ofertas[]>(MAIN_URL+OFERTA, { params: params });
   }
 }

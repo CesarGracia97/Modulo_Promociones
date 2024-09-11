@@ -5,7 +5,6 @@ import { Servicios } from '../../../../interfaces/planes/servicios.interface';
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_PLANES = environment.API_GET_PLANES;
 const SERVIC = environment.API_GET_PLANES_SERV;
 
 @Injectable({
@@ -18,6 +17,6 @@ export class ServiciosService {
   getServiciosALL():Observable<Servicios[]>{
     let params = new HttpParams().set('type', 'ALL_DATA')
     .set('stype', 'SERV');
-    return this.http.get<Servicios[]>(MAIN_URL+ API_GET_PLANES+SERVIC, { params: params });
+    return this.http.get<Servicios[]>(MAIN_URL+SERVIC, { params: params });
   }
 }

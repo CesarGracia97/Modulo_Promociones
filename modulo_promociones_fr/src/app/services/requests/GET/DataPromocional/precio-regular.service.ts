@@ -5,8 +5,7 @@ import { PrecioRegular } from '../../../../interfaces/DataPromocional/precio-reg
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_FINANCE = environment.API_GET_FINANCE;
-const DataPromo = environment.API_GET_FINANCE_DTPR
+const PRECIO_REGULAR = environment.API_GET_PRECIO_REGULAR;
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class PrecioRegularService {
     let params = new HttpParams().set('type', 'PRECIO_REGULAR')
     .set('TARIFFPLANVARIANT', TFPV.toString())
     .set('id_Prod', id_Producto.toString());
-    return this.http.get<PrecioRegular[]>(MAIN_URL+API_GET_FINANCE+DataPromo, { params: params });
+    return this.http.get<PrecioRegular[]>(MAIN_URL+PRECIO_REGULAR, { params: params });
   }
 
 }

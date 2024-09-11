@@ -5,7 +5,6 @@ import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_FINANCE = environment.API_GET_FINANCE;
 const MDPG = environment.API_GET_FINANCE_MDPG;
 
 @Injectable({
@@ -17,6 +16,6 @@ export class FormaspagoService {
 
   getModosPago():Observable<ModosPago[]> {
     let params = new HttpParams().set('type', 'ALL_MPAGOS');
-    return this.http.get<ModosPago[]>(MAIN_URL+API_GET_FINANCE+MDPG, { params: params });
+    return this.http.get<ModosPago[]>(MAIN_URL+MDPG, { params: params });
   }
 }

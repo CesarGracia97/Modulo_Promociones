@@ -5,8 +5,7 @@ import { DiasGozados } from '../../../../interfaces/DataPromocional/dias-gozados
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_FINANCE = environment.API_GET_FINANCE;
-const DataPromo = environment.API_GET_FINANCE_DTPR
+const DIAS_GOZADOS = environment.API_GET_FINANCE_DIAS_GOZADOS;
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,6 @@ export class DiasGozadosService {
 
   getDiasGozados():Observable<DiasGozados[]>{
     let params = new HttpParams().set('type', 'DIAS_GOZADOS');
-    return this.http.get<DiasGozados[]>(MAIN_URL+API_GET_FINANCE+DataPromo, { params: params });
+    return this.http.get<DiasGozados[]>(MAIN_URL+DIAS_GOZADOS, { params: params });
   }
 }

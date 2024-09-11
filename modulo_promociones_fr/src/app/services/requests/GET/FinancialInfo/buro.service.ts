@@ -5,7 +5,6 @@ import { Buro } from '../../../../interfaces/financial/buro.interface';
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_FINANCE = environment.API_GET_FINANCE
 const BURO = environment.API_GET_FINANCE_BURO 
 
 @Injectable({
@@ -17,6 +16,6 @@ export class BuroService {
 
   getTiposBuro():Observable<Buro[]>{
     let params = new HttpParams().set('type', 'ALL_BURO');
-    return this.http.get<Buro[]>(MAIN_URL+API_GET_FINANCE+BURO, { params: params });
+    return this.http.get<Buro[]>(MAIN_URL+BURO, { params: params });
   }
 }

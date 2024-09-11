@@ -7,7 +7,6 @@ import { Productos } from '../../../../interfaces/planes/productos.interface';
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_PLANES = environment.API_GET_PLANES;
 const COMBOS = environment.API_GET_PLANES_COMB;
 
 @Injectable({
@@ -21,7 +20,7 @@ export class CombosService {
     let params = new HttpParams()
     .set('type', 'COMBO')
     .set('stype', 'PRODUCTO_ROUTER');
-    return this.http.get<Productos[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+    return this.http.get<Productos[]>(MAIN_URL+COMBOS, { params: params });
   }
 
   getCombosTipoServicios(Id_TPV: number):Observable<TipoServicios[]>{
@@ -29,7 +28,7 @@ export class CombosService {
     .set('type', 'COMBO')
     .set('stype', 'TIPO_SERVICIO')
     .set('_V1', Id_TPV.toString());
-    return this.http.get<TipoServicios[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+    return this.http.get<TipoServicios[]>(MAIN_URL+COMBOS, { params: params });
   }
 
   getCombosProductos(Id_TPV: number):Observable<Productos[]>{
@@ -37,7 +36,7 @@ export class CombosService {
     .set('type', 'COMBO')
     .set('stype', 'PRODUCTO')
     .set('_V1', Id_TPV.toString());
-    return this.http.get<Productos[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+    return this.http.get<Productos[]>(MAIN_URL+COMBOS, { params: params });
   }
 
   getCombosPlan(SERVICIO: string):Observable<TariffPlanes[]>{
@@ -45,7 +44,7 @@ export class CombosService {
     .set('type', 'COMBO')
     .set('stype', 'PLAN')
     .set('_V1', SERVICIO.toString());
-    return this.http.get<TariffPlanes[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+    return this.http.get<TariffPlanes[]>(MAIN_URL+COMBOS, { params: params });
   }
 
   getCombosPlanVariant(Id_Plan: number):Observable<TariffPlanesVariant[]>{
@@ -53,6 +52,6 @@ export class CombosService {
     .set('type', 'COMBO')
     .set('stype', 'PLANVARIANT')
     .set('_V1', Id_Plan.toString());
-    return this.http.get<TariffPlanesVariant[]>(MAIN_URL+API_GET_PLANES+COMBOS, { params: params });
+    return this.http.get<TariffPlanesVariant[]>(MAIN_URL+COMBOS, { params: params });
   }
 }

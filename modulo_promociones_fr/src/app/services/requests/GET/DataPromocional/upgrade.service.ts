@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../../environments/environment';
 
 const MAIN_URL = environment.MAIN_URL;
-const API_GET_FINANCE = environment.API_GET_FINANCE;
-const DataPromo = environment.API_GET_FINANCE_DTPR
+const UPGRADE = environment.API_GET_UPGRADE;
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +18,6 @@ export class UpgradeService {
     let params = new HttpParams().set('type', 'UPGRADE')
     .set('TARIFFPLAN', Tariffplan.toString())
     .set('TARIFFPLANVARIANT', TFPV.toString());
-    return this.http.get<Upgrade[]>(MAIN_URL+API_GET_FINANCE+DataPromo, { params: params });
+    return this.http.get<Upgrade[]>(MAIN_URL+UPGRADE, { params: params });
   }
 }

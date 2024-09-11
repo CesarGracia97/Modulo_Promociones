@@ -92,13 +92,22 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
     const variantId = this.idVariant[this.rowId] ? this.idVariant[this.rowId][0] : null;
     if(PlanesPaquetesModelos){
       if(type == "STREAMING"){
-        this.fd_precio.fetchDataPrecioRegularPA(1000065, parseInt(PlanesPaquetesModelos), this.rowId, this.selectedTableIndex[this.rowId], type);
-        /*
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]] = {};
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Paquete'] = parseInt(PlanesPaquetesModelos);
-        */
-        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
+        const selectedTableIdx = this.selectedTableIndex[this.rowId];
+        const paquete = parseInt(PlanesPaquetesModelos);
+        // Fetching precio referencial
+        this.fd_precio.fetchDataPrecioRegularPA(1000065, paquete, this.rowId, selectedTableIdx, type);
+        const precioReferencial = this.precioRegularStreamingData[this.rowId]?.[selectedTableIdx]?.[0]?.PRECIO || 0;
+        // Crear o actualizar el JSON string en la posición correspondiente de la tabla
+        const jsonObj = {
+          "Paquete": paquete,
+          "Precio Referencial": precioReferencial,
+          "Precio Promocional": null,
+          "Mes Inicio": null,
+          "Mes Fin": null
+        };
         
+        this.diccionario[this.rowId]['STREAMING'][selectedTableIdx] = JSON.stringify(jsonObj); // Convertimos el objeto a string JSON
+        this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);       
       } else if(type == "TELEFONIA") {
         //
       } else if(type == "TELEVISION") {
@@ -116,17 +125,18 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
   getPrecMIniMFinCantidad(value: string, mIni: string, mFin: string, cantidad: number, type: string): void {
     if(type == 'STREAMING'){
       if((parseInt(value) >= 0) && (parseInt(mIni) >= 0 && parseInt(mIni) <= 24)) {
-        /*
-        this.diccionario[this.rowId][type][this.selectedTableIndex[this.rowId]]['Producto Adicional'] = type
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Referencial'] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO;
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Precio Promocional'] = parseFloat(value);
-        this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Inicio'] = parseInt(mIni);
-        if(!mFin || mFin == '') {
-          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Fin'] = 'SIEMPRE';
-        } else if (mFin){
-          this.diccionario[this.rowId]['STREAMING'][this.selectedTableIndex[this.rowId]]['Mes Fin'] = mFin;
+        const selectedTableIdx = this.selectedTableIndex[this.rowId];
+        let currentJson = this.diccionario[this.rowId]['STREAMING'][selectedTableIdx]; // Recuperar el JSON existente de la tabla seleccionada
+        let jsonObj = currentJson ? JSON.parse(currentJson) : {};
+        // Asignar los valores
+        jsonObj["Precio Promocional"] = parseFloat(value) || 0;
+        jsonObj["Mes Inicio"] = parseInt(mIni) || 0;
+        jsonObj["Mes Fin"] = mFin ? parseInt(mFin) : 'SIEMPRE';
+        // Validar límites de meses
+        if (jsonObj["Mes Inicio"] >= 0 && jsonObj["Mes Inicio"] <= 24 && (!mFin || (jsonObj["Mes Fin"] >= 1 && jsonObj["Mes Fin"] <= 24))) {
+          // Actualizar el JSON en la lista
+          this.diccionario[this.rowId]['STREAMING'][selectedTableIdx] = JSON.stringify(jsonObj);
         }
-        */
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }
     } else if (type == 'TELEVISION' || type == 'TELEFONIA' || type == 'ROUTER'){
