@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TipoServicios } from '../../../../interfaces/planes/tiposervicios.interface';
@@ -17,41 +17,61 @@ export class CombosService {
   constructor(private http:HttpClient) { }
 
   getCombosProductos_Router(): Observable<Productos[]> {
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PRODUCTO_ROUTER');
-    return this.http.get<Productos[]>(MAIN_URL+COMBOS, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'COMBO',
+      stype: 'PRODUCTO_ROUTER'
+    }
+    return this.http.post<Productos[]>(MAIN_URL+COMBOS, body, { headers });
   }
 
   getCombosTipoServicios(Id_TPV: number):Observable<TipoServicios[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'TIPO_SERVICIO')
-    .set('_V1', Id_TPV.toString());
-    return this.http.get<TipoServicios[]>(MAIN_URL+COMBOS, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'COMBO',
+      stype: 'TIPO_SERVICIO',
+      _V1: Id_TPV.toString()
+    }
+    return this.http.post<TipoServicios[]>(MAIN_URL+COMBOS, body, { headers });
   }
 
   getCombosProductos(Id_TPV: number):Observable<Productos[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PRODUCTO')
-    .set('_V1', Id_TPV.toString());
-    return this.http.get<Productos[]>(MAIN_URL+COMBOS, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'COMBO',
+      stype: 'PRODUCTO',
+      _V1: Id_TPV.toString()
+    }
+    return this.http.post<Productos[]>(MAIN_URL+COMBOS, body, { headers });
   }
 
   getCombosPlan(SERVICIO: string):Observable<TariffPlanes[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PLAN')
-    .set('_V1', SERVICIO.toString());
-    return this.http.get<TariffPlanes[]>(MAIN_URL+COMBOS, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'COMBO',
+      stype: 'PLAN',
+      _V1: SERVICIO.toString()
+    }
+    return this.http.post<TariffPlanes[]>(MAIN_URL+COMBOS, body, { headers });
   }
 
   getCombosPlanVariant(Id_Plan: number):Observable<TariffPlanesVariant[]>{
-    let params = new HttpParams()
-    .set('type', 'COMBO')
-    .set('stype', 'PLANVARIANT')
-    .set('_V1', Id_Plan.toString());
-    return this.http.get<TariffPlanesVariant[]>(MAIN_URL+COMBOS, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'COMBO',
+      stype: 'PLANVARIANT',
+      _V1: Id_Plan.toString()
+    }
+    return this.http.post<TariffPlanesVariant[]>(MAIN_URL+COMBOS, body, { headers });
   }
 }

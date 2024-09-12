@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Buro } from '../../../../interfaces/financial/buro.interface';
@@ -15,7 +15,12 @@ export class BuroService {
   constructor(private http:HttpClient) { }
 
   getTiposBuro():Observable<Buro[]>{
-    let params = new HttpParams().set('type', 'ALL_BURO');
-    return this.http.get<Buro[]>(MAIN_URL+BURO, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'ALL_BURO'
+    }
+    return this.http.post<Buro[]>(MAIN_URL+BURO, body, { headers });
   }
 }

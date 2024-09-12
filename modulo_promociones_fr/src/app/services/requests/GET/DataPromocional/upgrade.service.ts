@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Upgrade } from '../../../../interfaces/DataPromocional/upgrade.interface';
 import { Observable } from 'rxjs/internal/Observable';
@@ -15,9 +15,14 @@ export class UpgradeService {
   constructor(private http:HttpClient) { }
 
   getUpgrade(Tariffplan: number, TFPV: number):Observable<Upgrade[]>{
-    let params = new HttpParams().set('type', 'UPGRADE')
-    .set('TARIFFPLAN', Tariffplan.toString())
-    .set('TARIFFPLANVARIANT', TFPV.toString());
-    return this.http.get<Upgrade[]>(MAIN_URL+UPGRADE, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'UPGRADE',
+      TARIFFPLAN: Tariffplan,
+      TARIFFPLANVARIANT: TFPV
+    }
+    return this.http.post<Upgrade[]>(MAIN_URL+UPGRADE, body, { headers });
   }
 }

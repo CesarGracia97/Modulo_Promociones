@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Sectores } from '../../../../interfaces/places/sector.interface';
@@ -15,43 +15,73 @@ export class SectorService {
   constructor(private http:HttpClient) { }
 
   getSectoresALL():Observable<Sectores[]>{
-    let params = new HttpParams().set('type', 'ALL_SECTORS');
-    return this.http.get<Sectores[]>(API_MAIN+SECT, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'ALL_SECTORS'
+    }
+    return this.http.post<Sectores[]>(API_MAIN+SECT, body, { headers });
   }
 
   getSectoresESP(id_City: number):Observable<Sectores[]>{
-    let params = new HttpParams().set('type', 'SECTORES_ESPECIFICOSxCITY')
-    .set('id_City', id_City.toString());
-    return this.http.get<Sectores[]>(API_MAIN+SECT, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'SECTORES_ESPECIFICOSxCITY',
+      id_City: id_City.toString()
+    }
+    return this.http.post<Sectores[]>(API_MAIN+SECT, body, { headers });
   }
 
   getSectoresALLXTariffplanVariant(tariffplanvariant: number): Observable<Sectores[]> {
-    let params = new HttpParams().set('type', 'SECTORES_ESPECIFICOSxTFV')
-    .set('TARIFFPLANVARIANT', tariffplanvariant);
-    return this.http.get<Sectores[]>(API_MAIN+SECT, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'SECTORES_ESPECIFICOSxTFV',
+      TARIFFPLANVARIANT: tariffplanvariant.toString()
+    }
+    return this.http.post<Sectores[]>(API_MAIN+SECT, body, { headers });
   }
 
   getSectoresXTariffplanVariant(id_City: number, tariffplanvariant: number): Observable<Sectores[]> {
-    let params = new HttpParams().set('type', 'SECTORES_ESPECIFICOSxCITYxTFV')
-    .set('id_City', id_City)
-    .set('TARIFFPLANVARIANT', tariffplanvariant);
-    return this.http.get<Sectores[]>(API_MAIN+SECT, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'SECTORES_ESPECIFICOSxCITYxTFV',
+      id_City: id_City,
+      TARIFFPLANVARIANT: tariffplanvariant.toString()
+    }
+    return this.http.post<Sectores[]>(API_MAIN+SECT, body, { headers });
   }
 
   getSectoresMasivosXTariffplanVariant(id_Cities: number[], tariffplanvariant: number): Observable<Sectores[]> {
     const a_idCities = id_Cities.join(',');
-    let params = new HttpParams().set('type', 'SECTORES_M__ESPECIFICOSxCITYxTFV')
-    .set('id_Cities', a_idCities)
-    .set('TARIFFPLANVARIANT', tariffplanvariant.toString());
-    return this.http.get<Sectores[]>(API_MAIN+SECT, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'SECTORES_M__ESPECIFICOSxCITYxTFV',
+      id_Cities: a_idCities,
+      TARIFFPLANVARIANT: tariffplanvariant.toString()
+    }
+    return this.http.post<Sectores[]>(API_MAIN+SECT, body, { headers });
   }
 
   getSectoresMasivosXTariffplanVariantXProductoId(id_Cities: number[], tariffplanvariant: number, ProductoId: number): Observable<Sectores[]> {
     const a_idCities = id_Cities.join(',');
-    let params = new HttpParams().set('type', 'SECTORES_M_ESPECIFICOSxCITYxTFVxPROD')
-    .set('id_Cities', a_idCities)
-    .set('TARIFFPLANVARIANT', tariffplanvariant.toString())
-    .set('PRODUCTOID', ProductoId.toString());
-    return this.http.get<Sectores[]>(API_MAIN+SECT, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'SECTORES_M_ESPECIFICOSxCITYxTFVxPROD',
+      id_Cities: a_idCities,
+      TARIFFPLANVARIANT: tariffplanvariant.toString(),
+      PRODUCTOID: ProductoId.toString()
+    }
+    return this.http.post<Sectores[]>(API_MAIN+SECT, body, { headers });
   }
 }

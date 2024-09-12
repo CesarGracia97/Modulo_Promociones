@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ModosPago } from '../../../../interfaces/financial/modos-pago.interface';
@@ -15,7 +15,12 @@ export class FormaspagoService {
   constructor(private http:HttpClient) { }
 
   getModosPago():Observable<ModosPago[]> {
-    let params = new HttpParams().set('type', 'ALL_MPAGOS');
-    return this.http.get<ModosPago[]>(MAIN_URL+MDPG, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'ALL_MPAGOS'
+    }
+    return this.http.post<ModosPago[]>(MAIN_URL+MDPG, body, { headers });
   }
 }

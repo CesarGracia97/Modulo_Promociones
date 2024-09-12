@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Servicios } from '../../../../interfaces/planes/servicios.interface';
@@ -15,8 +15,13 @@ export class ServiciosService {
   constructor(private http:HttpClient) { }
 
   getServiciosALL():Observable<Servicios[]>{
-    let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'SERV');
-    return this.http.get<Servicios[]>(MAIN_URL+SERVIC, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'ALL_DATA',
+      stype: 'SERV'
+    };
+    return this.http.post<Servicios[]>(MAIN_URL+SERVIC, body, { headers });
   }
 }

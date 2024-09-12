@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Provincias } from '../../../../interfaces/places/provincias.interface';
@@ -15,14 +15,23 @@ export class ProvinciasService {
   constructor(private http:HttpClient) { }
   
   getProvincias(): Observable<Provincias[]> {
-    // Construir los parámetros de consulta
-    let params = new HttpParams().set('type', 'ALL_PROV');
-    return this.http.get<Provincias[]>(API_MAIN+PROV, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'ALL_PROV'
+    }
+    return this.http.post<Provincias[]>(API_MAIN+PROV, body, { headers });
   }
 
   getProvinciasXTariffplanVariant(tariffplanvariant: number):Observable<Provincias[]>{
-    let params = new HttpParams().set('type', 'PROVINCIAS_ESPECIFICASxTFV')
-                                  .set('TARIFFPLANVARIANT', tariffplanvariant);
-    return this.http.get<Provincias[]>(API_MAIN+PROV, { params: params });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'PROVINCIAS_ESPECIFICASxTFV',
+      TARIFFPLANVARIANT: tariffplanvariant
+    }
+    return this.http.post<Provincias[]>(API_MAIN+PROV, body, { headers });
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ofertas } from '../../../../interfaces/planes/ofertas.interface';
 import { Observable } from 'rxjs';
@@ -14,9 +14,14 @@ export class OfertasService {
 
   constructor(private http:HttpClient) { }
 
-  getOfertasALL():Observable<Ofertas[]>{
-    let params = new HttpParams().set('type', 'ALL_DATA')
-    .set('stype', 'OFER');
-    return this.http.get<Ofertas[]>(MAIN_URL+OFERTA, { params: params });
+  getOfertasALL():Observable<Ofertas[]> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = {
+      externalTransactionId: 'ihjqbhwbehbecbcehws',
+      channel: 'web-modulos-promocionales',
+      type: 'ALL_DATA',
+      stype: 'OFER'
+    }
+    return this.http.post<Ofertas[]>(MAIN_URL+OFERTA, body, { headers });
   }
 }

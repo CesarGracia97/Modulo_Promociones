@@ -16,6 +16,11 @@ export class DiasGozadosService {
 
   getDiasGozados():Observable<DiasGozados[]>{
     let params = new HttpParams().set('type', 'DIAS_GOZADOS');
-    return this.http.get<DiasGozados[]>(MAIN_URL+DIAS_GOZADOS, { params: params });
+    return this.http.post<DiasGozados[]>(MAIN_URL+DIAS_GOZADOS, { params: params });
+  }
+
+  _getDiasGozados():Observable<DiasGozados[]>{
+    let params = new HttpParams().set('type', 'DIAS_GOZADOS');
+    return this.http.post<DiasGozados[]>(MAIN_URL+DIAS_GOZADOS, { params: params });
   }
 }
