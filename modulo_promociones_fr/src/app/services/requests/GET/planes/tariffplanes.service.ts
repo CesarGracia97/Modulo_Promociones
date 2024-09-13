@@ -3,22 +3,24 @@ import { TariffPlan_X_TariffPlanVariant, TariffPlanes, TariffPlanesVariant } fro
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
+import { UuidgeneratorService } from '../../../complements/uuidgenerator.service';
 
 const MAIN_URL = environment.MAIN_URL;
 const PLANES = environment.API_GET_PLANES_PLAN;
+const CHANNEL = environment.CHANNEL;
 
 @Injectable({
   providedIn: 'root'
 })
 export class TariffplanesService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private  uuidService: UuidgeneratorService) { }
 
   getTariffPlanesALL():Observable<TariffPlanes[]>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'ALL_DATA',
       stype: 'AD_TARIFFPLAN'
     }
@@ -28,8 +30,8 @@ export class TariffplanesService {
   getTariffPlan_X_TariffPlanVariantALL():Observable<TariffPlan_X_TariffPlanVariant[]>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'ALL_DATA',
       stype: 'AD_TARIFFPLAN_TARIFFPLANVARIANT'
     }
@@ -39,8 +41,8 @@ export class TariffplanesService {
   getTariffPlanesVariantXProducto_Adicional(SERVICIO: string): Observable <TariffPlanesVariant[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'ALL_DATA',
       stype: 'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL',
       SERVICIO: SERVICIO
@@ -51,8 +53,8 @@ export class TariffplanesService {
   getTariffPlanesVariantALL(servicio: string, tipo_servicio: string):Observable<TariffPlanesVariant[]>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'ALL_DATA',
       stype: 'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL',
       SERVICIO: servicio,

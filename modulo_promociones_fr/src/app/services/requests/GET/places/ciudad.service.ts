@@ -3,22 +3,24 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ciudades } from '../../../../interfaces/places/ciudad.interface';
 import { environment } from '../../../../../environments/environment';
+import { UuidgeneratorService } from '../../../complements/uuidgenerator.service';
 
 const API_MAIN = environment.MAIN_URL;
 const CITY = environment.API_GET_PLACES_CITY;
+const CHANNEL = environment.CHANNEL;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CiudadService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private  uuidService: UuidgeneratorService) { }
 
   getCiudadesALL(): Observable<Ciudades[]>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'ALL_CITIES',
     }
     return this.http.post<Ciudades[]>(API_MAIN+CITY, body, { headers });
@@ -27,8 +29,8 @@ export class CiudadService {
   getCiudadesESP(id_Prov:number):Observable<Ciudades[]>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'CIUDADES_ESPECIFICASxPROV',
       id_Prov: id_Prov
     }
@@ -38,8 +40,8 @@ export class CiudadService {
   getCiudadesALLXTariffplanVariant(tariffplanvariant: number): Observable <Ciudades[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'CIUDADES_ESPECIFICASxTFV',
       TARIFFPLANVARIANT: tariffplanvariant
     }
@@ -49,8 +51,8 @@ export class CiudadService {
   getCiudadesALLXTariffplanVariantXProductoId(tariffplanvariant: number, ProductoId: number): Observable <Ciudades[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'CIUDADES_ESPECIFICASxTFVxPROD',
       TARIFFPLANVARIANT: tariffplanvariant,
       PRODUCTOID: ProductoId
@@ -61,8 +63,8 @@ export class CiudadService {
   getCiudadesXTariffplanVariant(id_Prov:number, tariffplanvariant: number):Observable<Ciudades[]>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'CIUDADES_ESPECIFICASxPROVxTFV',
       TARIFFPLANVARIANT: tariffplanvariant,
       id_Prov: id_Prov
@@ -74,8 +76,8 @@ export class CiudadService {
     const a_idProv = id_Prov.join(',');
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = {
-      externalTransactionId: 'ihjqbhwbehbecbcehws',
-      channel: 'web-modulos-promocionales',
+      externalTransactionId: this.uuidService.generateUUID(),
+      channel: CHANNEL,
       type: 'CIUDADES_M_ESPECIFICASxPROVxTFV',
       TARIFFPLANVARIANT: tariffplanvariant,
       id_Provs: a_idProv

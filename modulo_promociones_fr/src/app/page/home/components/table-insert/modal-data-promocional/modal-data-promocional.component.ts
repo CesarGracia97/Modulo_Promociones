@@ -30,7 +30,7 @@ import { ModalUpgradeComponent } from './modal-upgrade/modal-upgrade.component';
   imports: [CommonModule, FormsModule, ModalCiudadesysectoresComponent, ModalPromocionesAdicionalesComponent,
     ModalEntidadesComponent, ModalTarjetasComponent, ModalUpgradeComponent],
   templateUrl: './modal-data-promocional.component.html',
-  styleUrl: './modal-data-promocional.component.scss'
+  styleUrls: ['./modal-data-promocional.component.scss', './modal-data-promocional.component2.scss']
 })
 export class ModalDataPromocionalComponent implements OnInit {
   //Variables de Vista
@@ -119,9 +119,9 @@ export class ModalDataPromocionalComponent implements OnInit {
     }
   }
 
-  getUpgrade(SERVICIO: string, id_Plan: number, IdVariant: number): void {
+  getUpgrade(SERVICIO: string, id_Plan: string, IdVariant: string): void {
     if((SERVICIO && SERVICIO == 'INTERNET') && id_Plan && IdVariant)
-      this.fd_upgrade.fetchDataUpgrade(id_Plan, IdVariant, this.rowId)
+      this.fd_upgrade.fetchDataUpgrade(parseInt(id_Plan), parseInt(IdVariant), this.rowId)
   }
 
   most(value: string): void {

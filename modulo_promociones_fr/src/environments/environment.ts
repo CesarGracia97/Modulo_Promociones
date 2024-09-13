@@ -1,6 +1,7 @@
 export const environment = {
     
     MAIN_URL: 'http://192.168.28.48:2014/rest/modulos-promocionales-api/v1.0',
+    CHANNEL: 'web-modulos-promocionales',
 
     //APIs
     API_GET_PLACES_PROV: '/get/lugares/provincias',
