@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.one_of_diccionario_datos_mes_fin_promocion import OneOfDiccionarioDatosMesFinPromocion  # noqa: F401,E501
 from swagger_server.models.all_of_diccionario_datos_upgrade import AllOfDiccionarioDatosUpgrade  # noqa: F401,E501
 from swagger_server.models.one_of_diccionario_datos_sectores import OneOfDiccionarioDatosSectores  # noqa: F401,E501
 from swagger_server.models.all_of_diccionario_datos_telefonia import AllOfDiccionarioDatosTelefonia  # noqa: F401,E501
@@ -19,7 +20,7 @@ class DiccionarioDatos(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id_registro: int=None, nombre_promocion: str=None, fecha_inicio_promocion: date=None, fecha_finalizacion_promocion: date=None, servicio: str=None, plan_id: int=None, variant_id: int=None, producto_id: int=None, dias_gozados: str=None, canal: int=None, precio_promocional: float=None, precio_referencial: float=None, mes_inicio_promocion: int=None, mes_fin_promocion: str=None, upgrade: AllOfDiccionarioDatosUpgrade=None, ciudades: List[int]=None, sectores: OneOfDiccionarioDatosSectores=None, buro: List[int]=None, formas_de_pago: List[int]=None, fecha_generacion_registro: datetime=None, streaming: List[str]=None, telefonia: AllOfDiccionarioDatosTelefonia=None, television: AllOfDiccionarioDatosTelevision=None, router: AllOfDiccionarioDatosRouter=None):  # noqa: E501
+    def __init__(self, id_registro: int=None, nombre_promocion: str=None, fecha_inicio_promocion: str=None, fecha_finalizacion_promocion: str=None, fecha_generacion_registro: str=None, servicio: str=None, plan_id: int=None, variant_id: int=None, producto_id: int=None, dias_gozados: str=None, canal: int=None, precio_promocional: float=None, precio_referencial: float=None, mes_inicio_promocion: int=None, mes_fin_promocion: OneOfDiccionarioDatosMesFinPromocion=None, upgrade: AllOfDiccionarioDatosUpgrade=None, ciudades: List[int]=None, sectores: OneOfDiccionarioDatosSectores=None, buro: List[int]=None, forma_de_pago: List[int]=None, streaming: List[str]=None, telefonia: AllOfDiccionarioDatosTelefonia=None, television: AllOfDiccionarioDatosTelevision=None, router: AllOfDiccionarioDatosRouter=None):  # noqa: E501
         """DiccionarioDatos - a model defined in Swagger
 
         :param id_registro: The id_registro of this DiccionarioDatos.  # noqa: E501
@@ -27,9 +28,11 @@ class DiccionarioDatos(Model):
         :param nombre_promocion: The nombre_promocion of this DiccionarioDatos.  # noqa: E501
         :type nombre_promocion: str
         :param fecha_inicio_promocion: The fecha_inicio_promocion of this DiccionarioDatos.  # noqa: E501
-        :type fecha_inicio_promocion: date
+        :type fecha_inicio_promocion: str
         :param fecha_finalizacion_promocion: The fecha_finalizacion_promocion of this DiccionarioDatos.  # noqa: E501
-        :type fecha_finalizacion_promocion: date
+        :type fecha_finalizacion_promocion: str
+        :param fecha_generacion_registro: The fecha_generacion_registro of this DiccionarioDatos.  # noqa: E501
+        :type fecha_generacion_registro: str
         :param servicio: The servicio of this DiccionarioDatos.  # noqa: E501
         :type servicio: str
         :param plan_id: The plan_id of this DiccionarioDatos.  # noqa: E501
@@ -49,7 +52,7 @@ class DiccionarioDatos(Model):
         :param mes_inicio_promocion: The mes_inicio_promocion of this DiccionarioDatos.  # noqa: E501
         :type mes_inicio_promocion: int
         :param mes_fin_promocion: The mes_fin_promocion of this DiccionarioDatos.  # noqa: E501
-        :type mes_fin_promocion: str
+        :type mes_fin_promocion: OneOfDiccionarioDatosMesFinPromocion
         :param upgrade: The upgrade of this DiccionarioDatos.  # noqa: E501
         :type upgrade: AllOfDiccionarioDatosUpgrade
         :param ciudades: The ciudades of this DiccionarioDatos.  # noqa: E501
@@ -58,10 +61,8 @@ class DiccionarioDatos(Model):
         :type sectores: OneOfDiccionarioDatosSectores
         :param buro: The buro of this DiccionarioDatos.  # noqa: E501
         :type buro: List[int]
-        :param formas_de_pago: The formas_de_pago of this DiccionarioDatos.  # noqa: E501
-        :type formas_de_pago: List[int]
-        :param fecha_generacion_registro: The fecha_generacion_registro of this DiccionarioDatos.  # noqa: E501
-        :type fecha_generacion_registro: datetime
+        :param forma_de_pago: The forma_de_pago of this DiccionarioDatos.  # noqa: E501
+        :type forma_de_pago: List[int]
         :param streaming: The streaming of this DiccionarioDatos.  # noqa: E501
         :type streaming: List[str]
         :param telefonia: The telefonia of this DiccionarioDatos.  # noqa: E501
@@ -74,8 +75,9 @@ class DiccionarioDatos(Model):
         self.swagger_types = {
             'id_registro': int,
             'nombre_promocion': str,
-            'fecha_inicio_promocion': date,
-            'fecha_finalizacion_promocion': date,
+            'fecha_inicio_promocion': str,
+            'fecha_finalizacion_promocion': str,
+            'fecha_generacion_registro': str,
             'servicio': str,
             'plan_id': int,
             'variant_id': int,
@@ -85,13 +87,12 @@ class DiccionarioDatos(Model):
             'precio_promocional': float,
             'precio_referencial': float,
             'mes_inicio_promocion': int,
-            'mes_fin_promocion': str,
+            'mes_fin_promocion': OneOfDiccionarioDatosMesFinPromocion,
             'upgrade': AllOfDiccionarioDatosUpgrade,
             'ciudades': List[int],
             'sectores': OneOfDiccionarioDatosSectores,
             'buro': List[int],
-            'formas_de_pago': List[int],
-            'fecha_generacion_registro': datetime,
+            'forma_de_pago': List[int],
             'streaming': List[str],
             'telefonia': AllOfDiccionarioDatosTelefonia,
             'television': AllOfDiccionarioDatosTelevision,
@@ -103,6 +104,7 @@ class DiccionarioDatos(Model):
             'nombre_promocion': 'Nombre Promocion',
             'fecha_inicio_promocion': 'Fecha Inicio Promocion',
             'fecha_finalizacion_promocion': 'Fecha Finalizacion Promocion',
+            'fecha_generacion_registro': 'Fecha Generacion Registro',
             'servicio': 'Servicio',
             'plan_id': 'Plan_Id',
             'variant_id': 'Variant_Id',
@@ -117,8 +119,7 @@ class DiccionarioDatos(Model):
             'ciudades': 'Ciudades',
             'sectores': 'Sectores',
             'buro': 'Buro',
-            'formas_de_pago': 'Formas de Pago',
-            'fecha_generacion_registro': 'Fecha Generacion Registro',
+            'forma_de_pago': 'Forma de Pago',
             'streaming': 'STREAMING',
             'telefonia': 'TELEFONIA',
             'television': 'TELEVISION',
@@ -128,6 +129,7 @@ class DiccionarioDatos(Model):
         self._nombre_promocion = nombre_promocion
         self._fecha_inicio_promocion = fecha_inicio_promocion
         self._fecha_finalizacion_promocion = fecha_finalizacion_promocion
+        self._fecha_generacion_registro = fecha_generacion_registro
         self._servicio = servicio
         self._plan_id = plan_id
         self._variant_id = variant_id
@@ -142,8 +144,7 @@ class DiccionarioDatos(Model):
         self._ciudades = ciudades
         self._sectores = sectores
         self._buro = buro
-        self._formas_de_pago = formas_de_pago
-        self._fecha_generacion_registro = fecha_generacion_registro
+        self._forma_de_pago = forma_de_pago
         self._streaming = streaming
         self._telefonia = telefonia
         self._television = television
@@ -207,22 +208,22 @@ class DiccionarioDatos(Model):
         self._nombre_promocion = nombre_promocion
 
     @property
-    def fecha_inicio_promocion(self) -> date:
+    def fecha_inicio_promocion(self) -> str:
         """Gets the fecha_inicio_promocion of this DiccionarioDatos.
 
 
         :return: The fecha_inicio_promocion of this DiccionarioDatos.
-        :rtype: date
+        :rtype: str
         """
         return self._fecha_inicio_promocion
 
     @fecha_inicio_promocion.setter
-    def fecha_inicio_promocion(self, fecha_inicio_promocion: date):
+    def fecha_inicio_promocion(self, fecha_inicio_promocion: str):
         """Sets the fecha_inicio_promocion of this DiccionarioDatos.
 
 
         :param fecha_inicio_promocion: The fecha_inicio_promocion of this DiccionarioDatos.
-        :type fecha_inicio_promocion: date
+        :type fecha_inicio_promocion: str
         """
         if fecha_inicio_promocion is None:
             raise ValueError("Invalid value for `fecha_inicio_promocion`, must not be `None`")  # noqa: E501
@@ -230,27 +231,50 @@ class DiccionarioDatos(Model):
         self._fecha_inicio_promocion = fecha_inicio_promocion
 
     @property
-    def fecha_finalizacion_promocion(self) -> date:
+    def fecha_finalizacion_promocion(self) -> str:
         """Gets the fecha_finalizacion_promocion of this DiccionarioDatos.
 
 
         :return: The fecha_finalizacion_promocion of this DiccionarioDatos.
-        :rtype: date
+        :rtype: str
         """
         return self._fecha_finalizacion_promocion
 
     @fecha_finalizacion_promocion.setter
-    def fecha_finalizacion_promocion(self, fecha_finalizacion_promocion: date):
+    def fecha_finalizacion_promocion(self, fecha_finalizacion_promocion: str):
         """Sets the fecha_finalizacion_promocion of this DiccionarioDatos.
 
 
         :param fecha_finalizacion_promocion: The fecha_finalizacion_promocion of this DiccionarioDatos.
-        :type fecha_finalizacion_promocion: date
+        :type fecha_finalizacion_promocion: str
         """
         if fecha_finalizacion_promocion is None:
             raise ValueError("Invalid value for `fecha_finalizacion_promocion`, must not be `None`")  # noqa: E501
 
         self._fecha_finalizacion_promocion = fecha_finalizacion_promocion
+
+    @property
+    def fecha_generacion_registro(self) -> str:
+        """Gets the fecha_generacion_registro of this DiccionarioDatos.
+
+
+        :return: The fecha_generacion_registro of this DiccionarioDatos.
+        :rtype: str
+        """
+        return self._fecha_generacion_registro
+
+    @fecha_generacion_registro.setter
+    def fecha_generacion_registro(self, fecha_generacion_registro: str):
+        """Sets the fecha_generacion_registro of this DiccionarioDatos.
+
+
+        :param fecha_generacion_registro: The fecha_generacion_registro of this DiccionarioDatos.
+        :type fecha_generacion_registro: str
+        """
+        if fecha_generacion_registro is None:
+            raise ValueError("Invalid value for `fecha_generacion_registro`, must not be `None`")  # noqa: E501
+
+        self._fecha_generacion_registro = fecha_generacion_registro
 
     @property
     def servicio(self) -> str:
@@ -464,22 +488,22 @@ class DiccionarioDatos(Model):
         self._mes_inicio_promocion = mes_inicio_promocion
 
     @property
-    def mes_fin_promocion(self) -> str:
+    def mes_fin_promocion(self) -> OneOfDiccionarioDatosMesFinPromocion:
         """Gets the mes_fin_promocion of this DiccionarioDatos.
 
 
         :return: The mes_fin_promocion of this DiccionarioDatos.
-        :rtype: str
+        :rtype: OneOfDiccionarioDatosMesFinPromocion
         """
         return self._mes_fin_promocion
 
     @mes_fin_promocion.setter
-    def mes_fin_promocion(self, mes_fin_promocion: str):
+    def mes_fin_promocion(self, mes_fin_promocion: OneOfDiccionarioDatosMesFinPromocion):
         """Sets the mes_fin_promocion of this DiccionarioDatos.
 
 
         :param mes_fin_promocion: The mes_fin_promocion of this DiccionarioDatos.
-        :type mes_fin_promocion: str
+        :type mes_fin_promocion: OneOfDiccionarioDatosMesFinPromocion
         """
         if mes_fin_promocion is None:
             raise ValueError("Invalid value for `mes_fin_promocion`, must not be `None`")  # noqa: E501
@@ -577,50 +601,27 @@ class DiccionarioDatos(Model):
         self._buro = buro
 
     @property
-    def formas_de_pago(self) -> List[int]:
-        """Gets the formas_de_pago of this DiccionarioDatos.
+    def forma_de_pago(self) -> List[int]:
+        """Gets the forma_de_pago of this DiccionarioDatos.
 
 
-        :return: The formas_de_pago of this DiccionarioDatos.
+        :return: The forma_de_pago of this DiccionarioDatos.
         :rtype: List[int]
         """
-        return self._formas_de_pago
+        return self._forma_de_pago
 
-    @formas_de_pago.setter
-    def formas_de_pago(self, formas_de_pago: List[int]):
-        """Sets the formas_de_pago of this DiccionarioDatos.
+    @forma_de_pago.setter
+    def forma_de_pago(self, forma_de_pago: List[int]):
+        """Sets the forma_de_pago of this DiccionarioDatos.
 
 
-        :param formas_de_pago: The formas_de_pago of this DiccionarioDatos.
-        :type formas_de_pago: List[int]
+        :param forma_de_pago: The forma_de_pago of this DiccionarioDatos.
+        :type forma_de_pago: List[int]
         """
-        if formas_de_pago is None:
-            raise ValueError("Invalid value for `formas_de_pago`, must not be `None`")  # noqa: E501
+        if forma_de_pago is None:
+            raise ValueError("Invalid value for `forma_de_pago`, must not be `None`")  # noqa: E501
 
-        self._formas_de_pago = formas_de_pago
-
-    @property
-    def fecha_generacion_registro(self) -> datetime:
-        """Gets the fecha_generacion_registro of this DiccionarioDatos.
-
-
-        :return: The fecha_generacion_registro of this DiccionarioDatos.
-        :rtype: datetime
-        """
-        return self._fecha_generacion_registro
-
-    @fecha_generacion_registro.setter
-    def fecha_generacion_registro(self, fecha_generacion_registro: datetime):
-        """Sets the fecha_generacion_registro of this DiccionarioDatos.
-
-
-        :param fecha_generacion_registro: The fecha_generacion_registro of this DiccionarioDatos.
-        :type fecha_generacion_registro: datetime
-        """
-        if fecha_generacion_registro is None:
-            raise ValueError("Invalid value for `fecha_generacion_registro`, must not be `None`")  # noqa: E501
-
-        self._fecha_generacion_registro = fecha_generacion_registro
+        self._forma_de_pago = forma_de_pago
 
     @property
     def streaming(self) -> List[str]:

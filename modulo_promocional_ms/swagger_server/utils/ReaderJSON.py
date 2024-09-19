@@ -28,7 +28,7 @@ class ReaderJSON:
                                 _V2 = _diccionario["_V2"]
                                 return (data["Type_Queries"][_popcion][_sopcion]
                                         .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}").replace
-                                        ("_V1", _V1).replace("_V2", str(_V2)))
+                                        ("_V1", str(_V1)).replace("_V2", str(_V2)))
                             return (data["Type_Queries"][_popcion][_sopcion]
                                     .get(_nameQuery, f"Consulta no encontrada en {_popcion}, {_sopcion}")
                                     .replace("_V1", str(_V1)))
@@ -101,9 +101,9 @@ class ReaderJSON:
                     if 'name_Query' in _diccionario:
                         _type = _nameQuery = _diccionario["name_Query"]
                         if "_V1" in _diccionario:
-                            _V1 = _diccionario["_V1"]
+                            _V1: str = _diccionario["_V1"]
                             if "_V2" in _diccionario:
-                                _V2 = _diccionario["_V2"]
+                                _V2: str = _diccionario["_V2"]
                                 return (data["Type_Queries"][_popcion]
                                         .get(_nameQuery, f"Consulta no encontrada en "f"{_popcion}")
                                         .replace("_V1", str(_V1)).replace("_V2", str(_V2)))

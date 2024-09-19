@@ -59,6 +59,7 @@ class lugares_Repository:
                         if "_V2" in _diccionario:
                             _Qdiccionario["_V2"] = _diccionario["_V2"]
                         query = self.reader_json.getQuery(_Qdiccionario)
+                        print(query)
                         results = self.db.execute_query(query)
                         data = {}
                         if results is None:
@@ -111,7 +112,8 @@ class lugares_Repository:
                                 data['CITIESxPROV'].append(sector)
                             print("**** CIUDADES ESPECIFICAS POR PROVINCIA TT - DATOS OBTENIDOS ****")
                         elif (_diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFV" or
-                              _diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFVxPROD"):
+                              _diccionario["name_Query"] == "SECTORES_ESPECIFICOSxCITYxTFVxPROD" or
+                              _diccionario["name_Query"] == "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"):
                             data['SECTORSxCITY'] = []
                             for result in results:
                                 sector = Sector(result[0], result[1], result[2])

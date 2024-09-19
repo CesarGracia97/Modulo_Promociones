@@ -31,7 +31,7 @@ class AllOfDiccionarioDatosTelevision(Model):
         :param mes_inicio: The mes_inicio of this AllOfDiccionarioDatosTelevision.  # noqa: E501
         :type mes_inicio: int
         :param mes_fin: The mes_fin of this AllOfDiccionarioDatosTelevision.  # noqa: E501
-        :type mes_fin: str
+        :type mes_fin: Object
         """
         self.swagger_types = {
             'plan': int,
@@ -205,7 +205,7 @@ class AllOfDiccionarioDatosTelevision(Model):
 
 
         :return: The mes_fin of this AllOfDiccionarioDatosTelevision.
-        :rtype: str
+        :rtype: Object
         """
         return self._mes_fin
 
@@ -215,7 +215,7 @@ class AllOfDiccionarioDatosTelevision(Model):
 
 
         :param mes_fin: The mes_fin of this AllOfDiccionarioDatosTelevision.
-        :type mes_fin: str
+        :type mes_fin: Object
         """
 
         self._mes_fin = mes_fin

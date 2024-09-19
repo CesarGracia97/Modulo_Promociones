@@ -49,7 +49,7 @@ export class ModalUpgradeComponent implements OnInit {
       if(!MesFinalizacion || MesFinalizacion ==''){
         this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = 'SIEMPRE';
       } else if (MesFinalizacion) {
-        this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = parseInt(MesFinalizacion);
+        this.diccionario[this.rowId]['UPGRADE']['Mes Fin UPGRADE'] = MesFinalizacion.toString();
       }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }

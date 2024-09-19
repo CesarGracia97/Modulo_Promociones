@@ -20,11 +20,13 @@ def get_combos(body=None):  # noqa: E501
         body = RequestGetCombos.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'api-modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
+                params_planes['externalTransactionId'] = body.external_transaction_id
+                params_planes['internalTransactionId'] = internal_transaction_id
                 if body.stype in set(reader.get_type_list('COMBOS')):
                     if body.v1 is not None:
                         params_planes['_V1'] = body.v1
@@ -60,12 +62,14 @@ def get_ofertas(body=None):  # noqa: E501
         body = RequestGetOfertas.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
+                params_planes['externalTransactionId'] = body.external_transaction_id
+                params_planes['internalTransactionId'] = internal_transaction_id
                 response = requests.post(reader.get_base_url() + '/get/Planes', json=params_planes)
                 response.raise_for_status()
                 return response.json(), response.status_code
@@ -98,11 +102,13 @@ def get_planes(body=None):  # noqa: E501
         body = RequestGetPlanes.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'api-modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
+                params_planes['externalTransactionId'] = body.external_transaction_id
+                params_planes['internalTransactionId'] = internal_transaction_id
                 if body.stype in set(reader.get_type_list('PLANES_T1')):
                     print("Que dios me libre si entra aqui")
                 elif body.stype in set(reader.get_type_list('PLANES_T2')):
@@ -142,11 +148,13 @@ def get_servicios(body=None):  # noqa: E501
         body = RequestGetServicios.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_planes['type'] = body.type
                 params_planes['stype'] = body.stype
+                params_planes['externalTransactionId'] = body.external_transaction_id
+                params_planes['internalTransactionId'] = internal_transaction_id
                 response = requests.post(reader.get_base_url() + '/get/Planes', json=params_planes)
                 response.raise_for_status()
                 return response.json(), response.status_code

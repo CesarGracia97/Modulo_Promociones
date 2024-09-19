@@ -31,7 +31,7 @@ class AllOfDiccionarioDatosTelefonia(Model):
         :param mes_inicio: The mes_inicio of this AllOfDiccionarioDatosTelefonia.  # noqa: E501
         :type mes_inicio: int
         :param mes_fin: The mes_fin of this AllOfDiccionarioDatosTelefonia.  # noqa: E501
-        :type mes_fin: str
+        :type mes_fin: Object
         """
         self.swagger_types = {
             'plan': int,
@@ -205,7 +205,7 @@ class AllOfDiccionarioDatosTelefonia(Model):
 
 
         :return: The mes_fin of this AllOfDiccionarioDatosTelefonia.
-        :rtype: str
+        :rtype: Object
         """
         return self._mes_fin
 
@@ -215,7 +215,7 @@ class AllOfDiccionarioDatosTelefonia(Model):
 
 
         :param mes_fin: The mes_fin of this AllOfDiccionarioDatosTelefonia.
-        :type mes_fin: str
+        :type mes_fin: Object
         """
 
         self._mes_fin = mes_fin

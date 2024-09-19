@@ -18,7 +18,6 @@ def get_lugares(body=None):  # noqa: E501
                               "SECTORES_M_ESPECIFICOSxCITYxTFVxPROD"}
             body = RequestGetLugares.from_dict(connexion.request.get_json())
             if body.channel == 'api-modulos-promocionales-lugares':
-                print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
                 repository = lugares_Repository()
@@ -32,6 +31,8 @@ def get_lugares(body=None):  # noqa: E501
                     _diccionario = {"popcion": "SPECIFIC_DATA", "name_Query": _type, "_V1": body.v1}
                     if body.v2 is not None:
                         _diccionario["_V2"] = body.v2
+                    print("TFV: ", body.v1)
+                    print("Prod ", body.v2)
                     data = repository.getData_Places(_diccionario)
                     dt = frt.formated_placeMIXDATA(data, _type)
                     return jsonify(dt), 200
@@ -47,6 +48,7 @@ def get_lugares(body=None):  # noqa: E501
                             _diccionario['_V3'] = body.v3
                     data = repository.getData_Places(_diccionario)
                     dt = frt.formated_placeMIXDATA(data, _type)
+
                     return jsonify(dt), 200
 
     except Exception as e:

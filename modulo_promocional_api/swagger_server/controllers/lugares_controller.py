@@ -20,13 +20,14 @@ def get_provincias(body=None):  # noqa: E501
         body = RequestGetProvincia.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
                 if body.type in set(reader.get_type_list('PROVINCIAS')):
                     params_lugares['type'] = body.type
                     params_lugares['externalTransactionId'] = body.external_transaction_id
+                    params_lugares['internalTransactionId'] = internal_transaction_id
                     if body.tariffplanvariant is not None:
                         params_lugares['_V1'] = body.tariffplanvariant
                     response = requests.post(reader.get_base_url() + '/get/Lugares', json=params_lugares)
@@ -61,7 +62,7 @@ def get_ciudades(body=None):  # noqa: E501
         body = RequestGetCiudades.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_lugares['type'] = body.type
@@ -75,7 +76,9 @@ def get_ciudades(body=None):  # noqa: E501
                     if body.tariffplanvariant is not None and '_V1' not in params_lugares:
                         params_lugares['_V1'] = body.tariffplanvariant
                         if body.productoid is not None:
-                            params_lugares['_V1'] = body.productoid
+                            params_lugares['_V2'] = body.productoid
+                    print("variant: ", body.tariffplanvariant)
+                    print("producto: ", body.productoid)
                 if body.type in set(reader.get_type_list('CIUDADESM')):
                     if body.id_prov is not None:
                         params_lugares['_V1'] = body.id_provs
@@ -117,10 +120,12 @@ def get_sectores(body=None):  # noqa: E501
         body = RequestGetSectores.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
+                params_lugares['type'] = body.type
                 params_lugares['externalTransactionId'] = body.external_transaction_id
+                params_lugares['internalTransactionId'] = internal_transaction_id
                 if body.type in set(reader.get_type_list('SECTORES')):
                     _type = body.type
                     if body.id_city is not None:

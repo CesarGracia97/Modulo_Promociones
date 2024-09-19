@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.one_of_router_mes_fin import OneOfROUTERMesFin  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,7 +15,7 @@ class ROUTER(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, modelo: int=None, producto_adicional: str=None, cantidad: int=None, precio_referencial: float=None, precio_promocional: float=None, mes_inicio: int=None, mes_fin: str=None):  # noqa: E501
+    def __init__(self, modelo: int=None, producto_adicional: str=None, cantidad: int=None, precio_referencial: float=None, precio_promocional: float=None, mes_inicio: int=None, mes_fin: OneOfROUTERMesFin=None):  # noqa: E501
         """ROUTER - a model defined in Swagger
 
         :param modelo: The modelo of this ROUTER.  # noqa: E501
@@ -30,7 +31,7 @@ class ROUTER(Model):
         :param mes_inicio: The mes_inicio of this ROUTER.  # noqa: E501
         :type mes_inicio: int
         :param mes_fin: The mes_fin of this ROUTER.  # noqa: E501
-        :type mes_fin: str
+        :type mes_fin: OneOfROUTERMesFin
         """
         self.swagger_types = {
             'modelo': int,
@@ -39,7 +40,7 @@ class ROUTER(Model):
             'precio_referencial': float,
             'precio_promocional': float,
             'mes_inicio': int,
-            'mes_fin': str
+            'mes_fin': OneOfROUTERMesFin
         }
 
         self.attribute_map = {
@@ -199,22 +200,22 @@ class ROUTER(Model):
         self._mes_inicio = mes_inicio
 
     @property
-    def mes_fin(self) -> str:
+    def mes_fin(self) -> OneOfROUTERMesFin:
         """Gets the mes_fin of this ROUTER.
 
 
         :return: The mes_fin of this ROUTER.
-        :rtype: str
+        :rtype: OneOfROUTERMesFin
         """
         return self._mes_fin
 
     @mes_fin.setter
-    def mes_fin(self, mes_fin: str):
+    def mes_fin(self, mes_fin: OneOfROUTERMesFin):
         """Sets the mes_fin of this ROUTER.
 
 
         :param mes_fin: The mes_fin of this ROUTER.
-        :type mes_fin: str
+        :type mes_fin: OneOfROUTERMesFin
         """
 
         self._mes_fin = mes_fin

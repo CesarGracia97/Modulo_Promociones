@@ -184,14 +184,14 @@ components:
         type:
           type: string
           example: SECTORES_ESPECIFICOSxCITYxTFV
-        'id_Provs:':
+        id_Provs:
           type: array
           example:
           - 96006
           - 96000
           items:
             type: integer
-        'id_Cities:':
+        id_Cities:
           type: array
           example:
           - 96006
@@ -268,11 +268,11 @@ components:
       - Buro
       - Canal
       - Ciudades
-      - Dias Gozado
+      - Dias Gozados
       - Fecha Finalizacion Promocion
       - Fecha Generacion Registro
       - Fecha Inicio Promocion
-      - Formas de Pago
+      - Forma de Pago
       - Id Registro
       - Mes Fin Promocion
       - Mes Inicio Promocion
@@ -365,7 +365,7 @@ components:
           - 96000
           items:
             type: integer
-        Formas de Pago:
+        Forma de Pago:
           type: array
           example:
           - 96006
@@ -376,8 +376,14 @@ components:
           type: string
           format: date-time
         STREAMING:
-          allOf:
-          - $ref: '#/components/schemas/DataSTREAMING'
+          type: array
+          example:
+          - "{\"Paquete\":1000390,\"Precio Referencial\":0,\"Precio Promocional\"\
+            \ :4,\"Mes Inicio\":1,\"Mes Fin\":23}"
+          - "{\"Paquete\":1000268,\"Precio Referencial\":0,\"Precio Promocional\"\
+            \ :3,\"Mes Inicio\":21,\"Mes Fin\":22}"
+          items:
+            type: string
         TELEFONIA:
           allOf:
           - $ref: '#/components/schemas/DataTELEFONIA'
@@ -401,39 +407,7 @@ components:
           example: 0
         Mes Fin UPGRADE:
           type: string
-          example: 0 - 24 o siempre
-    DataSTREAMING:
-      type: object
-      additionalProperties:
-        required:
-        - Mes Fin
-        - Mes Inicio
-        - Paquete
-        - Precio Promocional
-        - Precio Referencial
-        - Producto Adicional
-        type: object
-        properties:
-          Paquete:
-            type: integer
-            example: 1000569
-          Producto Adicional:
-            type: string
-            example: STREAMING
-          Precio Referencial:
-            type: number
-            format: float
-            example: 0
-          Precio Promocional:
-            type: number
-            format: float
-            example: 0
-          Mes Inicio:
-            type: integer
-            example: 0
-          Mes Fin:
-            type: string
-            example: SIEMPRE
+          example: 0 - 24 o SIEMPRE
     DataTELEFONIA:
       required:
       - Plan
@@ -460,7 +434,7 @@ components:
           example: 0
         Mes Fin:
           type: string
-          example: ' 0 - 24 o SIEMPRE'
+          example: 0 - 24 o SIEMPRE
     DataTELEVISION:
       required:
       - Plan
@@ -487,7 +461,7 @@ components:
           example: 0
         Mes Fin:
           type: string
-          example: ' 0 - 24 o SIEMPRE'
+          example: 0 - 24 o SIEMPRE
     DataROUTER:
       required:
       - Modelo
@@ -514,36 +488,7 @@ components:
           example: 0
         Mes Fin:
           type: string
-          example: ' 0 - 24 o SIEMPRE'
-    ProductoAdicional:
-      required:
-      - Cantidad
-      - Mes Fin
-      - Mes Inicio
-      - Precio Promocional
-      - Precio Referencial
-      - Producto Adicional
-      properties:
-        Producto Adicional:
-          type: string
-          example: STREAMING
-        Cantidad:
-          type: integer
-          example: 5
-        Precio Referencial:
-          type: number
-          format: float
-          example: 0
-        Precio Promocional:
-          type: number
-          format: float
-          example: 0
-        Mes Inicio:
-          type: integer
-          example: 0
-        Mes Fin:
-          type: string
-          example: ' 0 - 24 o SIEMPRE'
+          example: 0 - 24 o SIEMPRE
     ResponseGetProvincias:
       type: object
       properties:

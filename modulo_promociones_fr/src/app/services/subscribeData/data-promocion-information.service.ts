@@ -292,7 +292,7 @@ export class DataPromocionInformationService {
         // Combina fecha y hora en el formato deseado
         const formattedDateTime = `${date} ${time}`;
         // Asigna el valor al diccionario
-        this.diccionario[this.index]['Fecha Generacion Registro'] = formattedDateTime;
+        this.diccionario[this.index]['Fecha Generacion Registro'] = formattedDateTime.toString();
         this.sendDataUptadeDiccionario(this.diccionario[this.index], this.index);
         console.log("Diccionario: ");
         console.log(this.diccionario[this.index]);

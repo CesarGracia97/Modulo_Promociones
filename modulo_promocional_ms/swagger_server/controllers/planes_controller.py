@@ -18,7 +18,6 @@ def get_planes(body=None):  # noqa: E501
             repository = planes_Repository()
             body = RequestGetPlanes.from_dict(connexion.request.get_json())  # noqa: E501
             if body.channel == 'api-modulos-promocionales-planes':
-                print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
                 _diccionario = {}
@@ -27,7 +26,7 @@ def get_planes(body=None):  # noqa: E501
                     stype_valid = {'SERV', 'TECN', 'TISE', 'OFER'}
                     valid_stype = {'AD_TARIFFPLAN', 'AD_TARIFFPLANVARIANT', 'AD_TARIFFPLAN_TARIFFPLANVARIANT',
                                    'AD_TARIFFPLANVARIANT_PRODUCTO_ADICIONAL'}
-                    _diccionario['popcion'] = body.stype
+                    _diccionario['popcion'] = body.type
 
                     if body.stype in stype_valid:
                         _diccionario['sopcion'] = body.stype
@@ -39,7 +38,7 @@ def get_planes(body=None):  # noqa: E501
                         _diccionario['sopcion'] = body.stype
                         if body.v1 is not None:
                             _diccionario['_V1'] = body.v1
-                            if '_V2' is not None:
+                            if body.v2 is not None:
                                 _diccionario['_V2'] = body.v2
 
                         data = repository.getData_Planes(_diccionario)

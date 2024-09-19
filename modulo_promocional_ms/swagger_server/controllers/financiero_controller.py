@@ -18,7 +18,6 @@ def get_financiero(body: None):  # noqa: E501
             _financial = {"ALL_BURO", "ALL_MPAGOS", "UPGRADE", "PRECIO_REGULAR", "DIAS_GOZADOS"}
             body = RequestGetFinanciero.from_dict(connexion.request.get_json())  # noqa: E501
             if body.channel == 'api-modulos-promocionales-financiero':
-                print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
                 repository = financiero_Repository()

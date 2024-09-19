@@ -10,14 +10,17 @@ class connection:
         self.username = "bscc"
         self.password = "titan66"
         self.connection = None
+        # self.host = "192.168.59.12"
+        # self.port = "1523"
+        # self.service_name = "BSDESA"
+        # self.username = "BSCC"
+        # self.password = "DESA1234"
+        # self.connection = None
 
     def connect(self):
         try:
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, service_name=self.service_name)
             self.connection = cx_Oracle.connect(user=self.username, password=self.password, dsn=dsn_tns)
-            print("-----------------------------------------")
-            print("Conexión a la base de datos exitosa.")
-            print("-----------------------------------------")
             return self.connection
         except cx_Oracle.Error as error:
             print("--------------------------------------------------")
@@ -41,10 +44,10 @@ class connection:
             print("--------------------------------------------------------------------")
             return None
 
-    def insert_data(self, query: str, parameters: tuple = ()) -> bool:
+    def insert_data(self, query: str) -> bool:
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute(query, parameters)
+                cursor.execute(query)
                 self.connection.commit()
                 print("--------------------------------------------------------------------")
                 print("Connection - OracleDB | Inserción de datos exitosa.")

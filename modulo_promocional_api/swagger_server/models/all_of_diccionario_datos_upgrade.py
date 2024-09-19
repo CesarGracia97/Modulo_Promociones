@@ -23,7 +23,7 @@ class AllOfDiccionarioDatosUpgrade(Model):
         :param mes_inicio_upgrade: The mes_inicio_upgrade of this AllOfDiccionarioDatosUpgrade.  # noqa: E501
         :type mes_inicio_upgrade: int
         :param mes_fin_upgrade: The mes_fin_upgrade of this AllOfDiccionarioDatosUpgrade.  # noqa: E501
-        :type mes_fin_upgrade: str
+        :type mes_fin_upgrade: Object
         """
         self.swagger_types = {
             'upgrade': int,
@@ -103,7 +103,7 @@ class AllOfDiccionarioDatosUpgrade(Model):
 
 
         :return: The mes_fin_upgrade of this AllOfDiccionarioDatosUpgrade.
-        :rtype: str
+        :rtype: Object
         """
         return self._mes_fin_upgrade
 
@@ -113,7 +113,7 @@ class AllOfDiccionarioDatosUpgrade(Model):
 
 
         :param mes_fin_upgrade: The mes_fin_upgrade of this AllOfDiccionarioDatosUpgrade.
-        :type mes_fin_upgrade: str
+        :type mes_fin_upgrade: Object
         """
         if mes_fin_upgrade is None:
             raise ValueError("Invalid value for `mes_fin_upgrade`, must not be `None`")  # noqa: E501

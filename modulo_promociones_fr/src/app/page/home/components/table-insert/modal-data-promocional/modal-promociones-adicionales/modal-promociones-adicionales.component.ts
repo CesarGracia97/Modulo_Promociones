@@ -131,7 +131,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
         // Asignar los valores
         jsonObj["Precio Promocional"] = parseFloat(value) || 0;
         jsonObj["Mes Inicio"] = parseInt(mIni) || 0;
-        jsonObj["Mes Fin"] = mFin ? parseInt(mFin) : 'SIEMPRE';
+        jsonObj["Mes Fin"] = mFin ? mFin.toString() : 'SIEMPRE';
         // Validar límites de meses
         if (jsonObj["Mes Inicio"] >= 0 && jsonObj["Mes Inicio"] <= 24 && (!mFin || (jsonObj["Mes Fin"] >= 1 && jsonObj["Mes Fin"] <= 24))) {
           // Actualizar el JSON en la lista
@@ -155,7 +155,7 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
         if (!mFin || mFin == '') {
           this.diccionario[this.rowId][type]['Mes Fin'] = 'SIEMPRE';
         } else if (mFin) {
-          this.diccionario[this.rowId][type]['Mes Inicio'] = mIni;
+          this.diccionario[this.rowId][type]['Mes Fin'] = mFin.toString();
         }
         this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
       }

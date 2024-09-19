@@ -8,7 +8,6 @@ from typing import List, Dict  # noqa: F401
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.all_of_data_post_diccionario_datos_upgrade import AllOfDataPostDiccionarioDatosUpgrade  # noqa: F401,E501
 from swagger_server.models.one_of_data_post_diccionario_datos_sectores import OneOfDataPostDiccionarioDatosSectores  # noqa: F401,E501
-from swagger_server.models.all_of_data_post_diccionario_datos_streaming import AllOfDataPostDiccionarioDatosStreaming  # noqa: F401,E501
 from swagger_server.models.all_of_data_post_diccionario_datos_telefonia import AllOfDataPostDiccionarioDatosTelefonia  # noqa: F401,E501
 from swagger_server.models.all_of_data_post_diccionario_datos_television import AllOfDataPostDiccionarioDatosTelevision  # noqa: F401,E501
 from swagger_server.models.all_of_data_post_diccionario_datos_router import AllOfDataPostDiccionarioDatosRouter  # noqa: F401,E501
@@ -20,7 +19,7 @@ class DataPostDiccionarioDatos(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id_registro: int=None, nombre_promocion: str=None, fecha_inicio_promocion: date=None, fecha_finalizacion_promocion: date=None, servicio: str=None, plan_id: int=None, variant_id: int=None, producto_id: int=None, dias_gozados: str=None, canal: int=None, precio_promocional: float=None, precio_referencial: float=None, mes_inicio_promocion: int=None, mes_fin_promocion: str=None, upgrade: AllOfDataPostDiccionarioDatosUpgrade=None, ciudades: List[int]=None, sectores: OneOfDataPostDiccionarioDatosSectores=None, buro: List[int]=None, formas_de_pago: List[int]=None, fecha_generacion_registro: datetime=None, streaming: AllOfDataPostDiccionarioDatosStreaming=None, telefonia: AllOfDataPostDiccionarioDatosTelefonia=None, television: AllOfDataPostDiccionarioDatosTelevision=None, router: AllOfDataPostDiccionarioDatosRouter=None):  # noqa: E501
+    def __init__(self, id_registro: int=None, nombre_promocion: str=None, fecha_inicio_promocion: date=None, fecha_finalizacion_promocion: date=None, servicio: str=None, plan_id: int=None, variant_id: int=None, producto_id: int=None, dias_gozados: str=None, canal: int=None, precio_promocional: float=None, precio_referencial: float=None, mes_inicio_promocion: int=None, mes_fin_promocion: str=None, upgrade: AllOfDataPostDiccionarioDatosUpgrade=None, ciudades: List[int]=None, sectores: OneOfDataPostDiccionarioDatosSectores=None, buro: List[int]=None, forma_de_pago: List[int]=None, fecha_generacion_registro: datetime=None, streaming: List[str]=None, telefonia: AllOfDataPostDiccionarioDatosTelefonia=None, television: AllOfDataPostDiccionarioDatosTelevision=None, router: AllOfDataPostDiccionarioDatosRouter=None):  # noqa: E501
         """DataPostDiccionarioDatos - a model defined in Swagger
 
         :param id_registro: The id_registro of this DataPostDiccionarioDatos.  # noqa: E501
@@ -59,12 +58,12 @@ class DataPostDiccionarioDatos(Model):
         :type sectores: OneOfDataPostDiccionarioDatosSectores
         :param buro: The buro of this DataPostDiccionarioDatos.  # noqa: E501
         :type buro: List[int]
-        :param formas_de_pago: The formas_de_pago of this DataPostDiccionarioDatos.  # noqa: E501
-        :type formas_de_pago: List[int]
+        :param forma_de_pago: The forma_de_pago of this DataPostDiccionarioDatos.  # noqa: E501
+        :type forma_de_pago: List[int]
         :param fecha_generacion_registro: The fecha_generacion_registro of this DataPostDiccionarioDatos.  # noqa: E501
         :type fecha_generacion_registro: datetime
         :param streaming: The streaming of this DataPostDiccionarioDatos.  # noqa: E501
-        :type streaming: AllOfDataPostDiccionarioDatosStreaming
+        :type streaming: List[str]
         :param telefonia: The telefonia of this DataPostDiccionarioDatos.  # noqa: E501
         :type telefonia: AllOfDataPostDiccionarioDatosTelefonia
         :param television: The television of this DataPostDiccionarioDatos.  # noqa: E501
@@ -91,9 +90,9 @@ class DataPostDiccionarioDatos(Model):
             'ciudades': List[int],
             'sectores': OneOfDataPostDiccionarioDatosSectores,
             'buro': List[int],
-            'formas_de_pago': List[int],
+            'forma_de_pago': List[int],
             'fecha_generacion_registro': datetime,
-            'streaming': AllOfDataPostDiccionarioDatosStreaming,
+            'streaming': List[str],
             'telefonia': AllOfDataPostDiccionarioDatosTelefonia,
             'television': AllOfDataPostDiccionarioDatosTelevision,
             'router': AllOfDataPostDiccionarioDatosRouter
@@ -118,7 +117,7 @@ class DataPostDiccionarioDatos(Model):
             'ciudades': 'Ciudades',
             'sectores': 'Sectores',
             'buro': 'Buro',
-            'formas_de_pago': 'Formas de Pago',
+            'forma_de_pago': 'Forma de Pago',
             'fecha_generacion_registro': 'Fecha Generacion Registro',
             'streaming': 'STREAMING',
             'telefonia': 'TELEFONIA',
@@ -143,7 +142,7 @@ class DataPostDiccionarioDatos(Model):
         self._ciudades = ciudades
         self._sectores = sectores
         self._buro = buro
-        self._formas_de_pago = formas_de_pago
+        self._forma_de_pago = forma_de_pago
         self._fecha_generacion_registro = fecha_generacion_registro
         self._streaming = streaming
         self._telefonia = telefonia
@@ -578,27 +577,27 @@ class DataPostDiccionarioDatos(Model):
         self._buro = buro
 
     @property
-    def formas_de_pago(self) -> List[int]:
-        """Gets the formas_de_pago of this DataPostDiccionarioDatos.
+    def forma_de_pago(self) -> List[int]:
+        """Gets the forma_de_pago of this DataPostDiccionarioDatos.
 
 
-        :return: The formas_de_pago of this DataPostDiccionarioDatos.
+        :return: The forma_de_pago of this DataPostDiccionarioDatos.
         :rtype: List[int]
         """
-        return self._formas_de_pago
+        return self._forma_de_pago
 
-    @formas_de_pago.setter
-    def formas_de_pago(self, formas_de_pago: List[int]):
-        """Sets the formas_de_pago of this DataPostDiccionarioDatos.
+    @forma_de_pago.setter
+    def forma_de_pago(self, forma_de_pago: List[int]):
+        """Sets the forma_de_pago of this DataPostDiccionarioDatos.
 
 
-        :param formas_de_pago: The formas_de_pago of this DataPostDiccionarioDatos.
-        :type formas_de_pago: List[int]
+        :param forma_de_pago: The forma_de_pago of this DataPostDiccionarioDatos.
+        :type forma_de_pago: List[int]
         """
-        if formas_de_pago is None:
-            raise ValueError("Invalid value for `formas_de_pago`, must not be `None`")  # noqa: E501
+        if forma_de_pago is None:
+            raise ValueError("Invalid value for `forma_de_pago`, must not be `None`")  # noqa: E501
 
-        self._formas_de_pago = formas_de_pago
+        self._forma_de_pago = forma_de_pago
 
     @property
     def fecha_generacion_registro(self) -> datetime:
@@ -624,22 +623,22 @@ class DataPostDiccionarioDatos(Model):
         self._fecha_generacion_registro = fecha_generacion_registro
 
     @property
-    def streaming(self) -> AllOfDataPostDiccionarioDatosStreaming:
+    def streaming(self) -> List[str]:
         """Gets the streaming of this DataPostDiccionarioDatos.
 
 
         :return: The streaming of this DataPostDiccionarioDatos.
-        :rtype: AllOfDataPostDiccionarioDatosStreaming
+        :rtype: List[str]
         """
         return self._streaming
 
     @streaming.setter
-    def streaming(self, streaming: AllOfDataPostDiccionarioDatosStreaming):
+    def streaming(self, streaming: List[str]):
         """Sets the streaming of this DataPostDiccionarioDatos.
 
 
         :param streaming: The streaming of this DataPostDiccionarioDatos.
-        :type streaming: AllOfDataPostDiccionarioDatosStreaming
+        :type streaming: List[str]
         """
 
         self._streaming = streaming

@@ -17,7 +17,7 @@ def get_buro(body=None):  # noqa: E501
         body = RequestGetBuro.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_financiero['type'] = body.type
@@ -53,10 +53,12 @@ def get_diasgozados(body=None):  # noqa: E501
         body = RequestGetDiasGozados.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_financiero['type'] = body.type
+                params_financiero['externalTransactionId'] = body.external_transaction_id
+                params_financiero['internalTransactionId'] = internal_transaction_id
                 response = requests.post(reader.get_base_url() + '/get/Financiero', json=params_financiero)
                 response.raise_for_status()
                 return response.json(), response.status_code
@@ -89,10 +91,12 @@ def get_modospago(body=None):  # noqa: E501
         body = RequestGetFormasPago.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_financiero['type'] = body.type
+                params_financiero['externalTransactionId'] = body.external_transaction_id
+                params_financiero['internalTransactionId'] = internal_transaction_id
                 response = requests.post(reader.get_base_url() + '/get/Financiero', json=params_financiero)
                 response.raise_for_status()
                 return response.json(), response.status_code
@@ -125,13 +129,15 @@ def get_precioregular(body=None):  # noqa: E501
         body = RequestGetPrecioRegular.from_dict(connexion.request.get_json())
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 _type = body.type
                 params_financiero['type'] = body.type
                 params_financiero['_V1'] = body.tariffplanvariant
                 params_financiero['_V2'] = body.id_prod
+                params_financiero['externalTransactionId'] = body.external_transaction_id
+                params_financiero['internalTransactionId'] = internal_transaction_id
                 response = requests.post(reader.get_base_url() + '/get/Financiero', json=params_financiero)
                 response.raise_for_status()
                 return response.json(), response.status_code
@@ -164,12 +170,14 @@ def get_upgrade(body=None):  # noqa: E501
         body = RequestGetUpgrade.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
         try:
-            if body.channel == 'modulos-promocionales-web':
+            if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
                 params_financiero['type'] = body.type
                 params_financiero['_V1'] = body.tariffplan
                 params_financiero['_V2'] = body.tariffplanvariant
+                params_financiero['externalTransactionId'] = body.external_transaction_id
+                params_financiero['internalTransactionId'] = internal_transaction_id
                 response = requests.post(reader.get_base_url() + '/get/Financiero', json=params_financiero)
                 response.raise_for_status()
                 return response.json(), response.status_code

@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.one_of_telefonia_mes_fin import OneOfTELEFONIAMesFin  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,7 +15,7 @@ class TELEFONIA(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, plan: int=None, producto_adicional: str=None, cantidad: int=None, precio_referencial: float=None, precio_promocional: float=None, mes_inicio: int=None, mes_fin: str=None):  # noqa: E501
+    def __init__(self, plan: int=None, producto_adicional: str=None, cantidad: int=None, precio_referencial: float=None, precio_promocional: float=None, mes_inicio: int=None, mes_fin: OneOfTELEFONIAMesFin=None):  # noqa: E501
         """TELEFONIA - a model defined in Swagger
 
         :param plan: The plan of this TELEFONIA.  # noqa: E501
@@ -30,7 +31,7 @@ class TELEFONIA(Model):
         :param mes_inicio: The mes_inicio of this TELEFONIA.  # noqa: E501
         :type mes_inicio: int
         :param mes_fin: The mes_fin of this TELEFONIA.  # noqa: E501
-        :type mes_fin: str
+        :type mes_fin: OneOfTELEFONIAMesFin
         """
         self.swagger_types = {
             'plan': int,
@@ -39,7 +40,7 @@ class TELEFONIA(Model):
             'precio_referencial': float,
             'precio_promocional': float,
             'mes_inicio': int,
-            'mes_fin': str
+            'mes_fin': OneOfTELEFONIAMesFin
         }
 
         self.attribute_map = {
@@ -199,22 +200,22 @@ class TELEFONIA(Model):
         self._mes_inicio = mes_inicio
 
     @property
-    def mes_fin(self) -> str:
+    def mes_fin(self) -> OneOfTELEFONIAMesFin:
         """Gets the mes_fin of this TELEFONIA.
 
 
         :return: The mes_fin of this TELEFONIA.
-        :rtype: str
+        :rtype: OneOfTELEFONIAMesFin
         """
         return self._mes_fin
 
     @mes_fin.setter
-    def mes_fin(self, mes_fin: str):
+    def mes_fin(self, mes_fin: OneOfTELEFONIAMesFin):
         """Sets the mes_fin of this TELEFONIA.
 
 
         :param mes_fin: The mes_fin of this TELEFONIA.
-        :type mes_fin: str
+        :type mes_fin: OneOfTELEFONIAMesFin
         """
 
         self._mes_fin = mes_fin

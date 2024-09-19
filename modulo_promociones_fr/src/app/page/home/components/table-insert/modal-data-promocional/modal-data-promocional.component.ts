@@ -106,6 +106,8 @@ export class ModalDataPromocionalComponent implements OnInit {
 
   getPROD_CiudadesTariffplanVariantProducto(idVariant: string, ProductoId: string): void {
     if(idVariant){
+      console.log("Variant: "+idVariant)
+      console.log("Producto:"+ProductoId)
       this.fd_combos.fetchDataComboPROD(parseInt(idVariant), this.rowId);
       if(idVariant && ProductoId){
         this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(parseInt(idVariant), parseInt(ProductoId), this.rowId);
@@ -139,7 +141,7 @@ export class ModalDataPromocionalComponent implements OnInit {
       if(!mFin || mFin ==''){
         this.diccionario[this.rowId]['Mes Fin Promocion'] = 'SIEMPRE';
       } else if(mFin) {
-        this.diccionario[this.rowId]['Mes Fin Promocion'] = parseInt(mFin);
+        this.diccionario[this.rowId]['Mes Fin Promocion'] = mFin.toString();
       }
       this.data_information.sendDataUptadeDiccionario(this.diccionario[this.rowId], this.rowId);
     }

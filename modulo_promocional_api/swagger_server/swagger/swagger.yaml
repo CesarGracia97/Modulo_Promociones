@@ -982,7 +982,7 @@ components:
           example: 0
         Mes Fin UPGRADE:
           type: string
-          example: 0 - 24 o siempre
+          example: "0 - 24 o SIEMPRE"
     TELEFONIA:
       required:
       - Plan
@@ -1009,7 +1009,7 @@ components:
           example: 0
         Mes Fin:
           type: string
-          example: ' 0 - 24 o SIEMPRE'
+          example: "0 - 24 o SIEMPRE"
     TELEVISION:
       required:
       - Plan
@@ -1036,7 +1036,7 @@ components:
           example: 0
         Mes Fin:
           type: string
-          example: ' 0 - 24 o SIEMPRE'
+          example: "0 - 24 o SIEMPRE"
     ROUTER:
       required:
       - Modelo
@@ -1063,17 +1063,17 @@ components:
           example: 0
         Mes Fin:
           type: string
-          example: ' 0 - 24 o SIEMPRE'
+          example: "0 - 24 o SIEMPRE"
     DiccionarioDatos:
       required:
       - Buro
       - Canal
       - Ciudades
-      - Dias Gozado
+      - Dias Gozados
       - Fecha Finalizacion Promocion
       - Fecha Generacion Registro
       - Fecha Inicio Promocion
-      - Formas de Pago
+      - Forma de Pago
       - Id Registro
       - Mes Fin Promocion
       - Mes Inicio Promocion
@@ -1094,12 +1094,13 @@ components:
           example: Prueba de Modulos
         Fecha Inicio Promocion:
           type: string
-          format: date
-          example: 2024-08-08
+          example: "2024-08-08"
         Fecha Finalizacion Promocion:
           type: string
-          format: date
-          example: 2024-08-08
+          example: "2024-08-08"
+        Fecha Generacion Registro:
+          type: string
+          example: "2024-09-17 10:33:26"
         Servicio:
           type: string
           example: INTERNET
@@ -1134,7 +1135,7 @@ components:
           example: 24
         Mes Fin Promocion:
           type: string
-          example: 0 - 24 o SIEMPRE
+          example: "0 - 24 o SIEMPRE"
         UPGRADE:
           allOf:
           - $ref: '#/components/schemas/Upgrade'
@@ -1166,16 +1167,13 @@ components:
           - 96000
           items:
             type: integer
-        Formas de Pago:
+        Forma de Pago:
           type: array
           example:
           - 96006
           - 96000
           items:
             type: integer
-        Fecha Generacion Registro:
-          type: string
-          format: date-time
         STREAMING:
           type: array
           example:
@@ -1321,4 +1319,3 @@ components:
       example:
         PLAN_UPGRADE: PLAN_UPGRADE
         ID: 0
-

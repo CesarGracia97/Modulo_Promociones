@@ -49,8 +49,8 @@ class RequestGetLugares(Model):
             'external_transaction_id': 'externalTransactionId',
             'channel': 'channel',
             'type': 'type',
-            'id_provs': 'id_Provs:',
-            'id_cities': 'id_Cities:',
+            'id_provs': 'id_Provs',
+            'id_cities': 'id_Cities',
             'v1': '_V1',
             'v2': '_V2',
             'v3': '_V3'

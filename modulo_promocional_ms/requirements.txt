@@ -9,3 +9,4 @@ gunicorn==21.2.0
 jsonschema==4.19.2
 jsonschema-specifications==2023.7.1
 cx-Oracle==8.3.0
+requests~=2.32.3

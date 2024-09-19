@@ -1,1 +1,0 @@
-# MODULO_PROMOCIONES_BACKEND (Microservicio)

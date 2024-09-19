@@ -17,5 +17,6 @@
             "formas_de_pago", "nombre_promocion", "plan_id", "producto_id", "sectores", "servicio", "variant_id",
             "mes_fin_promocion", "mes_inicio_promocion", "precio_referencial", "precio_promocional"]
     },
-    "RUTA_BASE": "http://192.168.59.115:2013/rest/modulos-promocionales-api/v1.0"
+    "RUTA_BASE": "http://192.168.28.48:2013/rest/modulos-promocionales-api/v1.0",
+    "RUTA_BASE2": "http://192.168.59.115:2013/rest/modulos-promocionales-api/v1.0"
 }

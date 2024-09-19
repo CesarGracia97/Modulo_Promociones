@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.one_of_upgrade_mes_fin_upgrade import OneOfUpgradeMesFinUpgrade  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,7 +15,7 @@ class Upgrade(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, upgrade: int=None, mes_inicio_upgrade: int=None, mes_fin_upgrade: str=None):  # noqa: E501
+    def __init__(self, upgrade: int=None, mes_inicio_upgrade: int=None, mes_fin_upgrade: OneOfUpgradeMesFinUpgrade=None):  # noqa: E501
         """Upgrade - a model defined in Swagger
 
         :param upgrade: The upgrade of this Upgrade.  # noqa: E501
@@ -22,12 +23,12 @@ class Upgrade(Model):
         :param mes_inicio_upgrade: The mes_inicio_upgrade of this Upgrade.  # noqa: E501
         :type mes_inicio_upgrade: int
         :param mes_fin_upgrade: The mes_fin_upgrade of this Upgrade.  # noqa: E501
-        :type mes_fin_upgrade: str
+        :type mes_fin_upgrade: OneOfUpgradeMesFinUpgrade
         """
         self.swagger_types = {
             'upgrade': int,
             'mes_inicio_upgrade': int,
-            'mes_fin_upgrade': str
+            'mes_fin_upgrade': OneOfUpgradeMesFinUpgrade
         }
 
         self.attribute_map = {
@@ -97,22 +98,22 @@ class Upgrade(Model):
         self._mes_inicio_upgrade = mes_inicio_upgrade
 
     @property
-    def mes_fin_upgrade(self) -> str:
+    def mes_fin_upgrade(self) -> OneOfUpgradeMesFinUpgrade:
         """Gets the mes_fin_upgrade of this Upgrade.
 
 
         :return: The mes_fin_upgrade of this Upgrade.
-        :rtype: str
+        :rtype: OneOfUpgradeMesFinUpgrade
         """
         return self._mes_fin_upgrade
 
     @mes_fin_upgrade.setter
-    def mes_fin_upgrade(self, mes_fin_upgrade: str):
+    def mes_fin_upgrade(self, mes_fin_upgrade: OneOfUpgradeMesFinUpgrade):
         """Sets the mes_fin_upgrade of this Upgrade.
 
 
         :param mes_fin_upgrade: The mes_fin_upgrade of this Upgrade.
-        :type mes_fin_upgrade: str
+        :type mes_fin_upgrade: OneOfUpgradeMesFinUpgrade
         """
         if mes_fin_upgrade is None:
             raise ValueError("Invalid value for `mes_fin_upgrade`, must not be `None`")  # noqa: E501
