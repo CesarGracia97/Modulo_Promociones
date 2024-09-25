@@ -8,7 +8,6 @@ from swagger_server.utils.transactions.transaction import TransactionId
 
 reader = ReaderJSON()
 internal = TransactionId()
-params_post = {'channel': 'api-modulos-promocionales-post', 'data': {}}
 
 
 def post_modulopromocional(body=None):  # noqa: E501
@@ -16,6 +15,7 @@ def post_modulopromocional(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = ResquestPostDiccionarioDatos.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_post = {'channel': 'api-modulos-promocionales-post', 'data': {}}
         try:
             if body.channel == 'web-modulos-promocionales':
                 params_post['externalTransactionId'] = body.external_transaction_id

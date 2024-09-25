@@ -8,8 +8,6 @@ from swagger_server.models.request_get_provincia import RequestGetProvincia  # n
 from swagger_server.models.request_get_sectores import RequestGetSectores  # noqa: E501from swagger_server.utils.logs.logging import Log
 from swagger_server.utils.transactions.transaction import TransactionId
 
-
-params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
 reader = ReaderJSON()
 internal = TransactionId()
 
@@ -19,11 +17,11 @@ def get_provincias(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetProvincia.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
                 print(body.type)
-                _type = body.type
                 if body.type in set(reader.get_type_list('PROVINCIAS')):
                     params_lugares['type'] = body.type
                     params_lugares['externalTransactionId'] = body.external_transaction_id
@@ -61,6 +59,7 @@ def get_ciudades(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetCiudades.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
@@ -119,6 +118,7 @@ def get_sectores(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetSectores.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")

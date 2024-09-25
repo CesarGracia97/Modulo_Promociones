@@ -9,7 +9,6 @@ from swagger_server.models.request_get_planes import RequestGetPlanes  # noqa: E
 from swagger_server.models.request_get_servicios import RequestGetServicios  # noqa: E501from swagger_server.models.response_servicios_data import ResponseServiciosData  # noqa: E501
 from swagger_server.utils.transactions.transaction import TransactionId
 
-params_planes = {'channel': 'api-modulos-promocionales-planes'}
 reader = ReaderJSON()
 internal = TransactionId()
 
@@ -19,6 +18,7 @@ def get_combos(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetCombos.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
@@ -61,6 +61,7 @@ def get_ofertas(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetOfertas.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
@@ -101,6 +102,7 @@ def get_planes(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetPlanes.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
@@ -147,6 +149,7 @@ def get_servicios(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = RequestGetServicios.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
                 print("*** FASE DE ESCUCHA ACTIVA ***")
