@@ -13,17 +13,20 @@ RUN apk add --no-cache unzip && \
     unzip dist.zip -d ./dist && \
     rm dist.zip
 
-# Instala un servidor HTTP simple para servir el contenido estático de Angular
-RUN npm install -g http-server
 
-# Fase para instalar certificados SSL
-# Copia y descomprime certs.zip
-COPY certs.zip /app/
-RUN unzip certs.zip -d /etc/ssl/certs/ && \
-    rm certs.zip
+ FROM nginx:1.23-alpine
+
+# INSTALAR CERTIFICADOS SSL
+# RUN mkdir -p /app/nginx/certs
+# COPY certs.zip /app/nginx/certs
+# RUN unzip -o /app/nginx/certs/certs.zip -d /app/nginx/certs
+    
+RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
+    chmod -R 770 /var/cache/nginx /var/run /var/log/nginx
+RUN cp /usr/share/zoneinfo/America/Guayaquil /etc/localtime
+#COPY default-ssl.conf /etc/nginx/conf.d/default-ssl.conf
+COPY nginx.conf /etc/nginx/nginx.conf 
+COPY --from=build-step /app/dist/tv-cable-deb-automaticos /usr/share/nginx/html
 
 # Expone el puerto que usarás
 EXPOSE 2021
-
-# Comando para correr la aplicación con http-server
-CMD ["http-server", "dist", "-p", "2021", "--ssl", "--cert", "/etc/ssl/certs/cert.pem", "--key", "/etc/ssl/certs/key.pem"]
