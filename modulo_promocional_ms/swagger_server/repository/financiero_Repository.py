@@ -1,12 +1,12 @@
 from swagger_server.resources.models.model_finance import MPagos, Buro, UPGRADE, Precio_Regular, Dias_Gozados
 from swagger_server.resources.database.connection import connection
-from swagger_server.utils.ReaderJSON import ReaderJSON
+from swagger_server.utils.Readers.ReaderQuery import ReaderQuery
 
 
 class financiero_Repository:
     def __init__(self):
         self.db = connection()
-        self.reader_json = ReaderJSON()
+        self.reader_json = ReaderQuery()
 
     def getData_Financial(self, _diccionario: dict) -> dict:
         try:
@@ -53,7 +53,7 @@ class financiero_Repository:
                         dt = Dias_Gozados(result[0], result[1])
                         data['DIAS_GOZADOS'].append(dt)
 
-                print("\n**** " + _diccionario['name_Query'] + " - DATOS OBTENIDOS ****\n")
+                print("**** " + _diccionario['name_Query'] + " - DATOS OBTENIDOS ****")
                 self.db.close()
                 return data
 

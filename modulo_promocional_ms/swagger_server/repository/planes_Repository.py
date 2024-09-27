@@ -2,13 +2,13 @@ from swagger_server.resources.models.model_place import Provincia, Ciudad, Secto
 from swagger_server.resources.models.model_plane import Ofertas, Servicios, Tipo_Servicios, TariffPlanes, TariffPlanVariant, \
     Tecnologias, Producto
 from swagger_server.resources.database.connection import connection
-from swagger_server.utils.ReaderJSON import ReaderJSON
+from swagger_server.utils.Readers.ReaderQuery import ReaderQuery
 
 
 class planes_Repository:
     def __init__(self):
         self.db = connection()
-        self.reader_json = ReaderJSON()
+        self.reader_json = ReaderQuery()
 
     def getData_Planes(self, _diccionario: dict) -> dict:
         try:
@@ -32,7 +32,7 @@ class planes_Repository:
                             for result in results:
                                 oferta = Ofertas(result[0], result[1])
                                 data['OFERTAS'].append(oferta)
-                            print("\n**** OFERTAS - DATOS OBTENIDOS ****\n")
+                            print("**** OFERTAS - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -49,7 +49,7 @@ class planes_Repository:
                             for result in results:
                                 servicio = Servicios(result[0])
                                 data['SERVICIOS'].append(servicio)
-                            print("\n**** SERVICIOS - DATOS OBTENIDOS ****\n")
+                            print("**** SERVICIOS - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -66,7 +66,7 @@ class planes_Repository:
                             for result in results:
                                 tecnologia = Tecnologias(result[0])
                                 data['TECNOLOGIAS'].append(tecnologia)
-                            print("\n**** TECNOLOGIAS - DATOS OBTENIDOS ****\n")
+                            print("**** TECNOLOGIAS - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -83,7 +83,7 @@ class planes_Repository:
                             for result in results:
                                 tservicio = Tipo_Servicios(result[0])
                                 data['TIPO_SERVICIO'].append(tservicio)
-                            print("\n**** TIPO DE SERVICIO - DATOS OBTENIDOS ****\n")
+                            print("**** TIPO DE SERVICIO - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -118,7 +118,7 @@ class planes_Repository:
                                 for result in results:
                                     planes = TariffPlanes(result[0], result[1])
                                     data['PLANES'].append(planes)
-                            print("\n**** PLANES - DATOS OBTENIDOS ****\n")
+                            print("**** PLANES - DATOS OBTENIDOS ****")
                             return data
 
                 if _diccionario["popcion"] == "COMBO":
@@ -140,7 +140,7 @@ class planes_Repository:
                             for result in results:
                                 _COMBO_PLAN = TariffPlanes(result[0], result[1])
                                 data['COMBO_PLAN'].append(_COMBO_PLAN)
-                            print("\n**** COMBO_PLAN - DATOS OBTENIDOS ****\n")
+                            print("**** COMBO_PLAN - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -160,7 +160,7 @@ class planes_Repository:
                             for result in results:
                                 _COMBO_PLANVARIANT = TariffPlanVariant(result[0], result[1])
                                 data['COMBO_PLANVARIANT'].append(_COMBO_PLANVARIANT)
-                            print("\n**** COMBO_PLANVARIANT - DATOS OBTENIDOS ****\n")
+                            print("**** COMBO_PLANVARIANT - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -180,7 +180,7 @@ class planes_Repository:
                             for result in results:
                                 _COMBO_PRODUCTO = Producto(result[0], result[1])
                                 data['COMBO_PRODUCTO'].append(_COMBO_PRODUCTO)
-                            print("\n**** COMBO_PRODUCTO - DATOS OBTENIDOS ****\n")
+                            print("**** COMBO_PRODUCTO - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -200,7 +200,7 @@ class planes_Repository:
                             for result in results:
                                 _COMBO_TIPO_SERVICIO = Tipo_Servicios(result[0])
                                 data['COMBO_TIPO_SERVICIO'].append(_COMBO_TIPO_SERVICIO)
-                            print("\n**** COMBO_TIPO_SERVICIO - DATOS OBTENIDOS ****\n")
+                            print("**** COMBO_TIPO_SERVICIO - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -226,7 +226,7 @@ class planes_Repository:
                             for result in results:
                                 _CProvincias = Provincia(result[0], result[1])
                                 data['C_PROVINCIA'].append(_CProvincias)
-                            print("\n**** C_PROVINCIAS - DATOS OBTENIDOS ****\n")
+                            print("**** C_PROVINCIAS - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -254,7 +254,7 @@ class planes_Repository:
                             for result in results:
                                 _CCiudad = Ciudad(result[0], result[1], result[2])
                                 data['C_CIUDAD'].append(_CCiudad)
-                            print("\n**** C_CIUDAD - DATOS OBTENIDOS ****\n")
+                            print("**** C_CIUDAD - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -284,7 +284,7 @@ class planes_Repository:
                             for result in results:
                                 _CSector = Sector(result[0], result[1], result[2])
                                 data['C_SECTOR'].append(_CSector)
-                            print("\n**** C_CIUDAD - DATOS OBTENIDOS ****\n")
+                            print("**** C_CIUDAD - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
 
@@ -302,7 +302,7 @@ class planes_Repository:
                             for result in results:
                                 _COMBO_PRODUCTO = Producto(result[0], result[1])
                                 data['COMBO_PRODUCTO'].append(_COMBO_PRODUCTO)
-                            print("\n**** COMBO_PRODUCTO - DATOS OBTENIDOS ****\n")
+                            print("**** COMBO_PRODUCTO - DATOS OBTENIDOS ****")
                             self.db.close()
                             return data
         except Exception as e:

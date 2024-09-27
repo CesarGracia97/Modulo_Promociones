@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 import connexion
 import requests
@@ -19,9 +19,9 @@ def get_modulo_promocional(body=None):  # noqa: E501
         try:
             if body.channel == 'api-modulos-promocionales-post':
                 dic = body.data
-                id_registro = generate_id_registro(dic.id_registro, dic.fecha_generacion_registro, body, internal_transaction_id)
-                data_to_insert = moduloprin_data(dic, id_registro)  # Extrae datos para la tabla principal
+                data_to_insert = moduloprin_data(dic, body.external_transaction_id)  # Extrae datos para la tabla principal
                 query = generate_query_modpromo(data_to_insert)  # Genera el query de inserción
+                print(query)
                 db = connection()  # Inserta los datos en la base de datos
                 db.connect()
                 success = db.insert_data(query)
@@ -33,7 +33,7 @@ def get_modulo_promocional(body=None):  # noqa: E501
                         'externalTransactionId': body.external_transaction_id,
                         'internalTransactionId': internal_transaction_id
                     }), 500
-                success = handle_promociones_adicionales(db, dic, id_registro)  # Inserción de productos adicionales
+                success = handle_promociones_adicionales(db, dic, body.external_transaction_id)  # Inserción de productos adicionales
                 if not success:
                     db.close()
                     return jsonify({
@@ -71,65 +71,39 @@ def get_modulo_promocional(body=None):  # noqa: E501
             return jsonify(response), 400
 
 
-def convert_to_date(date_str):
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
-    except ValueError:
-        return datetime.strptime(date_str, "%Y-%m-%d")
-
-
-def generate_id_registro(id_registro, fecha_generacion_registro, body, internal_transaction_id):
-    try:
-        fecha_obj = convert_to_date(fecha_generacion_registro)
-        fecha_str = fecha_obj.strftime('%d%m%y:%H%M')
-        return f"MODP-{id_registro}-{fecha_str}"
-    except requests.exceptions.HTTPError as http_err:
-        print("--------------------------------------------------------------------")
-        print("generate_id_registro - get_modulo_promocional | Error detectado")
-        print("Tipo de Peticion: POST")
-        print("Error: ", http_err.response.status_code, http_err.response.text)
-        print("--------------------------------------------------------------------")
-        response = {
-            'errorCode': http_err.response.status_code,
-            'message': http_err.response.text,
-            'externalTransactionId': body.external_transaction_id,
-            'internalTransactionId': internal_transaction_id
-        }
-        return jsonify(response), 400
-
-
-def moduloprin_data(dic, id_registro):
+def moduloprin_data(dic, external_transaction_id):
     return {
-        "IDREGISTRO": id_registro,
-        "FGENERACIONREGISTRO": convert_to_date(dic.fecha_generacion_registro),
+        "IDREGISTRO": external_transaction_id,
+        "FGENERACIONREGISTRO": dic.fecha_generacion_registro,
         "NOMBREPROMOCION": dic.nombre_promocion,
-        "FINICIOCONTRATACION": convert_to_date(dic.fecha_inicio_promocion),
-        "FFINCONTRATACION": convert_to_date(dic.fecha_finalizacion_promocion),
+        "FINICIOCONTRATACION": dic.fecha_inicio_promocion,
+        "FFINCONTRATACION": dic.fecha_finalizacion_promocion,
         "FFINANTICIPADACONTRATACION": None,
         "ISVALID": 'Y',
         "PRODUCTOID": int(dic.producto_id),
         "VARIANTID": int(dic.variant_id),
         "REDID": None,
         "CANALID": int(dic.canal),
+        "BURO": ','.join(map(str, dic.buro)),
         "EXCEPCION": None,
+        "FORMADEPAGO": ','.join(map(str, dic.forma_de_pago)),
+        "ENTIDADBANCARIA": None,
+        "EMISORTARJETA": None,
+        "CIUDADES": ','.join(map(str, dic.ciudades)),
+        "SECTORES": json.dumps(dic.sectores),
+        "SUBSECTORES": None,
         "MESINICIOPROMOCION": int(dic.mes_inicio_promocion),
         "MESFINPROMOCION": dic.mes_fin_promocion,
         "FFINPROMOCION": None,
         "DIASGOZADOS": dic.dias_gozados,
         "PRECIOPROMOCIONAL": float(dic.precio_promocional),
         "PRECIOREFERENCIAL": float(dic.precio_referencial),
-        "FCADUCIDADANTICIPADAREGISTRO": None,
-        "BURO": ','.join(map(str, dic.buro)),
-        "FORMADEPAGO": ','.join(map(str, dic.forma_de_pago)),
-        "ENTIDADBANCARIA": None,
-        "EMISORTARJETA": None,
-        "CIUDADES": json.dumps(dic.ciudades),
-        "SECTORES": json.dumps(dic.sectores),
         "UPGRADE": json.dumps({
             "Upgrade": int(dic.upgrade.upgrade),
             "Mes Inicio Upgrade": int(dic.upgrade.mes_inicio_upgrade),
             "Mes Fin Upgrade": dic.upgrade.mes_fin_upgrade
-        }) if dic.upgrade else None
+        }) if dic.upgrade else None,
+        "FCADUCIDADANTICIPADAREGISTRO": None
     }
 
 
@@ -139,15 +113,21 @@ def generate_query_modpromo(data):
 
     for v in data.values():
         if v is None:
-            values_list.append('NULL')
+            values_list.append('NULL')  # Asegura que valores nulos estén presentes
         elif isinstance(v, str):
             sanitized_value = v.replace("'", "''")
             values_list.append(f"'{sanitized_value}'")
         elif isinstance(v, (int, float)):
             values_list.append(str(v))
-        elif isinstance(v, datetime):
-            formatted_date = v.strftime('%Y-%m-%d %H:%M:%S')
-            values_list.append(f"TO_DATE('{formatted_date}', 'YYYY-MM-DD HH24:MI:SS')")
+        elif isinstance(v, (datetime, date)):  # Incluimos tanto datetime como date
+            if isinstance(v, datetime) and v.time() != datetime.min.time():
+                # Si tiene hora, usamos TO_TIMESTAMP
+                formatted_date = v.strftime('%Y-%m-%d %H:%M:%S')
+                values_list.append(f"TO_TIMESTAMP('{formatted_date}', 'YYYY-MM-DD HH24:MI:SS')")
+            else:
+                # Solo fecha, usamos TO_DATE
+                formatted_date = v.strftime('%Y-%m-%d')
+                values_list.append(f"TO_DATE('{formatted_date}', 'YYYY-MM-DD')")
         elif isinstance(v, (list, dict)):
             json_value = json.dumps(v).replace("'", "''")
             values_list.append(f"'{json_value}'")
@@ -157,7 +137,7 @@ def generate_query_modpromo(data):
     return query
 
 
-def handle_promociones_adicionales(db, dic, id_registro):
+def handle_promociones_adicionales(db, dic, external_transaction_id):
     productos_adicionales = ['telefonia', 'television', 'router', 'streaming']
 
     for producto in productos_adicionales:
@@ -166,7 +146,7 @@ def handle_promociones_adicionales(db, dic, id_registro):
                 for streaming_data_str in dic.streaming:  # Caso especial: streaming tiene múltiples entradas
                     streaming_data = json.loads(streaming_data_str)  # Convertir de string a JSON
                     data_to_insert = {
-                        "IDREGISTRO": id_registro,
+                        "IDREGISTRO": external_transaction_id,
                         "PRODUCTO": 'STREAMING',
                         "PLANPAQUETEMODELO": int(streaming_data.get('Paquete', 0)),
                         "CANTIDAD": 0,
@@ -181,7 +161,7 @@ def handle_promociones_adicionales(db, dic, id_registro):
             else:
                 # Telefonía, Televisión o Router
                 data_to_insert = {
-                    "IDREGISTRO": id_registro,
+                    "IDREGISTRO": external_transaction_id,
                     "PRODUCTO": producto.upper(),
                     "PLANPAQUETEMODELO": getattr(dic, producto).get('modelo' if producto == 'router' else 'plan'),
                     "CANTIDAD": int(getattr(dic, producto).get('cantidad', 0)),

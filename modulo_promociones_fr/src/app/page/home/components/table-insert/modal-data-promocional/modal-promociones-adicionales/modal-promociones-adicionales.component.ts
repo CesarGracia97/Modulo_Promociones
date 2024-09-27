@@ -16,6 +16,7 @@ import { Ciudades } from '../../../../../../interfaces/places/ciudad.interface';
 import { Buro } from '../../../../../../interfaces/financial/buro.interface';
 import { ModosPago } from '../../../../../../interfaces/financial/modos-pago.interface';
 import { DiasGozados } from '../../../../../../interfaces/DataPromocional/dias-gozados.interface';
+import { json } from 'node:stream/consumers';
 
 @Component({
   selector: 'app-modal-promociones-adicionales',
@@ -129,10 +130,11 @@ export class ModalPromocionesAdicionalesComponent implements OnInit {
         let currentJson = this.diccionario[this.rowId]['STREAMING'][selectedTableIdx]; // Recuperar el JSON existente de la tabla seleccionada
         let jsonObj = currentJson ? JSON.parse(currentJson) : {};
         // Asignar los valores
+        jsonObj["Precio Referencial"] = this.precioRegularStreamingData[this.rowId][this.selectedTableIndex[this.rowId]][0].PRECIO
         jsonObj["Precio Promocional"] = parseFloat(value) || 0;
         jsonObj["Mes Inicio"] = parseInt(mIni) || 0;
         jsonObj["Mes Fin"] = mFin ? mFin.toString() : 'SIEMPRE';
-        // Validar límites de meses
+        // Validar límites de meses<s
         if (jsonObj["Mes Inicio"] >= 0 && jsonObj["Mes Inicio"] <= 24 && (!mFin || (jsonObj["Mes Fin"] >= 1 && jsonObj["Mes Fin"] <= 24))) {
           // Actualizar el JSON en la lista
           this.diccionario[this.rowId]['STREAMING'][selectedTableIdx] = JSON.stringify(jsonObj);

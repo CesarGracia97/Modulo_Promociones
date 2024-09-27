@@ -1,12 +1,12 @@
 from swagger_server.resources.models.model_place import Provincia, Ciudad, Sector
 from swagger_server.resources.database.connection import connection
-from swagger_server.utils.ReaderJSON import ReaderJSON
+from swagger_server.utils.Readers.ReaderQuery import ReaderQuery
 
 
 class lugares_Repository:
     def __init__(self):
         self.db = connection()
-        self.reader_json = ReaderJSON()
+        self.reader_json = ReaderQuery()
 
     def getData_Places(self, _diccionario: dict) -> dict:
         _ciudades = {"CIUDADES_ESPECIFICASxPROV", "CIUDADES_ESPECIFICASxTFV", "CIUDADES_ESPECIFICASxPROVxTFV",
@@ -40,7 +40,7 @@ class lugares_Repository:
                             for result in results:
                                 ciudades = Ciudad(result[0], result[1], result[2])
                                 data['CITIES'].append(ciudades)
-                            print("\n**** CIUDADES - DATOS OBTENIDOS ****\n")
+                            print("**** CIUDADES - DATOS OBTENIDOS ****")
                         elif _diccionario["name_Query"] == "ALL_SECTORS":
                             data['SECTORS'] = []
                             for result in results:

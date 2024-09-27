@@ -1,6 +1,6 @@
 export const environment = {
     
-    MAIN_URL: 'http://192.168.28.48:2014/rest/modulos-promocionales-api/v1.0',
+    MAIN_URL: 'http://127.0.0.1:2014/rest/modulos-promocionales-api/v1.0',
     CHANNEL: 'web-modulos-promocionales',
 
     //APIs

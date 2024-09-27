@@ -1,7 +1,12 @@
-import glob
-import logging
-from logging.handlers import RotatingFileHandler
-import datetime
+
+import os
+from datetime import datetime
+
+class logging:
+    def __init__(self):
+        self.log_directory = "/swagger_server/utils/logs/logs"
+        if not os.path.exists("/swagger_server/utils/logs/logs"):
+            os.makedirs("/swagger_server/utils/logs/logs")
 
 
 class Log:

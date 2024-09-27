@@ -30,7 +30,7 @@ import { ModalUpgradeComponent } from './modal-upgrade/modal-upgrade.component';
   imports: [CommonModule, FormsModule, ModalCiudadesysectoresComponent, ModalPromocionesAdicionalesComponent,
     ModalEntidadesComponent, ModalTarjetasComponent, ModalUpgradeComponent],
   templateUrl: './modal-data-promocional.component.html',
-  styleUrls: ['./modal-data-promocional.component.scss', './modal-data-promocional.component2.scss']
+  styleUrl: './modal-data-promocional.component.scss'
 })
 export class ModalDataPromocionalComponent implements OnInit {
   //Variables de Vista
@@ -106,8 +106,6 @@ export class ModalDataPromocionalComponent implements OnInit {
 
   getPROD_CiudadesTariffplanVariantProducto(idVariant: string, ProductoId: string): void {
     if(idVariant){
-      console.log("Variant: "+idVariant)
-      console.log("Producto:"+ProductoId)
       this.fd_combos.fetchDataComboPROD(parseInt(idVariant), this.rowId);
       if(idVariant && ProductoId){
         this.fd_lugares.fetchDataCiudadesALLXTariffplanVariant(parseInt(idVariant), parseInt(ProductoId), this.rowId);

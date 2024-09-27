@@ -1,29 +1,29 @@
-FROM node:19.5-alpine as build-step
-RUN apk add unzip
-RUN apk add --no-cache tzdata
-#USER root
-RUN mkdir -p /app 
+# Usa la imagen de Node.js apropiada para Angular 17
+# Según la documentación, Angular 17 requiere Node.js v18.x
+FROM node:18-alpine as build
+
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-COPY package.json /app
-COPY dist.zip /app
-#RUN npm install npm@9.4.0
-COPY . .
-RUN unzip -o /app/dist.zip -d /app/dist
-#RUN npm run build --prod
+# Copia el archivo compilado dist.zip al contenedor
+COPY dist.zip /app/
 
-FROM nginx:1.23-alpine
+# Descomprime el archivo dist.zip
+RUN apk add --no-cache unzip && \
+    unzip dist.zip -d ./dist && \
+    rm dist.zip
 
-# INSTALAR CERTIFICADOS SSL
-RUN mkdir -p /app/nginx/certs
-COPY certs.zip /app/nginx/certs
-RUN unzip -o /app/nginx/certs/certs.zip -d /app/nginx/certs
+# Instala un servidor HTTP simple para servir el contenido estático de Angular
+RUN npm install -g http-server
 
-RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
-    chmod -R 770 /var/cache/nginx /var/run /var/log/nginx
-RUN cp /usr/share/zoneinfo/America/Guayaquil /etc/localtime
-#COPY default-ssl.conf /etc/nginx/conf.d/default-ssl.conf
-COPY nginx.conf /etc/nginx/nginx.conf 
-COPY --from=build-step /app/dist/tv-cable-deb-automaticos /usr/share/nginx/html
+# Fase para instalar certificados SSL
+# Copia y descomprime certs.zip
+COPY certs.zip /app/
+RUN unzip certs.zip -d /etc/ssl/certs/ && \
+    rm certs.zip
 
+# Expone el puerto que usarás
 EXPOSE 2021
+
+# Comando para correr la aplicación con http-server
+CMD ["http-server", "dist", "-p", "2021", "--ssl", "--cert", "/etc/ssl/certs/cert.pem", "--key", "/etc/ssl/certs/key.pem"]

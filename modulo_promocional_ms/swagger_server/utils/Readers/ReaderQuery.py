@@ -2,10 +2,10 @@ import json
 import os
 
 
-class ReaderJSON:
+class ReaderQuery:
     def __init__(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        self._PATH = os.path.join(current_dir, "..", "utils", "Readers", "JSON", "Query.json")
+        self._PATH = os.path.join(current_dir, "JSON", "query.json")
 
     def getQuery(self, _diccionario: dict):
         _type = ""
