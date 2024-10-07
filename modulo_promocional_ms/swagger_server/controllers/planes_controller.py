@@ -6,6 +6,7 @@ from swagger_server.repository.planes_Repository import planes_Repository
 from swagger_server.uses_cases.FormattedPlans import FormattedPlans
 from swagger_server.utils.Readers.ReaderType import ReaderType
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 internal = TransactionId()
 reader = ReaderType()
@@ -13,9 +14,11 @@ reader = ReaderType()
 
 def get_planes(body=None):  # noqa: E501
     """get_planes Consulta de Datos de Provincias segun sus parametros. # noqa: E501 """
+    message = f"start get_planes"
     if connexion.request.is_json:
         body = RequestGetPlanes.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         try:
             if body.channel == 'api-modulos-promocionales-planes':
                 print(body.type)

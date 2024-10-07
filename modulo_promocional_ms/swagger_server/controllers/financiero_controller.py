@@ -7,6 +7,7 @@ from swagger_server.repository.financiero_Repository import financiero_Repositor
 from swagger_server.uses_cases.FormattedFinancial import FormattedFinance
 from swagger_server.utils.Readers.ReaderType import ReaderType
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 internal = TransactionId()
 reader = ReaderType()
@@ -14,11 +15,14 @@ reader = ReaderType()
 
 def get_financiero(body: None):  # noqa: E501
     """get_financiero"""
+    message = f"start get_financiero"
     if connexion.request.is_json:
         body = RequestGetFinanciero.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         try:
             if body.channel == 'api-modulos-promocionales-financiero':
+
                 print(body.type)
                 repository = financiero_Repository()
                 frt = FormattedFinance()

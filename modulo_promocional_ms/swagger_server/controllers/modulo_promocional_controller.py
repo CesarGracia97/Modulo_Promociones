@@ -7,15 +7,18 @@ from flask import jsonify, json
 from swagger_server.models.resquest_post_diccionario_datos import ResquestPostDiccionarioDatos  # noqa: E501
 from swagger_server.resources.database.connection import connection
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 internal = TransactionId()
 
 
 def get_modulo_promocional(body=None):  # noqa: E501
     """get_modulo_promocional  # noqa: E501"""
+    message = f"start get_modulo_promocional"
     if connexion.request.is_json:
         body = ResquestPostDiccionarioDatos.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         try:
             if body.channel == 'api-modulos-promocionales-post':
                 dic = body.data
