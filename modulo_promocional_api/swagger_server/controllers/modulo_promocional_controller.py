@@ -5,6 +5,7 @@ from datetime import datetime, date
 from swagger_server.config.config import ReaderJSON
 from swagger_server.models.resquest_post_diccionario_datos import ResquestPostDiccionarioDatos  # noqa: E501
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 reader = ReaderJSON()
 internal = TransactionId()
@@ -12,9 +13,11 @@ internal = TransactionId()
 
 def post_modulopromocional(body=None):  # noqa: E501
     """post_modulopromocional Envio de Datos a Base de Datos # noqa: E501"""
+    message = f"start post_modulopromocional"
     if connexion.request.is_json:
         body = ResquestPostDiccionarioDatos.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_post = {'channel': 'api-modulos-promocionales-post', 'data': {}}
         try:
             if body.channel == 'web-modulos-promocionales':

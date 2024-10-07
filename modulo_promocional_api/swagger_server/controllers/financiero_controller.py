@@ -5,6 +5,7 @@ from swagger_server.config.config import ReaderJSON
 from swagger_server.models import RequestGetBuro, RequestGetDiasGozados, RequestGetFormasPago, RequestGetPrecioRegular
 from swagger_server.models.request_get_upgrade import RequestGetUpgrade  # noqa: E501
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 reader = ReaderJSON()
 internal = TransactionId()
@@ -12,9 +13,11 @@ internal = TransactionId()
 
 def get_buro(body=None):  # noqa: E501
     """get_buro Consulta de Buro # noqa: E501 """
+    message = f"start get_buro"
     if connexion.request.is_json:
         body = RequestGetBuro.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_financiero = {'channel': 'api-modulos-promocionales-financiero'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -51,9 +54,11 @@ def get_buro(body=None):  # noqa: E501
 
 def get_diasgozados(body=None):  # noqa: E501
     """get_diasgozados Consulta de Dias Gozados # noqa: E501 """
+    message = f"start get_diasgozados"
     if connexion.request.is_json:
         body = RequestGetDiasGozados.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_financiero = {'channel': 'api-modulos-promocionales-financiero'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -90,9 +95,11 @@ def get_diasgozados(body=None):  # noqa: E501
 
 def get_modospago(body=None):  # noqa: E501
     """get_modospago Consulta de Modos de Pago # noqa: E501 """
+    message = f"start get_modospago"
     if connexion.request.is_json:
         body = RequestGetFormasPago.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_financiero = {'channel': 'api-modulos-promocionales-financiero'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -129,9 +136,11 @@ def get_modospago(body=None):  # noqa: E501
 
 def get_precioregular(body=None):  # noqa: E501
     """get_precioregular Consulta de Precios de Productos # noqa: E501 """
+    message = f"start get_precioregular"
     if connexion.request.is_json:
         body = RequestGetPrecioRegular.from_dict(connexion.request.get_json())
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_financiero = {'channel': 'api-modulos-promocionales-financiero'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -170,9 +179,11 @@ def get_precioregular(body=None):  # noqa: E501
 
 def get_upgrade(body=None):  # noqa: E501
     """get_upgrade Consulta de Datos Upgrade # noqa: E501 """
+    message = f"start get_upgrade"
     if connexion.request.is_json:
         body = RequestGetUpgrade.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_financiero = {'channel': 'api-modulos-promocionales-financiero'}
         try:
             if body.channel == 'web-modulos-promocionales':

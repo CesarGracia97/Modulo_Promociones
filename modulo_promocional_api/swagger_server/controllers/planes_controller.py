@@ -8,6 +8,7 @@ from swagger_server.models.request_get_ofertas import RequestGetOfertas  # noqa:
 from swagger_server.models.request_get_planes import RequestGetPlanes  # noqa: E501
 from swagger_server.models.request_get_servicios import RequestGetServicios  # noqa: E501from swagger_server.models.response_servicios_data import ResponseServiciosData  # noqa: E501
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 reader = ReaderJSON()
 internal = TransactionId()
@@ -15,9 +16,11 @@ internal = TransactionId()
 
 def get_combos(body=None):  # noqa: E501
     """Consulta de Datos de Combos"""
+    message = f"start get_combos"
     if connexion.request.is_json:
         body = RequestGetCombos.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -58,9 +61,11 @@ def get_combos(body=None):  # noqa: E501
 
 def get_ofertas(body=None):  # noqa: E501
     """Consulta de Datos de Ofertas"""
+    message = f"start get_ofertas"
     if connexion.request.is_json:
         body = RequestGetOfertas.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -99,9 +104,11 @@ def get_ofertas(body=None):  # noqa: E501
 
 def get_planes(body=None):  # noqa: E501
     """Consulta de Datos de Planes"""
+    message = f"start get_planes"
     if connexion.request.is_json:
         body = RequestGetPlanes.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -146,9 +153,11 @@ def get_planes(body=None):  # noqa: E501
 
 def get_servicios(body=None):  # noqa: E501
     """Consulta de Datos de Servicios"""
+    message = f"start get_servicios"
     if connexion.request.is_json:
         body = RequestGetServicios.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_planes = {'channel': 'api-modulos-promocionales-planes'}
         try:
             if body.channel == 'web-modulos-promocionales':

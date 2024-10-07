@@ -7,6 +7,7 @@ from swagger_server.models.request_get_ciudades import RequestGetCiudades  # noq
 from swagger_server.models.request_get_provincia import RequestGetProvincia  # noqa: E501
 from swagger_server.models.request_get_sectores import RequestGetSectores  # noqa: E501from swagger_server.utils.logs.logging import Log
 from swagger_server.utils.transactions.transaction import TransactionId
+from loguru import logger
 
 reader = ReaderJSON()
 internal = TransactionId()
@@ -14,9 +15,11 @@ internal = TransactionId()
 
 def get_provincias(body=None):  # noqa: E501
     """get_provincias Consulta de Datos de Provincias segun sus parametros. # noqa: E501 """
+    message = f"start get_provincias"
     if connexion.request.is_json:
         body = RequestGetProvincia.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -56,9 +59,11 @@ def get_provincias(body=None):  # noqa: E501
 
 def get_ciudades(body=None):  # noqa: E501
     """get_ciudades Consulta de Datos de Ciudades # noqa: E501 """
+    message = f"start get_provincias"
     if connexion.request.is_json:
         body = RequestGetCiudades.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
         try:
             if body.channel == 'web-modulos-promocionales':
@@ -115,9 +120,11 @@ def get_ciudades(body=None):  # noqa: E501
 
 def get_sectores(body=None):  # noqa: E501
     """get_sectores Consulta de Datos de Sectores # noqa: E501 """
+    message = f"start get_sectores"
     if connexion.request.is_json:
         body = RequestGetSectores.from_dict(connexion.request.get_json())  # noqa: E501
         internal_transaction_id: str = internal.generate_internal_transaction_id()
+        logger.info(message, internal = internal_transaction_id, external = body.external_transaction_id)
         params_lugares = {'channel': 'api-modulos-promocionales-lugares'}
         try:
             if body.channel == 'web-modulos-promocionales':

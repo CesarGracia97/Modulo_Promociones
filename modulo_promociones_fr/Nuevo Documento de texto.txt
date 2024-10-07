@@ -1,0 +1,24 @@
+Producción 1
+API: 1
+WWW: 2
+QUEUE: 3
+MOBILE: 4
+TODOS 5
+
+Desarrollo 2
+API: 1
+WWW: 2
+QUEUE: 3
+MOBILE: 4
+TODOS 5
+
+Test 3
+API: 1
+WWW: 2
+QUEUE: 3
+MOBILE: 4
+TODOS 5
+
+STAR: 1
+STATUS: 2
+STOP: 3
